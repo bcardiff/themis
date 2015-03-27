@@ -1,11 +1,26 @@
 Rails.application.routes.draw do
+
+  get 'courses/index'
+
+  root 'welcome#index'
+
   post 'ona' => 'ona#json_post'
+  post 'ona/teach' => 'ona#teach'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+
+  resources :teachers, only: :index do
+    member do
+      get 'teach_log'
+    end
+  end
+
+  resources :courses, only: :index
+  mount Listings::Engine => "/listings"
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
