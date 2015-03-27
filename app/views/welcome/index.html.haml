@@ -5,3 +5,37 @@
     = link_to 'Profesores', teachers_path
   %li
     = link_to 'Cursos', courses_path
+
+
+%h2 Applicación Android
+%p
+  Descargar
+
+  %ul
+    %li
+      %a(href="https://play.google.com/store/apps/details?id=org.odk.collect.android&hl=en") ODK Collect
+    %li
+      %a(href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android&hl=en") ZXing Barcode Scanner
+
+  Al abrir ODK Collect configurar por única vez, siguiendo
+  %a(href="https://github.com/onaio/onadata/wiki/Configuring-ODK-collect-with-your-Ona-account") esta guía
+  la url del server a
+  %pre
+    http://ona.io/themis
+
+  Ir a
+  %i Get Blank Form
+  para descargar los formularios.
+
+  Usar
+  %i Fill Blank Form
+  y
+  %i Send Finalized Form
+  para enviarlos.
+
+  Se puede configurar para que se manden siempre que haya wifi o plan de datos disponibles para no tener que hacer manualemente el último paso.
+
+
+%h2 Dictado de clase
+%p
+  %a(href="https://so7ry.enketo.org/webform" target="_blank") formulario web
