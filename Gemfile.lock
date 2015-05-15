@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/manastech/listings.git
-  revision: 0de91b1eba92d67dc8a28b580e0c9eee6f1bbe89
+  revision: c14e91aaa70edaf009896f3e022ed0fa34fc49ce
   branch: master
   specs:
     listings (0.0.2)
@@ -80,6 +80,11 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.4.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     haml (4.0.6)
@@ -183,7 +188,7 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     sexp_processor (4.5.0)
-    spring (1.3.3)
+    spring (1.3.4)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -215,6 +220,7 @@ DEPENDENCIES
   bootstrap-sass
   byebug
   coffee-rails (~> 4.1.0)
+  factory_girl_rails
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
