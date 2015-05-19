@@ -1,0 +1,14 @@
+%button.btn.btn-link.btn-xs{'type'=>"button", 'data-toggle'=>"modal", 'data-target'=> "\##{id}"}
+  = label
+
+%div{'class'=>"modal fade", 'id'=>id, 'tabindex'=>"-1", 'role'=>"dialog"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button(type="button" class="close" data-dismiss="modal")
+          %span
+            &times;
+        %h4.modal-title
+          = title
+      .modal-body
+        %pre= text

@@ -1,11 +1,29 @@
 Rails.application.routes.draw do
+  post 'ona/issued_class' => 'ona#issued_class'
+
+  namespace :admin do
+    get '/' => 'welcome#index', as: :index
+
+    resources :ona_submissions, only: :index do
+      member do
+        post :reprocess
+      end
+    end
+  end
+
+  namespace :teacher do
+    get '/' => 'welcome#index', as: :index
+    get '/how_to' => 'welcome#how_to', as: :how_to
+  end
+
+
 
   get 'courses/index'
 
   root 'welcome#index'
 
   post 'ona' => 'ona#json_post'
-  post 'ona/teach' => 'ona#teach'
+  # post 'ona/teach' => 'ona#teach'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

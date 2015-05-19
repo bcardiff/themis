@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe OnaController, type: :controller do
+RSpec.describe Admin::OnaSubmissionsController, type: :controller do
 
-  describe "GET #json_post" do
+  describe "GET #index" do
     it "returns http success" do
-      post :json_post, {}.to_json
+      get :index
       expect(response).to have_http_status(:success)
     end
   end

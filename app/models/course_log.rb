@@ -8,4 +8,10 @@ class CourseLog < ActiveRecord::Base
 
     CourseLog.find_or_initialize_by(course: course, date: date)
   end
+
+  def self.process(data)
+    course_log = for_course_on_date(data['course'], data['today'])
+
+    course_log.save!
+  end
 end
