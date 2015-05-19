@@ -20,10 +20,10 @@ RSpec.describe CourseLog, type: :model do
     let(:course_code) { course.code }
 
     it "should create new course_log" do
-      c = CourseLog.for_course_on_date(course_code, "2015-05-15")
+      c = nil
 
       expect {
-        c.save!
+        c = CourseLog.for_course_on_date(course_code, "2015-05-15")
       }.to change{ CourseLog.count }.by(1)
 
       expect(c.course).to eq(course)
@@ -32,14 +32,47 @@ RSpec.describe CourseLog, type: :model do
 
     it "should only one course_log per course, date" do
       c = CourseLog.for_course_on_date(course_code, "2015-05-15")
-      c.save!
+      c1 = nil
 
-      c1 = CourseLog.for_course_on_date(course_code, "2015-05-15")
       expect {
-        c1.save!
+        c1 = CourseLog.for_course_on_date(course_code, "2015-05-15")
       }.to change{ CourseLog.count }.by(0)
 
       expect(c1).to eq(c)
+    end
+  end
+
+  describe "teacher_course_logs" do
+    let(:teacher) { create(:teacher) }
+    let(:onther_teacher) { create(:teacher) }
+    let(:course) { create(:course) }
+    let(:course_log) { CourseLog.for_course_on_date(course.code, "2015-05-19") }
+
+    it "should add teacher only" do
+      expect {
+        course_log.add_teacher teacher.name
+      }.to change{ TeacherCourseLog.count }.by(1)
+    end
+
+    it "should add teacher only once" do
+      course_log.add_teacher teacher.name
+
+      expect {
+        course_log.add_teacher teacher.name
+      }.to change{ TeacherCourseLog.count }.by(0)
+    end
+
+    it "should add many teacher only once" do
+      expect {
+        course_log.add_teacher teacher.name
+        course_log.add_teacher onther_teacher.name
+      }.to change{ TeacherCourseLog.count }.by(2)
+    end
+
+    it "should raise if invalid teacher" do
+      expect {
+        course_log.add_teacher "invalid"
+      }.to raise_error
     end
   end
 end

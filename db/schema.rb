@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517192819) do
+ActiveRecord::Schema.define(version: 20150519220111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,13 +39,15 @@ ActiveRecord::Schema.define(version: 20150517192819) do
     t.text     "log"
   end
 
-  create_table "teach_logs", force: :cascade do |t|
-    t.date     "date"
+  create_table "teacher_course_logs", force: :cascade do |t|
     t.integer  "teacher_id"
-    t.integer  "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "course_log_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
+
+  add_index "teacher_course_logs", ["course_log_id"], name: "index_teacher_course_logs_on_course_log_id", using: :btree
+  add_index "teacher_course_logs", ["teacher_id"], name: "index_teacher_course_logs_on_teacher_id", using: :btree
 
   create_table "teachers", force: :cascade do |t|
     t.string   "name"
@@ -54,4 +56,6 @@ ActiveRecord::Schema.define(version: 20150517192819) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "teacher_course_logs", "course_logs"
+  add_foreign_key "teacher_course_logs", "teachers"
 end

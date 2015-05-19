@@ -4,7 +4,7 @@ class OnaSubmission < ActiveRecord::Base
   serialize :data, JSON
 
 
-  def process!
+  def process!(_raise = false)
     begin
       # TODO begin transaction
       if self.form == 'issued_class'
@@ -13,6 +13,7 @@ class OnaSubmission < ActiveRecord::Base
       self.status = 'done'
       self.log = nil
     rescue Exception => e
+      raise e if _raise
       self.log = e.to_s
       self.status = 'error'
     end

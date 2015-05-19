@@ -1,3 +1,3 @@
 class Teacher < ActiveRecord::Base
-  has_many :teach_logs
+  has_many :teacher_course_log
 end
