@@ -1,19 +1,30 @@
-%h1 Inicio
+%h1 Admin
 
-%ul
-  %li
+/ %ul
+/   %li
+/   %li
+/     = link_to 'Profesores', teachers_path
+/   %li
+/     = link_to 'Cursos', courses_path
+
+
+.row
+  .col-md-4
     = link_to 'Recepción Ona', admin_ona_submissions_path
-  %li
-    = link_to 'Profesores', teachers_path
-  %li
-    = link_to 'Cursos', courses_path
 
-= month_calendar do |date|
-  .daynum
-    = date.day
-  - (@course_logs[date] || []).each do |course_log|
-    %div{"class" => "#{'missing' if course_log.missing}"}
-      = course_log.calendar_name
-      - unless course_log.missing
+    - OnaSubmission.with_error.count.tap do |ona_error|
+      - if ona_error > 0
         %label.badge
-          = course_log.teachers.count
+          = ona_error
+          Errors
+
+  .col-md-8
+    = month_calendar do |date|
+      .daynum
+        = date.day
+      - (@course_logs[date] || []).each do |course_log|
+        %div{"class" => "#{'missing' if course_log.missing}"}
+          = course_log.calendar_name
+          - unless course_log.missing
+            %label.badge
+              = course_log.teachers.count

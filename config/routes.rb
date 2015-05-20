@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :ona_submissions, only: :index do
       member do
         post :reprocess
+        post :dismiss
       end
     end
   end

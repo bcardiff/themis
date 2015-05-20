@@ -15,6 +15,6 @@ class OnaSubmissionsListing < Listings::Base
   end
 
   column '' do |s|
-    link_to 'reprocesar', reprocess_admin_ona_submission_path(id: s.id), method: :post
+    render partial: 'shared/ona_submission_actions', locals: {s: s}
   end
 end

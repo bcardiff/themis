@@ -1,0 +1,4 @@
+= link_to 'reprocesar', reprocess_admin_ona_submission_path(id: s.id), method: :post
+
+- if s.can_dismiss?
+  = link_to 'ignorar', dismiss_admin_ona_submission_path(id: s.id), method: :post

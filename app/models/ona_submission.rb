@@ -3,6 +3,16 @@ class OnaSubmission < ActiveRecord::Base
 
   serialize :data, JSON
 
+  scope :with_error, -> { where(status: 'error') }
+
+  def can_dismiss?
+    self.status == 'error'
+  end
+
+  def dismiss!
+    self.status = 'dismiss'
+    self.save!
+  end
 
   def process!(_raise = false)
     begin
