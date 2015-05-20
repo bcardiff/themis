@@ -15,6 +15,67 @@ RSpec.describe CourseLog, type: :model do
     expect(c.valid?).to be_falsey
   end
 
+  describe "fill_missings" do
+    let!(:course) { create(:course, weekday: 2, valid_since: Date.new(2015, 5, 1)) }
+
+    context "empty history" do
+      before(:each) {
+        allow(Date).to receive(:today).and_return(today)
+        CourseLog.fill_missings
+      }
+
+      context "one day after the course" do
+        let(:today) { Date.new(2015, 5, 6) }
+
+        it "should create as missing" do
+          expect(CourseLog.all.count).to eq(1)
+          log = CourseLog.all.first
+
+          expect(log.course).to eq(course)
+          expect(log.date).to eq(today - 1.day)
+          expect(log.missing).to be_truthy
+        end
+      end
+
+      context "multiple weeks" do
+        let(:today) { Date.new(2015, 5, 20) }
+
+        it "should create as missing" do
+          expect(CourseLog.all.count).to eq(3)
+
+          expect(CourseLog.all.map(&:date)).to eq([Date.new(2015, 5, 5), Date.new(2015, 5, 12), Date.new(2015, 5, 19)])
+          expect(CourseLog.all.map(&:missing)).to eq([true, true, true])
+        end
+      end
+    end
+
+    context "with history" do
+
+      before(:each) {
+        CourseLog.for_course_on_date(course.code, "2015-05-12")
+        allow(Date).to receive(:today).and_return(today)
+        CourseLog.fill_missings
+      }
+
+      context "on the same day of the course" do
+        let(:today) { Date.new(2015, 5, 19) }
+
+        it "should create as missing" do
+          expect(CourseLog.missing.count).to eq(0)
+        end
+      end
+
+      context "one day after the course" do
+        let(:today) { Date.new(2015, 5, 27) }
+
+        it "should create as missing" do
+          expect(CourseLog.missing.count).to eq(2)
+          expect(CourseLog.missing.map(&:date)).to eq([Date.new(2015, 5, 19), Date.new(2015, 5, 26)])
+        end
+      end
+    end
+  end
+
   describe "for_course_on_date" do
     let(:course) { create(:course) }
     let(:course_code) { course.code }

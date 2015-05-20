@@ -9,6 +9,7 @@ class OnaController < ApplicationController
 
   def issued_class
     @submission.process!
+    CourseLog.fill_missings
     head :ok
   end
 

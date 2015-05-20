@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519220111) do
+ActiveRecord::Schema.define(version: 20150520041144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,15 +19,18 @@ ActiveRecord::Schema.define(version: 20150519220111) do
   create_table "course_logs", force: :cascade do |t|
     t.integer  "course_id"
     t.date     "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "missing",    default: false, null: false
   end
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "weekday"
+    t.date     "valid_since"
   end
 
   create_table "ona_submissions", force: :cascade do |t|
