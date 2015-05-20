@@ -24,7 +24,7 @@
         = date.day
       - (@course_logs[date] || []).each do |course_log|
         %div{"class" => "#{'missing' if course_log.missing}"}
-          = course_log.calendar_name
+          = link_to course_log.calendar_name, admin_course_log_path(course_log)
           - unless course_log.missing
             %label.badge
               = course_log.teachers.count

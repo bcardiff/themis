@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         post :dismiss
       end
     end
+
+    resources :course_logs, only: :show
   end
 
   namespace :teacher do

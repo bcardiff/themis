@@ -34,6 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'haml-rails'
 gem 'simple_calendar'
+gem 'decent_exposure'
 
 gem 'listings', github: 'manastech/listings', branch: 'master'
 

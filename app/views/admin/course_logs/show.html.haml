@@ -1,0 +1,10 @@
+%h1 Detalle Clase
+
+%form.form-horizontal
+  = text_field 'Id', course_log.id
+  = text_field 'Curso', course_log.course.name
+  = text_field 'Fecha', course_log.date
+  = text_field 'Estado', course_log.status
+  - unless course_log.missing
+    = text_field 'Profesores', course_log.teachers.map(&:name).join(", ")
+

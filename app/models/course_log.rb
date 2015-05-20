@@ -66,4 +66,8 @@ class CourseLog < ActiveRecord::Base
 
     teacher
   end
+
+  def status
+    self.missing ? 'Sin información enviada' : 'Ok'
+  end
 end
