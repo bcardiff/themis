@@ -1,6 +1,7 @@
 class CourseLog < ActiveRecord::Base
   belongs_to :course
   validates_presence_of :course, :date
+  validate :validate_course_date
 
   has_many :teacher_course_logs, dependent: :destroy
   has_many :teachers, through: :teacher_course_logs
@@ -8,6 +9,12 @@ class CourseLog < ActiveRecord::Base
   scope :missing, -> { where(missing: true) }
 
   delegate :calendar_name, to: :course
+
+  def validate_course_date
+    if date.wday != course.weekday
+      errors.add(:date, "invalid date for course #{date} is #{Date::DAYNAMES[date.wday]} but not #{Date::DAYNAMES[course.weekday]}")
+    end
+  end
 
   def self.fill_missings
     today = Date.today
@@ -48,6 +55,8 @@ class CourseLog < ActiveRecord::Base
   end
 
   def add_teacher(teacher_name)
+    return nil if teacher_name.blank?
+
     teacher = Teacher.find_by!(name: teacher_name)
     teacher = teacher_course_logs.where(teacher: teacher).first || teacher_course_logs.build(teacher: teacher)
 

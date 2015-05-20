@@ -13,7 +13,6 @@
     = date.day
   - (@course_logs[date] || []).each do |course_log|
     %div{"class" => "#{'missing' if course_log.missing}"}
-      = course_log.id
       = course_log.calendar_name
       - unless course_log.missing
         %label.badge
