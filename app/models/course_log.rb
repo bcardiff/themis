@@ -2,10 +2,12 @@ class CourseLog < ActiveRecord::Base
   belongs_to :course
   validates_presence_of :course, :date
 
-  has_many :teacher_course_logs
-  # has_many :teachers, throught: ...
+  has_many :teacher_course_logs, dependent: :destroy
+  has_many :teachers, through: :teacher_course_logs
 
   scope :missing, -> { where(missing: true) }
+
+  delegate :calendar_name, to: :course
 
   def self.fill_missings
     today = Date.today
@@ -26,7 +28,7 @@ class CourseLog < ActiveRecord::Base
   end
 
   def self.process(data)
-    for_course_on_date(data['course'], data['today']) do |course_log|
+    for_course_on_date(data['course'], data['date']) do |course_log|
       course_log.add_teacher(data['teachers'])
     end
   end

@@ -6,7 +6,7 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "process teacher giving a class" do
     issued_class({
-      "today" => "2015-05-17",
+      "date" => "2015-05-17",
       "course" => lh_int1_jue.code,
       "teachers" => mariel.name,
     })
