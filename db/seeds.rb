@@ -43,4 +43,4 @@ course "LH_PRIN_SAB", name: "Lindy Hop - Principiantes - Sábados Sc", weekday: 
 course "LH_PRIN_VIE", name: "Lindy Hop - Principiantes - Viernes Iberá", weekday: 5
 course "TP_INT1_MAR", name: "Tap - Intermedios 1 - Martes La huella", weekday: 2
 course "TP_PRIN_MAR", name: "Tap - Principiantes - Martes La huella", weekday: 2
-course "TP_PRIN_MIE", name: "Tap - Principiantes - Miércoles Medrano", weekday: 2
+course "TP_PRIN_MIE", name: "Tap - Principiantes - Miércoles Medrano", weekday: 3

@@ -8,3 +8,9 @@
   %li
     = link_to 'Cursos', courses_path
 
+= month_calendar do |date|
+  .daynum
+    = date.day
+  - (@course_logs[date] || []).each do |course_log|
+    %div{"class" => "#{'missing' if course_log.missing}"}
+      = course_log.course.code
