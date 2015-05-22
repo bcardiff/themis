@@ -6,9 +6,15 @@ class CourseLog < ActiveRecord::Base
   has_many :teacher_course_logs, dependent: :destroy
   has_many :teachers, through: :teacher_course_logs
 
+  has_many :student_course_logs
+
   scope :missing, -> { where(missing: true) }
 
   delegate :calendar_name, to: :course
+
+  def students_count
+    self.student_course_log.count
+  end
 
   def validate_course_date
     if date && date.wday != course.weekday
@@ -36,7 +42,11 @@ class CourseLog < ActiveRecord::Base
 
   def self.process(data)
     for_course_on_date(data['course'], data['date']) do |course_log|
-      course_log.add_teacher(data['teachers'])
+      teacher = course_log.add_teacher(data['teachers'])
+
+      (data['student_repeat'] || []).each do |student_payload|
+        StudentCourseLog.process(course_log, teacher, student_payload)
+      end
     end
   end
 
@@ -58,11 +68,9 @@ class CourseLog < ActiveRecord::Base
     return nil if teacher_name.blank?
 
     teacher = Teacher.find_by!(name: teacher_name)
-    teacher = teacher_course_logs.where(teacher: teacher).first || teacher_course_logs.build(teacher: teacher)
+    teacher_log = teacher_course_logs.first_or_build(teacher: teacher)
 
-    # TODO yield
-
-    teacher.save!
+    teacher_log.save!
 
     teacher
   end
