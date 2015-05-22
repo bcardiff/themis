@@ -11,7 +11,7 @@ class CourseLog < ActiveRecord::Base
   delegate :calendar_name, to: :course
 
   def validate_course_date
-    if date.wday != course.weekday
+    if date && date.wday != course.weekday
       errors.add(:date, "invalid date for course #{date} is #{Date::DAYNAMES[date.wday]} but not #{Date::DAYNAMES[course.weekday]}")
     end
   end

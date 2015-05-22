@@ -77,7 +77,7 @@ RSpec.describe CourseLog, type: :model do
   end
 
   describe "for_course_on_date" do
-    let(:course) { create(:course) }
+    let(:course) { create(:course, weekday: 5) }
     let(:course_code) { course.code }
 
     it "should create new course_log" do
@@ -106,7 +106,7 @@ RSpec.describe CourseLog, type: :model do
   describe "teacher_course_logs" do
     let(:teacher) { create(:teacher) }
     let(:onther_teacher) { create(:teacher) }
-    let(:course) { create(:course) }
+    let(:course) { create(:course, weekday: 2) }
     let(:course_log) { CourseLog.for_course_on_date(course.code, "2015-05-19") }
 
     it "should add teacher only" do

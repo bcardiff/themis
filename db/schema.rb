@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520041144) do
+ActiveRecord::Schema.define(version: 20150521174428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,28 @@ ActiveRecord::Schema.define(version: 20150520041144) do
     t.text     "log"
   end
 
+  create_table "student_course_logs", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "course_log_id"
+    t.integer  "teacher_id"
+    t.text     "payload"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "student_course_logs", ["course_log_id"], name: "index_student_course_logs_on_course_log_id", using: :btree
+  add_index "student_course_logs", ["student_id"], name: "index_student_course_logs_on_student_id", using: :btree
+  add_index "student_course_logs", ["teacher_id"], name: "index_student_course_logs_on_teacher_id", using: :btree
+
+  create_table "students", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "card_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teacher_course_logs", force: :cascade do |t|
     t.integer  "teacher_id"
     t.integer  "course_log_id"
@@ -59,6 +81,9 @@ ActiveRecord::Schema.define(version: 20150520041144) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "student_course_logs", "course_logs"
+  add_foreign_key "student_course_logs", "students"
+  add_foreign_key "student_course_logs", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"
   add_foreign_key "teacher_course_logs", "teachers"
 end
