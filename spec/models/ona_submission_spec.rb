@@ -11,8 +11,8 @@ RSpec.describe OnaSubmission, type: :model do
       "teachers" => mariel.name,
     })
 
-    expect(mariel.teacher_course_log.count).to eq(1)
-    expect(mariel.teacher_course_log.first.course).to eq(lh_int1_jue)
+    expect(mariel.teacher_course_logs.count).to eq(1)
+    expect(mariel.teacher_course_logs.first.course).to eq(lh_int1_jue)
   end
 
   it "fails if date does not match weekday" do
