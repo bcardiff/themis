@@ -16,6 +16,15 @@ def course(code, attributes)
   end
 end
 
+def payment_plan(code, attributes)
+  PaymentPlan.find_or_create_by(code: code).tap do |plan|
+    attributes.each do |key, value|
+      plan.send "#{key}=", value
+    end
+    plan.save!
+  end
+end
+
 Teacher.find_or_create_by name: 'Mariel'
 Teacher.find_or_create_by name: 'Manuel'
 Teacher.find_or_create_by name: 'Juani'
@@ -44,3 +53,13 @@ course "LH_PRIN_VIE", name: "Lindy Hop - Principiantes - Viernes Iberá", weekda
 course "TP_INT1_MAR", name: "Tap - Intermedios 1 - Martes La huella", weekday: 2
 course "TP_PRIN_MAR", name: "Tap - Principiantes - Martes La huella", weekday: 2
 course "TP_PRIN_MIE", name: "Tap - Principiantes - Miércoles Medrano", weekday: 3
+
+payment_plan "3_MESES", description: "3 Meses 1 x Semana $550", price: 550
+payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $350", price: 350
+payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $250", price: 250
+payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $300", price: 300
+payment_plan "CLASE", description: "Clase suelta $70", price: 70
+payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0
+
+
+

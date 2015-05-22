@@ -147,6 +147,43 @@ RSpec.describe OnaSubmission, type: :model do
     expect(StudentCourseLog.count).to eq(2)
   end
 
+  it "should register pending payment of amount" do
+    plan = create(:payment_plan, code: PaymentPlan::OTHER)
+
+    submit_student({
+      "student_repeat/id_kind": "guest",
+      "student_repeat/email": "johndoe@email.com",
+      "student_repeat/name": "John",
+      "student_repeat/do_payment": "yes",
+      "student_repeat/payment/kind": plan.code,
+      "student_repeat/payment/amount": 45,
+    })
+
+    student_log = StudentCourseLog.first
+
+    expect(student_log.teacher).to eq(mariel)
+    expect(student_log.payment_amount).to eq(45)
+    expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
+  end
+
+  it "should register pending payment of amount given by the plan" do
+    plan = create(:payment_plan, price: 172)
+
+    submit_student({
+      "student_repeat/id_kind": "guest",
+      "student_repeat/email": "johndoe@email.com",
+      "student_repeat/name": "John",
+      "student_repeat/do_payment": "yes",
+      "student_repeat/payment/kind": plan.code,
+    })
+
+    student_log = StudentCourseLog.first
+
+    expect(student_log.teacher).to eq(mariel)
+    expect(student_log.payment_amount).to eq(172)
+    expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
+  end
+
   def issued_invalid_class(payload)
     result = nil
 

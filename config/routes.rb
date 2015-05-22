@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :teachers, only: :index do
+    end
+
     resources :course_logs, only: :show
   end
 
@@ -32,12 +35,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-
-  resources :teachers, only: :index do
-    member do
-      get 'teach_log'
-    end
-  end
 
   resources :courses, only: :index
   mount Listings::Engine => "/listings"

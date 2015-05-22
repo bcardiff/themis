@@ -1,4 +1,6 @@
 class StudentCourseLog < ActiveRecord::Base
+  PAYMENT_ON_TEACHER = 'teacher'
+
   belongs_to :student
   belongs_to :course_log
   belongs_to :teacher
@@ -6,6 +8,8 @@ class StudentCourseLog < ActiveRecord::Base
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
+
+  scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
 
   def validate_teacher_in_course_log
     return unless teacher && course_log
@@ -18,6 +22,9 @@ class StudentCourseLog < ActiveRecord::Base
     card = payload["student_repeat/card"]
     email = payload["student_repeat/email"]
     name = payload["student_repeat/name"]
+    do_payment = payload["student_repeat/do_payment"]
+    payment_kind = payload["student_repeat/payment/kind"]
+    payment_amount = payload["student_repeat/payment/amount"]
 
     case id_kind
     when "new_card"
@@ -41,9 +48,23 @@ class StudentCourseLog < ActiveRecord::Base
       raise 'not supported id_kind'
     end
 
+    # TODO better error when student is nil
     student_log = course_log.student_course_logs.first_or_build(student: student)
     student_log.payload = payload.to_json
     student_log.teacher = teacher
+
+
+    if do_payment == "yes"
+      case payment_kind
+      when PaymentPlan::OTHER
+        student_log.payment_amount = payment_amount
+        student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
+      else
+        student_log.payment_amount = PaymentPlan.find_by!(code: payment_kind).price
+        student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
+      end
+    end
+
     student_log.save!
   end
 end

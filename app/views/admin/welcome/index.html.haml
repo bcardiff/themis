@@ -18,6 +18,16 @@
           = ona_error
           Errors
 
+    %br
+
+    = link_to 'Profesores', admin_teachers_path
+
+    %br
+
+    .well.well-sm(style="text-align: center")
+      %h1(style="margin-top: 0px")= number_to_currency @teachears_owed_money
+      %label por entrar a caja
+
   .col-md-8
     = month_calendar do |date|
       .daynum

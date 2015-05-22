@@ -3,10 +3,13 @@ class TeachersListing < Listings::Base
 
   column :name
   column :card
-
-  column do |teacher|
-    link_to 'clases', teach_log_teacher_path(teacher)
+  column 'Pagos de alumnos' do |teacher|
+    teacher.classes_money_owed
   end
+
+  # column do |teacher|
+  #   link_to 'clases', teach_log_admin_teacher_path(teacher)
+  # end
 
   export :csv, :xls
 
