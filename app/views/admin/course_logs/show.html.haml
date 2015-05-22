@@ -18,5 +18,5 @@
 
       %ul
         - course_log.student_course_logs.each do |student_log|
-          %li= student_log.student.display_name
+          %li= student_log.student.try :display_name
 
