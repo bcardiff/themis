@@ -6,5 +6,17 @@
   = text_field 'Fecha', course_log.date
   = text_field 'Estado', course_log.status
   - unless course_log.missing
-    = text_field 'Profesores', course_log.teachers.map(&:name).join(", ")
+    = text_field 'Profesores' do
+      %label.badge= course_log.teachers.count
+
+      %ul
+        - course_log.teachers.each do |teacher|
+          %li= teacher.name
+
+    = text_field 'Alumnos' do
+      %label.badge= course_log.students_count
+
+      %ul
+        - course_log.student_course_logs.each do |student_log|
+          %li= student_log.student.display_name
 

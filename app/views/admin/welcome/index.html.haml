@@ -28,3 +28,5 @@
           - unless course_log.missing
             %label.badge
               = course_log.teachers.count
+              \ :
+              = course_log.students_count

@@ -136,4 +136,10 @@ RSpec.describe CourseLog, type: :model do
       }.to raise_error
     end
   end
+
+  describe "students" do
+    it "should count students" do
+      expect(create(:course_log).students_count).to eq(0)
+    end
+  end
 end
