@@ -75,6 +75,8 @@ class StudentCourseLog < ActiveRecord::Base
         student_log.payment_amount = PaymentPlan.find_by!(code: payment_kind).price
         student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
       end
+    else
+      student_log.payment_status = nil
     end
 
     student_log.save!

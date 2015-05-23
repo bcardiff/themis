@@ -9,14 +9,9 @@
     = text_field 'Profesores' do
       %label.badge= course_log.teachers.count
 
-      %ul
-        - course_log.teachers.each do |teacher|
-          %li= teacher.name
+      = render_listing :admin_course_log_teachers
 
     = text_field 'Alumnos' do
       %label.badge= course_log.students_count
 
-      %ul
-        - course_log.student_course_logs.each do |student_log|
-          %li= student_log.student.try :display_name
-
+      = render_listing :admin_course_log_students

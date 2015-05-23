@@ -7,6 +7,7 @@ class CourseLog < ActiveRecord::Base
   has_many :teachers, through: :teacher_course_logs
 
   has_many :student_course_logs
+  has_many :students, through: :student_course_logs
 
   scope :missing, -> { where(missing: true) }
 

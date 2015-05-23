@@ -8,7 +8,7 @@ RSpec.describe StudentCourseLog, type: :model do
   end
 
   describe "validates" do
-    it "should requires student" do # TODO if not pending (?)
+    it "should requires student" do
       expect(build(:student_course_log, student: nil)).to_not be_valid
     end
 
