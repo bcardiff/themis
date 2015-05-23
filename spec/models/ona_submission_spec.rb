@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OnaSubmission, type: :model do
   let(:lh_int1_jue) { create(:course, weekday: 4) }
+  let(:ch_int2_jue) { create(:course, weekday: 4) }
   let(:mariel) { create(:teacher) }
 
   it "process teacher giving a class" do
@@ -124,6 +125,14 @@ RSpec.describe OnaSubmission, type: :model do
   it "should ignore empty students" do
     submit_student({
       "student_repeat/id_kind": "existing_card",
+      "student_repeat/card": "",
+    },{
+      "student_repeat/id_kind": "new_card",
+      "student_repeat/card": "",
+      "student_repeat/email": "",
+      "student_repeat/name": ""
+    },{
+      "student_repeat/id_kind": "guest",
       "student_repeat/email": "",
       "student_repeat/name": ""
     })
@@ -184,6 +193,42 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
   end
 
+  it "should create new student if advertised as existing but it doesn't" do
+    submit_student({
+      "student_repeat/id_kind": "existing_card",
+      "student_repeat/card": "245"
+    })
+
+    expect(StudentCourseLog.count).to eq(1)
+    expect(Student.count).to eq(1)
+
+    student_log = StudentCourseLog.first
+    expect(student_log.student.card_code).to eq("245")
+    expect(student_log.student.first_name).to eq(Student::UNKOWN)
+    expect(student_log.student.email).to eq(Student::UNKOWN)
+  end
+
+  it "should update name and email when it was unkown" do
+    submit_student({
+      "student_repeat/id_kind": "existing_card",
+      "student_repeat/card": "245"
+    })
+
+    submit_student(ch_int2_jue, {
+      "student_repeat/id_kind": "new_card",
+      "student_repeat/card": "245",
+      "student_repeat/email": "johndoe@email.com",
+      "student_repeat/name": "John",
+    })
+
+    expect(Student.count).to eq(1)
+
+    student_log = StudentCourseLog.first
+    expect(student_log.student.card_code).to eq("245")
+    expect(student_log.student.first_name).to eq("John")
+    expect(student_log.student.email).to eq("johndoe@email.com")
+  end
+
   def issued_invalid_class(payload)
     result = nil
 
@@ -197,9 +242,15 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   def submit_student(*student_payload)
+    if student_payload.first.is_a? Course
+      course, *student_payload = student_payload
+    else
+      course = lh_int1_jue
+    end
+
     issued_class({
       "date" => "2015-05-14",
-      "course" => lh_int1_jue.code,
+      "course" => course.code,
       "teachers" => mariel.name,
       "student_repeat": student_payload
     })

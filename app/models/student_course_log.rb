@@ -26,18 +26,25 @@ class StudentCourseLog < ActiveRecord::Base
     payment_kind = payload["student_repeat/payment/kind"]
     payment_amount = payload["student_repeat/payment/amount"]
 
+    # skip empty students
+    return if card.blank? and email.blank? and name.blank?
+
     case id_kind
     when "new_card"
       # TODO when reprocessing this will leads to an error
       student = Student.find_or_initialize_by card_code: card
-      if student.new_record?
+      if student.new_record? || student.first_name == Student::UNKOWN || student.email == Student::UNKOWN
         student.first_name = name
         student.email = email
         student.save!
       end
     when "existing_card"
-      return if card.blank?
-      student = Student.find_by card_code: card
+      student = Student.find_or_initialize_by card_code: card
+      if student.new_record?
+        student.first_name = Student::UNKOWN
+        student.email = Student::UNKOWN
+        student.save!
+      end
     when "guest"
       student = Student.find_or_initialize_by email: email
       if student.new_record?
