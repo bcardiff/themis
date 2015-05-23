@@ -173,6 +173,7 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.teacher).to eq(mariel)
     expect(student_log.payment_amount).to eq(45)
     expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
+    expect(student_log.payment_plan).to eq(plan)
   end
 
   it "should register pending payment of amount given by the plan" do
@@ -191,6 +192,7 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.teacher).to eq(mariel)
     expect(student_log.payment_amount).to eq(172)
     expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
+    expect(student_log.payment_plan).to eq(plan)
   end
 
   it "should create new student if advertised as existing but it doesn't" do
@@ -243,6 +245,7 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.student.first_name).to eq(Student::UNKOWN)
     expect(student_log.student.email).to be_nil
     expect(student_log.payment_amount).to eq(plan.price)
+    expect(student_log.payment_plan).to eq(plan)
   end
 
 

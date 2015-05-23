@@ -5,6 +5,7 @@ class StudentCourseLog < ActiveRecord::Base
   belongs_to :course_log
   belongs_to :teacher
   serialize :payload, JSON
+  belongs_to :payment_plan
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
@@ -67,14 +68,15 @@ class StudentCourseLog < ActiveRecord::Base
 
 
     if do_payment == "yes"
-      case payment_kind
-      when PaymentPlan::OTHER
-        student_log.payment_amount = payment_amount
-        student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
+      # TODO error handling
+      plan = PaymentPlan.find_by!(code: payment_kind)
+      student_log.payment_plan = plan
+      student_log.payment_amount = if plan.other?
+        payment_amount
       else
-        student_log.payment_amount = PaymentPlan.find_by!(code: payment_kind).price
-        student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
+        plan.price
       end
+      student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
     else
       student_log.payment_status = nil
     end
