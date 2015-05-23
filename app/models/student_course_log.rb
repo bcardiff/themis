@@ -27,13 +27,12 @@ class StudentCourseLog < ActiveRecord::Base
     payment_amount = payload["student_repeat/payment/amount"]
 
     # skip empty students
-    return if card.blank? and email.blank? and name.blank?
+    return if card.blank? and email.blank? and name.blank? and payment_kind.blank?
 
     case id_kind
     when "new_card"
-      # TODO when reprocessing this will leads to an error
       student = Student.find_or_initialize_by card_code: card
-      if student.new_record? || student.first_name == Student::UNKOWN || student.email == Student::UNKOWN
+      if student.new_record? || student.first_name == Student::UNKOWN || student.email == nil
         student.first_name = name
         student.email = email
         student.save!
@@ -42,14 +41,20 @@ class StudentCourseLog < ActiveRecord::Base
       student = Student.find_or_initialize_by card_code: card
       if student.new_record?
         student.first_name = Student::UNKOWN
-        student.email = Student::UNKOWN
+        student.email = nil
         student.save!
       end
     when "guest"
-      student = Student.find_or_initialize_by email: email
+      if email.blank?
+        student = Student.new email: nil
+      else
+        student = Student.find_or_initialize_by email: email
+      end
+
       if student.new_record?
         student.card_code = nil
-        student.first_name = name
+        student.first_name = name || Student::UNKOWN
+        student.save!
       end
     else
       raise 'not supported id_kind'

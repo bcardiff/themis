@@ -205,7 +205,7 @@ RSpec.describe OnaSubmission, type: :model do
     student_log = StudentCourseLog.first
     expect(student_log.student.card_code).to eq("245")
     expect(student_log.student.first_name).to eq(Student::UNKOWN)
-    expect(student_log.student.email).to eq(Student::UNKOWN)
+    expect(student_log.student.email).to be_nil
   end
 
   it "should update name and email when it was unkown" do
@@ -228,6 +228,23 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.student.first_name).to eq("John")
     expect(student_log.student.email).to eq("johndoe@email.com")
   end
+
+  it "should create guess without name if there is payment" do
+    plan = create(:payment_plan)
+
+    submit_student({
+      "student_repeat/id_kind": "guest",
+      "student_repeat/do_payment": "yes",
+      "student_repeat/payment/kind": plan.code
+    })
+
+    expect(Student.count).to eq(1)
+    student_log = StudentCourseLog.first
+    expect(student_log.student.first_name).to eq(Student::UNKOWN)
+    expect(student_log.student.email).to be_nil
+    expect(student_log.payment_amount).to eq(plan.price)
+  end
+
 
   def issued_invalid_class(payload)
     result = nil
