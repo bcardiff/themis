@@ -58,6 +58,34 @@ RSpec.describe OnaSubmission, type: :model do
 
     submit_student(data)
     submit_student(data)
+
+    expect(Student.count).to eq(1)
+  end
+
+  it "can reprocess with a guest student" do
+    data = {
+      "student_repeat/id_kind": "guest",
+      "student_repeat/name": "John"
+    }
+
+    s = submit_student(data)
+    reprocess s
+
+    expect(Student.count).to eq(1)
+    expect(StudentCourseLog.count).to eq(1)
+  end
+
+  it "different submissions creates diffrent guests student" do
+    data = {
+      "student_repeat/id_kind": "guest",
+      "student_repeat/name": "John"
+    }
+
+    submit_student(data)
+    submit_student(data)
+
+    expect(Student.count).to eq(2)
+    expect(StudentCourseLog.count).to eq(2)
   end
 
   it "can assign existing student" do
@@ -248,6 +276,10 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.payment_plan).to eq(plan)
   end
 
+  it "should avoid changing payment amount if it was already transferered to account"
+  it "ensure invalid students do not block payment processing" # example bad payment plan
+  it "support inteligent match of students cards"
+
 
   def issued_invalid_class(payload)
     result = nil
@@ -282,6 +314,17 @@ RSpec.describe OnaSubmission, type: :model do
     s.data = payload
     result = s.process! _raise
 
+    reload_entities
+
+    s
+  end
+
+  def reprocess(ona_submission)
+    ona_submission.process! true
+    reload_entities
+  end
+
+  def reload_entities
     entities = [mariel, lh_int1_jue]
     entities.map &:reload
   end

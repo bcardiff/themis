@@ -6,6 +6,7 @@ class StudentCourseLog < ActiveRecord::Base
   belongs_to :teacher
   serialize :payload, JSON
   belongs_to :payment_plan
+  belongs_to :ona_submission
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
@@ -18,7 +19,7 @@ class StudentCourseLog < ActiveRecord::Base
     errors.add(:teacher, 'must be in the course_log') unless course_log.teachers.include?(teacher)
   end
 
-  def self.process(course_log, teacher, payload)
+  def self.process(course_log, teacher, payload, ona_submission, ona_submission_path)
     id_kind = payload["student_repeat/id_kind"]
     card = payload["student_repeat/card"]
     email = payload["student_repeat/email"]
@@ -30,16 +31,23 @@ class StudentCourseLog < ActiveRecord::Base
     # skip empty students
     return if card.blank? and email.blank? and name.blank? and payment_kind.blank?
 
+    # if there already was a student course log for this part of the submission
+    student = nil
+    existing_log = StudentCourseLog.where(ona_submission: ona_submission, ona_submission_path: ona_submission_path).first
+    if existing_log
+      student = existing_log.student
+    end
+
     case id_kind
     when "new_card"
-      student = Student.find_or_initialize_by card_code: card
+      student ||= Student.find_or_initialize_by card_code: card
       if student.new_record? || student.first_name == Student::UNKOWN || student.email == nil
         student.first_name = name
         student.email = email
         student.save!
       end
     when "existing_card"
-      student = Student.find_or_initialize_by card_code: card
+      student ||= Student.find_or_initialize_by card_code: card
       if student.new_record?
         student.first_name = Student::UNKOWN
         student.email = nil
@@ -47,9 +55,9 @@ class StudentCourseLog < ActiveRecord::Base
       end
     when "guest"
       if email.blank?
-        student = Student.new email: nil
+        student ||= Student.new email: nil
       else
-        student = Student.find_or_initialize_by email: email
+        student ||= Student.find_or_initialize_by email: email
       end
 
       if student.new_record?
@@ -62,10 +70,13 @@ class StudentCourseLog < ActiveRecord::Base
     end
 
     # TODO better error when student is nil
-    student_log = course_log.student_course_logs.first_or_build(student: student)
+    student_log = existing_log || course_log.student_course_logs.first_or_build(student: student)
     student_log.payload = payload.to_json
     student_log.teacher = teacher
-
+    if student_log.new_record?
+      student_log.ona_submission = ona_submission
+      student_log.ona_submission_path = ona_submission_path
+    end
 
     if do_payment == "yes"
       # TODO error handling

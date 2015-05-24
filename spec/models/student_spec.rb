@@ -17,4 +17,10 @@ RSpec.describe Student, type: :model do
       expect(build(:student, card_code: student.card_code)).to_not be_valid
     end
   end
+
+  it "should find card by number only"
+  it "should find card by code with slash"
+  it "should find card by code with dash"
+  it "should find card by code with spaces"
+  it "should ensure students cards are stored with full format"
 end

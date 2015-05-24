@@ -18,7 +18,7 @@ class OnaSubmission < ActiveRecord::Base
     begin
       # TODO begin transaction
       if self.form == 'issued_class'
-        CourseLog.process self.data
+        CourseLog.process self.data, self
       else
         raise "unable to process '#{self.form}' form"
       end

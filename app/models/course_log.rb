@@ -41,12 +41,12 @@ class CourseLog < ActiveRecord::Base
     end
   end
 
-  def self.process(data)
+  def self.process(data, ona_submission)
     for_course_on_date(data['course'], data['date']) do |course_log|
       teacher = course_log.add_teacher(data['teachers'])
 
-      (data['student_repeat'] || []).each do |student_payload|
-        StudentCourseLog.process(course_log, teacher, student_payload)
+      (data['student_repeat'] || []).each_with_index do |student_payload, index|
+        StudentCourseLog.process(course_log, teacher, student_payload, ona_submission, "student_repeat[#{index}]")
       end
     end
   end
