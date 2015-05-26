@@ -25,7 +25,7 @@ class OnaSubmission < ActiveRecord::Base
       self.status = 'done'
       self.log = nil
     rescue Exception => e
-      raise e #if _raise
+      raise e if _raise
       self.log = e.to_s
       self.status = 'error'
     end
