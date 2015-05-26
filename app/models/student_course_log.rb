@@ -23,7 +23,7 @@ class StudentCourseLog < ActiveRecord::Base
     id_kind = payload["student_repeat/id_kind"]
     card = payload["student_repeat/card"]
     email = payload["student_repeat/email"]
-    name = payload["student_repeat/name"]
+    name = payload["student_repeat/first_name"]
     do_payment = payload["student_repeat/do_payment"]
     payment_kind = payload["student_repeat/payment/kind"]
     payment_amount = payload["student_repeat/payment/amount"]
