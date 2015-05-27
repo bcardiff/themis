@@ -4,6 +4,7 @@ RSpec.describe OnaSubmission, type: :model do
   let(:lh_int1_jue) { create(:course, weekday: 4) }
   let(:ch_int2_jue) { create(:course, weekday: 4) }
   let(:mariel) { create(:teacher) }
+  let(:manu) { create(:teacher) }
 
   it "process teacher giving a class" do
     issued_class({
@@ -281,6 +282,21 @@ RSpec.describe OnaSubmission, type: :model do
   it "support inteligent match of students cards"
   it "should use cardtxt when provided"
   it "should saved student last_name"
+
+  it "should record secondary teacher as giving the class" do
+    issued_class({
+      "date" => "2015-05-14",
+      "course" => lh_int1_jue.code,
+      "teacher" => mariel.name,
+      "secondary_teacher" => manu.name,
+    })
+
+    expect(mariel.teacher_course_logs.count).to eq(1)
+    expect(mariel.teacher_course_logs.first.course).to eq(lh_int1_jue)
+
+    expect(manu.teacher_course_logs.count).to eq(1)
+    expect(manu.teacher_course_logs.first.course).to eq(lh_int1_jue)
+  end
 
 
   def issued_invalid_class(payload)
