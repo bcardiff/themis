@@ -1,0 +1,27 @@
+%h1
+  = teacher.name
+  >
+  Pagos de alumnos
+
+%table.table
+  %tr
+    %th
+    %th Alumno
+    %th Monto
+  %tr.subtotal
+    %td(colspan=2) Total
+    %td= number_to_currency @total
+  - @payments.each do |course_log, student_course_logs|
+    %tr.subtotal
+      %td(colspan=2)
+        = "#{course_log.date} #{course_log.course.calendar_name}"
+      %td= number_to_currency student_course_logs.sum(&:payment_amount)
+    - student_course_logs.each do |student_course_log|
+      %tr
+        %td
+        %td= student_course_log.student.display_name
+        %td= number_to_currency student_course_log.payment_amount
+
+
+- if @total > 0
+  = link_to 'Registrar entrega', transfer_student_payments_money_admin_teacher_path(teacher), method: :post, class: 'btn btn-primary', 'data-confirm': "Seguro desea registrar que se entregaron #{number_to_currency @total}?"

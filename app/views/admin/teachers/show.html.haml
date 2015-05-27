@@ -1,0 +1,7 @@
+%h1= teacher.name
+
+%form.form-horizontal
+  = text_field 'Pagos de alumnos' do
+    %span= number_to_currency(teacher.owed_student_payments)
+    = link_to 'ver detalle', owed_student_payments_admin_teacher_path(teacher)
+

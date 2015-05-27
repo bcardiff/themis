@@ -25,7 +25,8 @@
     %br
 
     .well.well-sm(style="text-align: center")
-      %h1(style="margin-top: 0px")= number_to_currency @owed_student_payments
+      %h1(style="margin-top: 0px")
+        = link_to number_to_currency(@owed_student_payments), admin_teachers_path
       %label por entrar a caja
 
   .col-md-8

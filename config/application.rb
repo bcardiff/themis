@@ -28,5 +28,7 @@ module Themis
     config.generators.helper = false
 
     Money.default_currency = Money::Currency.new("ARS")
+    DoubleEntry::Locking.configuration.running_inside_transactional_fixtures = true
+
   end
 end

@@ -11,7 +11,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :teachers, only: :index do
+    resources :teachers, only: [:index, :show] do
+      member do
+        get :owed_student_payments
+        post :transfer_student_payments_money
+      end
     end
 
     resources :course_logs, only: :show
