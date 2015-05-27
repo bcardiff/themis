@@ -1,5 +1,6 @@
 class StudentCourseLog < ActiveRecord::Base
   PAYMENT_ON_TEACHER = 'teacher'
+  PAYMENT_ON_CLASSES_INCOME = 'classes_income'
 
   belongs_to :student
   belongs_to :course_log
@@ -7,6 +8,7 @@ class StudentCourseLog < ActiveRecord::Base
   serialize :payload, JSON
   belongs_to :payment_plan
   belongs_to :ona_submission
+  before_save :payments_initially_on_teachers
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
@@ -82,16 +84,25 @@ class StudentCourseLog < ActiveRecord::Base
       # TODO error handling
       plan = PaymentPlan.find_by!(code: payment_kind)
       student_log.payment_plan = plan
-      student_log.payment_amount = if plan.other?
-        payment_amount
-      else
-        plan.price
-      end
-      student_log.payment_status = StudentCourseLog::PAYMENT_ON_TEACHER
+      student_log.payment_amount = payment_amount if plan.other?
     else
-      student_log.payment_status = nil
+      student_log.payment_plan = nil
     end
 
     student_log.save!
   end
+
+  def payments_initially_on_teachers
+    plan = self.payment_plan
+
+    if plan
+      self.payment_status ||= StudentCourseLog::PAYMENT_ON_TEACHER
+      self.payment_amount = plan.price unless plan.other?
+    else
+      self.payment_status ||= nil
+    end
+
+    true
+  end
+
 end
