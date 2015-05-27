@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/' => 'welcome#index', as: :index
+    get 'lines' => 'welcome#lines', as: :lines
 
     resources :ona_submissions, only: :index do
       member do

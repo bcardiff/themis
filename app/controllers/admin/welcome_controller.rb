@@ -7,4 +7,7 @@ class Admin::WelcomeController < Admin::BaseController
 
     @owed_student_payments = StudentCourseLog.owed.sum(:payment_amount)
   end
+
+  def lines
+  end
 end

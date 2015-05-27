@@ -26,7 +26,7 @@ class OnaSubmission < ActiveRecord::Base
       self.log = nil
     rescue Exception => e
       raise e if _raise
-      self.log = e.to_s
+      self.log = "#{e.to_s}\n#{e.backtrace.join("\n")}"
       self.status = 'error'
     end
 

@@ -19,8 +19,9 @@
           Errors
 
     %br
-
     = link_to 'Profesores', admin_teachers_path
+    %br
+    = link_to 'Movimientos', admin_lines_path
 
     %br
 
@@ -28,6 +29,11 @@
       %h1(style="margin-top: 0px")
         = link_to number_to_currency(@owed_student_payments), admin_teachers_path
       %label por entrar a caja
+
+    .well.well-sm(style="text-align: center")
+      %h1(style="margin-top: 0px")
+        = number_to_currency(School.course_income_account.balance)
+      %label caja
 
   .col-md-8
     = month_calendar do |date|
