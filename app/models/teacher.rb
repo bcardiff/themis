@@ -11,19 +11,8 @@ class Teacher < ActiveRecord::Base
   end
 
   def transfer_student_payments_money
-    account_from = self.student_payments_account
-    account_to = School.course_income_account
+    amount = self.owed_student_payments
 
-    # DoubleEntry.lock_accounts(account_from, account_to) do
-      amount = self.owed_student_payments
-      DoubleEntry.transfer(Money.new(amount * 100),
-        from: account_from, to: account_to, code: :deliver_student_payment)
-
-      student_course_logs.transfer_student_payments_money
-    # end
-  end
-
-  def student_payments_account
-    DoubleEntry.account(:student_payments, :scope => self)
+    student_course_logs.transfer_student_payments_money
   end
 end

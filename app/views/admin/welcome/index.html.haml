@@ -21,18 +21,18 @@
     %br
     = link_to 'Profesores', admin_teachers_path
     %br
-    = link_to 'Movimientos', admin_lines_path
+    / = link_to 'Movimientos', admin_lines_path
 
     %br
 
     .well.well-sm(style="text-align: center")
       %h1(style="margin-top: 0px")
-        = link_to number_to_currency(@owed_student_payments), admin_teachers_path
+        = link_to number_to_currency(School.course_incomes_not_handed), admin_teachers_path
       %label por entrar a caja
 
     .well.well-sm(style="text-align: center")
       %h1(style="margin-top: 0px")
-        = number_to_currency(School.course_income_account.balance)
+        = number_to_currency(School.course_incomes_total)
       %label caja
 
   .col-md-8

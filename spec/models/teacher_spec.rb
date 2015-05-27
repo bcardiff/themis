@@ -22,7 +22,7 @@ RSpec.describe Teacher, type: :model do
     end
 
     it "should add them to class income account" do
-      expect(School.course_income_account.balance.amount).to eq(plan.price * 3)
+      expect(School.course_incomes_total).to eq(plan.price * 3)
     end
   end
 end

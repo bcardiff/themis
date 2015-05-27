@@ -14,6 +14,7 @@ class StudentCourseLog < ActiveRecord::Base
   validate :validate_teacher_in_course_log
 
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
+  scope :handed, -> { where(payment_status: PAYMENT_ON_CLASSES_INCOME) }
 
   def validate_teacher_in_course_log
     return unless teacher && course_log
@@ -102,8 +103,6 @@ class StudentCourseLog < ActiveRecord::Base
 
       # TODO when the amount is updated. revert previous payment line.
       # TODO when updating, if amount didn't change, do not create payment
-
-      self.student.record_payment plan, self.payment_amount, self.teacher
     else
       self.payment_status ||= nil
     end
