@@ -282,6 +282,7 @@ RSpec.describe OnaSubmission, type: :model do
   it "support inteligent match of students cards"
   it "should use cardtxt when provided"
   it "should saved student last_name"
+  it "should fail if other payment is choosen without amount"
 
   it "should record secondary teacher as giving the class" do
     issued_class({
