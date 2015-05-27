@@ -1,4 +1,8 @@
 class School
+  def self.description
+    "Swing City"
+  end
+
   def self.course_incomes_total
     StudentCourseLog.handed.sum(:payment_amount)
   end

@@ -1,49 +1,59 @@
-%h1 Admin
-
-/ %ul
-/   %li
-/   %li
-/     = link_to 'Profesores', teachers_path
-/   %li
-/     = link_to 'Cursos', courses_path
-
-
 .row
   .col-md-4
-    = link_to 'Recepción Ona', admin_ona_submissions_path
 
-    - OnaSubmission.with_error.count.tap do |ona_error|
-      - if ona_error > 0
-        %label.badge
-          = ona_error
-          Errors
-
-    %br
-    = link_to 'Profesores', admin_teachers_path
-    %br
-    / = link_to 'Movimientos', admin_lines_path
+    %ul.nav.nav-pills.nav-stacked
+      %li
+        = link_to 'Profesores', admin_teachers_path
+      %li
+        = link_to 'Cursos', admin_courses_path
 
     %br
 
-    .well.well-sm(style="text-align: center")
-      %h1(style="margin-top: 0px")
-        = link_to number_to_currency(School.course_incomes_not_handed), admin_teachers_path
-      %label por entrar a caja
+    .well.well-sm.status-well
+      .row
+        .col-md-12
+          %h3 Recepción Formularios
+      .row
+        .col-md-12
+          - OnaSubmission.with_error.count.tap do |ona_error|
+            = link_to admin_ona_submissions_path do
+              - if ona_error > 0
+                %h1= ona_error
+                %label Errores
+              - else
+                OK
 
-    .well.well-sm(style="text-align: center")
-      %h1(style="margin-top: 0px")
-        = number_to_currency(School.course_incomes_total)
-      %label caja
+    .well.well-sm.status-well
+      .row
+        .col-md-12
+          %h3 Pago de alumnos
+      .row
+        .col-md-6
+          %h1
+            = link_to number_to_currency(@course_incomes_not_handed), admin_teachers_path
+          %label en mano de profesores
+        .col-md-6
+          %h1
+            = number_to_currency(@course_incomes_total)
+          %label entregado
+      .row
+        .col-md-12
+          = link_to 'histórico', admin_student_payments_path
+
 
   .col-md-8
     = month_calendar do |date|
       .daynum
         = date.day
-      - (@course_logs[date] || []).each do |course_log|
-        %div{"class" => "#{'missing' if course_log.missing}"}
-          = link_to course_log.calendar_name, admin_course_log_path(course_log)
+      - (@course_logs[date] || []).sort_by(&:calendar_name).each do |course_log|
+        %div.course_log{"class" => "#{'missing' if course_log.missing}"}
+          %span
+            = link_to course_log.calendar_name, admin_course_log_path(course_log)
           - unless course_log.missing
             %label.badge
               = course_log.teachers.count
               \ :
               = course_log.students_count
+          - else
+            %label.badge
+              !

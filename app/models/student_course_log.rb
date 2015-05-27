@@ -13,6 +13,7 @@ class StudentCourseLog < ActiveRecord::Base
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
 
+  scope :with_payment, -> { where.not(payment_status: nil) }
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
   scope :handed, -> { where(payment_status: PAYMENT_ON_CLASSES_INCOME) }
 

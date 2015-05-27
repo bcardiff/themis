@@ -1,4 +1,4 @@
-class CoursesListing < Listings::Base
+class AdminCoursesListing < Listings::Base
   model Course
 
   column :code

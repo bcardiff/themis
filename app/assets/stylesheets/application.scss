@@ -22,8 +22,13 @@ body {
   padding-top: 50px;
 }
 
-.missing a {
-  color: red;
+.missing {
+  a {
+    color: red;
+  }
+  .badge {
+    background-color: red;
+  }
 }
 
 .day {
@@ -31,9 +36,37 @@ body {
   height: 100px;
   vertical-align: top;
   border: 1px solid #ccc;
+  font-size: 0.8em;
+  .course_log {
+    span {
+      margin-left: 7px;
+      width: 60px;
+      display: inline-block;
+      float: left;
+    }
+    label {
+      float: left;
+    }
+  }
 }
 
 .subtotal {
   background-color: #f7f7f9;
   font-weight: bold;
+}
+
+.status-well {
+  text-align: center;
+
+  h1, h2, h3 {
+    margin-top: 0px;
+  }
+}
+
+.calendar-header {
+  text-align: right;
+  font-size: 1.4em;
+  a {
+    font-size: 1.4em;
+  }
 }

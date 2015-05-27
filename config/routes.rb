@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/' => 'welcome#index', as: :index
+    get 'student_payments' => 'welcome#student_payments'
 
     resources :ona_submissions, only: :index do
       member do
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
         post :dismiss
       end
     end
+
+    resources :courses, only: [:index]
 
     resources :teachers, only: [:index, :show] do
       member do
@@ -25,10 +28,6 @@ Rails.application.routes.draw do
     get '/' => 'welcome#index', as: :index
     get '/how_to' => 'welcome#how_to', as: :how_to
   end
-
-
-
-  get 'courses/index'
 
   root 'welcome#index'
 
