@@ -4,7 +4,7 @@ class TeachersListing < Listings::Base
   column :name
   column :card
   column 'Pagos de alumnos' do |teacher|
-    teacher.classes_money_owed
+    number_to_currency teacher.owed_student_payments
   end
 
   # column do |teacher|

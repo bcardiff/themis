@@ -26,5 +26,7 @@ module Themis
     config.generators.stylesheets = false
     config.generators.javascripts = false
     config.generators.helper = false
+
+    Money.default_currency = Money::Currency.new("ARS")
   end
 end

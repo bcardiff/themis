@@ -95,9 +95,15 @@ class StudentCourseLog < ActiveRecord::Base
   def payments_initially_on_teachers
     plan = self.payment_plan
 
+
     if plan
       self.payment_status ||= StudentCourseLog::PAYMENT_ON_TEACHER
       self.payment_amount = plan.price unless plan.other?
+
+      # TODO when the amount is updated. revert previous payment line.
+      # TODO when updating, if amount didn't change, do not create payment
+
+      self.student.record_payment plan, self.payment_amount, self.teacher
     else
       self.payment_status ||= nil
     end

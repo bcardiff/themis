@@ -35,6 +35,7 @@ gem 'bootstrap-sass'
 gem 'haml-rails'
 gem 'simple_calendar'
 gem 'decent_exposure'
+gem 'double_entry'
 
 gem 'listings', github: 'manastech/listings', branch: 'master'
 
@@ -52,6 +53,7 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
