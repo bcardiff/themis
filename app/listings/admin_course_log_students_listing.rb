@@ -8,9 +8,12 @@ class AdminCourseLogStudentsListing < Listings::Base
     @course_log.student_course_logs.where(student: student).first
   end
 
-  column :card_code#, searchable: true
-  column :first_name#, searchable: true
-  column :email#, searchable: true
+  column :card_code, searchable: true
+  column :first_name, searchable: true
+  column :last_name, searchable: true
+  column :email, searchable: true do |student|
+    mail_to student.email
+  end
   column 'Pago' do |student|
     student_log = find_student_log(student)
     if student_log.payment_status
