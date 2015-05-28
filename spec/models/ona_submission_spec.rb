@@ -29,14 +29,15 @@ RSpec.describe OnaSubmission, type: :model do
       "student_repeat/id_kind": "new_card",
       "student_repeat/card": "465",
       "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/first_name": "John",
+      "student_repeat/last_name": "Doe"
     })
 
     student = Student.first
     course_log = CourseLog.first
 
     expect(Student.count).to eq(1)
-    expect(student.card_code).to eq("465")
+    expect(student.card_code).to eq(student_card("465"))
 
     student_course_log = course_log.student_course_logs.first
     expect(student_course_log).to_not be_nil
@@ -45,7 +46,8 @@ RSpec.describe OnaSubmission, type: :model do
       "student_repeat/id_kind": "new_card",
       "student_repeat/card": "465",
       "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/first_name": "John",
+      "student_repeat/last_name": "Doe"
     }.to_json)
   end
 
@@ -114,7 +116,8 @@ RSpec.describe OnaSubmission, type: :model do
     submit_student({
       "student_repeat/id_kind": "guest",
       "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/first_name": "John",
+      "student_repeat/last_name": "Doe"
     })
 
     student = Student.first
@@ -131,7 +134,8 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_course_log.payload).to eq({
       "student_repeat/id_kind": "guest",
       "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/first_name": "John",
+      "student_repeat/last_name": "Doe"
     }.to_json)
   end
 
@@ -234,7 +238,7 @@ RSpec.describe OnaSubmission, type: :model do
     expect(Student.count).to eq(1)
 
     student_log = StudentCourseLog.first
-    expect(student_log.student.card_code).to eq("245")
+    expect(student_log.student.card_code).to eq(student_card("245"))
     expect(student_log.student.first_name).to eq(Student::UNKOWN)
     expect(student_log.student.email).to be_nil
   end
@@ -250,13 +254,15 @@ RSpec.describe OnaSubmission, type: :model do
       "student_repeat/card": "245",
       "student_repeat/email": "johndoe@email.com",
       "student_repeat/first_name": "John",
+      "student_repeat/last_name": "Doe",
     })
 
     expect(Student.count).to eq(1)
 
     student_log = StudentCourseLog.first
-    expect(student_log.student.card_code).to eq("245")
+    expect(student_log.student.card_code).to eq(student_card("245"))
     expect(student_log.student.first_name).to eq("John")
+    expect(student_log.student.last_name).to eq("Doe")
     expect(student_log.student.email).to eq("johndoe@email.com")
   end
 
@@ -272,16 +278,83 @@ RSpec.describe OnaSubmission, type: :model do
     expect(Student.count).to eq(1)
     student_log = StudentCourseLog.first
     expect(student_log.student.first_name).to eq(Student::UNKOWN)
+    expect(student_log.student.last_name).to eq(Student::UNKOWN)
     expect(student_log.student.email).to be_nil
     expect(student_log.payment_amount).to eq(plan.price)
     expect(student_log.payment_plan).to eq(plan)
   end
 
   it "should avoid changing payment amount if it was already transferered to account"
-  it "ensure invalid students do not block payment processing" # example bad payment plan
-  it "support inteligent match of students cards"
-  it "should use cardtxt when provided"
-  it "should saved student last_name"
+
+  it "processing should be transactional" do
+    plan = create(:payment_plan)
+
+    submission = issued_class({
+      "date" => "2015-05-14",
+      "course" => lh_int1_jue.code,
+      "teacher" => mariel.name,
+      "student_repeat" => [{
+        "student_repeat/id_kind" => "guest",
+        "student_repeat/do_payment" => "yes",
+        "student_repeat/payment/kind" => plan.code
+      },{
+        "student_repeat/id_kind" => "guest",
+        "student_repeat/do_payment" => "yes",
+        "student_repeat/payment/kind" => "wrong-plan-code"
+      }]
+    }, false)
+
+    expect(Student.count).to eq(0)
+    expect(StudentCourseLog.count).to eq(0)
+    expect(CourseLog.count).to eq(0)
+    expect(submission.status).to eq('error')
+    expect(OnaSubmission.count).to eq(1)
+  end
+
+  describe "card vs cardtxt" do
+    it "should use card when cardtxt empty" do
+      submit_student({
+        "student_repeat/id_kind": "new_card",
+        "student_repeat/card": "245",
+        "student_repeat/cardtxt": "",
+        "student_repeat/email": "johndoe@email.com",
+        "student_repeat/first_name": "John",
+      })
+
+      expect(Student.count).to eq(1)
+      student_log = StudentCourseLog.first
+      expect(student_log.student.card_code).to eq(student_card("245"))
+    end
+
+    it "should use cardtxt when card empty" do
+      submit_student({
+        "student_repeat/id_kind": "new_card",
+        "student_repeat/card": "",
+        "student_repeat/cardtxt": "245",
+        "student_repeat/email": "johndoe@email.com",
+        "student_repeat/first_name": "John",
+      })
+
+      expect(Student.count).to eq(1)
+      student_log = StudentCourseLog.first
+      expect(student_log.student.card_code).to eq(student_card("245"))
+    end
+
+    it "should use cardtxt when both provided" do
+      submit_student({
+        "student_repeat/id_kind": "new_card",
+        "student_repeat/card": "999",
+        "student_repeat/cardtxt": "245",
+        "student_repeat/email": "johndoe@email.com",
+        "student_repeat/first_name": "John",
+      })
+
+      expect(Student.count).to eq(1)
+      student_log = StudentCourseLog.first
+      expect(student_log.student.card_code).to eq(student_card("245"))
+    end
+  end
+
   it "should fail if other payment is choosen without amount"
 
   it "should record secondary teacher as giving the class" do
@@ -328,9 +401,7 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   def issued_class(payload, _raise = true)
-    s = OnaSubmission.new
-    s.form = 'issued_class'
-    s.data = payload
+    s = OnaSubmission.create form: 'issued_class', data: payload, status: 'pending'
     result = s.process! _raise
 
     reload_entities
@@ -347,4 +418,9 @@ RSpec.describe OnaSubmission, type: :model do
     entities = [mariel, lh_int1_jue]
     entities.map &:reload
   end
+
+  def student_card(code)
+    Student.format_card_code(code)
+  end
+
 end

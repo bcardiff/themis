@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
 
     resources :courses, only: [:index]
+    resources :students, only: [:index, :show]
 
     resources :teachers, only: [:index, :show] do
       member do

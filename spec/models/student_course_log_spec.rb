@@ -23,6 +23,17 @@ RSpec.describe StudentCourseLog, type: :model do
       expect(student_log).to have_error_on(:teacher)
     end
 
-    # TODO it has teacher when paying
+    it "must have a teacher when paying" do
+      student_log = build(:student_course_log, teacher: nil, payment_plan: create(:payment_plan))
+      student_log.validate
+      expect(student_log).to have_error_on(:teacher)
+    end
+
+    it "can have no teacher when no paying" do
+      student_log = build(:student_course_log, teacher: nil, payment_plan: nil)
+      student_log.validate
+      expect(student_log).to be_valid
+    end
+
   end
 end

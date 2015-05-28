@@ -12,6 +12,7 @@ class StudentCourseLog < ActiveRecord::Base
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
+  validate :validate_teacher_if_paying
 
   scope :with_payment, -> { where.not(payment_status: nil) }
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
@@ -23,17 +24,25 @@ class StudentCourseLog < ActiveRecord::Base
     errors.add(:teacher, 'must be in the course_log') unless course_log.teachers.include?(teacher)
   end
 
+  def validate_teacher_if_paying
+    return unless payment_plan
+
+    errors.add(:teacher, "can't be blank") unless teacher
+  end
+
   def self.process(course_log, teacher, payload, ona_submission, ona_submission_path)
     id_kind = payload["student_repeat/id_kind"]
-    card = payload["student_repeat/card"]
+    card = payload["student_repeat/cardtxt"]
+    card = payload["student_repeat/card"] if card.blank?
     email = payload["student_repeat/email"]
-    name = payload["student_repeat/first_name"]
+    first_name = payload["student_repeat/first_name"]
+    last_name = payload["student_repeat/last_name"]
     do_payment = payload["student_repeat/do_payment"]
     payment_kind = payload["student_repeat/payment/kind"]
     payment_amount = payload["student_repeat/payment/amount"]
 
     # skip empty students
-    return if card.blank? and email.blank? and name.blank? and payment_kind.blank?
+    return if card.blank? and email.blank? and first_name.blank? and payment_kind.blank?
 
     # if there already was a student course log for this part of the submission
     student = nil
@@ -44,16 +53,18 @@ class StudentCourseLog < ActiveRecord::Base
 
     case id_kind
     when "new_card"
-      student ||= Student.find_or_initialize_by card_code: card
+      student ||= Student.find_or_initialize_by_card card
       if student.new_record? || student.first_name == Student::UNKOWN || student.email == nil
-        student.first_name = name
+        student.first_name = first_name
+        student.last_name = last_name
         student.email = email
         student.save!
       end
     when "existing_card"
-      student ||= Student.find_or_initialize_by card_code: card
+      student ||= Student.find_or_initialize_by_card card
       if student.new_record?
         student.first_name = Student::UNKOWN
+        student.last_name = Student::UNKOWN
         student.email = nil
         student.save!
       end
@@ -66,7 +77,8 @@ class StudentCourseLog < ActiveRecord::Base
 
       if student.new_record?
         student.card_code = nil
-        student.first_name = name || Student::UNKOWN
+        student.first_name = first_name || Student::UNKOWN
+        student.last_name = last_name || Student::UNKOWN
         student.save!
       end
     else

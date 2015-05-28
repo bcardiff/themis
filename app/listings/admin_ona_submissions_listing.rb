@@ -1,4 +1,4 @@
-class OnaSubmissionsListing < Listings::Base
+class AdminOnaSubmissionsListing < Listings::Base
   model OnaSubmission
 
   column :created_at

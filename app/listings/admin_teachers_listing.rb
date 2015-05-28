@@ -1,4 +1,4 @@
-class TeachersListing < Listings::Base
+class AdminTeachersListing < Listings::Base
   model Teacher
 
   column :name do |teacher|
