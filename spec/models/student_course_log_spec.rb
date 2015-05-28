@@ -34,6 +34,13 @@ RSpec.describe StudentCourseLog, type: :model do
       student_log.validate
       expect(student_log).to be_valid
     end
-
   end
+
+  describe "activity_logs" do
+    it "should create" do
+      student = create(:student_course_log).student
+      expect(student.activity_logs).to_not be_empty
+    end
+  end
+
 end

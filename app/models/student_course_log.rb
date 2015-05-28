@@ -9,6 +9,7 @@ class StudentCourseLog < ActiveRecord::Base
   belongs_to :payment_plan
   belongs_to :ona_submission
   before_save :payments_initially_on_teachers
+  after_save :record_student_activities
 
   validates_presence_of :student, :course_log
   validate :validate_teacher_in_course_log
@@ -121,6 +122,13 @@ class StudentCourseLog < ActiveRecord::Base
     end
 
     true
+  end
+
+  def record_student_activities
+    ActivityLogs::Student::CourseAttended.record(student, course_log)
+    if payment_plan
+      ActivityLogs::Student::Payment.record(student, self)
+    end
   end
 
 end

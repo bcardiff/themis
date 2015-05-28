@@ -1,4 +1,6 @@
 class Student < ActiveRecord::Base
+  has_many :activity_logs, as: :target
+
   UNKOWN = "N/A"
 
   validates_presence_of :first_name

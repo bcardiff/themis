@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527191100) do
+ActiveRecord::Schema.define(version: 20150528073426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.text     "description"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.date     "date"
+    t.integer  "related_id"
+    t.string   "related_type"
+  end
+
+  add_index "activity_logs", ["related_type", "related_id"], name: "index_activity_logs_on_related_type_and_related_id", using: :btree
+  add_index "activity_logs", ["target_type", "target_id"], name: "index_activity_logs_on_target_type_and_target_id", using: :btree
 
   create_table "course_logs", force: :cascade do |t|
     t.integer  "course_id"
