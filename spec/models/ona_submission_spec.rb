@@ -286,29 +286,56 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "should avoid changing payment amount if it was already transferered to account"
 
-  it "processing should be transactional" do
-    plan = create(:payment_plan)
+  describe "transactional processing" do
 
-    submission = issued_class({
-      "date" => "2015-05-14",
-      "course" => lh_int1_jue.code,
-      "teacher" => mariel.name,
-      "student_repeat" => [{
-        "student_repeat/id_kind" => "guest",
-        "student_repeat/do_payment" => "yes",
-        "student_repeat/payment/kind" => plan.code
-      },{
-        "student_repeat/id_kind" => "guest",
-        "student_repeat/do_payment" => "yes",
-        "student_repeat/payment/kind" => "wrong-plan-code"
-      }]
-    }, false)
+    it "when teacher is missing and a payment is been submitted" do
+      plan = create(:payment_plan)
+      student = create(:student)
 
-    expect(Student.count).to eq(0)
-    expect(StudentCourseLog.count).to eq(0)
-    expect(CourseLog.count).to eq(0)
-    expect(submission.status).to eq('error')
-    expect(OnaSubmission.count).to eq(1)
+      submission = issued_class({
+        "date" => "2015-05-14",
+        "course" => lh_int1_jue.code,
+        "student_repeat" => [{
+          "student_repeat/id_kind" => "guest",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => plan.code
+        },{
+          "student_repeat/id_kind": "existing_card",
+          "student_repeat/card": student.card_code
+        }]
+      }, false)
+
+      expect(submission.status).to eq('error')
+      expect(Student.count).to eq(1)
+      expect(StudentCourseLog.count).to eq(0)
+      expect(CourseLog.count).to eq(0)
+      expect(OnaSubmission.count).to eq(1)
+    end
+
+    it "when a record not found do to a plan" do
+      plan = create(:payment_plan)
+
+      submission = issued_class({
+        "date" => "2015-05-14",
+        "course" => lh_int1_jue.code,
+        "teacher" => mariel.name,
+        "student_repeat" => [{
+          "student_repeat/id_kind" => "guest",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => plan.code
+        },{
+          "student_repeat/id_kind" => "guest",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => "wrong-plan-code"
+        }]
+      }, false)
+
+      expect(Student.count).to eq(0)
+      expect(StudentCourseLog.count).to eq(0)
+      expect(CourseLog.count).to eq(0)
+      expect(submission.status).to eq('error')
+      expect(OnaSubmission.count).to eq(1)
+    end
   end
 
   describe "card vs cardtxt" do
