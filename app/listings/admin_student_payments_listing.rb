@@ -7,7 +7,7 @@ class AdminStudentPaymentsListing < Listings::Base
   scope 'En Profesor', :owed
   scope "Entregados a #{School.description}", :handed
 
-  column 'Fecha' do |student_course_log|
+  column 'Fecha pago' do |student_course_log|
     student_course_log.course_log.date
   end
 
@@ -17,6 +17,10 @@ class AdminStudentPaymentsListing < Listings::Base
 
   column 'Profesor' do |student_course_log|
     student_course_log.teacher.name
+  end
+
+  column :transferred_at do |student_course_log|
+    student_course_log.transferred_at.try :to_date
   end
 
   column 'Alumno' do |student_course_log|

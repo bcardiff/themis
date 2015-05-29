@@ -18,6 +18,7 @@ class StudentCourseLog < ActiveRecord::Base
   scope :with_payment, -> { where.not(payment_status: nil) }
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
   scope :handed, -> { where(payment_status: PAYMENT_ON_CLASSES_INCOME) }
+  scope :handed_at_month, -> (time) { handed.where('transferred_at >= ?', time.at_beginning_of_month).where('transferred_at < ?', time.at_beginning_of_month.next_month) }
 
   def validate_teacher_in_course_log
     return unless teacher && course_log

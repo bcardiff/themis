@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528073426) do
+ActiveRecord::Schema.define(version: 20150529213743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150528073426) do
     t.integer  "payment_plan_id"
     t.integer  "ona_submission_id"
     t.string   "ona_submission_path"
+    t.datetime "transferred_at"
   end
 
   add_index "student_course_logs", ["course_log_id"], name: "index_student_course_logs_on_course_log_id", using: :btree

@@ -36,8 +36,8 @@
           %label en mano de profesores
         .col-md-6
           %h1
-            = number_to_currency(@course_incomes_total)
-          %label entregado
+            = number_to_currency(@course_incomes_in_month)
+          %label ingresos del mes
       .row
         .col-md-12
           = link_to 'histórico', admin_student_payments_path

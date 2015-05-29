@@ -6,7 +6,7 @@ class Admin::WelcomeController < Admin::BaseController
     @course_logs = CourseLog.where(date: start_date.beginning_of_month..start_date.end_of_month).all.group_by(&:date)
 
     @course_incomes_not_handed = School.course_incomes_not_handed
-    @course_incomes_total = School.course_incomes_total
+    @course_incomes_in_month = School.course_incomes_per_month(start_date)
   end
 
   def student_payments
