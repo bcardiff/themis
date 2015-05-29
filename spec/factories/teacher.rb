@@ -3,5 +3,6 @@ FactoryGirl.define do
     sequence :name do |n|
       "teacher_#{n}"
     end
+    fee "150"
   end
 end

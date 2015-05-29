@@ -399,6 +399,27 @@ RSpec.describe OnaSubmission, type: :model do
     expect(manu.teacher_course_logs.first.course).to eq(lh_int1_jue)
   end
 
+  it "should schedule pending payment for main teacher" do
+    issued_class({
+      "date" => "2015-05-14",
+      "course" => lh_int1_jue.code,
+      "teacher" => mariel.name
+    })
+
+    expect(mariel.teacher_course_logs.first.paid).to eq(false)
+  end
+
+  it "should schedule pending payment for secondary teacher" do
+    issued_class({
+      "date" => "2015-05-14",
+      "course" => lh_int1_jue.code,
+      "teacher" => mariel.name,
+      "secondary_teacher" => manu.name,
+    })
+
+    expect(manu.teacher_course_logs.first.paid).to eq(false)
+  end
+
 
   def issued_invalid_class(payload)
     result = nil

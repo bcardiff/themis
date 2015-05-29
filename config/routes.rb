@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => 'welcome#index', as: :index
     get 'student_payments' => 'welcome#student_payments'
+    get 'teacher_courses' => 'welcome#teacher_courses'
 
     resources :ona_submissions, only: :index do
       member do
@@ -19,6 +20,9 @@ Rails.application.routes.draw do
       member do
         get :owed_student_payments
         post :transfer_student_payments_money
+
+        get :due_course_salary
+        post :pay_pending_classes
       end
     end
 

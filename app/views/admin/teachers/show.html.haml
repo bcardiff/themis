@@ -5,3 +5,6 @@
     %span= number_to_currency(teacher.owed_student_payments)
     = link_to 'ver detalle', owed_student_payments_admin_teacher_path(teacher)
 
+  = text_field 'Salario adeudado' do
+    %span= number_to_currency(teacher.due_salary)
+    = link_to 'ver detalle', due_course_salary_admin_teacher_path(teacher)

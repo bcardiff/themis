@@ -1,0 +1,22 @@
+%h1
+  = teacher.name
+  >
+  Salario adeudado
+
+%table.table
+  %tr
+    %th Fecha
+    %th Clase
+    %th Total
+  %tr.subtotal
+    %td(colspan=2)
+    %td= number_to_currency @due_salary
+  %tr.subtotal
+  - @due_teacher_course_logs.each do |teacher_course_log|
+    %tr
+      %td= teacher_course_log.course_log.date
+      %td= teacher_course_log.course_log.course.calendar_name
+      %td= number_to_currency teacher.fee
+
+- if @due_salary > 0
+  = link_to 'Registrar pago', pay_pending_classes_admin_teacher_path(teacher), method: :post, class: 'btn btn-primary', 'data-confirm': "Seguro desea registrar que se pagaron #{number_to_currency @due_salary}?"

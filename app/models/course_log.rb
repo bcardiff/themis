@@ -71,6 +71,11 @@ class CourseLog < ActiveRecord::Base
 
     teacher = Teacher.find_by!(name: teacher_name)
     teacher_log = teacher_course_logs.first_or_build(teacher: teacher)
+    if teacher_log.new_record?
+      teacher_log.paid = false
+      teacher_log.paid_amount = nil
+      teacher_log.paid_at = nil
+    end
 
     teacher_log.save!
 

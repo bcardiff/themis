@@ -7,8 +7,15 @@ class Admin::WelcomeController < Admin::BaseController
 
     @course_incomes_not_handed = School.course_incomes_not_handed
     @course_incomes_in_month = School.course_incomes_per_month(start_date)
+
+
+    @course_teaching_expense_to_paid = School.course_teaching_expense_to_paid
+    @course_teaching_expense_in_month = School.course_teaching_expense_per_month(start_date)
   end
 
   def student_payments
+  end
+
+  def teacher_courses
   end
 end

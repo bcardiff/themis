@@ -41,7 +41,52 @@ RSpec.describe Teacher, type: :model do
     it "should mark current time as transferred_at" do
       expect(student_course_logs.count).to eq(3)
       expect(student_course_logs.first.transferred_at).to_not be_nil
-      expect(student_course_logs.all? { |l| !l.transferred_at.nil? && l.transferred_at == Time.now }).to be_truthy
+      expect(student_course_logs.all? { |l| l.transferred_at == Time.now }).to be_truthy
     end
+  end
+
+  describe "pay pending classes" do
+    let(:teacher) { create(:teacher) }
+
+    before do
+      Timecop.freeze
+    end
+
+    after do
+      Timecop.return
+    end
+
+    let!(:teacher_course_logs) {
+      [create(:teacher_course_log, teacher: teacher),
+      create(:teacher_course_log, teacher: teacher),
+      create(:teacher_course_log, teacher: teacher)]
+    }
+
+    before(:each) {
+      teacher.reload
+
+      expect(teacher.due_salary).to eq(teacher.fee * 3)
+      expect(teacher.fee).to_not eq(0)
+      expect(teacher_course_logs.first.paid_amount).to be_nil
+
+      teacher.pay_pending_classes
+
+      teacher_course_logs.map &:reload
+    }
+
+    it "should leave as there is no dued salary" do
+      expect(teacher.due_salary).to eq(0)
+    end
+
+    it "should mark current time as paid_at" do
+      expect(teacher_course_logs.count).to eq(3)
+      expect(teacher_course_logs.first.paid_at).to_not be_nil
+      expect(teacher_course_logs.all? { |l| l.paid_at == Time.now }).to be_truthy
+    end
+
+    it "should add them to teaching expense account" do
+      expect(School.course_teaching_expense_per_month(Time.now)).to eq(teacher.fee * 3)
+    end
+
   end
 end

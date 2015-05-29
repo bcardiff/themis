@@ -25,13 +25,22 @@ def payment_plan(code, attributes)
   end
 end
 
-Teacher.find_or_create_by name: 'Mariel'
-Teacher.find_or_create_by name: 'Manuel'
-Teacher.find_or_create_by name: 'Juani'
-Teacher.find_or_create_by name: 'Candela'
-Teacher.find_or_create_by name: 'Mariano'
-Teacher.find_or_create_by name: 'Celeste'
-Teacher.find_or_create_by name: 'Nanchi'
+def teacher(name, attributes)
+  Teacher.find_or_create_by(name: name).tap do |teacher|
+    attributes.each do |key, value|
+      teacher.send "#{key}=", value
+    end
+    teacher.save!
+  end
+end
+
+teacher 'Mariel', fee: 200
+teacher 'Manuel', fee: 200
+teacher 'Juani', fee: 200
+teacher 'Candela', fee: 150
+teacher 'Mariano', fee: 150
+teacher 'Celeste', fee: 150
+teacher 'Nanchi', fee: 150
 
 course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles Sendas", weekday: 3
 course "CH_PRIN_MIE", name: "Charleston - Principiantes - Miércoles Sendas", weekday: 3

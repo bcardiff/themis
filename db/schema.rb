@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529213743) do
+ActiveRecord::Schema.define(version: 20150529222310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,9 @@ ActiveRecord::Schema.define(version: 20150529213743) do
     t.integer  "course_log_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.boolean  "paid"
+    t.decimal  "paid_amount"
+    t.datetime "paid_at"
   end
 
   add_index "teacher_course_logs", ["course_log_id"], name: "index_teacher_course_logs_on_course_log_id", using: :btree
@@ -110,6 +113,7 @@ ActiveRecord::Schema.define(version: 20150529213743) do
     t.string   "card"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal  "fee"
   end
 
   add_foreign_key "student_course_logs", "course_logs"

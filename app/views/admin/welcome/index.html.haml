@@ -42,6 +42,23 @@
         .col-md-12
           = link_to 'histórico', admin_student_payments_path
 
+    .well.well-sm.status-well
+      .row
+        .col-md-12
+          %h3 Salario docente
+      .row
+        .col-md-6
+          %h1
+            = link_to number_to_currency(@course_teaching_expense_to_paid), admin_teachers_path
+          %label a pagar
+        .col-md-6
+          %h1
+            = number_to_currency(@course_teaching_expense_in_month)
+          %label pagado en el mes
+      .row
+        .col-md-12
+          = link_to 'histórico', admin_teacher_courses_path
+
 
   .col-md-8
     = month_calendar do |date|
