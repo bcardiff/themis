@@ -420,6 +420,25 @@ RSpec.describe OnaSubmission, type: :model do
     expect(manu.teacher_course_logs.first.paid).to eq(false)
   end
 
+  it "reg bug" do
+    issued_class ({
+      "student_repeat": [
+        {
+          "student_repeat/id_kind": "existing_card",
+          "student_repeat/do_payment": "no",
+          "student_repeat/card": "322"
+        }
+      ],
+      "course": lh_int1_jue.code,
+      "date": "2015-05-14",
+      "teacher": mariel.name
+    })
+
+    expect(mariel.teacher_course_logs.count).to eq(1)
+    expect(StudentCourseLog.first.teacher).to eq(mariel)
+    expect(StudentCourseLog.first.course_log.teacher_course_logs.first.teacher).to eq(mariel)
+  end
+
 
   def issued_invalid_class(payload)
     result = nil
