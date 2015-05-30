@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %title Themis
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body
+
+    %nav.navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          = link_to 'Themis', root_url, class: 'navbar-brand'
+
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            = yield :nav_bar
+
+          .nav.navbar-nav.navbar-right
+            - if notice
+              %p.navbar-text= notice
+            - if alert
+              %p.navbar-text= alert
+            - if current_user
+              %li
+                = link_to 'Salir', destroy_user_session_path, method: :delete
+
+
+    .container
+
+      %br
+      = yield

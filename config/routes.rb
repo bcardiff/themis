@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   post 'ona/issued_class' => 'ona#issued_class'
 
   namespace :admin do
@@ -44,9 +46,9 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  resources :courses, only: :index
   mount Listings::Engine => "/listings"
 
+  get 'forbidden' => 'welcome#forbidden'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

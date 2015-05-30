@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TeachersController, type: :controller do
+  include AdminControllerHelper
 
   describe "GET #index" do
     it "returns http success" do

@@ -1,28 +1,7 @@
-!!!
-%html
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %title Themis
-    = stylesheet_link_tag    'application', media: 'all'
-    = javascript_include_tag 'application'
-    = csrf_meta_tags
-  %body
+- content_for :nav_bar do
+  %li
+    = link_to 'Portal Admin', admin_index_path
+  %li
+    = link_to 'Portal Docente', teacher_index_path
 
-    %nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          = link_to 'Themis', root_url, class: 'navbar-brand'
-        #navbar.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            / %li.active
-            /   %a(href="#")Home
-            %li
-              = link_to 'Portal Admin', admin_index_path
-            %li
-              = link_to 'Portal Docente', teacher_index_path
-
-    .container
-      = yield
+= render template: "layouts/application"

@@ -39,6 +39,8 @@ gem 'decent_exposure'
 gem 'listings', github: 'manastech/listings', branch: 'master'
 
 gem 'rails_12factor', group: :production
+gem 'devise'
+gem 'devise-bootstrap-views'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,10 @@
+.jumbotron
+  %h1 Bienvenido a Swing City
+  - unless current_user
+    %p
+      ¿Tenés usuario?
+      = link_to 'Entrar', new_user_session_path, class: "btn btn-primary btn-lg"
+
+    %p
+      ¿Sos nuevo?
+      = link_to 'Registrate', new_user_registration_path, class: "btn btn-lg"
