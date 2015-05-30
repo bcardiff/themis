@@ -16,7 +16,7 @@ RSpec.describe CourseLog, type: :model do
   end
 
   describe "fill_missings" do
-    let!(:course) { create(:course, weekday: 2, valid_since: Date.new(2015, 5, 1)) }
+    let!(:course) { create(:course, weekday: 2, valid_since: Date.new(2015, 5, 1), valid_until: Date.new(2015, 5, 31)) }
 
     context "empty history" do
       before(:each) {
@@ -45,6 +45,14 @@ RSpec.describe CourseLog, type: :model do
 
           expect(CourseLog.all.map(&:date)).to eq([Date.new(2015, 5, 5), Date.new(2015, 5, 12), Date.new(2015, 5, 19)])
           expect(CourseLog.all.map(&:missing)).to eq([true, true, true])
+        end
+      end
+
+      context "after the course has ended" do
+        let(:today) { Date.new(2015, 6, 20) }
+
+        it "should create as missing" do
+          expect(CourseLog.all.count).to eq(4)
         end
       end
     end

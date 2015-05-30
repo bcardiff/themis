@@ -8,10 +8,10 @@
 
 def course(code, attributes)
   Course.find_or_create_by(code: code).tap do |course|
+    course.valid_since = Date.new(2015,5,1)
     attributes.each do |key, value|
       course.send "#{key}=", value
     end
-    course.valid_since = Date.new(2015,5,1)
     course.save!
   end
 end
@@ -41,27 +41,39 @@ teacher 'Candela', fee: 150
 teacher 'Mariano', fee: 150
 teacher 'Celeste', fee: 150
 teacher 'Nanchi', fee: 150
+teacher 'Sol', fee: 150
 
-course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles Sendas", weekday: 3
 course "CH_PRIN_MIE", name: "Charleston - Principiantes - Miércoles Sendas", weekday: 3
-course "LH_AVAN_LUN", name: "Lindy Hop - Avanzados - Lunes colmegna", weekday: 1
-course "LH_INT1_JUE", name: "Lindy Hop - Intermedios 1 - Jueves Vera", weekday: 4
+course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles Sendas", weekday: 3
+
 course "LH_INT1_LUN", name: "Lindy Hop - Intermedios 1 - Lunes colmegna", weekday: 1
 course "LH_INT1_MAR", name: "Lindy Hop - Intermedios 1 - Martes Gascon", weekday: 2
 course "LH_INT1_MIE", name: "Lindy Hop - Intermedios 1 - Miércoles Vera", weekday: 3
-course "LH_INT1_VIE", name: "Lindy Hop - Intermedios 1 - Viernes Malcom", weekday: 5
-course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves Vera", weekday: 4
+course "LH_INT1_JUE", name: "Lindy Hop - Intermedios 1 - Jueves Vera", weekday: 4
+course "LH_INT1_VIE", name: "Lindy Hop - Intermedios 1 - Viernes Malcom", weekday: 5, valid_until: Date.new(2015,5,31)
+course "LH_INT1_VIE_PARANA", name: "Lindy Hop - Intermedios 1 - Viernes Paraná y Córdoba", weekday: 5 # new?
+course "LH_INT1_VIE_IBERA", name: "Lindy Hop - Intermedios 1 - Viernes Iberá", weekday: 5 # new?
+
 course "LH_INT2_LUN", name: "Lindy Hop - Intermedios 2 - Lunes colmegna", weekday: 1
-course "LH_PRIN_JUE", name: "Lindy Hop - Principiantes - Jueves Vera", weekday: 4
+course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves Vera", weekday: 4
+course "LH_INT2_SAB", name: "Lindy Hop - Intermedios 2 - Sábados Sc", weekday: 6, valid_since: Date.new(2015,6,1)
+
 course "LH_PRIN_LUN", name: "Lindy Hop - Principiantes - Lunes colmegna", weekday: 1
 course "LH_PRIN_MAR2", name: "Lindy Hop - Principiantes - Martes Gascon", weekday: 2
-course "LH_PRIN_MIE", name: "Lindy Hop - Principiantes - Miércoles colmegna", weekday: 3
 course "LH_PRIN_MIE2", name: "Lindy Hop - Principiantes - Miércoles Vera", weekday: 3
-course "LH_PRIN_SAB", name: "Lindy Hop - Principiantes - Sábados Sc", weekday: 6
+course "LH_PRIN_MIE", name: "Lindy Hop - Principiantes - Miércoles colmegna", weekday: 3, valid_until: Date.new(2015,5,31)
+course "LH_PRIN_JUE", name: "Lindy Hop - Principiantes - Jueves Vera", weekday: 4
 course "LH_PRIN_VIE", name: "Lindy Hop - Principiantes - Viernes Iberá", weekday: 5
+course "LH_PRIN_SAB", name: "Lindy Hop - Principiantes - Sábados Sc", weekday: 6
+
+course "LH_AVAN_LUN", name: "Lindy Hop - Avanzados - Lunes colmegna", weekday: 1
+
+course "TP_PRIN_MAR", name: "Tap - Principiantes - Martes La huella", weekday: 2, valid_until: Date.new(2015,5,31)
+course "TP_PRIN_MIE", name: "Tap - Principiantes - Miércoles Medrano", weekday: 3, valid_until: Date.new(2015,5,31)
+course "TP_PRIN_VIE", name: "Tap - Principiantes - Viernes La huella", weekday: 5, valid_since: Date.new(2015,6,1)
+
 course "TP_INT1_MAR", name: "Tap - Intermedios 1 - Martes La huella", weekday: 2
-course "TP_PRIN_MAR", name: "Tap - Principiantes - Martes La huella", weekday: 2
-course "TP_PRIN_MIE", name: "Tap - Principiantes - Miércoles Medrano", weekday: 3
+course "TP_INT1_VIE", name: "Tap - Intermedios 1 - Viernes La huella", weekday: 5, valid_since: Date.new(2015,6,1)
 
 payment_plan "3_MESES", description: "3 Meses 1 x Semana $550", price: 550
 payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $350", price: 350

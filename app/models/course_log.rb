@@ -31,7 +31,7 @@ class CourseLog < ActiveRecord::Base
       .group("courses.id").each do |course|
       next_date = (course.last || (course.valid_since - 1.day)).next_wday(course.weekday)
 
-      while next_date < today
+      while next_date < today && (course.valid_until.nil? || next_date < course.valid_until)
         for_course_on_date(course.code, next_date) do |course_log|
           course_log.missing = true
         end
