@@ -1,0 +1,15 @@
+= month_calendar do |date|
+  .daynum
+    = date.day
+  - (course_logs[date] || []).sort_by(&:calendar_name).each do |course_log|
+    %div.course_log{"class" => "#{'missing' if course_log.missing}"}
+      %span
+        = link_to course_log.calendar_name, self.send(url, course_log)
+      - unless course_log.missing
+        %label.badge
+          = course_log.teachers.count
+          \ :
+          = course_log.students_count
+      - else
+        %label.badge
+          !

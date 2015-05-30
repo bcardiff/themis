@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   namespace :teacher do
     get '/' => 'welcome#index', as: :index
     get '/how_to' => 'welcome#how_to', as: :how_to
+
+    resources :course_logs, only: :show
   end
 
   root 'welcome#index'

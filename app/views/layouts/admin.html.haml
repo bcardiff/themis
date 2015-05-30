@@ -1,7 +1,9 @@
 - content_for :nav_bar do
-  %li
-    = link_to 'Portal Admin', admin_index_path
-  %li
-    = link_to 'Portal Docente', teacher_index_path
+  - if current_user.admin?
+    %li
+      = link_to 'Portal Admin', admin_index_path
+  - if current_user.teacher?
+    %li
+      = link_to 'Portal Docente', teacher_index_path
 
 = render template: "layouts/application"

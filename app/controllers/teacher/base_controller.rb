@@ -1,3 +1,8 @@
 class Teacher::BaseController < ApplicationController
-  layout 'admin' # todo layout 'teacher' if not admin
+  before_filter :authenticate_user!
+  before_filter do
+    redirect_to forbidden_path unless current_user.teacher?
+  end
+
+  layout 'admin'
 end

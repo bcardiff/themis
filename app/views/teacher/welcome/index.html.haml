@@ -1,6 +1,33 @@
-%h1 Bienvenido
+.row
+  .col-md-4
+    %h1
+      Bienvenido
+      = teacher.name
 
-%p
-  Descargue la applicación para mandar los formularios siguiendo
-  = link_to "estas instrucciones", "https://github.com/bcardiff/themis/wiki/Swing-City--Instalaci%C3%B3n-cliente-Android"
-  \ .
+    %p
+      Descargá la applicación para mandar los formularios siguiendo
+      = link_to "estas instrucciones", "https://github.com/bcardiff/themis/wiki/Swing-City--Instalaci%C3%B3n-cliente-Android"
+      \ .
+
+    - side_box 'Pago de alumnos' do
+      .row
+        - side_box_data "a entregar a #{School.description}" do
+          = number_to_currency(@course_payments_not_handed)
+        - side_box_data 'entregados en el mes' do
+          = number_to_currency(@handed_course_payments_in_month)
+      / .row
+      /   .col-md-12
+      /     = link_to 'histórico', admin_student_payments_path
+
+    - side_box 'Salario docente' do
+      .row
+        - side_box_data 'a percibir' do
+          = number_to_currency teacher.due_salary
+        - side_box_data 'recibido en el mes' do
+          = number_to_currency(@teaching_expense_in_month)
+      / .row
+      /   .col-md-12
+      /     = link_to 'histórico', admin_teacher_courses_path
+
+  .col-md-8
+    = render partial: 'shared/course_logs_calendar', locals: { course_logs: @course_logs, url: :teacher_course_log_path }

@@ -25,54 +25,26 @@
               - else
                 OK
 
-    .well.well-sm.status-well
+    - side_box 'Pago de alumnos' do
       .row
-        .col-md-12
-          %h3 Pago de alumnos
-      .row
-        .col-md-6
-          %h1
-            = link_to number_to_currency(@course_incomes_not_handed), admin_teachers_path
-          %label en mano de profesores
-        .col-md-6
-          %h1
-            = number_to_currency(@course_incomes_in_month)
-          %label ingresos del mes
+        - side_box_data 'en mano de profesores' do
+          = link_to number_to_currency(@course_incomes_not_handed), admin_teachers_path
+        - side_box_data 'ingresos del mes' do
+          = number_to_currency(@course_incomes_in_month)
       .row
         .col-md-12
           = link_to 'histórico', admin_student_payments_path
 
-    .well.well-sm.status-well
+    - side_box 'Salario docente' do
       .row
-        .col-md-12
-          %h3 Salario docente
-      .row
-        .col-md-6
-          %h1
-            = link_to number_to_currency(@course_teaching_expense_to_paid), admin_teachers_path
-          %label a pagar
-        .col-md-6
-          %h1
-            = number_to_currency(@course_teaching_expense_in_month)
-          %label pagado en el mes
+        - side_box_data 'a pagar' do
+          = link_to number_to_currency(@course_teaching_expense_to_paid), admin_teachers_path
+        - side_box_data 'pagado en el mes' do
+          = number_to_currency(@course_teaching_expense_in_month)
       .row
         .col-md-12
           = link_to 'histórico', admin_teacher_courses_path
 
 
   .col-md-8
-    = month_calendar do |date|
-      .daynum
-        = date.day
-      - (@course_logs[date] || []).sort_by(&:calendar_name).each do |course_log|
-        %div.course_log{"class" => "#{'missing' if course_log.missing}"}
-          %span
-            = link_to course_log.calendar_name, admin_course_log_path(course_log)
-          - unless course_log.missing
-            %label.badge
-              = course_log.teachers.count
-              \ :
-              = course_log.students_count
-          - else
-            %label.badge
-              !
+    = render partial: 'shared/course_logs_calendar', locals: { course_logs: @course_logs, url: :admin_course_log_path }

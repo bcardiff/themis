@@ -18,4 +18,8 @@ class School
   def self.course_teaching_expense_to_paid
     TeacherCourseLog.due.joins(:teacher).sum('teachers.fee')
   end
+
+  def self.course_logs_per_month_grouped(course_logs, date)
+    course_logs.where(date: date.beginning_of_month..date.end_of_month).all.group_by(&:date)
+  end
 end

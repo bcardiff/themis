@@ -1,4 +1,4 @@
-class AdminCourseLogTeachersListing < Listings::Base
+class TeacherCourseLogTeachersListing < Listings::Base
   model do
     @course_log = CourseLog.find(params[:id])
     @course_log.teachers
