@@ -27,4 +27,6 @@ class AdminTeacherCoursesListing < Listings::Base
     number_to_currency teacher_course_log.paid_amount
   end
 
+  export :xls, :csv
+
 end

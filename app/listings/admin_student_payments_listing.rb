@@ -42,4 +42,6 @@ class AdminStudentPaymentsListing < Listings::Base
     end
   end
 
+  export :xls, :csv
+
 end
