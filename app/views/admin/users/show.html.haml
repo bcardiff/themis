@@ -1,0 +1,7 @@
+%h1= user.email
+
+= simple_form_for([:admin, user], html: { class: 'form-horizontal' }) do |f|
+  = f.input :admin
+  = f.association :teacher
+
+  = f.button :submit

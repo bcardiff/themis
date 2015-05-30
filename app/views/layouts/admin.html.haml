@@ -1,7 +1,20 @@
 - content_for :nav_bar do
   - if current_user.admin?
-    %li
-      = link_to 'Portal Admin', admin_index_path
+    %li.dropdown
+      %a.dropdown-toggle(href="#" data-toggle="dropdown")
+        Portal Admin
+        %span.caret
+      %ul.dropdown-menu
+        %li
+          = link_to 'Inicio', admin_index_path
+        %li
+          = link_to 'Profesores', admin_teachers_path
+        %li
+          = link_to 'Alumnos', admin_students_path
+        %li
+          = link_to 'Cursos', admin_courses_path
+        %li
+          = link_to 'Usuarios', admin_users_path
   - if current_user.teacher?
     %li
       = link_to 'Portal Docente', teacher_index_path
