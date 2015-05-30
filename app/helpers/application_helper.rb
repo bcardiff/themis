@@ -29,6 +29,17 @@ module ApplicationHelper
     end
   end
 
+  def side_box_data_full(legend)
+    haml_tag :div, class: 'col-md-12' do
+      haml_tag :h1 do
+        yield
+      end
+      haml_tag :label do
+        haml_concat legend
+      end
+    end
+  end
+
   def side_box_data(legend)
     haml_tag :div, class: 'col-md-6' do
       haml_tag :h1 do

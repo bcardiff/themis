@@ -9,12 +9,16 @@
       = link_to "estas instrucciones", "https://github.com/bcardiff/themis/wiki/Swing-City--Instalaci%C3%B3n-cliente-Android"
       \ .
 
+    %p
+      Se pueden hacer envios mediante el
+      %a(href="https://mt9cb.enketo.org/webform" target="_blank") formulario web.
+
     - side_box 'Pago de alumnos' do
       .row
-        - side_box_data "a entregar a #{School.description}" do
+        - side_box_data_full "a entregar a #{School.description}" do
           = number_to_currency(@course_payments_not_handed)
-        - side_box_data 'entregados en el mes' do
-          = number_to_currency(@handed_course_payments_in_month)
+        / - side_box_data 'entregados en el mes' do
+        /   = number_to_currency(@handed_course_payments_in_month)
       / .row
       /   .col-md-12
       /     = link_to 'histórico', admin_student_payments_path
