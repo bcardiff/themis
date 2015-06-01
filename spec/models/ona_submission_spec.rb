@@ -439,6 +439,8 @@ RSpec.describe OnaSubmission, type: :model do
     expect(StudentCourseLog.first.course_log.teacher_course_logs.first.teacher).to eq(mariel)
   end
 
+  it "should remove payment if second submission stands it"
+  it "should reject negative payments amount"
 
   def issued_invalid_class(payload)
     result = nil
