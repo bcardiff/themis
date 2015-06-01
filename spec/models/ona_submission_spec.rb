@@ -439,6 +439,28 @@ RSpec.describe OnaSubmission, type: :model do
     expect(StudentCourseLog.first.course_log.teacher_course_logs.first.teacher).to eq(mariel)
   end
 
+  it "reg bug with payment" do
+    plan = create(:payment_plan)
+
+    issued_class ({
+      "student_repeat": [
+        {
+          "student_repeat/id_kind": "existing_card",
+          "student_repeat/card": "322",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => plan.code
+        }
+      ],
+      "course": lh_int1_jue.code,
+      "date": "2015-05-14",
+      "teacher": mariel.name
+    })
+
+    expect(mariel.teacher_course_logs.count).to eq(1)
+    expect(StudentCourseLog.first.teacher).to eq(mariel)
+    expect(StudentCourseLog.first.course_log.teacher_course_logs.first.teacher).to eq(mariel)
+  end
+
   it "should remove payment if second submission stands it"
   it "should reject negative payments amount"
 
