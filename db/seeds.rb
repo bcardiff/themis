@@ -34,14 +34,14 @@ def teacher(name, attributes)
   end
 end
 
-teacher 'Mariel', fee: 200
-teacher 'Manuel', fee: 200
-teacher 'Juani', fee: 200
-teacher 'Candela', fee: 150
-teacher 'Mariano', fee: 150
-teacher 'Celeste', fee: 150
-teacher 'Nanchi', fee: 150
-teacher 'Sol', fee: 150
+teacher 'Mariel', fee: 230
+teacher 'Manuel', fee: 230
+teacher 'Juani', fee: 230
+teacher 'Candela', fee: 175
+teacher 'Mariano', fee: 175
+teacher 'Celeste', fee: 175
+teacher 'Nanchi', fee: 175
+teacher 'Sol', fee: 175
 
 course "CH_PRIN_MIE", name: "Charleston - Principiantes - Miércoles Sendas", weekday: 3
 course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles Sendas", weekday: 3
