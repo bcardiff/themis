@@ -21,8 +21,8 @@ class StudentCourseLog < ActiveRecord::Base
   scope :handed_at_month, -> (time) { handed.where('transferred_at >= ?', time.at_beginning_of_month).where('transferred_at < ?', time.at_beginning_of_month.next_month) }
 
   def validate_teacher_in_course_log
-    return unless teacher && course_log
-    errors.add(:teacher, 'must be in the course_log') unless course_log.teachers.include?(teacher)
+    # return unless teacher && course_log
+    # errors.add(:teacher, 'must be in the course_log') unless course_log.teachers.include?(teacher)
   end
 
   def validate_teacher_if_paying
