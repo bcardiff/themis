@@ -13,71 +13,68 @@
 
 ActiveRecord::Schema.define(version: 20150530160203) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "activity_logs", force: :cascade do |t|
-    t.string   "type"
-    t.integer  "target_id"
-    t.string   "target_type"
-    t.text     "description"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "type",         limit: 255
+    t.integer  "target_id",    limit: 4
+    t.string   "target_type",  limit: 255
+    t.text     "description",  limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.date     "date"
-    t.integer  "related_id"
-    t.string   "related_type"
+    t.integer  "related_id",   limit: 4
+    t.string   "related_type", limit: 255
   end
 
   add_index "activity_logs", ["related_type", "related_id"], name: "index_activity_logs_on_related_type_and_related_id", using: :btree
   add_index "activity_logs", ["target_type", "target_id"], name: "index_activity_logs_on_target_type_and_target_id", using: :btree
 
   create_table "course_logs", force: :cascade do |t|
-    t.integer  "course_id"
+    t.integer  "course_id",  limit: 4
     t.date     "date"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "missing",    default: false, null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "missing",    limit: 1, default: false, null: false
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string   "name"
-    t.string   "code"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "weekday"
+    t.string   "name",        limit: 255
+    t.string   "code",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "weekday",     limit: 4
     t.date     "valid_since"
     t.date     "valid_until"
   end
 
   create_table "ona_submissions", force: :cascade do |t|
-    t.string   "form"
-    t.text     "data"
-    t.string   "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text     "log"
+    t.string   "form",       limit: 255
+    t.text     "data",       limit: 65535
+    t.string   "status",     limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.text     "log",        limit: 65535
   end
 
   create_table "payment_plans", force: :cascade do |t|
-    t.string   "code"
-    t.string   "description"
-    t.decimal  "price"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "code",        limit: 255
+    t.string   "description", limit: 255
+    t.decimal  "price",                   precision: 10
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "student_course_logs", force: :cascade do |t|
-    t.integer  "student_id"
-    t.integer  "course_log_id"
-    t.integer  "teacher_id"
-    t.text     "payload"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.decimal  "payment_amount"
-    t.string   "payment_status"
-    t.integer  "payment_plan_id"
-    t.integer  "ona_submission_id"
-    t.string   "ona_submission_path"
+    t.integer  "student_id",          limit: 4
+    t.integer  "course_log_id",       limit: 4
+    t.integer  "teacher_id",          limit: 4
+    t.text     "payload",             limit: 65535
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.decimal  "payment_amount",                    precision: 10
+    t.string   "payment_status",      limit: 255
+    t.integer  "payment_plan_id",     limit: 4
+    t.integer  "ona_submission_id",   limit: 4
+    t.string   "ona_submission_path", limit: 255
     t.datetime "transferred_at"
   end
 
@@ -88,21 +85,21 @@ ActiveRecord::Schema.define(version: 20150530160203) do
   add_index "student_course_logs", ["teacher_id"], name: "index_student_course_logs_on_teacher_id", using: :btree
 
   create_table "students", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "card_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "first_name", limit: 255
+    t.string   "last_name",  limit: 255
+    t.string   "email",      limit: 255
+    t.string   "card_code",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "teacher_course_logs", force: :cascade do |t|
-    t.integer  "teacher_id"
-    t.integer  "course_log_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.boolean  "paid"
-    t.decimal  "paid_amount"
+    t.integer  "teacher_id",    limit: 4
+    t.integer  "course_log_id", limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "paid",          limit: 1
+    t.decimal  "paid_amount",             precision: 10
     t.datetime "paid_at"
   end
 
@@ -110,28 +107,28 @@ ActiveRecord::Schema.define(version: 20150530160203) do
   add_index "teacher_course_logs", ["teacher_id"], name: "index_teacher_course_logs_on_teacher_id", using: :btree
 
   create_table "teachers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "card"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.decimal  "fee"
+    t.string   "name",       limit: 255
+    t.string   "card",       limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.decimal  "fee",                    precision: 10
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.boolean  "admin",                  default: false
-    t.integer  "teacher_id"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.boolean  "admin",                  limit: 1,   default: false
+    t.integer  "teacher_id",             limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

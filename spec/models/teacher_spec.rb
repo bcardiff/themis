@@ -6,7 +6,7 @@ RSpec.describe Teacher, type: :model do
     let(:plan) { create(:payment_plan) }
 
     before do
-      Timecop.freeze
+      Timecop.freeze Time.now.at_beginning_of_minute
     end
 
     after do
@@ -49,7 +49,7 @@ RSpec.describe Teacher, type: :model do
     let(:teacher) { create(:teacher) }
 
     before do
-      Timecop.freeze
+      Timecop.freeze Time.now.at_beginning_of_minute
     end
 
     after do

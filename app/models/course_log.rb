@@ -26,7 +26,7 @@ class CourseLog < ActiveRecord::Base
   def self.fill_missings
     today = Date.today
 
-    Course.joins('LEFT JOIN "course_logs" ON "course_logs"."course_id" = "courses"."id"')
+    Course.joins('LEFT JOIN course_logs ON course_logs.course_id = courses.id')
       .select("courses.*, max(course_logs.date) as last")
       .group("courses.id").each do |course|
       next_date = (course.last || (course.valid_since - 1.day)).next_wday(course.weekday)
