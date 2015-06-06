@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/manastech/listings
+  remote: git://github.com/manastech/listings.git
   revision: 41873da1952d2bea2db2bbb81d90794efa79f512
   branch: master
   specs:
