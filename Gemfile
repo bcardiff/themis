@@ -36,7 +36,7 @@ gem 'haml-rails'
 gem 'simple_calendar'
 gem 'decent_exposure'
 
-gem 'listings', github: 'manastech/listings', branch: 'master'
+gem 'listings', git: 'https://github.com/manastech/listings', branch: 'master'
 
 gem 'rails_12factor', group: :production
 gem 'devise'
