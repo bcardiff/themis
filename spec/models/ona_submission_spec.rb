@@ -26,11 +26,11 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "can create new student" do
     submit_student({
-      "student_repeat/id_kind": "new_card",
-      "student_repeat/card": "465",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/last_name": "Doe"
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "465",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe"
     })
 
     student = Student.first
@@ -43,20 +43,20 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_course_log).to_not be_nil
     expect(student_course_log.student).to eq(student)
     expect(student_course_log.payload).to eq({
-      "student_repeat/id_kind": "new_card",
-      "student_repeat/card": "465",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/last_name": "Doe"
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "465",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe"
     }.to_json)
   end
 
   it "can reprocess with a new student" do
     data = {
-      "student_repeat/id_kind": "new_card",
-      "student_repeat/card": "465",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "465",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John"
     }
 
     submit_student(data)
@@ -67,8 +67,8 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "can reprocess with a guest student" do
     data = {
-      "student_repeat/id_kind": "guest",
-      "student_repeat/first_name": "John"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/first_name" => "John"
     }
 
     s = submit_student(data)
@@ -80,8 +80,8 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "different submissions creates diffrent guests student" do
     data = {
-      "student_repeat/id_kind": "guest",
-      "student_repeat/first_name": "John"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/first_name" => "John"
     }
 
     submit_student(data)
@@ -95,8 +95,8 @@ RSpec.describe OnaSubmission, type: :model do
     student = create(:student)
 
     submit_student({
-      "student_repeat/id_kind": "existing_card",
-      "student_repeat/card": student.card_code
+      "student_repeat/id_kind" => "existing_card",
+      "student_repeat/card" => student.card_code
     })
 
     course_log = CourseLog.first
@@ -107,17 +107,17 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_course_log).to_not be_nil
     expect(student_course_log.student).to eq(student)
     expect(student_course_log.payload).to eq({
-      "student_repeat/id_kind": "existing_card",
-      "student_repeat/card": student.card_code
+      "student_repeat/id_kind" => "existing_card",
+      "student_repeat/card" => student.card_code
     }.to_json)
   end
 
   it "can create new student" do
     submit_student({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/last_name": "Doe"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe"
     })
 
     student = Student.first
@@ -132,18 +132,18 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_course_log).to_not be_nil
     expect(student_course_log.student).to eq(student)
     expect(student_course_log.payload).to eq({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/last_name": "Doe"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe"
     }.to_json)
   end
 
   it "should no duplicate guest when reprocessing" do
     data = {
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John"
     }
 
     submit_student(data)
@@ -157,17 +157,17 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "should ignore empty students" do
     submit_student({
-      "student_repeat/id_kind": "existing_card",
-      "student_repeat/card": "",
+      "student_repeat/id_kind" => "existing_card",
+      "student_repeat/card" => "",
     },{
-      "student_repeat/id_kind": "new_card",
-      "student_repeat/card": "",
-      "student_repeat/email": "",
-      "student_repeat/first_name": ""
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "",
+      "student_repeat/email" => "",
+      "student_repeat/first_name" => ""
     },{
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "",
-      "student_repeat/first_name": ""
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "",
+      "student_repeat/first_name" => ""
     })
 
     expect(Student.count).to eq(0)
@@ -176,13 +176,13 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "should add many students to course_log" do
     submit_student({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John"
     },{
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "mary@email.com",
-      "student_repeat/first_name": "Mary"
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "mary@email.com",
+      "student_repeat/first_name" => "Mary"
     })
 
     expect(Student.count).to eq(2)
@@ -193,12 +193,12 @@ RSpec.describe OnaSubmission, type: :model do
     plan = create(:payment_plan, code: PaymentPlan::OTHER)
 
     submit_student({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/do_payment": "yes",
-      "student_repeat/payment/kind": plan.code,
-      "student_repeat/payment/amount": 45,
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/do_payment" => "yes",
+      "student_repeat/payment/kind" => plan.code,
+      "student_repeat/payment/amount" => 45,
     })
 
     student_log = StudentCourseLog.first
@@ -213,11 +213,11 @@ RSpec.describe OnaSubmission, type: :model do
     plan = create(:payment_plan, price: 172)
 
     submit_student({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/do_payment": "yes",
-      "student_repeat/payment/kind": plan.code,
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/do_payment" => "yes",
+      "student_repeat/payment/kind" => plan.code,
     })
 
     student_log = StudentCourseLog.first
@@ -230,8 +230,8 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "should create new student if advertised as existing but it doesn't" do
     submit_student({
-      "student_repeat/id_kind": "existing_card",
-      "student_repeat/card": "245"
+      "student_repeat/id_kind" => "existing_card",
+      "student_repeat/card" => "245"
     })
 
     expect(StudentCourseLog.count).to eq(1)
@@ -245,16 +245,16 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "should update name and email when it was unkown" do
     submit_student({
-      "student_repeat/id_kind": "existing_card",
-      "student_repeat/card": "245"
+      "student_repeat/id_kind" => "existing_card",
+      "student_repeat/card" => "245"
     })
 
     submit_student(ch_int2_jue, {
-      "student_repeat/id_kind": "new_card",
-      "student_repeat/card": "245",
-      "student_repeat/email": "johndoe@email.com",
-      "student_repeat/first_name": "John",
-      "student_repeat/last_name": "Doe",
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "245",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
     })
 
     expect(Student.count).to eq(1)
@@ -270,9 +270,9 @@ RSpec.describe OnaSubmission, type: :model do
     plan = create(:payment_plan)
 
     submit_student({
-      "student_repeat/id_kind": "guest",
-      "student_repeat/do_payment": "yes",
-      "student_repeat/payment/kind": plan.code
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/do_payment" => "yes",
+      "student_repeat/payment/kind" => plan.code
     })
 
     expect(Student.count).to eq(1)
@@ -300,8 +300,8 @@ RSpec.describe OnaSubmission, type: :model do
           "student_repeat/do_payment" => "yes",
           "student_repeat/payment/kind" => plan.code
         },{
-          "student_repeat/id_kind": "existing_card",
-          "student_repeat/card": student.card_code
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/card" => student.card_code
         }]
       }, false)
 
@@ -341,11 +341,11 @@ RSpec.describe OnaSubmission, type: :model do
   describe "card vs cardtxt" do
     it "should use card when cardtxt empty" do
       submit_student({
-        "student_repeat/id_kind": "new_card",
-        "student_repeat/card": "245",
-        "student_repeat/cardtxt": "",
-        "student_repeat/email": "johndoe@email.com",
-        "student_repeat/first_name": "John",
+        "student_repeat/id_kind" => "new_card",
+        "student_repeat/card" => "245",
+        "student_repeat/cardtxt" => "",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
       })
 
       expect(Student.count).to eq(1)
@@ -355,11 +355,11 @@ RSpec.describe OnaSubmission, type: :model do
 
     it "should use cardtxt when card empty" do
       submit_student({
-        "student_repeat/id_kind": "new_card",
-        "student_repeat/card": "",
-        "student_repeat/cardtxt": "245",
-        "student_repeat/email": "johndoe@email.com",
-        "student_repeat/first_name": "John",
+        "student_repeat/id_kind" => "new_card",
+        "student_repeat/card" => "",
+        "student_repeat/cardtxt" => "245",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
       })
 
       expect(Student.count).to eq(1)
@@ -369,11 +369,11 @@ RSpec.describe OnaSubmission, type: :model do
 
     it "should use cardtxt when both provided" do
       submit_student({
-        "student_repeat/id_kind": "new_card",
-        "student_repeat/card": "999",
-        "student_repeat/cardtxt": "245",
-        "student_repeat/email": "johndoe@email.com",
-        "student_repeat/first_name": "John",
+        "student_repeat/id_kind" => "new_card",
+        "student_repeat/card" => "999",
+        "student_repeat/cardtxt" => "245",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
       })
 
       expect(Student.count).to eq(1)
@@ -422,16 +422,16 @@ RSpec.describe OnaSubmission, type: :model do
 
   it "reg bug" do
     issued_class ({
-      "student_repeat": [
+      "student_repeat" => [
         {
-          "student_repeat/id_kind": "existing_card",
-          "student_repeat/do_payment": "no",
-          "student_repeat/card": "322"
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/do_payment" => "no",
+          "student_repeat/card" => "322"
         }
       ],
-      "course": lh_int1_jue.code,
-      "date": "2015-05-14",
-      "teacher": mariel.name
+      "course" => lh_int1_jue.code,
+      "date" => "2015-05-14",
+      "teacher" => mariel.name
     })
 
     expect(mariel.teacher_course_logs.count).to eq(1)
@@ -443,17 +443,17 @@ RSpec.describe OnaSubmission, type: :model do
     plan = create(:payment_plan)
 
     issued_class ({
-      "student_repeat": [
+      "student_repeat" => [
         {
-          "student_repeat/id_kind": "existing_card",
-          "student_repeat/card": "322",
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/card" => "322",
           "student_repeat/do_payment" => "yes",
           "student_repeat/payment/kind" => plan.code
         }
       ],
-      "course": lh_int1_jue.code,
-      "date": "2015-05-14",
-      "teacher": mariel.name
+      "course" => lh_int1_jue.code,
+      "date" => "2015-05-14",
+      "teacher" => mariel.name
     })
 
     expect(mariel.teacher_course_logs.count).to eq(1)
@@ -487,7 +487,7 @@ RSpec.describe OnaSubmission, type: :model do
       "date" => "2015-05-14",
       "course" => course.code,
       "teacher" => mariel.name,
-      "student_repeat": student_payload
+      "student_repeat" => student_payload
     })
   end
 
