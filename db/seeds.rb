@@ -53,6 +53,7 @@ course "LH_INT1_JUE", name: "Lindy Hop - Intermedios 1 - Jueves Vera", weekday: 
 course "LH_INT1_VIE", name: "Lindy Hop - Intermedios 1 - Viernes Malcom", weekday: 5, valid_until: Date.new(2015,5,31)
 course "LH_INT1_VIE_PARANA", name: "Lindy Hop - Intermedios 1 - Viernes Paraná y Córdoba", weekday: 5 # new?
 course "LH_INT1_VIE_IBERA", name: "Lindy Hop - Intermedios 1 - Viernes Iberá", weekday: 5 # new?
+course "LH_INT1_SAB", name: "Lindy Hop - Intermedios 1 - Sábados Sc", weekday: 6, valid_since: Date.new(2015,6,1)
 
 course "LH_INT2_LUN", name: "Lindy Hop - Intermedios 2 - Lunes colmegna", weekday: 1
 course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves Vera", weekday: 4
