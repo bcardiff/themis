@@ -20,7 +20,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '~> 0.4.0', :group => :doc
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -36,7 +36,7 @@ gem 'haml-rails'
 gem 'simple_calendar'
 gem 'decent_exposure'
 
-gem 'listings', github: 'manastech/listings', branch: 'master'
+gem 'listings', :github => 'manastech/listings', :branch => 'master'
 
 gem 'rails_12factor', group: :production
 gem 'devise'
