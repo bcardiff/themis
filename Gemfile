@@ -38,7 +38,7 @@ gem 'decent_exposure'
 
 gem 'listings', :github => 'manastech/listings', :branch => 'master'
 
-gem 'rails_12factor', group: :production
+gem 'rails_12factor', :group => :production
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'simple_form'
