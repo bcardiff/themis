@@ -60,5 +60,7 @@ end
 
 group :development do
   gem 'better_errors'
+
+  gem 'capistrano-rails', '~> 1.1'
 end
 
