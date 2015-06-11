@@ -5,7 +5,7 @@ class Student < ActiveRecord::Base
 
   validates_presence_of :first_name
   validates_uniqueness_of :card_code, allow_nil: true
-   #TODO uniq card, email
+  validates_uniqueness_of :email, allow_nil: true
 
   before_validation :apply_format_card_code
   validates_format_of :card_code, with: /SWC\/stu\/\d\d\d\d/, allow_nil: true

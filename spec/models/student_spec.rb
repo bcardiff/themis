@@ -16,6 +16,11 @@ RSpec.describe Student, type: :model do
       student = create(:student)
       expect(build(:student, card_code: student.card_code)).to_not be_valid
     end
+
+    it "email should be uniq" do
+      student = create(:student)
+      expect(build(:student, email: student.email)).to_not be_valid
+    end
   end
 
   describe "card code saved with slashes" do
