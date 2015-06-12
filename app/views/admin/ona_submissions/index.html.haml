@@ -2,6 +2,6 @@
 
 %p
   Se pueden hacer envios mediante el
-  %a(href="https://mt9cb.enketo.org/webform" target="_blank") formulario web
+  = link_to 'formulario web', Settings.webform_url, target: '_blank'
 
 = render_listing :admin_ona_submissions
