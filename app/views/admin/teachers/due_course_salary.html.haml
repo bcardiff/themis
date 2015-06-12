@@ -19,4 +19,4 @@
       %td= number_to_currency teacher.fee
 
 - if @due_salary > 0
-  = link_to 'Registrar pago', pay_pending_classes_admin_teacher_path(teacher), method: :post, class: 'btn btn-primary', 'data-confirm': "Seguro desea registrar que se pagaron #{number_to_currency @due_salary}?"
+  = link_to 'Registrar pago', pay_pending_classes_admin_teacher_path(teacher), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "Seguro desea registrar que se pagaron #{number_to_currency @due_salary}?"

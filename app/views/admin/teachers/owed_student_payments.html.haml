@@ -24,4 +24,4 @@
 
 
 - if @total > 0
-  = link_to 'Registrar entrega', transfer_student_payments_money_admin_teacher_path(teacher), method: :post, class: 'btn btn-primary', 'data-confirm': "Seguro desea registrar que se entregaron #{number_to_currency @total}?"
+  = link_to 'Registrar entrega', transfer_student_payments_money_admin_teacher_path(teacher), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "Seguro desea registrar que se entregaron #{number_to_currency @total}?"
