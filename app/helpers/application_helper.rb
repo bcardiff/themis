@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def number_to_currency(number, options = {})
+    super(number, options.reverse_merge(precision: 0, format: '%u%n'))
+  end
+
   def text_modal(label, title, text)
     id = SecureRandom.uuid
     render partial: 'shared/text_modal', locals: { id: id, label: label , title: title, text: text }
