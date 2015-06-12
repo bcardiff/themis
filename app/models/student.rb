@@ -30,6 +30,11 @@ class Student < ActiveRecord::Base
     end
   end
 
+  def self.import!(first_name, last_name, email, card_code)
+    first_name, last_name, email, card_code = [first_name, last_name, email, card_code].map { |x| x.strip.blank? ? nil : x.strip }
+    self.create! first_name: first_name, last_name: last_name, email: email, card_code: card_code
+  end
+
   private
 
   def apply_format_card_code
