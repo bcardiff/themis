@@ -51,6 +51,8 @@ namespace :deploy do
     on roles(:web) do
       htaccess = "#{current_path}/public/.htaccess"
       execute "echo 'RewriteEngine On' > #{htaccess};echo 'PassengerEnabled On' >> #{htaccess}; echo 'PassengerLoadShellEnvVars On' >> #{htaccess}; echo 'PassengerAppRoot #{current_path}' >> #{htaccess}; echo 'PassengerRuby /usr/local/ruby20/bin/ruby' >> #{htaccess}; echo 'RackEnv production' >> #{htaccess}; echo '.htaccess created'"
+
+      execute "touch #{current_path}/tmp/restart.txt"
     end
   end
 
