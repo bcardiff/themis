@@ -4,6 +4,7 @@ class OnaSubmission < ActiveRecord::Base
   serialize :data, JSON
 
   scope :with_error, -> { where(status: 'error') }
+  scope :with_dismissed_errors, -> { where(status: 'dismiss') }
 
   def can_dismiss?
     self.status == 'error'
@@ -32,5 +33,18 @@ class OnaSubmission < ActiveRecord::Base
     end
 
     self.save!
+  end
+
+  def edit_data_url(ona_api)
+    ona_api.submission_edit_url(self.data)
+  end
+
+  def pull_from_ona!(ona_api)
+    self.data = ona_api.submission_updated_data(self.data)
+    self.save!
+  end
+
+  def ona_data_url
+    "https://ona.io/api/v1/data/#{22845}/4503"
   end
 end

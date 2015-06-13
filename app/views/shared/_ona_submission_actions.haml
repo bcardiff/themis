@@ -1,4 +1,9 @@
-= link_to 'reprocesar', reprocess_admin_ona_submission_path(id: s.id), method: :post
+.btn-group
+  = link_to 'reprocesar', reprocess_admin_ona_submission_path(id: s.id), method: :post, class: 'btn btn-default btn-xs'
 
-- if s.can_dismiss?
-  = link_to 'ignorar', dismiss_admin_ona_submission_path(id: s.id), method: :post
+  - if s.can_dismiss?
+    = link_to 'ignorar', dismiss_admin_ona_submission_path(id: s.id), method: :post, class: 'btn btn-default btn-xs'
+
+  = link_to 'editar ona', ona_edit_admin_ona_submission_path(id: s.id), target: '_blank', class: 'btn btn-default btn-xs'
+
+  = link_to 'update from ona', pull_from_ona_admin_ona_submission_path(id: s.id), method: :post, class: 'btn btn-default btn-xs'

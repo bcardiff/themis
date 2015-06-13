@@ -1,5 +1,11 @@
 class AdminOnaSubmissionsListing < Listings::Base
+  include ApplicationHelper
+
   model OnaSubmission
+
+  scope :all, default: true
+  scope :with_error, 'Con errors'
+  scope :with_dismissed_errors, 'Ignorados'
 
   column :created_at
   column :form
@@ -11,6 +17,12 @@ class AdminOnaSubmissionsListing < Listings::Base
       h(s.status) + h(' ') + text_modal('...', 'Error Log', s.log)
     else
       h(s.status)
+    end
+  end
+
+  %w(date course teacher).each do |data_field|
+    column data_field do |s|
+      s.data[data_field]
     end
   end
 

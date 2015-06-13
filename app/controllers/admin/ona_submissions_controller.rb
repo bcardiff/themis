@@ -1,4 +1,8 @@
 class Admin::OnaSubmissionsController < Admin::BaseController
+  before_action do
+    @ona_api = Ona::Api.new(Settings.ona_api_token)
+  end
+
   def index
   end
 
@@ -12,5 +16,17 @@ class Admin::OnaSubmissionsController < Admin::BaseController
     OnaSubmission.find(params[:id]).dismiss!
     # TODO alert
     redirect_to :admin_ona_submissions
+  end
+
+  def pull_from_ona
+    s = OnaSubmission.find(params[:id])
+    s.pull_from_ona!(@ona_api)
+    s.process!
+    redirect_to :admin_ona_submissions
+  end
+
+  def ona_edit
+    s = OnaSubmission.find(params[:id])
+    redirect_to s.edit_data_url(@ona_api)
   end
 end

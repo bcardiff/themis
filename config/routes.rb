@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       member do
         post :reprocess
         post :dismiss
+        post :pull_from_ona
+        get :ona_edit
       end
     end
 
