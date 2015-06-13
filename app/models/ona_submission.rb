@@ -10,6 +10,10 @@ class OnaSubmission < ActiveRecord::Base
     self.status == 'error'
   end
 
+  def can_edit?
+    self.status == 'error'
+  end
+
   def dismiss!
     self.status = 'dismiss'
     self.save!
