@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530160203) do
+ActiveRecord::Schema.define(version: 20150613214604) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -93,6 +93,22 @@ ActiveRecord::Schema.define(version: 20150530160203) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "teacher_cash_incomes", force: :cascade do |t|
+    t.integer  "teacher_id",            limit: 4
+    t.string   "type",                  limit: 255
+    t.decimal  "payment_amount",                    precision: 10
+    t.string   "payment_status",        limit: 255
+    t.datetime "transferred_at"
+    t.integer  "student_course_log_id", limit: 4
+    t.integer  "course_log_id",         limit: 4
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "teacher_cash_incomes", ["course_log_id"], name: "index_teacher_cash_incomes_on_course_log_id", using: :btree
+  add_index "teacher_cash_incomes", ["student_course_log_id"], name: "index_teacher_cash_incomes_on_student_course_log_id", using: :btree
+  add_index "teacher_cash_incomes", ["teacher_id"], name: "index_teacher_cash_incomes_on_teacher_id", using: :btree
+
   create_table "teacher_course_logs", force: :cascade do |t|
     t.integer  "teacher_id",    limit: 4
     t.integer  "course_log_id", limit: 4
@@ -140,6 +156,9 @@ ActiveRecord::Schema.define(version: 20150530160203) do
   add_foreign_key "student_course_logs", "payment_plans"
   add_foreign_key "student_course_logs", "students"
   add_foreign_key "student_course_logs", "teachers"
+  add_foreign_key "teacher_cash_incomes", "course_logs"
+  add_foreign_key "teacher_cash_incomes", "student_course_logs"
+  add_foreign_key "teacher_cash_incomes", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"
   add_foreign_key "teacher_course_logs", "teachers"
   add_foreign_key "users", "teachers"

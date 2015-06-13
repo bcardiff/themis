@@ -464,6 +464,39 @@ RSpec.describe OnaSubmission, type: :model do
   it "should remove payment if second submission stands it"
   it "should reject negative payments amount"
 
+  describe "new card" do
+    before(:each) do
+      submit_student({
+        "student_repeat/id_kind" => "new_card",
+        "student_repeat/card" => "999",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
+      })
+    end
+
+    subject(:income) { NewCardTeacherCashIncome.first }
+
+    it "record new card income" do
+      expect(income).to_not be_nil
+    end
+
+    it "create income with student" do
+      expect(income.student.card_code).to eq(student_card("999"))
+    end
+
+    it "create income with course_log" do
+      expect(income.course_log).to eq(CourseLog.first)
+    end
+
+    it "create income with teacher" do
+      expect(income.teacher).to eq(mariel)
+    end
+
+    it "tracks the income as pending" do
+      expect(mariel.owed_cash_total).to eq(NewCardTeacherCashIncome::FEE)
+    end
+  end
+
   def issued_invalid_class(payload)
     result = nil
 

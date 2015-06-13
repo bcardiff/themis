@@ -105,6 +105,11 @@ class StudentCourseLog < ActiveRecord::Base
     end
 
     student_log.save!
+
+    if id_kind = "new_card"
+      income = NewCardTeacherCashIncome.find_or_initialize_by_student_course_log(student_log)
+      income.save!
+    end
   end
 
   def payments_initially_on_teachers

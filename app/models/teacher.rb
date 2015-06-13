@@ -10,8 +10,14 @@ class Teacher < ActiveRecord::Base
     end
   end
 
+  has_many :teacher_cash_incomes
+
   def owed_student_payments
     student_course_logs.owed.sum(:payment_amount)
+  end
+
+  def owed_cash_total
+    teacher_cash_incomes.owed.sum(:payment_amount)
   end
 
   def transfer_student_payments_money
