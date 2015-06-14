@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614180754) do
+ActiveRecord::Schema.define(version: 20150614193041) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -71,11 +71,9 @@ ActiveRecord::Schema.define(version: 20150614180754) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.decimal  "payment_amount",                    precision: 10
-    t.string   "payment_status",      limit: 255
     t.integer  "payment_plan_id",     limit: 4
     t.integer  "ona_submission_id",   limit: 4
     t.string   "ona_submission_path", limit: 255
-    t.datetime "transferred_at"
     t.string   "id_kind",             limit: 255
   end
 
