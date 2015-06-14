@@ -8,7 +8,7 @@ class AdminTeacherCoursesListing < Listings::Base
   scope "Pagados", :paid
 
   column 'Fecha Curso' do |teacher_course_log|
-    teacher_course_log.course_log.date
+    teacher_course_log.course_log.date.to_human
   end
 
   column 'Curso' do |teacher_course_log|
@@ -20,7 +20,7 @@ class AdminTeacherCoursesListing < Listings::Base
   end
 
   column :paid_at do |teacher_course_log|
-    teacher_course_log.paid_at.try :to_date
+    teacher_course_log.paid_at.try { |x| x.to_date.to_human }
   end
 
   column :payment_amount do |teacher_course_log|

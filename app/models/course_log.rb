@@ -9,6 +9,10 @@ class CourseLog < ActiveRecord::Base
   has_many :student_course_logs
   has_many :students, through: :student_course_logs
 
+  def incomes
+    TeacherCashIncome.where(course_log_id: self.id)
+  end
+
   scope :missing, -> { where(missing: true) }
 
   delegate :calendar_name, to: :course

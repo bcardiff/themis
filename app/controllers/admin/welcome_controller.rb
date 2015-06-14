@@ -13,7 +13,7 @@ class Admin::WelcomeController < Admin::BaseController
     @course_teaching_expense_in_month = School.course_teaching_expense_per_month(start_date)
   end
 
-  def student_payments
+  def teacher_cash_incomes
   end
 
   def teacher_courses

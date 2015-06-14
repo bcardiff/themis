@@ -7,14 +7,14 @@ class Admin::TeachersController < Admin::BaseController
   def show
   end
 
-  def owed_student_payments
-    @payments = order_by_course_log(teacher.student_course_logs.owed).to_a.group_by(&:course_log)
+  def owed_cash
+    @incomes = teacher.owed_cash.to_a.group_by { |e| [e.date, e.course_log_id, e.type] }
 
-    @total = teacher.owed_student_payments
+    @total = teacher.owed_cash_total
   end
 
-  def transfer_student_payments_money
-    teacher.transfer_student_payments_money
+  def transfer_cash_income_money
+    teacher.transfer_cash_income_money
     redirect_to admin_teacher_path(teacher)
   end
 

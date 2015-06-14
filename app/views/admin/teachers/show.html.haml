@@ -2,8 +2,8 @@
 
 %form.form-horizontal
   = text_field 'Pagos de alumnos' do
-    %span= number_to_currency(teacher.owed_student_payments)
-    = link_to 'ver detalle', owed_student_payments_admin_teacher_path(teacher)
+    %span= number_to_currency(teacher.owed_cash_total)
+    = link_to 'ver detalle', owed_cash_admin_teacher_path(teacher)
 
   = text_field 'Salario adeudado' do
     %span= number_to_currency(teacher.due_salary)

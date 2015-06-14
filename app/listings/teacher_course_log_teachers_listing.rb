@@ -6,8 +6,7 @@ class TeacherCourseLogTeachersListing < Listings::Base
 
   column :name
   column 'Pagos de alumnos' do |teacher|
-    teacher_log = @course_log.teacher_course_logs.where(teacher: teacher).first
-    number_to_currency teacher_log.student_course_logs.sum(:payment_amount)
+    number_to_currency @course_log.incomes.where(teacher: teacher).sum(:payment_amount)
   end
 
 end

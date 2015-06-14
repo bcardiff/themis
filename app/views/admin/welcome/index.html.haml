@@ -15,7 +15,7 @@
               - else
                 OK
 
-    - side_box 'Pago de alumnos' do
+    - side_box 'Caja' do
       .row
         - side_box_data 'en mano de profesores' do
           = link_to number_to_currency(@course_incomes_not_handed), admin_teachers_path
@@ -23,7 +23,7 @@
           = number_to_currency(@course_incomes_in_month)
       .row
         .col-md-12
-          = link_to 'histórico', admin_student_payments_path
+          = link_to 'histórico', admin_teacher_cash_incomes_path
 
     - side_box 'Salario docente' do
       .row

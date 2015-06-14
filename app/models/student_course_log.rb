@@ -8,17 +8,22 @@ class StudentCourseLog < ActiveRecord::Base
   serialize :payload, JSON
   belongs_to :payment_plan
   belongs_to :ona_submission
-  before_save :payments_initially_on_teachers
+  def incomes
+    # TODO unable to work with has_many and subclasses
+    # has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'
+    TeacherCashIncome.where(student_course_log_id: self.id)
+  end
+
+  after_save :record_teacher_cash_income
   after_save :record_student_activities
 
-  validates_presence_of :student, :course_log
+  validates_presence_of :student, :course_log, :id_kind
   validate :validate_teacher_in_course_log
   validate :validate_teacher_if_paying
 
   scope :with_payment, -> { where.not(payment_status: nil) }
-  scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
-  scope :handed, -> { where(payment_status: PAYMENT_ON_CLASSES_INCOME) }
-  scope :handed_at_month, -> (time) { handed.where('transferred_at >= ?', time.at_beginning_of_month).where('transferred_at < ?', time.at_beginning_of_month.next_month) }
+
+  # TODO on delete, delete teacher income?
 
   def validate_teacher_in_course_log
     # return unless teacher && course_log
@@ -88,6 +93,7 @@ class StudentCourseLog < ActiveRecord::Base
 
     # TODO better error when student is nil
     student_log = existing_log || course_log.student_course_logs.first_or_build(student: student)
+    student_log.id_kind = id_kind
     student_log.payload = payload.to_json
     student_log.teacher = teacher
     if student_log.new_record?
@@ -99,7 +105,7 @@ class StudentCourseLog < ActiveRecord::Base
       # TODO error handling
       plan = PaymentPlan.find_by!(code: payment_kind)
       student_log.payment_plan = plan
-      student_log.payment_amount = payment_amount if plan.other?
+      student_log.payment_amount = plan.price_or_fallback(payment_amount)
     else
       student_log.payment_plan = nil
     end
@@ -107,21 +113,18 @@ class StudentCourseLog < ActiveRecord::Base
     student_log.save!
   end
 
-  def payments_initially_on_teachers
-    plan = self.payment_plan
-
-
-    if plan
-      self.payment_status ||= StudentCourseLog::PAYMENT_ON_TEACHER
-      self.payment_amount = plan.price unless plan.other?
-
-      # TODO when the amount is updated. revert previous payment line.
-      # TODO when updating, if amount didn't change, do not create payment
-    else
-      self.payment_status ||= nil
+  def record_teacher_cash_income
+    if id_kind == "new_card"
+      income = TeacherCashIncomes::NewCardIncome.find_or_initialize_by_student_course_log(self)
+      income.save!
     end
 
-    true
+    if payment_plan
+      income = TeacherCashIncomes::StudentPaymentIncome.find_or_initialize_by_student_course_log(self)
+      # TODO should update only if not transfered TeacherCashIncomes?
+      income.payment_amount = payment_plan.price_or_fallback(payment_amount)
+      income.save!
+    end
   end
 
   def record_student_activities
