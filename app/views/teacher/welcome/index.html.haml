@@ -13,10 +13,10 @@
       Se pueden hacer envios mediante el
       = link_to 'formulario web', Settings.webform_url, target: '_blank'
 
-    - side_box 'Pago de alumnos' do
+    - side_box 'Efectivo' do
       .row
         - side_box_data_full "a entregar a #{School.description}" do
-          = number_to_currency(@course_payments_not_handed)
+          = number_to_currency(@cash_not_handed)
         / - side_box_data 'entregados en el mes' do
         /   = number_to_currency(@handed_course_payments_in_month)
       / .row

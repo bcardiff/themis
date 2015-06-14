@@ -7,10 +7,10 @@ class Admin::TeachersController < Admin::BaseController
   def show
   end
 
-  def owed_student_payments
+  def owed_cash
     @payments = order_by_course_log(teacher.student_course_logs.owed).to_a.group_by(&:course_log)
 
-    @total = teacher.owed_student_payments
+    @total = teacher.owed_cash_total
   end
 
   def transfer_student_payments_money

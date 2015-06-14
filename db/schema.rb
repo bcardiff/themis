@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613214604) do
+ActiveRecord::Schema.define(version: 20150614000923) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20150613214604) do
     t.integer  "ona_submission_id",   limit: 4
     t.string   "ona_submission_path", limit: 255
     t.datetime "transferred_at"
+    t.string   "id_kind",             limit: 255
   end
 
   add_index "student_course_logs", ["course_log_id"], name: "index_student_course_logs_on_course_log_id", using: :btree

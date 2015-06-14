@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     resources :teachers, only: [:index, :show] do
       member do
-        get :owed_student_payments
+        get :owed_cash
         post :transfer_student_payments_money
 
         get :due_course_salary

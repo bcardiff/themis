@@ -41,6 +41,7 @@ RSpec.describe OnaSubmission, type: :model do
 
     student_course_log = course_log.student_course_logs.first
     expect(student_course_log).to_not be_nil
+    expect(student_course_log.id_kind).to eq("new_card")
     expect(student_course_log.student).to eq(student)
     expect(student_course_log.payload).to eq({
       "student_repeat/id_kind" => "new_card",
@@ -106,6 +107,7 @@ RSpec.describe OnaSubmission, type: :model do
     student_course_log = course_log.student_course_logs.first
     expect(student_course_log).to_not be_nil
     expect(student_course_log.student).to eq(student)
+    expect(student_course_log.id_kind).to eq("existing_card")
     expect(student_course_log.payload).to eq({
       "student_repeat/id_kind" => "existing_card",
       "student_repeat/card" => student.card_code
@@ -131,6 +133,7 @@ RSpec.describe OnaSubmission, type: :model do
     student_course_log = course_log.student_course_logs.first
     expect(student_course_log).to_not be_nil
     expect(student_course_log.student).to eq(student)
+    expect(student_course_log.id_kind).to eq("guest")
     expect(student_course_log.payload).to eq({
       "student_repeat/id_kind" => "guest",
       "student_repeat/email" => "johndoe@email.com",
@@ -202,11 +205,14 @@ RSpec.describe OnaSubmission, type: :model do
     })
 
     student_log = StudentCourseLog.first
+    income = student_log.incomes.first
 
     expect(student_log.teacher).to eq(mariel)
     expect(student_log.payment_amount).to eq(45)
-    expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
     expect(student_log.payment_plan).to eq(plan)
+
+    expect(income.payment_amount).to eq(45)
+    expect(income.payment_status).to eq(TeacherCashIncome::PAYMENT_ON_TEACHER)
   end
 
   it "should register pending payment of amount given by the plan" do
@@ -221,11 +227,14 @@ RSpec.describe OnaSubmission, type: :model do
     })
 
     student_log = StudentCourseLog.first
+    income = student_log.incomes.first
 
     expect(student_log.teacher).to eq(mariel)
     expect(student_log.payment_amount).to eq(172)
-    expect(student_log.payment_status).to eq(StudentCourseLog::PAYMENT_ON_TEACHER)
     expect(student_log.payment_plan).to eq(plan)
+
+    expect(income.payment_amount).to eq(172)
+    expect(income.payment_status).to eq(TeacherCashIncome::PAYMENT_ON_TEACHER)
   end
 
   it "should create new student if advertised as existing but it doesn't" do
@@ -474,7 +483,7 @@ RSpec.describe OnaSubmission, type: :model do
       })
     end
 
-    subject(:income) { NewCardTeacherCashIncome.first }
+    subject(:income) { TeacherCashIncomes::NewCardIncome.first }
 
     it "record new card income" do
       expect(income).to_not be_nil
@@ -493,7 +502,7 @@ RSpec.describe OnaSubmission, type: :model do
     end
 
     it "tracks the income as pending" do
-      expect(mariel.owed_cash_total).to eq(NewCardTeacherCashIncome::FEE)
+      expect(mariel.owed_cash_total).to eq(TeacherCashIncomes::NewCardIncome::FEE)
     end
   end
 

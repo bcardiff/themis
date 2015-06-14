@@ -4,26 +4,22 @@ class Teacher < ActiveRecord::Base
   has_many :teacher_course_logs
   has_many :course_logs, through: :teacher_course_logs
 
-  has_many :student_course_logs do
-    def transfer_student_payments_money
-      owed.update_all(payment_status: StudentCourseLog::PAYMENT_ON_CLASSES_INCOME, transferred_at: Time.now)
+  has_many :student_course_logs
+
+  has_many :teacher_cash_incomes do
+    def transfer_cash_income_money
+      owed.update_all(payment_status: TeacherCashIncome::PAYMENT_ON_SCHOOL, transferred_at: Time.now)
     end
-  end
-
-  has_many :teacher_cash_incomes
-
-  def owed_student_payments
-    student_course_logs.owed.sum(:payment_amount)
   end
 
   def owed_cash_total
     teacher_cash_incomes.owed.sum(:payment_amount)
   end
 
-  def transfer_student_payments_money
-    amount = self.owed_student_payments
+  def transfer_cash_income_money
+    amount = self.owed_cash_total
 
-    student_course_logs.transfer_student_payments_money
+    teacher_cash_incomes.transfer_cash_income_money
   end
 
   def handed_course_payments_per_month(time)

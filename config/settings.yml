@@ -1,2 +1,4 @@
 webform_url: https://mt9cb.enketo.org/webform
 ona_api_token:
+default_url_options:
+  host: 'localhost:3000'
