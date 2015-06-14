@@ -12,8 +12,12 @@ class Teacher < ActiveRecord::Base
     end
   end
 
+  def owed_cash
+    teacher_cash_incomes.owed
+  end
+
   def owed_cash_total
-    teacher_cash_incomes.owed.sum(:payment_amount)
+    owed_cash.sum(:payment_amount)
   end
 
   def transfer_cash_income_money
@@ -23,7 +27,7 @@ class Teacher < ActiveRecord::Base
   end
 
   def handed_course_payments_per_month(time)
-    student_course_logs.handed_at_month(time).sum(:payment_amount)
+    teacher_cash_incomes.handed_at_month(time).sum(:payment_amount)
   end
 
   def course_teaching_expense_per_month(time)

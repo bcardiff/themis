@@ -3,6 +3,7 @@
 # payment_amount < 0 expenses of the teacher / fixes of balances
 class TeacherCashIncome < ActiveRecord::Base
   belongs_to :teacher
+  validates_presence_of :date
 
   PAYMENT_ON_TEACHER = 'teacher'
   PAYMENT_ON_SCHOOL = 'school'

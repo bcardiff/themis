@@ -8,7 +8,11 @@ class StudentCourseLog < ActiveRecord::Base
   serialize :payload, JSON
   belongs_to :payment_plan
   belongs_to :ona_submission
-  has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'
+  def incomes
+    # TODO unable to work with has_many and subclasses
+    # has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'
+    TeacherCashIncome.where(student_course_log_id: self.id)
+  end
 
   after_save :record_teacher_cash_income
   after_save :record_student_activities

@@ -8,13 +8,18 @@ class TeacherCourseLogStudentsListing < Listings::Base
     @course_log.student_course_logs.where(student: student).first
   end
 
+  column 'id_kind' do |student|
+    student_log = find_student_log(student)
+    student_log.id_kind
+  end
+
   column :card_code, searchable: true
   column :first_name, searchable: true
   column :last_name, searchable: true
   column 'Pago' do |student|
-    student_log = find_student_log(student)
-    if student_log.payment_status
-      number_to_currency student_log.payment_amount
+    payment_amount = find_student_log(student).incomes.sum(:payment_amount)
+    if payment_amount > 0
+      number_to_currency payment_amount
     end
   end
 

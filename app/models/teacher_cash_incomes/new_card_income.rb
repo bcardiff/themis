@@ -7,5 +7,9 @@ module TeacherCashIncomes
         income.payment_amount = FEE
       end
     end
+
+    def kind_description
+      "Nueva tarjeta"
+    end
   end
 end
