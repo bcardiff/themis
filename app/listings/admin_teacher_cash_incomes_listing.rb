@@ -8,7 +8,7 @@ class AdminTeacherCashIncomesListing < Listings::Base
   scope 'En Profesor', :owed
   scope "Entregados a #{School.description}", :handed
 
-  column 'Fecha pago' do |income|
+  column :date do |income|
     income.date.to_human
   end
 

@@ -3,5 +3,6 @@
 = simple_form_for([:admin, user], html: { class: 'form-horizontal' }) do |f|
   = f.input :admin
   = f.association :teacher
+  = f.association :place
 
   = f.button :submit

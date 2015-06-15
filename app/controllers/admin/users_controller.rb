@@ -15,6 +15,6 @@ class Admin::UsersController < Admin::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:admin, :teacher_id)
+    params.require(:user).permit(:admin, :teacher_id, :place_id)
   end
 end

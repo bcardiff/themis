@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615214924) do
+ActiveRecord::Schema.define(version: 20150615221550) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -158,9 +158,11 @@ ActiveRecord::Schema.define(version: 20150615214924) do
     t.datetime "updated_at",                                         null: false
     t.boolean  "admin",                  limit: 1,   default: false
     t.integer  "teacher_id",             limit: 4
+    t.integer  "place_id",               limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["place_id"], name: "index_users_on_place_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["teacher_id"], name: "index_users_on_teacher_id", using: :btree
 
@@ -176,5 +178,6 @@ ActiveRecord::Schema.define(version: 20150615214924) do
   add_foreign_key "teacher_cash_incomes", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"
   add_foreign_key "teacher_course_logs", "teachers"
+  add_foreign_key "users", "places"
   add_foreign_key "users", "teachers"
 end

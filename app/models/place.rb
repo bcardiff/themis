@@ -9,6 +9,11 @@ class Place < ActiveRecord::Base
     TeacherCashIncome.where(place_id: self.id)
   end
 
+  def incomes
+    course_logs = CourseLog.arel_table
+    TeacherCashIncome.where("course_log_id IN (#{course_logs.project(:id).where(course_logs[:course_id].in(self.courses.pluck(:id))).to_sql})")
+  end
+
   def after_payment(student_payment_income)
     if commission > 0
       student_course_log = student_payment_income.student_course_log

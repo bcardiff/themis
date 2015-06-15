@@ -18,5 +18,8 @@
   - if current_user.teacher?
     %li
       = link_to 'Portal Docente', teacher_index_path
+  - if current_user.place?
+    %li
+      = link_to 'Portal Sala', place_index_path
 
 = render template: "layouts/application"

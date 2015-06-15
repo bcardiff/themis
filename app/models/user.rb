@@ -5,8 +5,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :teacher
+  belongs_to :place
 
   def teacher?
     !teacher.nil?
+  end
+
+  def place?
+    !place.nil?
   end
 end

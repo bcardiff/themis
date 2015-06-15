@@ -1,0 +1,28 @@
+.row
+  .col-md-4
+    %h1
+      Bienvenido
+      = place.name
+
+    %p
+      Se pueden hacer envios mediante el
+      = link_to 'formulario web', Settings.webform_url, target: '_blank'
+
+    %p
+      Una vez enviado el formulario podrá consultar el estado de la cuenta recargando esta página.
+
+  .col-md-8
+    %table.table
+      %tr
+        %th Fecha
+        %th= place.name
+        %th= School.description
+        %th Total
+
+      - @account_status.each do |item|
+        %tr
+          %td= item.date.to_human
+          %td= number_to_currency item.commission
+          %td= number_to_currency item.school
+          %td= number_to_currency item.total
+

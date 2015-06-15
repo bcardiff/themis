@@ -13,6 +13,10 @@ class AdminUsersListing < Listings::Base
     user.teacher.try :name
   end
 
+  column 'place' do |user|
+    user.place.try :name
+  end
+
   column '' do |user|
     link_to 'editar', admin_user_path(user)
   end
