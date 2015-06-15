@@ -5,6 +5,9 @@ class Place < ActiveRecord::Base
 
   has_many :courses
 
+  has_many :ona_submission_subscriptions, as: :follower
+  has_many :ona_submissions, through: :ona_submission_subscriptions
+
   def expenses
     TeacherCashIncome.where(place_id: self.id)
   end

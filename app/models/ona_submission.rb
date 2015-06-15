@@ -2,6 +2,7 @@ class OnaSubmission < ActiveRecord::Base
   default_scope { order('created_at desc') }
 
   serialize :data, JSON
+  has_many :ona_submission_subscriptions
 
   scope :with_error, -> { where(status: 'error') }
   scope :with_dismissed_errors, -> { where(status: 'dismiss') }
@@ -35,8 +36,19 @@ class OnaSubmission < ActiveRecord::Base
       self.log = "#{e.to_s}\n#{e.backtrace.join("\n")}"
       self.status = 'error'
     end
+    self.auto_follow
 
     self.save!
+  end
+
+  def auto_follow
+    if self.form == 'issued_class'
+      teacher_name = self.data['teacher']
+      teacher = Teacher.find_by(name: teacher_name)
+      if teacher
+        OnaSubmissionSubscription.find_or_create_by(ona_submission: self, follower: teacher)
+      end
+    end
   end
 
   def edit_data_url(ona_api)

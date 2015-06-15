@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     get '/owed_cash' => 'welcome#owed_cash', as: :owed_cash
 
     resources :course_logs, only: :show
+
+    resources :ona_submissions, only: :index
   end
 
   namespace :place do

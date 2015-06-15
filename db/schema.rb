@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615221550) do
+ActiveRecord::Schema.define(version: 20150615231707) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(version: 20150615221550) do
   end
 
   add_index "courses", ["place_id"], name: "index_courses_on_place_id", using: :btree
+
+  create_table "ona_submission_subscriptions", force: :cascade do |t|
+    t.integer  "ona_submission_id", limit: 4
+    t.integer  "follower_id",       limit: 4
+    t.string   "follower_type",     limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "ona_submissions", force: :cascade do |t|
     t.string   "form",       limit: 255

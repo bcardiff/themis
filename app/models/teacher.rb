@@ -12,6 +12,9 @@ class Teacher < ActiveRecord::Base
     end
   end
 
+  has_many :ona_submission_subscriptions, as: :follower
+  has_many :ona_submissions, through: :ona_submission_subscriptions
+
   def owed_cash
     teacher_cash_incomes.owed
   end

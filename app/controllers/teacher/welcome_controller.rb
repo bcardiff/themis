@@ -1,6 +1,4 @@
 class Teacher::WelcomeController < Teacher::BaseController
-  expose(:teacher) { current_user.teacher }
-
   def index
     start_date = Date.parse(params['start_date']) rescue Date.today
 
