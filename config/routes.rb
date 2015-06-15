@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     get '/' => 'welcome#index', as: :index
     get '/how_to' => 'welcome#how_to', as: :how_to
 
+    get '/owed_cash' => 'welcome#owed_cash', as: :owed_cash
+
     resources :course_logs, only: :show
   end
 

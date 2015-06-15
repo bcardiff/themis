@@ -8,9 +8,7 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def owed_cash
-    @incomes = teacher.owed_cash.to_a.group_by { |e| [e.date, e.course_log_id, e.type] }
-
-    @total = teacher.owed_cash_total
+    teacher_owed_cash teacher
   end
 
   def transfer_cash_income_money

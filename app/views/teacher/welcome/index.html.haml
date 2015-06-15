@@ -16,7 +16,7 @@
     - side_box 'Efectivo' do
       .row
         - side_box_data_full "a entregar a #{School.description}" do
-          = number_to_currency(@cash_not_handed)
+          = link_to number_to_currency(@cash_not_handed), teacher_owed_cash_path
         / - side_box_data 'entregados en el mes' do
         /   = number_to_currency(@handed_course_payments_in_month)
       / .row

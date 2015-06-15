@@ -3,31 +3,7 @@
   >
   Efectivo en mano
 
-%table.table
-  %tr
-    %th
-    %th(colspan=2) Alumno
-    %th(rowspan=2) Monto
-  %tr
-    %th Fecha
-    %th Curso
-    %th Motivo
-  %tr.subtotal
-    %td(colspan=3) Total
-    %td= number_to_currency @total
-  - @incomes.each do |key, items|
-    - date, course_log_id, type = key
-    %tr.subtotal
-      %td= date.to_human
-      %td= CourseLog.find(course_log_id).course.calendar_name
-      %td= items.first.kind_description
-      %td= number_to_currency items.sum(&:payment_amount)
-    - items.each do |income|
-      %tr
-        %td
-        %td(colspan=2)= income.student.display_name
-        %td= number_to_currency income.payment_amount
-
+= render 'shared/teacher_owed_cash'
 
 - if @total > 0
   = link_to 'Registrar entrega', transfer_cash_income_money_admin_teacher_path(teacher), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "Seguro desea registrar que se entregaron #{number_to_currency @total}?"

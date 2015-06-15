@@ -11,6 +11,10 @@ class Teacher::WelcomeController < Teacher::BaseController
     @teaching_expense_in_month = teacher.course_teaching_expense_per_month(start_date)
   end
 
+  def owed_cash
+    teacher_owed_cash teacher
+  end
+
   def how_to
   end
 end
