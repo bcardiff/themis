@@ -1,6 +1,6 @@
 module ApplicationHelper
   def number_to_currency(number, options = {})
-    super(number, options.reverse_merge(precision: 0, format: '%u%n'))
+    super(number, options.reverse_merge(precision: 2, format: '%u%n'))
   end
 
   def text_modal(label, title, text)

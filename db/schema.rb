@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614193041) do
+ActiveRecord::Schema.define(version: 20150615214924) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -44,7 +44,10 @@ ActiveRecord::Schema.define(version: 20150614193041) do
     t.integer  "weekday",     limit: 4
     t.date     "valid_since"
     t.date     "valid_until"
+    t.integer  "place_id",    limit: 4
   end
+
+  add_index "courses", ["place_id"], name: "index_courses_on_place_id", using: :btree
 
   create_table "ona_submissions", force: :cascade do |t|
     t.string   "form",       limit: 255
@@ -56,11 +59,19 @@ ActiveRecord::Schema.define(version: 20150614193041) do
   end
 
   create_table "payment_plans", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "description", limit: 255
-    t.decimal  "price",                   precision: 10
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.string   "code",           limit: 255
+    t.string   "description",    limit: 255
+    t.decimal  "price",                      precision: 10, scale: 2
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "weekly_classes", limit: 4
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "address",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "student_course_logs", force: :cascade do |t|
@@ -68,9 +79,9 @@ ActiveRecord::Schema.define(version: 20150614193041) do
     t.integer  "course_log_id",       limit: 4
     t.integer  "teacher_id",          limit: 4
     t.text     "payload",             limit: 65535
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.decimal  "payment_amount",                    precision: 10
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.decimal  "payment_amount",                    precision: 10, scale: 2
     t.integer  "payment_plan_id",     limit: 4
     t.integer  "ona_submission_id",   limit: 4
     t.string   "ona_submission_path", limit: 255
@@ -95,27 +106,29 @@ ActiveRecord::Schema.define(version: 20150614193041) do
   create_table "teacher_cash_incomes", force: :cascade do |t|
     t.integer  "teacher_id",            limit: 4
     t.string   "type",                  limit: 255
-    t.decimal  "payment_amount",                    precision: 10
+    t.decimal  "payment_amount",                    precision: 10, scale: 2
     t.string   "payment_status",        limit: 255
     t.datetime "transferred_at"
     t.integer  "student_course_log_id", limit: 4
     t.integer  "course_log_id",         limit: 4
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.date     "date"
+    t.integer  "place_id",              limit: 4
   end
 
   add_index "teacher_cash_incomes", ["course_log_id"], name: "index_teacher_cash_incomes_on_course_log_id", using: :btree
+  add_index "teacher_cash_incomes", ["place_id"], name: "index_teacher_cash_incomes_on_place_id", using: :btree
   add_index "teacher_cash_incomes", ["student_course_log_id"], name: "index_teacher_cash_incomes_on_student_course_log_id", using: :btree
   add_index "teacher_cash_incomes", ["teacher_id"], name: "index_teacher_cash_incomes_on_teacher_id", using: :btree
 
   create_table "teacher_course_logs", force: :cascade do |t|
     t.integer  "teacher_id",    limit: 4
     t.integer  "course_log_id", limit: 4
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.boolean  "paid",          limit: 1
-    t.decimal  "paid_amount",             precision: 10
+    t.decimal  "paid_amount",             precision: 10, scale: 2
     t.datetime "paid_at"
   end
 
@@ -125,9 +138,9 @@ ActiveRecord::Schema.define(version: 20150614193041) do
   create_table "teachers", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "card",       limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.decimal  "fee",                    precision: 10
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.decimal  "fee",                    precision: 10, scale: 2
   end
 
   create_table "users", force: :cascade do |t|
@@ -151,12 +164,14 @@ ActiveRecord::Schema.define(version: 20150614193041) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["teacher_id"], name: "index_users_on_teacher_id", using: :btree
 
+  add_foreign_key "courses", "places"
   add_foreign_key "student_course_logs", "course_logs"
   add_foreign_key "student_course_logs", "ona_submissions"
   add_foreign_key "student_course_logs", "payment_plans"
   add_foreign_key "student_course_logs", "students"
   add_foreign_key "student_course_logs", "teachers"
   add_foreign_key "teacher_cash_incomes", "course_logs"
+  add_foreign_key "teacher_cash_incomes", "places"
   add_foreign_key "teacher_cash_incomes", "student_course_logs"
   add_foreign_key "teacher_cash_incomes", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"

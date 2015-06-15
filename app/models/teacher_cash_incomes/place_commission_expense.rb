@@ -1,19 +1,18 @@
 module TeacherCashIncomes
-  class StudentPaymentIncome < StudentCourseLogIncome
+  class PlaceCommissionExpense < StudentCourseLogIncome
+    belongs_to :place
+
     def self.find_or_initialize_by_student_course_log(student_course_log)
       find_or_initialize_by student_course_log: student_course_log do |income|
       end
     end
 
     def kind_description
-      "Pago de alumno"
+      "Comisión sala"
     end
 
-    before_save do
-      place = student_course_log.course_log.course.place
-      if place
-        place.after_payment(self)
-      end
+    before_validation do
+      self.place = self.student_course_log.course_log.course.place
     end
   end
 end
