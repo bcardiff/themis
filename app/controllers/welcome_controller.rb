@@ -5,6 +5,8 @@ class WelcomeController < ApplicationController
         redirect_to admin_index_url
       elsif current_user.teacher?
         redirect_to teacher_index_url
+      elsif current_user.place?
+        redirect_to place_index_url
       end
     end
   end
