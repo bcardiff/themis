@@ -8,13 +8,15 @@ class Place < ActiveRecord::Base
   has_many :ona_submission_subscriptions, as: :follower
   has_many :ona_submissions, through: :ona_submission_subscriptions
 
+  # School expenses due to the place
   def expenses
     TeacherCashIncome.where(place_id: self.id)
   end
 
+  # School incomes relative to the place
   def incomes
     course_logs = CourseLog.arel_table
-    TeacherCashIncome.where("course_log_id IN (#{course_logs.project(:id).where(course_logs[:course_id].in(self.courses.pluck(:id))).to_sql})")
+    TeacherCashIncome.where("place_id = #{self.id} OR course_log_id IN (#{course_logs.project(:id).where(course_logs[:course_id].in(self.courses.pluck(:id))).to_sql})")
   end
 
   def after_payment(student_payment_income)
@@ -23,11 +25,28 @@ class Place < ActiveRecord::Base
       commission_expense = TeacherCashIncomes::PlaceCommissionExpense.find_or_initialize_by_student_course_log(student_course_log)
       commission_expense.payment_amount = - student_payment_income.payment_amount * commission / student_course_log.payment_plan.weekly_classes.to_f
       commission_expense.save!
+
+      after_class(student_course_log.course_log.date, student_payment_income.teacher)
+    end
+  end
+
+  def after_class(date, teacher)
+    if insurance > 0
+      if expenses.where(date: date.beginning_of_month..date-1.day).empty?
+        date_expenses = -TeacherCashIncomes::PlaceCommissionExpense.where(date: date).sum(:payment_amount)
+        insurance_expense = TeacherCashIncomes::PlaceInsuranceExpense.find_or_initialize_by_place_date(self, date, teacher)
+        insurance_expense.payment_amount = - [self.insurance - date_expenses, 0].max
+        insurance_expense.save!
+      end
     end
   end
 
   def commission
     name == CABALLITO ? 0.3 : 0
+  end
+
+  def insurance
+    name == CABALLITO ? 860 : 0
   end
 
   def expenses_total

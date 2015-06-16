@@ -4,6 +4,7 @@
 class TeacherCashIncome < ActiveRecord::Base
   belongs_to :teacher
   validates_presence_of :date
+  validates_presence_of :teacher
 
   PAYMENT_ON_TEACHER = 'teacher'
   PAYMENT_ON_SCHOOL = 'school'

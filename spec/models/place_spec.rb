@@ -13,8 +13,57 @@ RSpec.describe Place, type: :model do
     expect(place.commission).to eq(0)
   end
 
+  describe "insurance on the first expense of the month" do
+    before(:each) do
+      submit_student({
+        "student_repeat/id_kind" => "existing_card",
+        "student_repeat/card" => "465",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
+        "student_repeat/last_name" => "Doe",
+        "student_repeat/do_payment" => "yes",
+        "student_repeat/payment/kind" => plan_1w.code
+      })
+    end
+
+    it "should split commission for place" do
+      expect(caballito.expenses_total).to eq(caballito.insurance)
+    end
+
+    it "should split income-commission for teacher" do
+      expect(teacher.owed_cash_total).to eq(plan_1w.price-caballito.insurance)
+    end
+  end
+
+  describe "insurance on the class of the month event without payment" do
+    before(:each) do
+      submit_student({
+        "student_repeat/id_kind" => "existing_card",
+        "student_repeat/card" => "465",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
+        "student_repeat/last_name" => "Doe",
+        "student_repeat/do_payment" => "no",
+      })
+    end
+
+    it "should split commission for place" do
+      expect(caballito.expenses_total).to eq(caballito.insurance)
+    end
+
+    it "should split income-commission for teacher" do
+      expect(teacher.owed_cash_total).to eq(-caballito.insurance)
+    end
+  end
+
+  def assume_insurance
+    TeacherCashIncomes::PlaceInsuranceExpense.create(teacher: teacher, payment_amount: 0, place: caballito, date: Date.new(2015,05,07))
+  end
+
   describe "existing student payment" do
     before(:each) do
+      assume_insurance
+
       submit_student({
         "student_repeat/id_kind" => "existing_card",
         "student_repeat/card" => "465",
@@ -37,6 +86,8 @@ RSpec.describe Place, type: :model do
 
   describe "new student payment" do
     before(:each) do
+      assume_insurance
+
       submit_student({
         "student_repeat/id_kind" => "new_card",
         "student_repeat/card" => "465",
@@ -59,6 +110,8 @@ RSpec.describe Place, type: :model do
 
   describe "student payment with multiple weekly classes" do
     before(:each) do
+      assume_insurance
+
       submit_student({
         "student_repeat/id_kind" => "existing_card",
         "student_repeat/card" => "465",
