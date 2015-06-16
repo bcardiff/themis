@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   namespace :place do
     get '/' => 'welcome#index', as: :index
+
+    resources :ona_submissions, only: :index
   end
 
   root 'welcome#index'

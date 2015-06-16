@@ -1,6 +1,4 @@
 class Place::WelcomeController < Place::BaseController
-  expose(:place) { current_user.place }
-
   PlaceAccountStatus = Struct.new(:date, :school, :commission) do
     def total
       school + commission

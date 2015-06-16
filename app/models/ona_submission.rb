@@ -48,6 +48,14 @@ class OnaSubmission < ActiveRecord::Base
       if teacher
         OnaSubmissionSubscription.find_or_create_by(ona_submission: self, follower: teacher)
       end
+      course_code = self.data['course']
+      course = Course.find_by(code: course_code)
+      if course
+        place = course.place
+        if place
+          OnaSubmissionSubscription.find_or_create_by(ona_submission: self, follower: place)
+        end
+      end
     end
   end
 

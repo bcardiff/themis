@@ -11,6 +11,17 @@
     %p
       Una vez enviado el formulario podrá consultar el estado de la cuenta recargando esta página.
 
+    - side_box 'Recepción de formularios' do
+      .row
+        .col-md-12
+          - place.ona_submissions.with_error.count.tap do |ona_error|
+            = link_to place_ona_submissions_path do
+              - if ona_error > 0
+                %h1= ona_error
+                %label Errores
+              - else
+                OK
+
   .col-md-8
     %table.table
       %tr
