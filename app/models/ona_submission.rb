@@ -43,11 +43,19 @@ class OnaSubmission < ActiveRecord::Base
 
   def auto_follow
     if self.form == 'issued_class'
+
       teacher_name = self.data['teacher']
       teacher = Teacher.find_by(name: teacher_name)
       if teacher
         OnaSubmissionSubscription.find_or_create_by(ona_submission: self, follower: teacher)
       end
+
+      teacher_name = self.data['secondary_teacher']
+      teacher = Teacher.find_by(name: teacher_name)
+      if teacher
+        OnaSubmissionSubscription.find_or_create_by(ona_submission: self, follower: teacher)
+      end
+
       course_code = self.data['course']
       course = Course.find_by(code: course_code)
       if course
