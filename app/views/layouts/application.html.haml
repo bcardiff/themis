@@ -16,7 +16,13 @@
         .navbar-header
           = link_to 'Glims', root_url, class: 'navbar-brand'
 
-        .collapse.navbar-collapse
+          %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#navbar")
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
+        #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             = yield :nav_bar
 
