@@ -21,6 +21,24 @@ RSpec.describe Student, type: :model do
       student = create(:student)
       expect(build(:student, email: student.email)).to_not be_valid
     end
+
+    it "can't change card_code" do
+      student = create(:student, card_code: "111")
+      student.card_code = "222"
+      expect(student).to_not be_valid
+    end
+
+    it "can't remove card_code" do
+      student = create(:student, card_code: "111")
+      student.card_code = nil
+      expect(student).to_not be_valid
+    end
+
+    it "can assign card_code" do
+      student = create(:student, card_code: nil)
+      student.card_code = "222"
+      expect(student).to be_valid
+    end
   end
 
   describe "card code saved with slashes" do
@@ -83,6 +101,93 @@ RSpec.describe Student, type: :model do
       expect(Student.find_by_card('SWC stu 43')).to eq(nil)
       expect(Student.find_by_card('swc STU 42')).to eq(student)
       expect(Student.find_by_card('swc STU 43')).to eq(nil)
+    end
+  end
+
+  describe "import" do
+    it "should create new student if fresh email and no card" do
+      Student.import! "name", "last", "email@domain.com", ""
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq("name")
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq("email@domain.com")
+      expect(student.card_code).to be_nil
+    end
+
+    it "should create new student if fresh email and card" do
+      Student.import! "name", "last", "email@domain.com", "123"
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq("name")
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq("email@domain.com")
+      expect(student.card_code).to eq("SWC/stu/0123")
+    end
+
+    it "should update student matching by email" do
+      saved = create(:student, card_code: nil)
+
+      Student.import! "name", "last", saved.email, "123"
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq("name")
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq(saved.email)
+      expect(student.card_code).to eq("SWC/stu/0123")
+    end
+
+    it "should update student matching by email without removing information" do
+      saved = create(:student, card_code: nil, last_name: nil)
+
+      Student.import! "", "last", saved.email, ""
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq(saved.first_name)
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq(saved.email)
+      expect(student.card_code).to eq(saved.card_code)
+    end
+
+    it "should update student matching by card_code" do
+      saved = create(:student, email: nil)
+
+      Student.import! "name", "last", "email@domain.com", saved.card_code
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq("name")
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq("email@domain.com")
+      expect(student.card_code).to eq(saved.card_code)
+    end
+
+    it "should update student matching by card_code without removing information" do
+      saved = create(:student, email: nil, last_name: nil)
+
+      Student.import! "", "last", "email@domain.com", saved.card_code
+      expect(Student.count).to eq(1)
+      student = Student.first
+      expect(student.first_name).to eq(saved.first_name)
+      expect(student.last_name).to eq("last")
+      expect(student.email).to eq("email@domain.com")
+      expect(student.card_code).to eq(saved.card_code)
+    end
+
+    it "should fail if trying to change card" do
+      saved = create(:student, card_code: "111")
+
+      expect {
+        Student.import! "name", "last", saved.email, "222"
+      }.to raise_error
+    end
+
+    it "should fail if trying to mix students" do
+      saved1 = create(:student)
+      saved2 = create(:student)
+
+      expect {
+        Student.import! "name", "last", saved1.email, saved2.card_code
+      }.to raise_error
     end
   end
 end
