@@ -205,5 +205,16 @@ RSpec.describe Student, type: :model do
       expect(Student.last.email).to be_nil
       expect(Student.last.card_code).to be_nil
     end
+
+    it "should create students without email nor card code if duplica" do
+      Student.import! "name", "last", "", ""
+      Student.import! "name", "last", "", ""
+      expect(Student.count).to eq(1)
+
+      expect(Student.first.first_name).to eq("name")
+      expect(Student.first.last_name).to eq("last")
+      expect(Student.first.email).to be_nil
+      expect(Student.first.card_code).to be_nil
+    end
   end
 end
