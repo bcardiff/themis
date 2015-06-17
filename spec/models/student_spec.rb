@@ -189,5 +189,21 @@ RSpec.describe Student, type: :model do
         Student.import! "name", "last", saved1.email, saved2.card_code
       }.to raise_error
     end
+
+    it "should create students without email nor card code" do
+      Student.import! "name1", "last1", "", ""
+      Student.import! "name2", "last2", "", ""
+      expect(Student.count).to eq(2)
+
+      expect(Student.first.first_name).to eq("name1")
+      expect(Student.first.last_name).to eq("last1")
+      expect(Student.first.email).to be_nil
+      expect(Student.first.card_code).to be_nil
+
+      expect(Student.last.first_name).to eq("name2")
+      expect(Student.last.last_name).to eq("last2")
+      expect(Student.last.email).to be_nil
+      expect(Student.last.card_code).to be_nil
+    end
   end
 end

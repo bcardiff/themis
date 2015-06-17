@@ -33,8 +33,8 @@ class Student < ActiveRecord::Base
 
   def self.import!(first_name, last_name, email, card_code)
     first_name, last_name, email, card_code = [first_name, last_name, email, card_code].map { |x| x.strip.blank? ? nil : x.strip }
-    existing = find_by(email: email)
-    existing ||= find_by_card(card_code)
+    existing = find_by(email: email) if email
+    existing ||= find_by_card(card_code) if card_code
     if existing
       existing.first_name = first_name || existing.first_name
       existing.last_name = last_name || existing.last_name
