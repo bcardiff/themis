@@ -12,7 +12,7 @@ class AdminStudentsListing < Listings::Base
     student.created_at.to_date
   end
   column '' do |student|
-    link_to 'ver', admin_student_path(student)
+    link_to('ver', admin_student_path(student)) + ' ' + link_to('editar', edit_admin_student_path(student))
   end
 
   export :csv, :xls

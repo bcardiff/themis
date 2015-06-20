@@ -1,17 +1,17 @@
 %h1 Detalle Clase
 
 %form.form-horizontal
-  = text_field 'Id', course_log.id
-  = text_field 'Curso', course_log.course.name
-  = text_field 'Fecha', course_log.date
-  = text_field 'Estado', course_log.status
+  = plain_text_field 'Id', course_log.id
+  = plain_text_field 'Curso', course_log.course.name
+  = plain_text_field 'Fecha', course_log.date
+  = plain_text_field 'Estado', course_log.status
   - unless course_log.missing
-    = text_field 'Profesores' do
+    = plain_text_field 'Profesores' do
       %label.badge= course_log.teachers.count
 
       = render_listing :teacher_course_log_teachers
 
-    = text_field 'Alumnos' do
+    = plain_text_field 'Alumnos' do
       %label.badge= course_log.students_count
 
       = render_listing :teacher_course_log_students

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index, :show, :update]
     resources :courses, only: [:index]
-    resources :students, only: [:index, :show]
+    resources :students, only: [:index, :show, :edit, :update]
 
     resources :teachers, only: [:index, :show] do
       member do

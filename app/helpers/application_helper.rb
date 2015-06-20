@@ -8,13 +8,13 @@ module ApplicationHelper
     render partial: 'shared/text_modal', locals: { id: id, label: label , title: title, text: text }
   end
 
-  def text_field(label, value = nil)
+  def plain_text_field(label, value = nil)
     if block_given?
       value = capture do
         yield
       end
     end
-    render(partial: 'shared/text_field', locals: { label: label, value: value })
+    render(partial: 'shared/plain_text_field', locals: { label: label, value: value })
   end
 
   def side_box(title)

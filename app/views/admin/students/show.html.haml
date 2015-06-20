@@ -2,13 +2,15 @@
 .row
   .col-md-5
     %h1= student.display_name
+    %p
+      = link_to 'editar', edit_admin_student_path(student)
 
     %form.form-horizontal
-      = text_field 'Tarjeta', student.card_code
-      = text_field 'Nombre', student.first_name
-      = text_field 'Apellido', student.last_name
-      = text_field 'Email', mail_to(student.email)
-      = text_field 'Creado', student.created_at.to_date
+      = plain_text_field 'Tarjeta', student.card_code
+      = plain_text_field 'Nombre', student.first_name
+      = plain_text_field 'Apellido', student.last_name
+      = plain_text_field 'Email', mail_to(student.email)
+      = plain_text_field 'Creado', student.created_at.to_date
 
   .col-md-7
     %h3 Actividades
