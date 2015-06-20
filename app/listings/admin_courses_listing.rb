@@ -1,5 +1,5 @@
 class AdminCoursesListing < Listings::Base
-  model { Course.order(:code) }
+  model { Course.order(:weekday, :code) }
 
   scope 'Todos', :all, default: true
   scope 'Vigentes', :ongoing, -> (model) {
