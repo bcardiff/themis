@@ -43,6 +43,9 @@ Rails.application.routes.draw do
     resources :course_logs, only: :show
 
     resources :ona_submissions, only: :index
+
+    resources :students, only: [:index, :show]
+
   end
 
   namespace :place do

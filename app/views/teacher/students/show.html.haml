@@ -1,0 +1,14 @@
+
+.row
+  .col-md-5
+    %h1= student.display_name
+
+    %form.form-horizontal
+      = plain_text_field 'Tarjeta', student.card_code
+      = plain_text_field 'Nombre', student.first_name
+      = plain_text_field 'Apellido', student.last_name
+
+  .col-md-7
+    %h3 Actividades
+
+    = render_listing :admin_student_activities
