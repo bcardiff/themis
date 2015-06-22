@@ -8,6 +8,7 @@ class Student < ActiveRecord::Base
   validates_uniqueness_of :email, allow_nil: true
 
   before_validation :apply_format_card_code
+  before_validation :nil_if_empty
   validate :avoid_changing_card_code
   validates_format_of :card_code, with: /SWC\/stu\/\d\d\d\d/, allow_nil: true
 
@@ -55,6 +56,11 @@ class Student < ActiveRecord::Base
 
   def apply_format_card_code
     self.card_code = self.class.format_card_code(self.card_code)
+  end
+
+  def nil_if_empty
+    self.card_code = nil unless self.card_code.present?
+    self.email = nil unless self.email.present?
   end
 
   def avoid_changing_card_code
