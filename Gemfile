@@ -35,6 +35,7 @@ gem 'bootstrap-sass'
 gem 'haml-rails'
 gem 'simple_calendar'
 gem 'decent_exposure'
+gem 'rails-i18n'
 
 gem 'listings', :github => 'manastech/listings', :branch => 'master'
 

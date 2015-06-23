@@ -1,11 +1,14 @@
-es:
+es-AR:
   helpers:
       submit:
         student_course_log:
           create: Crear asistencia
           update: Actualizar asistencia
   listings:
+    no_data: No hay %{kind} para mostrar
+    search_placeholder: Buscar %{kind}
     export: Exportar
+    records: registros
   simple_form:
     labels:
       student_course_log:
