@@ -1,5 +1,5 @@
 class Place < ActiveRecord::Base
-  CABALLITO = 'Donarte'
+  CABALLITO = 'La Fragua'
 
   validates_presence_of :name
 

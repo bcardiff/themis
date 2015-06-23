@@ -58,7 +58,7 @@ course "CH_PRIN_MIE", name: "Charleston - Principiantes - Miércoles Sendas", we
 course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles Sendas", weekday: 3
 
 course "LH_INT1_LUN", name: "Lindy Hop - Intermedios 1 - Lunes colmegna", weekday: 1
-course "LH_INT1_MAR", name: "Lindy Hop - Intermedios 1 - Martes Gascon", weekday: 2, place: caballito
+course "LH_INT1_MAR", name: "Lindy Hop - Intermedios 1 - Martes La Fragua", weekday: 2, place: caballito
 course "LH_INT1_MIE", name: "Lindy Hop - Intermedios 1 - Miércoles Vera", weekday: 3
 course "LH_INT1_JUE", name: "Lindy Hop - Intermedios 1 - Jueves Vera", weekday: 4
 course "LH_INT1_VIE", name: "Lindy Hop - Intermedios 1 - Viernes Malcom", weekday: 5, valid_until: Date.new(2015,5,31)
@@ -71,7 +71,7 @@ course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves Vera", weekday: 
 course "LH_INT2_SAB", name: "Lindy Hop - Intermedios 2 - Sábados Sc", weekday: 6, valid_since: Date.new(2015,6,1)
 
 course "LH_PRIN_LUN", name: "Lindy Hop - Principiantes - Lunes colmegna", weekday: 1
-course "LH_PRIN_MAR2", name: "Lindy Hop - Principiantes - Martes Gascon", weekday: 2, place: caballito
+course "LH_PRIN_MAR2", name: "Lindy Hop - Principiantes - Martes La Fragua", weekday: 2, place: caballito
 course "LH_PRIN_MIE2", name: "Lindy Hop - Principiantes - Miércoles Vera", weekday: 3
 course "LH_PRIN_MIE", name: "Lindy Hop - Principiantes - Miércoles colmegna", weekday: 3, valid_until: Date.new(2015,5,31)
 course "LH_PRIN_JUE", name: "Lindy Hop - Principiantes - Jueves Vera", weekday: 4
