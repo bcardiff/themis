@@ -1,6 +1,6 @@
 class TeacherCourseLogTeachersListing < Listings::Base
   model do
-    @course_log = CourseLog.find(params[:id])
+    @course_log = CourseLog.find(params[:course_log_id] || params[:id])
     @course_log.teachers
   end
 

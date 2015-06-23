@@ -5,6 +5,9 @@
   = plain_text_field 'Curso', course_log.course.name
   = plain_text_field 'Fecha', course_log.date
   = plain_text_field 'Estado', course_log.status
+  - place = course_log.course.place
+  - if place.has_commission?
+    = plain_text_field "Comissión #{place.name}", number_to_currency(-place.expenses.where(course_log_id: course_log.id).sum(:payment_amount))
   - unless course_log.missing
     = plain_text_field 'Profesores' do
       %label.badge= course_log.teachers.count
@@ -15,3 +18,5 @@
       %label.badge= course_log.students_count
 
       = render_listing :teacher_course_log_students
+
+= render 'add_student_log'

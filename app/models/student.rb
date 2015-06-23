@@ -12,8 +12,14 @@ class Student < ActiveRecord::Base
   validate :avoid_changing_card_code
   validates_format_of :card_code, with: /SWC\/stu\/\d\d\d\d/, allow_nil: true
 
+  scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%") }
+
   def display_name
     "#{first_name} #{last_name}"
+  end
+
+  def autocomplete_display_name
+    "#{display_name} (#{card_code || 'Sin Tarjeta'})"
   end
 
   def self.find_by_card(code)

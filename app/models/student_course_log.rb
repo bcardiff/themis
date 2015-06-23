@@ -14,10 +14,12 @@ class StudentCourseLog < ActiveRecord::Base
     TeacherCashIncome.where(student_course_log_id: self.id)
   end
 
+  before_validation :clear_payment_if_no_plan
   after_save :record_teacher_cash_income
   after_save :record_student_activities
 
   validates_presence_of :student, :course_log, :id_kind
+  validates :student, uniqueness: { scope: :course_log_id, message: "No puede repetirse el alumno en una clase" }
   validate :validate_teacher_in_course_log
   validate :validate_teacher_if_paying
 
@@ -119,11 +121,13 @@ class StudentCourseLog < ActiveRecord::Base
       income.save!
     end
 
+    income = TeacherCashIncomes::StudentPaymentIncome.find_or_initialize_by_student_course_log(self)
     if payment_plan
-      income = TeacherCashIncomes::StudentPaymentIncome.find_or_initialize_by_student_course_log(self)
       # TODO should update only if not transfered TeacherCashIncomes?
       income.payment_amount = payment_plan.price_or_fallback(payment_amount)
       income.save!
+    elsif income.persisted?
+      income.destroy!
     end
   end
 
@@ -134,4 +138,13 @@ class StudentCourseLog < ActiveRecord::Base
     end
   end
 
+  def clear_payment_if_no_plan
+    if self.payment_plan.nil?
+      self.payment_amount = nil
+    end
+  end
+
+  def can_edit?(user)
+    user.admin?
+  end
 end

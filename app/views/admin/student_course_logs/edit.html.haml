@@ -1,0 +1,19 @@
+%h2 Editar Asistencia
+
+= link_to 'Volver', [:admin, course_log]
+
+= simple_form_for([:admin, course_log, student_course_log], html: { class: 'form-horizontal' }) do |f|
+
+  = plain_text_field 'id_kind', student_course_log.id_kind
+  = plain_text_field 'Student', student_course_log.student.autocomplete_display_name
+
+
+  = f.association :teacher
+
+  = f.association :payment_plan, label_method: :description
+
+  = f.input :payment_amount
+
+  = f.button :submit
+
+

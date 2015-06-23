@@ -30,6 +30,12 @@ class Place < ActiveRecord::Base
     end
   end
 
+  def after_payment_destroy(student_payment_income)
+    student_course_log = student_payment_income.student_course_log
+    commission_expense = TeacherCashIncomes::PlaceCommissionExpense.find_or_initialize_by_student_course_log(student_course_log)
+    commission_expense.destroy!
+  end
+
   def after_class(date, teacher)
     if insurance > 0
       if expenses.where(date: date.beginning_of_month..date-1.day).empty?
@@ -39,6 +45,10 @@ class Place < ActiveRecord::Base
         insurance_expense.save!
       end
     end
+  end
+
+  def has_commission?
+    name == CABALLITO
   end
 
   def commission

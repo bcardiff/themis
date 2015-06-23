@@ -1,0 +1,22 @@
+%h2 Agregar Asistencia
+
+/ %ul.nav.nav-tabs
+/   %li.active Alumno existente
+/   %li Alumno nuevo
+/   %li Visitante
+
+= simple_form_for([:admin, course_log, @new_student_course_log], html: { class: 'form-horizontal' }) do |f|
+
+  = f.hidden_field :id_kind, value: "existing_card"
+
+  = f.input :student, :as => :autocomplete, :source_query => autocomplete_student_admin_course_logs_url, input_html: { value: @new_student_course_log.student.try(:autocomplete_display_name)}
+
+  = f.association :teacher, selected: course_log.suggested_teacher.try(:id), include_blank: true
+
+  = f.association :payment_plan, label_method: :description
+
+  = f.input :payment_amount
+
+  = f.button :submit
+
+

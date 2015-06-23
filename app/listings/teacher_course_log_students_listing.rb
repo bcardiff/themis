@@ -1,6 +1,6 @@
 class TeacherCourseLogStudentsListing < Listings::Base
   model do
-    @course_log = CourseLog.find(params[:id])
+    @course_log = CourseLog.find(params[:course_log_id] || params[:id])
     @course_log.students
   end
 
@@ -17,10 +17,23 @@ class TeacherCourseLogStudentsListing < Listings::Base
   column :first_name, searchable: true
   column :last_name, searchable: true
   column 'Pago' do |student|
-    payment_amount = find_student_log(student).incomes.sum(:payment_amount)
+    incomes = find_student_log(student).incomes
+
+    payment_amount = incomes.where('type <> "TeacherCashIncomes::PlaceCommissionExpense"').sum(:payment_amount)
+
     if payment_amount > 0
-      number_to_currency payment_amount
+      res = number_to_currency payment_amount
     end
+
+    if course_log.course.place.has_commission?
+      school_incomes = incomes.sum(:payment_amount)
+      place_expenses = -incomes.where(type: 'TeacherCashIncomes::PlaceCommissionExpense').sum(:payment_amount)
+      if school_incomes > 0 || place_expenses > 0
+        res = "#{res} (#{number_to_currency school_incomes} / #{number_to_currency place_expenses})"
+      end
+    end
+
+    res
   end
 
   column 'Tipo' do |student|
@@ -29,8 +42,7 @@ class TeacherCourseLogStudentsListing < Listings::Base
   end
 
   column '' do |student|
-    student_log = find_student_log(student)
-    text_modal('...', 'Payload', JSON.pretty_generate(JSON.parse(student_log.payload)))
+    render partial: 'shared/student_course_log_actions', locals: {student: student, student_course_log: find_student_log(student) }
   end
 
   export :csv, :xls

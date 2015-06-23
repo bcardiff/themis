@@ -31,7 +31,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :course_logs, only: :show
+    resources :course_logs, only: :show do
+      resources :student_course_logs, only: [:create, :edit, :update]
+
+      get :autocomplete_student, :on => :collection
+    end
   end
 
   namespace :teacher do
