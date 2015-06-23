@@ -202,6 +202,10 @@ RSpec.describe CourseLog, type: :model do
         it "should leave place expenses in zero" do
           expect(caballito.expenses.count).to eq(0)
         end
+
+        it "should leave no logs" do
+          expect(ActivityLog.count).to eq(0)
+        end
       end
 
       context "with new students with further activities" do
@@ -356,6 +360,10 @@ RSpec.describe CourseLog, type: :model do
 
         it "should not delete student" do
           expect(Student.count).to eq(1)
+        end
+
+        it "should leave other activies" do
+          expect(ActivityLog.count).to eq(1)
         end
 
         it "should leave course_log as missing" do

@@ -4,4 +4,8 @@ class ActivityLogs::Student::CourseAttended < ActivityLog
       date: course_log.date,
       description: "Asistió a #{course_log.calendar_name}.")
   end
+
+  def self.for(student, course_log)
+    where(target: student, related: course_log, date: course_log.date)
+  end
 end

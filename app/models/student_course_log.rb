@@ -27,6 +27,9 @@ class StudentCourseLog < ActiveRecord::Base
 
   before_destroy do
     self.incomes.each { |i| i.destroy! }
+
+    ActivityLogs::Student::CourseAttended.for(student, course_log).each { |i| i.destroy! }
+    ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
   end
 
   def validate_teacher_in_course_log
