@@ -41,6 +41,14 @@ class Admin::StudentCourseLogsController < Admin::BaseController
     end
   end
 
+  def destroy
+    if student_course_log.destroy
+      redirect_to [:admin, course_log]
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def ensure_student_course_log_params

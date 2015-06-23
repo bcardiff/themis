@@ -25,7 +25,9 @@ class StudentCourseLog < ActiveRecord::Base
 
   scope :with_payment, -> { where.not(payment_status: nil) }
 
-  # TODO on delete, delete teacher income?
+  before_destroy do
+    self.incomes.each { |i| i.destroy! }
+  end
 
   def validate_teacher_in_course_log
     # return unless teacher && course_log
@@ -115,7 +117,6 @@ class StudentCourseLog < ActiveRecord::Base
 
     student = existing_log.student
 
-    existing_log.incomes.each { |i| i.destroy! }
     existing_log.destroy!
 
     case id_kind

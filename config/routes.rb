@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     end
 
     resources :course_logs, only: :show do
-      resources :student_course_logs, only: [:create, :edit, :update]
+      resources :student_course_logs, only: [:create, :edit, :update, :destroy]
 
       get :autocomplete_student, :on => :collection
     end
