@@ -18,7 +18,7 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def stats
-    @global_stats = { count: 0, student_ids: {} }
+    @global_stats = empty_stat_entry
     @stats = {}
     @stats_by_track = {}
     @stats_by_wday = {}
@@ -27,13 +27,13 @@ class Admin::StudentsController < Admin::BaseController
       count_stat_entry @global_stats, student_course_log
 
       weekday_entry = @stats[student_course_log.course_log.course.weekday] ||= {}
-      stat_entry = weekday_entry[student_course_log.course_log.course.track.code] ||= { count: 0, student_ids: {} }
+      stat_entry = weekday_entry[student_course_log.course_log.course.track.code] ||= empty_stat_entry
       count_stat_entry stat_entry, student_course_log
 
-      bytrack_entry = @stats_by_track[student_course_log.course_log.course.track.code] ||= { count: 0, student_ids: {} }
+      bytrack_entry = @stats_by_track[student_course_log.course_log.course.track.code] ||= empty_stat_entry
       count_stat_entry bytrack_entry, student_course_log
 
-      bywday_entry = @stats_by_wday[student_course_log.course_log.course.weekday] ||= { count: 0, student_ids: {} }
+      bywday_entry = @stats_by_wday[student_course_log.course_log.course.weekday] ||= empty_stat_entry
       count_stat_entry bywday_entry, student_course_log
     end
 
@@ -53,9 +53,14 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def count_stat_entry(stat_entry, student_course_log)
+    stat_entry[:total_count] = stat_entry[:total_count] + 1
     unless stat_entry[:student_ids][student_course_log.student_id]
       stat_entry[:count] = stat_entry[:count] + 1
       stat_entry[:student_ids][student_course_log.student_id] = true
     end
+  end
+
+  def empty_stat_entry
+    { count: 0, total_count: 0, student_ids: {} }
   end
 end
