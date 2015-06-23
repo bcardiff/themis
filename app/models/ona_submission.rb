@@ -7,12 +7,16 @@ class OnaSubmission < ActiveRecord::Base
   scope :with_error, -> { where(status: 'error') }
   scope :with_dismissed_errors, -> { where(status: 'dismiss') }
 
+  def can_yank?
+    self.status == 'done' # && ... payments were not transfered ...
+  end
+
   def can_dismiss?
-    self.status == 'error'
+    self.status == 'error' || self.status == 'yanked'
   end
 
   def can_edit?
-    self.status == 'error'
+    self.status == 'error' || self.status == 'yanked'
   end
 
   def dismiss!
@@ -37,6 +41,26 @@ class OnaSubmission < ActiveRecord::Base
       self.status = 'error'
     end
     self.auto_follow
+
+    self.save!
+  end
+
+  def yank!
+    begin
+      CourseLog.transaction(requires_new: true) do
+        if self.form == 'issued_class'
+          CourseLog.yank self.data, self
+        else
+          raise "unable to yank '#{self.form}' form"
+        end
+        self.log = nil
+        self.status = 'yanked'
+      end
+    rescue Exception => e
+      self.log = "#{e.to_s}\n#{e.backtrace.join("\n")}"
+      self.save!
+      raise e
+    end
 
     self.save!
   end

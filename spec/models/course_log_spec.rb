@@ -150,4 +150,319 @@ RSpec.describe CourseLog, type: :model do
       expect(create(:course_log).students_count).to eq(0)
     end
   end
+
+  describe "yank ona submission" do
+    let(:caballito) { create(:place, name: Place::CABALLITO) }
+    let(:caballito_course) { create(:course, weekday: 4, place: caballito) }
+    let(:other_course) { create(:course, weekday: 4) }
+    let(:teacher) { create(:teacher) }
+    let(:plan) { create(:payment_plan, weekly_classes: 1) }
+
+    context "yanking all student_course_logs" do
+
+      context "with new students without further activities" do
+
+        before(:each) {
+          @submission = submit_student({
+            "student_repeat/id_kind" => "new_card",
+            "student_repeat/card" => "465",
+            "student_repeat/email" => "johndoe@email.com",
+            "student_repeat/first_name" => "John",
+            "student_repeat/last_name" => "Doe",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan.code
+          })
+
+          submission.yank!
+        }
+
+        let(:submission) { OnaSubmission.find(@submission.id) }
+        let(:course_log) { CourseLog.first }
+
+        it "should leave submission as yanked" do
+          expect(submission.status).to eq('yanked')
+        end
+
+        it "should delete student" do
+          expect(Student.count).to eq(0)
+        end
+
+        it "should delete student_course_log" do
+          expect(StudentCourseLog.count).to eq(0)
+        end
+
+        it "should leave course_log as missing" do
+          expect(course_log.missing).to be_truthy
+        end
+
+        it "should leave no teachers in course_log" do
+          expect(course_log.teachers.count).to eq(0)
+        end
+
+        it "should leave place expenses in zero" do
+          expect(caballito.expenses.count).to eq(0)
+        end
+      end
+
+      context "with new students with further activities" do
+        before(:each) {
+          @submission = submit_student({
+            "student_repeat/id_kind" => "new_card",
+            "student_repeat/card" => "465",
+            "student_repeat/email" => "johndoe@email.com",
+            "student_repeat/first_name" => "John",
+            "student_repeat/last_name" => "Doe",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan.code
+          })
+
+          submit_student(other_course, {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "465",
+            "student_repeat/do_payment" => "no",
+          })
+
+        }
+
+        let(:submission) { OnaSubmission.find(@submission.id) }
+        let(:course_log) { CourseLog.first }
+
+        it "should fail" do
+          expect {
+            submission.yank!
+          }.to raise_error
+        end
+
+        # it "should leave submission as yanked"
+        # it "should not delete student"
+        # it "should leave course_log as missing"
+        # it "should leave no teachers in course_log"
+        # it "should leave place expenses in zero"
+      end
+
+      context "with new guests without further activities" do
+        before(:each) {
+          @submission = submit_student({
+            "student_repeat/id_kind" => "guest",
+            "student_repeat/card" => "465",
+            "student_repeat/email" => "johndoe@email.com",
+            "student_repeat/first_name" => "John",
+            "student_repeat/last_name" => "Doe",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan.code
+          })
+
+          submission.yank!
+        }
+
+        let(:submission) { OnaSubmission.find(@submission.id) }
+        let(:course_log) { CourseLog.first }
+
+        it "should leave submission as yanked" do
+          expect(submission.status).to eq('yanked')
+        end
+
+        it "should delete student" do
+          expect(Student.count).to eq(0)
+        end
+
+        it "should delete student_course_log" do
+          expect(StudentCourseLog.count).to eq(0)
+        end
+
+        it "should leave course_log as missing" do
+          expect(course_log.missing).to be_truthy
+        end
+
+        it "should leave no teachers in course_log" do
+          expect(course_log.teachers.count).to eq(0)
+        end
+
+        it "should leave place expenses in zero" do
+          expect(caballito.expenses.count).to eq(0)
+        end
+      end
+
+      context "with new guests with further activities" do
+        before(:each) {
+          @submission = submit_student({
+            "student_repeat/id_kind" => "guest",
+            "student_repeat/email" => "johndoe@email.com",
+            "student_repeat/first_name" => "John",
+            "student_repeat/last_name" => "Doe",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan.code
+          })
+
+          submit_student(other_course, {
+            "student_repeat/id_kind" => "guest",
+            "student_repeat/email" => "johndoe@email.com",
+            "student_repeat/first_name" => "John",
+            "student_repeat/last_name" => "Doe",
+            "student_repeat/do_payment" => "no",
+          })
+
+          submission.yank!
+        }
+
+        let(:submission) { OnaSubmission.find(@submission.id) }
+        let(:course_log) { CourseLog.first }
+
+        it "should leave submission as yanked" do
+          expect(submission.status).to eq('yanked')
+        end
+
+        it "should not delete student" do
+          expect(Student.count).to eq(1)
+        end
+
+        it "should leave course_log as missing" do
+          expect(course_log.missing).to be_truthy
+        end
+
+        it "should leave no teachers in course_log" do
+          expect(course_log.teachers.count).to eq(0)
+        end
+
+        it "should leave place expenses in zero" do
+          expect(caballito.expenses.count).to eq(0)
+        end
+      end
+
+      context "with existing student" do
+        before(:each) {
+          @submission = submit_student({
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "465",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan.code
+          })
+
+          submit_student(other_course, {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "465",
+            "student_repeat/do_payment" => "no",
+          })
+
+          submission.yank!
+        }
+
+        let(:submission) { OnaSubmission.find(@submission.id) }
+        let(:course_log) { CourseLog.first }
+
+        it "should leave submission as yanked" do
+          expect(submission.status).to eq('yanked')
+        end
+
+        it "should not delete student" do
+          expect(Student.count).to eq(1)
+        end
+
+        it "should leave course_log as missing" do
+          expect(course_log.missing).to be_truthy
+        end
+
+        it "should leave no teachers in course_log" do
+          expect(course_log.teachers.count).to eq(0)
+        end
+
+        it "should leave place expenses in zero" do
+          expect(caballito.expenses.count).to eq(0)
+        end
+      end
+    end
+
+    context "yanking some student_course_logs" do
+      before(:each) {
+        @submission = submit_student({
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/card" => "465",
+          "student_repeat/do_payment" => "no",
+        })
+
+        submit_student({
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/card" => "465",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => plan.code
+        })
+
+        submission.yank!
+      }
+
+      let(:submission) { OnaSubmission.find(@submission.id) }
+      let(:course_log) { CourseLog.first }
+
+      it "should leave submission as yanked" do
+        expect(submission.status).to eq('yanked')
+      end
+
+      it "should not delete student" do
+        expect(Student.count).to eq(1)
+      end
+
+      it "should not leave course_log as missing" do
+        expect(course_log.missing).to be_falsey
+      end
+
+      it "should leave teachers in course_log" do
+        expect(course_log.teachers.count).to eq(1)
+      end
+
+      it "should not leave place expenses in zero" do
+        expect(caballito.expenses.count).to_not eq(0)
+      end
+    end
+
+    context "yanking student_course_logs with transferred money" do
+      before(:each) {
+        @submission = submit_student({
+          "student_repeat/id_kind" => "existing_card",
+          "student_repeat/card" => "465",
+          "student_repeat/do_payment" => "yes",
+          "student_repeat/payment/kind" => plan.code
+        })
+
+        teacher.transfer_cash_income_money
+      }
+
+      let(:submission) { OnaSubmission.find(@submission.id) }
+      let(:course_log) { CourseLog.first }
+
+      it "should fail" do
+        expect {
+          submission.yank!
+        }.to raise_error
+      end
+    end
+
+    def submit_student(*student_payload)
+      if student_payload.first.is_a? Course
+        course, *student_payload = student_payload
+      else
+        course = caballito_course
+      end
+
+      issued_class({
+        "date" => "2015-05-14",
+        "course" => course.code,
+        "teacher" => teacher.name,
+        "student_repeat" => student_payload
+      })
+    end
+
+    def issued_class(payload, _raise = true)
+      s = OnaSubmission.create form: 'issued_class', data: payload, status: 'pending'
+      result = s.process! _raise
+
+      reload_entities
+
+      s
+    end
+
+    def reload_entities
+      entities = [teacher, caballito_course, caballito]
+      entities.map &:reload
+    end
+  end
 end

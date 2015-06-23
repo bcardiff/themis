@@ -61,6 +61,25 @@ class CourseLog < ActiveRecord::Base
     end
   end
 
+  def self.yank(data, ona_submission)
+    for_course_on_date(data['course'], data['date']) do |course_log|
+      (data['student_repeat'] || []).each_with_index do |student_payload, index|
+        StudentCourseLog.yank(course_log, student_payload, ona_submission, "student_repeat[#{index}]")
+      end
+
+      if course_log.students.count == 0
+        course_log.teacher_course_logs.each { |tcl| tcl.destroy! }
+
+        course_log.missing = true
+
+        if course_log.course.place
+          course_log.course.place.after_class_yank(course_log.date)
+        end
+      end
+    end
+  end
+
+
   def self.for_course_on_date(course_code, date)
     course = Course.find_by!(code: course_code)
     date = Date.parse(date) unless date.is_a? Date

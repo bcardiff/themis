@@ -17,4 +17,10 @@ class TeacherCashIncome < ActiveRecord::Base
     self.payment_status = PAYMENT_ON_TEACHER
   end
 
+  before_destroy do
+    if self.payment_status == PAYMENT_ON_SCHOOL
+      return false
+    end
+  end
+
 end

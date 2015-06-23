@@ -83,10 +83,9 @@ class StudentCourseLog < ActiveRecord::Base
     student_log.id_kind = id_kind
     student_log.payload = payload.to_json
     student_log.teacher = teacher
-    if student_log.new_record?
-      student_log.ona_submission = ona_submission
-      student_log.ona_submission_path = ona_submission_path
-    end
+    # keep last ona_submission that affect the student_log
+    student_log.ona_submission = ona_submission
+    student_log.ona_submission_path = ona_submission_path
 
     if do_payment == "yes"
       # TODO error handling
@@ -98,6 +97,39 @@ class StudentCourseLog < ActiveRecord::Base
     end
 
     student_log.save!
+  end
+
+  def self.yank(course_log, payload, ona_submission, ona_submission_path)
+    id_kind = payload["student_repeat/id_kind"]
+    card = payload["student_repeat/cardtxt"]
+    card = payload["student_repeat/card"] if card.blank?
+    email = payload["student_repeat/email"]
+    first_name = payload["student_repeat/first_name"]
+    last_name = payload["student_repeat/last_name"]
+    do_payment = payload["student_repeat/do_payment"]
+    payment_kind = payload["student_repeat/payment/kind"]
+    payment_amount = payload["student_repeat/payment/amount"]
+
+    existing_log = StudentCourseLog.where(ona_submission: ona_submission, ona_submission_path: ona_submission_path).first
+    return unless existing_log
+
+    student = existing_log.student
+
+    existing_log.incomes.each { |i| i.destroy! }
+    existing_log.destroy!
+
+    case id_kind
+    when "new_card"
+      student.destroy!
+    when "guest"
+      if student.student_course_logs.count == 0
+        student.destroy!
+      end
+    when "existing_card"
+      # nothing to do
+    else
+      raise 'not supported id_kind'
+    end
   end
 
   def record_teacher_cash_income

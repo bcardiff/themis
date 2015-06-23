@@ -4,6 +4,9 @@
   - if s.can_dismiss?
     = link_to 'ignorar', dismiss_admin_ona_submission_path(id: s.id), method: :post, class: 'btn btn-default btn-xs'
 
+  - if s.can_yank?
+    = link_to 'deshacer', yank_admin_ona_submission_path(id: s.id), method: :post, class: 'btn btn-danger btn-xs', :'data-confirm' => "¿Seguro desea deshacer el formulario?"
+
   - if s.can_edit?
     = link_to 'editar ona', ona_edit_admin_ona_submission_path(id: s.id), target: '_blank', class: 'btn btn-default btn-xs'
 

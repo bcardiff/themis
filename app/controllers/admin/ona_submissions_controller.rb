@@ -18,6 +18,12 @@ class Admin::OnaSubmissionsController < Admin::BaseController
     redirect_to :admin_ona_submissions
   end
 
+  def yank
+    OnaSubmission.find(params[:id]).yank!
+    # TODO alert
+    redirect_to :admin_ona_submissions
+  end
+
   def pull_from_ona
     s = OnaSubmission.find(params[:id])
     s.pull_from_ona!(@ona_api)

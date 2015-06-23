@@ -39,11 +39,17 @@ class Place < ActiveRecord::Base
   def after_class(date, teacher)
     if insurance > 0
       if expenses.where(date: date.beginning_of_month..date-1.day).empty?
-        date_expenses = -TeacherCashIncomes::PlaceCommissionExpense.where(date: date).sum(:payment_amount)
+        date_expenses = -TeacherCashIncomes::PlaceCommissionExpense.where(place: self, date: date).sum(:payment_amount)
         insurance_expense = TeacherCashIncomes::PlaceInsuranceExpense.find_or_initialize_by_place_date(self, date, teacher)
         insurance_expense.payment_amount = - [self.insurance - date_expenses, 0].max
         insurance_expense.save!
       end
+    end
+  end
+
+  def after_class_yank(date)
+    if insurance > 0
+      TeacherCashIncomes::PlaceInsuranceExpense.where(place: self, date: date).each { |i| i.destroy! }
     end
   end
 
