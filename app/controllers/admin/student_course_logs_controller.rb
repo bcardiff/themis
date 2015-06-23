@@ -6,6 +6,20 @@ class Admin::StudentCourseLogsController < Admin::BaseController
     course_log.missing = false
     course_log.save!
 
+    case student_course_log.id_kind
+    when "new_card"
+      student_data = params[:student_course_log][:student]
+
+      student_course_log.student = Student.find_or_initialize_by_card student_data[:card_code]
+      student_course_log.student.update_as_new_card!(student_data[:first_name], student_data[:last_name], student_data[:email])
+    when "existing_card"
+      # student is referenced by id
+    when "guest"
+      student_data = params[:student_course_log][:student]
+      student_course_log.student = Student.find_or_initialize_by_email student_data[:email]
+      student_course_log.student.update_as_guest!(student_data[:first_name], student_data[:last_name])
+    end
+
     ensure_student_course_log_params
 
     @new_student_course_log = student_course_log

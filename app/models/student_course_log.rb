@@ -62,12 +62,7 @@ class StudentCourseLog < ActiveRecord::Base
     case id_kind
     when "new_card"
       student ||= Student.find_or_initialize_by_card card
-      if student.new_record? || student.first_name == Student::UNKOWN || student.email == nil
-        student.first_name = first_name
-        student.last_name = last_name
-        student.email = email
-        student.save!
-      end
+      student.update_as_new_card!(first_name, last_name, email)
     when "existing_card"
       student ||= Student.find_or_initialize_by_card card
       if student.new_record?
@@ -77,18 +72,8 @@ class StudentCourseLog < ActiveRecord::Base
         student.save!
       end
     when "guest"
-      if email.blank?
-        student ||= Student.new email: nil
-      else
-        student ||= Student.find_or_initialize_by email: email
-      end
-
-      if student.new_record?
-        student.card_code = nil
-        student.first_name = first_name || Student::UNKOWN
-        student.last_name = last_name || Student::UNKOWN
-        student.save!
-      end
+      student ||= Student.find_or_initialize_by_email email
+      student.update_as_guest!(first_name, last_name)
     else
       raise 'not supported id_kind'
     end

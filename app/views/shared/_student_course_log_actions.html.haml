@@ -2,4 +2,4 @@
   = text_modal('...', 'Payload', JSON.pretty_generate(JSON.parse(student_course_log.payload)))
 
 - if student_course_log.can_edit?(current_user)
-  = link_to 'Edit', [:edit, :admin, student_course_log.course_log, student_course_log]
+  = link_to 'Editar', [:edit, :admin, student_course_log.course_log, student_course_log]

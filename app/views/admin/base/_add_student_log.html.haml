@@ -1,22 +1,65 @@
 %h2 Agregar Asistencia
 
-/ %ul.nav.nav-tabs
-/   %li.active Alumno existente
-/   %li Alumno nuevo
-/   %li Visitante
+%div
+  %ul.nav.nav-tabs
+    %li
+      %a(href="#existing_card" data-toggle="tab") Alumno existente
+    %li
+      %a(href="#new_card" data-toggle="tab") Alumno nuevo
+    %li{:class => "#{'active' if @new_student_course_log.id_kind == 'guest'}" }
+      %a(href="#guest" data-toggle="tab") Visitante
 
-= simple_form_for([:admin, course_log, @new_student_course_log], html: { class: 'form-horizontal' }) do |f|
+  .tab-content
+    #existing_card.tab-pane
+      = simple_form_for([:admin, course_log, @new_student_course_log], html: { class: 'form-horizontal' }) do |f|
 
-  = f.hidden_field :id_kind, value: "existing_card"
+        = f.hidden_field :id_kind, value: "existing_card"
 
-  = f.input :student, :as => :autocomplete, :source_query => autocomplete_student_admin_course_logs_url, input_html: { value: @new_student_course_log.student.try(:autocomplete_display_name)}
+        = f.input :student, :as => :autocomplete, :source_query => autocomplete_student_admin_course_logs_url, input_html: { value: @new_student_course_log.student.try(:autocomplete_display_name)}
 
-  = f.association :teacher, selected: course_log.suggested_teacher.try(:id), include_blank: true
+        = f.association :teacher, selected: course_log.suggested_teacher.try(:id), include_blank: true
 
-  = f.association :payment_plan, label_method: :description
+        = f.association :payment_plan, label_method: :description
 
-  = f.input :payment_amount
+        = f.input :payment_amount
 
-  = f.button :submit
+        = f.button :submit
 
+    #new_card.tab-pane
+      = simple_form_for([:admin, course_log, @new_student_course_log], html: { class: 'form-horizontal' }) do |f|
 
+        = f.hidden_field :id_kind, value: "new_card"
+
+        = plain_text_field 'Tarjeta', "Recuerde cobrar los $#{TeacherCashIncomes::NewCardIncome::FEE} por la tarjeta. Se los registra automáticamente."
+
+        = f.simple_fields_for :student do |s|
+          = s.input :card_code
+          = s.input :first_name
+          = s.input :last_name
+          = s.input :email
+
+        = f.association :teacher, selected: course_log.suggested_teacher.try(:id), include_blank: true
+
+        = f.association :payment_plan, label_method: :description
+
+        = f.input :payment_amount
+
+        = f.button :submit
+
+    #guest.tab-pane{:class => "#{'active' if @new_student_course_log.id_kind == 'guest'}" }
+      = simple_form_for([:admin, course_log, @new_student_course_log], html: { class: 'form-horizontal' }) do |f|
+
+        = f.hidden_field :id_kind, value: "guest"
+
+        = f.simple_fields_for :student do |s|
+          = s.input :first_name
+          = s.input :last_name
+          = s.input :email
+
+        = f.association :teacher, selected: course_log.suggested_teacher.try(:id), include_blank: true
+
+        = f.association :payment_plan, label_method: :description
+
+        = f.input :payment_amount
+
+        = f.button :submit

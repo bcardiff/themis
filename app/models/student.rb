@@ -30,6 +30,15 @@ class Student < ActiveRecord::Base
     find_or_initialize_by(card_code: format_card_code(code))
   end
 
+  def self.find_or_initialize_by_email(email)
+    if email.blank?
+      Student.new email: nil
+    else
+      Student.find_or_initialize_by email: email
+    end
+  end
+
+
   def self.format_card_code(code)
     if code.blank?
       nil
@@ -55,6 +64,24 @@ class Student < ActiveRecord::Base
       existing.save!
     else
       self.create! first_name: first_name, last_name: last_name, email: email, card_code: card_code
+    end
+  end
+
+  def update_as_guest!(first_name, last_name)
+    if self.new_record?
+      self.card_code = nil
+      self.first_name = first_name || Student::UNKOWN
+      self.last_name = last_name || Student::UNKOWN
+      self.save!
+    end
+  end
+
+  def update_as_new_card!(first_name, last_name, email)
+    if self.new_record? || self.first_name == Student::UNKOWN || self.email == nil
+      self.first_name = first_name
+      self.last_name = last_name
+      self.email = email
+      self.save!
     end
   end
 
