@@ -15,6 +15,8 @@
           = link_to 'Cursos', admin_courses_path
         %li
           = link_to 'Usuarios', admin_users_path
+        %li
+          = link_to 'Estadísticas', stats_admin_students_path
   - if current_user.teacher?
     %li.dropdown
       %a.dropdown-toggle(href="#" data-toggle="dropdown")

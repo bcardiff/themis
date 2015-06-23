@@ -1,0 +1,10 @@
+%h1
+  = link_to 'Estadísticas. Alumnos Activos', stats_admin_students_path
+
+%h2= "#{@track.try :code} #{Date::DAYNAMES[@wday] if @wday.present?}"
+
+= render_listing :admin_stats_details
+
+
+
+

@@ -1,5 +1,6 @@
 class Student < ActiveRecord::Base
   has_many :activity_logs, as: :target
+  has_many :student_course_logs
 
   UNKOWN = "N/A"
 

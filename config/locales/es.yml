@@ -4,6 +4,8 @@ es:
         student_course_log:
           create: Crear asistencia
           update: Actualizar asistencia
+  listings:
+    export: Exportar
   simple_form:
     labels:
       student_course_log:

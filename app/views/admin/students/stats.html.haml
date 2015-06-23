@@ -1,0 +1,35 @@
+%h1 Estadísticas. Alumnos Activos
+
+%table.table.table-bordered
+  %tr
+    %th
+    %th Total
+    - @weekdays.each do |wday|
+      %th
+        = Date::DAYNAMES[wday]
+
+  %tr
+    %th Total
+    %th
+      = link_to @global_stats[:count], stats_details_admin_students_path
+
+    - @weekdays.each do |wday|
+      %td
+        - count = @stats_by_wday[wday].try { |h| h[:count] }
+        - if count
+          = link_to count, stats_details_admin_students_path(wday: wday)
+
+  - @tracks.each do |track|
+    %tr
+      %th= track.code
+      %td
+        - count = @stats_by_track[track.code].try { |h| h[:count] }
+        - if count
+          = link_to count, stats_details_admin_students_path(track_id: track.id)
+
+      - @weekdays.each do |wday|
+        %td
+          - count = @stats[wday].try { |h| h[track.code] }.try { |h| h[:count] }
+          - if count
+            = link_to count, stats_details_admin_students_path(wday: wday, track_id: track.id)
+

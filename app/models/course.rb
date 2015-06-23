@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
   has_many :course_logs
   belongs_to :place
+  belongs_to :track
 
   validates_presence_of :weekday, :valid_since
 
