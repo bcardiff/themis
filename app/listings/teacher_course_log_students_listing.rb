@@ -25,7 +25,7 @@ class TeacherCourseLogStudentsListing < Listings::Base
       res = number_to_currency payment_amount
     end
 
-    if course_log.course.place.has_commission?
+    if course_log.course.place.try :has_commission?
       school_incomes = incomes.sum(:payment_amount)
       place_expenses = -incomes.where(type: 'TeacherCashIncomes::PlaceCommissionExpense').sum(:payment_amount)
       if school_incomes > 0 || place_expenses > 0
