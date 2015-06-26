@@ -94,6 +94,7 @@ course "TP_INT1_MAR", name: "Tap - Intermedios 1 - Martes La huella", weekday: 2
 course "TP_INT1_VIE", name: "Tap - Intermedios 1 - Viernes La huella", weekday: 5, valid_since: Date.new(2015,6,1), track: track("TP_INT1")
 
 payment_plan "3_MESES", description: "3 Meses 1 x Semana $550", price: 550, weekly_classes: 1
+payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $500", price: 500, weekly_classes: 3
 payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $350", price: 350, weekly_classes: 2
 payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $250", price: 250, weekly_classes: 1
 payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $300", price: 300, weekly_classes: 1
