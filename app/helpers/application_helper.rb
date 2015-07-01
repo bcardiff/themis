@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def local_wday(wday)
+    I18n.t('date.day_names')[wday]
+  end
+
   def number_to_currency(number, options = {})
     super(number, options.reverse_merge(precision: 2, format: '%u%n'))
   end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/' => 'welcome#index', as: :index
     get 'teacher_cash_incomes' => 'welcome#teacher_cash_incomes'
     get 'teacher_courses' => 'welcome#teacher_courses'
+    get 'horarios_wp' => 'welcome#horarios_wp'
 
     resources :ona_submissions, only: :index do
       member do

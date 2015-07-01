@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623030049) do
+ActiveRecord::Schema.define(version: 20150701131509) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150623030049) do
     t.date     "valid_until"
     t.integer  "place_id",    limit: 4
     t.integer  "track_id",    limit: 4
+    t.time     "start_time"
+    t.string   "hashtag",     limit: 255
   end
 
   add_index "courses", ["place_id"], name: "index_courses_on_place_id", using: :btree
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150623030049) do
     t.string   "address",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "link",       limit: 255
   end
 
   create_table "student_course_logs", force: :cascade do |t|

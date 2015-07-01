@@ -5,6 +5,8 @@ class Course < ActiveRecord::Base
 
   validates_presence_of :weekday, :valid_since
 
+  scope :ongoing, -> { where(valid_until: nil) }
+
   def calendar_name
     parts = code.split('_')
     if parts.length > 2

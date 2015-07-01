@@ -18,4 +18,7 @@ class Admin::WelcomeController < Admin::BaseController
 
   def teacher_courses
   end
+
+  def horarios_wp
+  end
 end

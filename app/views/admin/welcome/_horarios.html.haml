@@ -1,0 +1,58 @@
+%table#horarios
+  %tbody
+    %tr
+      %td(colspan="2")
+      %td.col-lindy.titulo.lwb.rwb(colspan="4") LINDY HOP
+      %td.col-jazz.titulo.lwb.rwb AUTH. JAZZ
+      %td.col-tap.titulo.lwb.rwb(colspan="2") TAP
+    %tr
+      %td(colspan="2")
+      %td.col-lindy.lwb
+        %span.nivel P
+      %td.col-lindy
+        %span.nivel I1
+      %td.col-lindy
+        %span.nivel I2
+      %td.col-lindy.rwb
+        %span.nivel A
+      %td.col-jazz.lwb.rwb<>
+        %span.nivel<> P
+        %span.nivel<> IA
+      %td.col-tap.lwb
+        %span.nivel P
+      %td.col-tap.rwb<>
+        %span.nivel<> I
+        %span.nivel<> IA
+    %tr.row-separator
+      %td
+
+    - tracks = ['LH_PRIN', 'LH_INT1', 'LH_INT2', 'LH_AVAN', 'CH_PRIN', 'TP_PRIN', 'TP_INT1'].map { |c| Track.find_by(code: c) }
+    - (1..6).each do |wday|
+      - courses = Course.ongoing.where(weekday: wday)
+      - times = courses.pluck(:start_time).uniq.sort
+      - times.each_with_index do |time, index|
+        %tr{class: index == 0 ? "row-with-date" : "row-no-date" }
+          - if index == 0
+            %td{rowspan: times.count}= local_wday(wday)
+          %td<
+            = time.hour
+            - if time.min != 0
+              %span.min<>= time.min
+          - tracks.each do |track|
+            %td
+              - courses.where(start_time: time, track: track).each do |course|
+                = render 'place', course: course, place: course.place
+
+
+    %tr.row-with-date
+      %td= local_wday(0)
+      %td 21
+      - place = Place.find_by(name: "Oliverio Girondo Espacio Cultural")
+      %td= render 'place', course: nil, place: place
+      %td= render 'place', course: nil, place: place
+      %td= render 'place', course: nil, place: place
+      %td
+      %td
+      %td
+      %td
+

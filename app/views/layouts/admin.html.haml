@@ -17,6 +17,8 @@
           = link_to 'Usuarios', admin_users_path
         %li
           = link_to 'Estadísticas', stats_admin_students_path
+        %li
+          = link_to 'Horarios Wordpress', admin_horarios_wp_path
   - if current_user.teacher?
     %li.dropdown
       %a.dropdown-toggle(href="#" data-toggle="dropdown")

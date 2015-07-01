@@ -1,13 +1,21 @@
 class AdminCoursesListing < Listings::Base
-  model { Course.order(:weekday, :code) }
+  include ApplicationHelper
+
+  model { Course.order(:weekday, :start_time, :code) }
 
   scope 'Todos', :all, default: true
-  scope 'Vigentes', :ongoing, -> (model) {
-    model.where(valid_until: nil)
-  }
+  scope 'Vigentes', :ongoing
 
   column :code
   column :name
+  column :weekday do |c|
+    local_wday(c.weekday)
+  end
+  column :start_time do |c|
+    if c.start_time
+      "#{c.start_time.hour}:#{"%02d" % c.start_time.min}"
+    end
+  end
   column :valid_since
   column :valid_until
 

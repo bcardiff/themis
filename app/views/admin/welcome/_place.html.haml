@@ -1,0 +1,7 @@
+%a{href: place.link, target: "_blank"}<>
+  - if course.try(:hashtag)
+    = "\##{course.hashtag} #{place.address}"
+  - else
+    = place.address
+  %br>
+  = "\"#{place.name}\""

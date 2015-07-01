@@ -1,0 +1,132 @@
+/* horarios */
+
+#horarios {
+  border-spacing: 0px;
+  border-collapse: separate;
+  font-weight: bold;
+}
+
+#horarios td {
+  border: 1px solid white;
+}
+
+#horarios .min {
+  vertical-align: super;
+  font-size: 0.7em;
+  margin-left: 3px;
+}
+
+#horarios tr:nth-child(1) td, #horarios tr:nth-child(2) td {
+  white-space: nowrap;
+  text-align: center;
+  color: white;
+}
+
+#horarios .titulo {
+  font-size: 1.3em;
+  position: relative;
+  top: 25px;
+}
+
+#horarios span.nivel {
+  margin: 0px 7px 0px 7px;
+  color: white;
+  display: inline-block;
+  border-radius: 30px;
+  background: inherit;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
+  top: 20px;
+}
+
+#horarios .col-lindy {
+  background-color: #ec3b62;
+  border-color: #ec3b62;
+}
+
+#horarios .col-jazz {
+  background-color: #71a9a4;
+  border-color: #71a9a4;
+}
+
+#horarios .col-tap {
+  background-color: #fab258;
+  border-color: #fab258;
+}
+
+#horarios .lwb {
+  border-left-color: white;
+}
+
+#horarios .rwb {
+  border-right-color: white;
+}
+
+#horarios .row-with-date td, #horarios .row-no-date td {
+  vertical-align: middle;
+}
+
+#horarios .row-with-date td:nth-child(1) {
+  text-decoration: underline;
+}
+
+#horarios .row-with-date td:nth-child(n+3), #horarios .row-no-date td:nth-child(n+2) {
+  width: 115px;
+}
+
+#horarios td a {
+  color: black;
+  font-size: 0.6em;
+}
+
+#horarios td a:before{
+  content:url('http://www.swingcity.com.ar/wp-content/uploads/2015/05/pin.png');
+  position:relative;
+  left:-3px;
+  top:2px;
+}
+
+
+/* cols de dias y horas */
+#horarios .row-with-date td:nth-child(1),
+#horarios .row-with-date td:nth-child(2),
+#horarios .row-no-date td:nth-child(1) {
+  background-color: #e7e8e9;
+}
+
+/* 1er y 3er columna lindy hop */
+#horarios .row-with-date td:nth-child(3),
+#horarios .row-with-date td:nth-child(5),
+#horarios .row-no-date td:nth-child(2),
+#horarios .row-no-date td:nth-child(4) {
+  background-color: #f3dcdb;
+}
+
+/* 2da y 4ta columna lindy hop */
+#horarios .row-with-date td:nth-child(4),
+#horarios .row-with-date td:nth-child(6),
+#horarios .row-no-date td:nth-child(3),
+#horarios .row-no-date td:nth-child(5) {
+  background-color: #e9d3d3;
+}
+
+/* 1er columna jazz */
+#horarios .row-with-date td:nth-child(7),
+#horarios .row-no-date td:nth-child(6) {
+  background-color: #e2e9e9;
+}
+
+/* 1er columna tap */
+#horarios .row-with-date td:nth-child(8),
+#horarios .row-no-date td:nth-child(7) {
+  background-color: #ebe1d4;
+}
+
+/* 2da columna tap */
+#horarios .row-with-date td:nth-child(9),
+#horarios .row-no-date td:nth-child(8) {
+  background-color: #f4ebdd;
+}
