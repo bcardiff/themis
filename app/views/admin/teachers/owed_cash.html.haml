@@ -6,4 +6,8 @@
 = render 'shared/teacher_owed_cash'
 
 - if @total > 0
-  = link_to 'Registrar entrega', transfer_cash_income_money_admin_teacher_path(teacher), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "¿Seguro desea registrar que se entregaron #{number_to_currency @total}?"
+  = form_tag transfer_cash_income_money_admin_teacher_path(teacher), class: 'form-inline' do |f|
+    .form-group
+      = label_tag :amount, 'Monto entregado'
+      = text_field_tag :amount, number_to_currency(@total, unit: ''), class: 'form-control'
+    = submit_tag 'Registrar entrega', :class => 'btn btn-primary', :'data-confirm' => "¿Seguro desea registrar la entrega por el valor indicado?"

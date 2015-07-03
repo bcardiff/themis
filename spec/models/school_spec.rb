@@ -22,7 +22,7 @@ RSpec.describe School, type: :model do
       number_of_students.times do
         create(:student_course_log, teacher: teacher, payment_plan: plan)
       end
-      teacher.transfer_cash_income_money
+      teacher.transfer_cash_income_money(plan.price * number_of_students)
     end
   end
 

@@ -23,8 +23,13 @@ class Teacher < ActiveRecord::Base
     owed_cash.sum(:payment_amount)
   end
 
-  def transfer_cash_income_money
+  def transfer_cash_income_money(real_amount)
     amount = self.owed_cash_total
+    delta = real_amount - amount
+
+    if delta != 0
+      TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: Time.now, payment_amount: delta)
+    end
 
     teacher_cash_incomes.transfer_cash_income_money
   end

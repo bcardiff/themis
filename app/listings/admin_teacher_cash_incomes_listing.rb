@@ -17,7 +17,9 @@ class AdminTeacherCashIncomesListing < Listings::Base
   end
 
   column 'Curso' do |income|
-    income.course_log.calendar_name
+    if income.respond_to?(:course_log)
+      income.course_log.calendar_name
+    end
   end
 
   column 'Profesor' do |income|
@@ -29,7 +31,9 @@ class AdminTeacherCashIncomesListing < Listings::Base
   end
 
   column 'Alumno' do |income|
-    income.student.display_name
+    if income.respond_to?(:student)
+      income.student.display_name
+    end
   end
 
   column :payment_amount do |income|

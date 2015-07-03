@@ -431,7 +431,7 @@ RSpec.describe CourseLog, type: :model do
           "student_repeat/payment/kind" => plan.code
         })
 
-        teacher.transfer_cash_income_money
+        teacher.transfer_cash_income_money(plan.price)
       }
 
       let(:submission) { OnaSubmission.find(@submission.id) }

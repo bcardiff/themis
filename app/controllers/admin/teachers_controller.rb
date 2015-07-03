@@ -12,7 +12,7 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def transfer_cash_income_money
-    teacher.transfer_cash_income_money
+    teacher.transfer_cash_income_money(params[:amount].gsub('.','').gsub(',','.').to_f)
     redirect_to admin_teacher_path(teacher)
   end
 
