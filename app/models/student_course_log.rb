@@ -155,7 +155,10 @@ class StudentCourseLog < ActiveRecord::Base
   def record_student_activities
     ActivityLogs::Student::CourseAttended.record(student, course_log)
     if payment_plan
+      self.payment_amount = self.payment_plan.price_or_fallback(self.payment_amount)
       ActivityLogs::Student::Payment.record(student, self)
+    else
+      ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
     end
   end
 

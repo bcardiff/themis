@@ -41,6 +41,36 @@ RSpec.describe StudentCourseLog, type: :model do
       student = create(:student_course_log).student
       expect(student.activity_logs).to_not be_empty
     end
+
+    it "should not be created twice" do
+      student_log = create(:student_course_log, payment_plan: create(:payment_plan))
+      first_count = student_log.student.activity_logs.count
+      student_log.save!
+      expect(student_log.student.activity_logs.count).to eq(first_count)
+    end
+
+    it "should remove payment log" do
+      student_log = create(:student_course_log, payment_plan: create(:payment_plan))
+      first_count = student_log.student.activity_logs.count
+      student_log.payment_plan = nil
+      student_log.save!
+      expect(student_log.student.activity_logs.count).to eq(first_count - 1)
+    end
+
+    it "should update payment log message when payment is changed" do
+      student_log = create(:student_course_log, payment_plan: create(:payment_plan, price: '20.00'))
+      first_count = student_log.student.activity_logs.count
+
+      expect(payment(student_log).description).to start_with("Abonó 20")
+      student_log.payment_plan = create(:payment_plan, price: '30.00')
+      student_log.save!
+      expect(student_log.student.activity_logs.count).to eq(first_count)
+      expect(payment(student_log).description).to start_with("Abonó 30")
+    end
+
+    def payment(student_log)
+      ActivityLogs::Student::Payment.for(student_log.student, student_log).first
+    end
   end
 
 end
