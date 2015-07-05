@@ -3,11 +3,21 @@
   >
   Efectivo en mano
 
-= render 'shared/teacher_owed_cash'
+= form_tag owed_cash_admin_teacher_path(teacher), method: :get, class: 'form-inline' do |f|
+  = label_tag :date, 'Movimientos hasta'
+  = text_field_tag :date, @date, :'data-provide'=>'datepicker', :'data-date-format'=>'dd/mm/yyyy', class: 'form-control'
+  = submit_tag 'Calcular', class: 'btn btn-info'
+
+%br
 
 - if @total > 0
   = form_tag transfer_cash_income_money_admin_teacher_path(teacher), class: 'form-inline' do |f|
+    = hidden_field_tag :date, @date
     .form-group
-      = label_tag :amount, 'Monto entregado'
+      = label_tag :amount, 'Monto a entregar'
       = text_field_tag :amount, number_to_currency(@total, unit: ''), class: 'form-control'
     = submit_tag 'Registrar entrega', :class => 'btn btn-primary', :'data-confirm' => "¿Seguro desea registrar la entrega por el valor indicado?"
+
+%br
+
+= render 'shared/teacher_owed_cash'

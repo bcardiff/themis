@@ -29,7 +29,7 @@ RSpec.describe Teacher, type: :model do
       expect(teacher.owed_cash_total).to eq(plan.price * 3)
       expect(plan.price).to_not eq(0)
 
-      teacher.transfer_cash_income_money(handed_money)
+      teacher.transfer_cash_income_money(handed_money, Time.now)
 
       student_course_logs.map &:reload
     }

@@ -6,32 +6,29 @@ class Teacher < ActiveRecord::Base
 
   has_many :student_course_logs
 
-  has_many :teacher_cash_incomes do
-    def transfer_cash_income_money
-      owed.update_all(payment_status: TeacherCashIncome::PAYMENT_ON_SCHOOL, transferred_at: Time.now)
-    end
-  end
+  has_many :teacher_cash_incomes
 
   has_many :ona_submission_subscriptions, as: :follower
   has_many :ona_submissions, through: :ona_submission_subscriptions
 
-  def owed_cash
-    teacher_cash_incomes.owed
+  def owed_cash(date)
+    teacher_cash_incomes.owed.where('date <= ?', date)
   end
 
   def owed_cash_total
-    owed_cash.sum(:payment_amount)
+    teacher_cash_incomes.owed.sum(:payment_amount)
   end
 
-  def transfer_cash_income_money(real_amount)
-    amount = self.owed_cash_total
+  def transfer_cash_income_money(real_amount, date)
+    owed_cash_records = self.owed_cash(date)
+    amount = owed_cash_records.sum(:payment_amount)
     delta = real_amount - amount
 
     if delta != 0
-      TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: Time.now, payment_amount: delta)
+      TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: Time.now, payment_amount: delta, payment_status: TeacherCashIncome::PAYMENT_ON_TEACHER)
     end
 
-    teacher_cash_incomes.transfer_cash_income_money
+    owed_cash_records.update_all(payment_status: TeacherCashIncome::PAYMENT_ON_SCHOOL, transferred_at: Time.now)
   end
 
   def handed_course_payments_per_month(time)

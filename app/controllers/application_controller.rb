@@ -9,8 +9,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def teacher_owed_cash(teacher)
-    @incomes = teacher.owed_cash.to_a.group_by { |e| [e.date, e.course_log_id, e.type] }
-    @total = teacher.owed_cash_total
+  def teacher_owed_cash(teacher, date = Date.today)
+    @date = date.to_dmy
+    incomes = teacher.owed_cash(date)
+    @incomes = incomes.to_a.group_by { |e| [e.date, e.course_log_id, e.type] } # TODO sort
+    @total = incomes.sum(:payment_amount)
   end
 end

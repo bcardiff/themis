@@ -14,4 +14,13 @@ class Date
       strftime("%a %e %b %Y")
     end
   end
+
+  def to_dmy
+    strftime("%d/%m/%Y")
+  end
+
+  def self.from_dmy(str)
+    return nil if str.blank?
+    Date.strptime(str, "%d/%m/%Y")
+  end
 end

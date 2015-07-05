@@ -4,7 +4,7 @@ FactoryGirl.define do
       teacher nil
     end
     course
-    date { Date.today.next_wday(course.weekday) if course }
+    date { Date.today.next_wday(course.weekday) - 1.week if course }
 
     after(:build) do |course_log, evaluator|
       if evaluator.teacher

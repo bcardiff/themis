@@ -8,11 +8,12 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def owed_cash
-    teacher_owed_cash teacher
+    date = Date.from_dmy(params[:date]) || Date.today
+    teacher_owed_cash teacher, date
   end
 
   def transfer_cash_income_money
-    teacher.transfer_cash_income_money(params[:amount].gsub('.','').gsub(',','.').to_f)
+    teacher.transfer_cash_income_money(params[:amount].gsub('.','').gsub(',','.').to_f, Date.from_dmy(params[:date]))
     redirect_to admin_teacher_path(teacher)
   end
 
