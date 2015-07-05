@@ -4,7 +4,7 @@
   Salario adeudado
 
 = form_tag due_course_salary_admin_teacher_path(teacher), method: :get, class: 'form-inline' do |f|
-  = label_tag :date, 'Movimientos hasta'
+  = label_tag :date, 'Clases hasta'
   = text_field_tag :date, @date, :'data-provide'=>'datepicker', :'data-date-format'=>'dd/mm/yyyy', class: 'form-control'
   = submit_tag 'Calcular', class: 'btn btn-info'
 
