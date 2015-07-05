@@ -15,7 +15,7 @@ class AdminTeachersListing < Listings::Base
   end
 
   column 'Salario adeudado' do |teacher|
-    link_to number_to_currency(teacher.due_salary), due_course_salary_admin_teacher_path(teacher)
+    link_to number_to_currency(teacher.due_salary_total), due_course_salary_admin_teacher_path(teacher)
   end
 
   # column do |teacher|

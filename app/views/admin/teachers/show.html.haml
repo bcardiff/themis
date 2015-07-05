@@ -6,5 +6,5 @@
     = link_to 'ver detalle', owed_cash_admin_teacher_path(teacher)
 
   = plain_text_field 'Salario adeudado' do
-    %span= number_to_currency(teacher.due_salary)
+    %span= number_to_currency(teacher.due_salary_total)
     = link_to 'ver detalle', due_course_salary_admin_teacher_path(teacher)

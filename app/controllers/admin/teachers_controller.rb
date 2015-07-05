@@ -18,13 +18,16 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def due_course_salary
-    @due_teacher_course_logs = order_by_course_log(teacher.teacher_course_logs.due)
+    date = Date.from_dmy(params[:date]) || Date.today
+    @date = date.to_dmy
+    @due_teacher_course_logs = order_by_course_log(teacher.teacher_course_logs.due_up_to(date))
 
-    @due_salary = teacher.due_salary
+    @due_salary = teacher.due_salary(date)
   end
 
   def pay_pending_classes
-    teacher.pay_pending_classes
+    date = Date.from_dmy(params[:date])
+    teacher.pay_pending_classes(date)
     redirect_to admin_teacher_path(teacher)
   end
 

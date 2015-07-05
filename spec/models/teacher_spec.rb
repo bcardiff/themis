@@ -101,17 +101,17 @@ RSpec.describe Teacher, type: :model do
     before(:each) {
       teacher.reload
 
-      expect(teacher.due_salary).to eq(teacher.fee * 3)
+      expect(teacher.due_salary_total).to eq(teacher.fee * 3)
       expect(teacher.fee).to_not eq(0)
       expect(teacher_course_logs.first.paid_amount).to be_nil
 
-      teacher.pay_pending_classes
+      teacher.pay_pending_classes(Time.now)
 
       teacher_course_logs.map &:reload
     }
 
     it "should leave as there is no dued salary" do
-      expect(teacher.due_salary).to eq(0)
+      expect(teacher.due_salary_total).to eq(0)
     end
 
     it "should mark current time as paid_at" do

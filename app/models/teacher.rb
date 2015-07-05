@@ -39,11 +39,15 @@ class Teacher < ActiveRecord::Base
     teacher_course_logs.paid_at_month(time).sum(:paid_amount)
   end
 
-  def due_salary
-    teacher_course_logs.due.count * fee
+  def due_salary_total
+    due_salary(Time.now)
   end
 
-  def pay_pending_classes
-    teacher_course_logs.due.update_all(paid: true, paid_at: Time.now, paid_amount: fee)
+  def due_salary(date)
+    teacher_course_logs.due_up_to(date).count * fee
+  end
+
+  def pay_pending_classes(date)
+    teacher_course_logs.due_up_to(date).update_all(paid: true, paid_at: Time.now, paid_amount: fee)
   end
 end

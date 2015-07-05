@@ -3,6 +3,16 @@
   >
   Salario adeudado
 
+= form_tag due_course_salary_admin_teacher_path(teacher), method: :get, class: 'form-inline' do |f|
+  = label_tag :date, 'Movimientos hasta'
+  = text_field_tag :date, @date, :'data-provide'=>'datepicker', :'data-date-format'=>'dd/mm/yyyy', class: 'form-control'
+  = submit_tag 'Calcular', class: 'btn btn-info'
+
+  - if @due_salary > 0
+    = link_to 'Registrar pago', pay_pending_classes_admin_teacher_path(teacher, date: @date), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "¿Seguro desea registrar que se pagaron #{number_to_currency @due_salary}?"
+
+%br
+
 %table.table
   %tr
     %th Fecha
@@ -17,6 +27,3 @@
       %td= teacher_course_log.course_log.date.to_human
       %td= teacher_course_log.course_log.course.calendar_name
       %td= number_to_currency teacher.fee
-
-- if @due_salary > 0
-  = link_to 'Registrar pago', pay_pending_classes_admin_teacher_path(teacher), :method => :post, :class => 'btn btn-primary', :'data-confirm' => "¿Seguro desea registrar que se pagaron #{number_to_currency @due_salary}?"

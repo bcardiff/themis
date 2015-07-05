@@ -26,7 +26,7 @@
     - side_box 'Salario docente' do
       .row
         - side_box_data 'a percibir' do
-          = number_to_currency teacher.due_salary
+          = number_to_currency teacher.due_salary_total
         - side_box_data 'recibido en el mes' do
           = number_to_currency(@teaching_expense_in_month)
       / .row
