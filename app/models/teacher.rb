@@ -24,11 +24,16 @@ class Teacher < ActiveRecord::Base
     amount = owed_cash_records.sum(:payment_amount)
     delta = real_amount - amount
 
+    transferred_at = Time.now
+
     if delta != 0
-      TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: Time.now, payment_amount: delta, payment_status: TeacherCashIncome::PAYMENT_ON_TEACHER)
+      fix_amount = TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: transferred_at, payment_amount: delta)
+      fix_amount.payment_status = TeacherCashIncome::PAYMENT_ON_SCHOOL
+      fix_amount.transferred_at = transferred_at
+      fix_amount.save!
     end
 
-    owed_cash_records.update_all(payment_status: TeacherCashIncome::PAYMENT_ON_SCHOOL, transferred_at: Time.now)
+    owed_cash_records.update_all(payment_status: TeacherCashIncome::PAYMENT_ON_SCHOOL, transferred_at: transferred_at)
   end
 
   def handed_course_payments_per_month(time)
