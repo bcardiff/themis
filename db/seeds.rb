@@ -57,6 +57,9 @@ teacher 'Mariano', fee: 175
 teacher 'Celeste', fee: 175
 teacher 'Nanchi', fee: 175
 teacher 'Sol', fee: 175
+teacher 'Majo', fee: 0
+teacher 'Brian', fee: 0
+teacher 'Otro', fee: 0
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
