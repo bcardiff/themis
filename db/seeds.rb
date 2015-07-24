@@ -57,8 +57,8 @@ teacher 'Mariano', fee: 175
 teacher 'Celeste', fee: 175
 teacher 'Nanchi', fee: 175
 teacher 'Sol', fee: 175
-teacher 'Majo', fee: 0
-teacher 'Brian', fee: 0
+teacher 'Majo', fee: 175
+teacher 'Brian', fee: 175
 teacher 'Otro', fee: 0
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
