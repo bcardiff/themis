@@ -77,13 +77,16 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def update_as_new_card!(first_name, last_name, email)
+  def update_as_new_card!(first_name, last_name, email, card_code)
     if self.new_record? || self.first_name == Student::UNKOWN || self.email == nil
       self.first_name = first_name
       self.last_name = last_name
       self.email = email
-      self.save!
     end
+    if self.card_code == nil
+      self.card_code = card_code
+    end
+    self.save!
   end
 
   private

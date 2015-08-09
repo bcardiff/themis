@@ -11,7 +11,7 @@ class Admin::StudentCourseLogsController < Admin::BaseController
       student_data = params[:student_course_log][:student]
 
       student_course_log.student = Student.find_or_initialize_by_card student_data[:card_code]
-      student_course_log.student.update_as_new_card!(student_data[:first_name], student_data[:last_name], student_data[:email])
+      student_course_log.student.update_as_new_card!(student_data[:first_name], student_data[:last_name], student_data[:email], student_data[:card_code])
     when "existing_card"
       # student is referenced by id
     when "guest"

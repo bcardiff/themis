@@ -66,8 +66,10 @@ class StudentCourseLog < ActiveRecord::Base
 
     case id_kind
     when "new_card"
+      student ||= Student.find_by_card card
+      student ||= Student.find_by(email: email)
       student ||= Student.find_or_initialize_by_card card
-      student.update_as_new_card!(first_name, last_name, email)
+      student.update_as_new_card!(first_name, last_name, email, card)
     when "existing_card"
       student ||= Student.find_or_initialize_by_card card
       if student.new_record?

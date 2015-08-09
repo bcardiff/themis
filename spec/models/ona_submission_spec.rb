@@ -473,6 +473,23 @@ RSpec.describe OnaSubmission, type: :model do
   it "should remove payment if second submission stands it"
   it "should reject negative payments amount"
 
+  it "should allow known student by email to get a new card" do
+    submit_student({
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+    })
+
+    submit_student({
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "999",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+    })
+
+    expect(Student.first.card_code).to eq(student_card("999"))
+  end
+
   describe "new card" do
     before(:each) do
       submit_student({
