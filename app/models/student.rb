@@ -2,6 +2,7 @@ class Student < ActiveRecord::Base
   has_many :activity_logs, as: :target
   has_many :student_course_logs
   has_many :cards, dependent: :destroy
+  has_many :student_packs, dependent: :delete_all
 
   UNKOWN = "N/A"
 

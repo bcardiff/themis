@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OnaSubmission, type: :model do
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1) }
+
   let(:lh_int1_jue) { create(:course, weekday: 4) }
   let(:ch_int2_jue) { create(:course, weekday: 4) }
   let(:mariel) { create(:teacher) }
@@ -573,6 +576,86 @@ RSpec.describe OnaSubmission, type: :model do
     })
 
     expect(Student.first.card_code).to eq(student_card("999"))
+  end
+
+  describe "student_packs check" do
+    it "should be ok to pay a single class" do
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "322",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan_clase.code
+          }
+        ],
+        "course" => lh_int1_jue.code,
+        "date" => "2015-08-06",
+        "teacher" => mariel.name
+      })
+
+      first_log = StudentCourseLog.first
+
+      expect(first_log.requires_student_pack).to be_falsey
+      expect(StudentCourseLog.missing_payment).to_not include(first_log)
+    end
+
+    it "should not be ok to take a class without a pack" do
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "322",
+            "student_repeat/do_payment" => "no"
+          }
+        ],
+        "course" => lh_int1_jue.code,
+        "date" => "2015-08-06",
+        "teacher" => mariel.name
+      })
+
+      first_log = StudentCourseLog.first
+
+      expect(first_log.requires_student_pack).to be_truthy
+      expect(first_log.student_pack).to be_nil
+      expect(StudentCourseLog.missing_payment).to include(first_log)
+    end
+
+    it "should be ok to pay for the pack the first class of the month" do
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => "322",
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan_1_x_semana_4.code
+          }
+        ],
+        "course" => lh_int1_jue.code,
+        "date" => "2015-08-06",
+        "teacher" => mariel.name
+      })
+
+      first_log = StudentCourseLog.first
+
+      expect(first_log.requires_student_pack).to be_truthy
+
+      first_log.student_pack.tap do |pack|
+        expect(pack).to_not be_nil
+        expect(pack.student).to eq(Student.find_by_card("322"))
+        expect(pack.payment_plan).to eq(plan_1_x_semana_4)
+        expect(pack.start_date).to eq(Date.new(2015,8,1))
+        expect(pack.due_date).to eq(Date.new(2015,8,31))
+        expect(pack.max_courses).to eq(4)
+      end
+
+      expect(StudentCourseLog.missing_payment).to_not include(first_log)
+    end
+
+    it "should be ok to pay for the pack the second class of the month"
+    it "should be ok to fullfil the pay for the pack the second class of the month"
+    it "should be ok to have clases in other month of the 3 month pack"
+    it "should not be ok to have more clases than allowed"
   end
 
   describe "new card" do
