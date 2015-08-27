@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CourseLog, type: :model do
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+
   it "factory works" do
     create(:course_log)
   end

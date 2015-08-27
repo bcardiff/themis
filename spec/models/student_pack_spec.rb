@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe StudentPack, type: :model do
+
   describe "factory" do
     it "should create" do
       create(:student_pack)
@@ -13,8 +14,11 @@ RSpec.describe StudentPack, type: :model do
   let!(:plan_1_x_semana_3) { create(:payment_plan, code: "1_X_SEMANA_3", price: 180, weekly_classes: 1) }
   let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1) }
   let!(:plan_1_x_semana_5) { create(:payment_plan, code: "1_X_SEMANA_5", price: 300, weekly_classes: 1) }
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_otro) { create(:payment_plan, code: PaymentPlan::OTHER) }
+
   let(:student) { create(:student) }
-  let(:invalid_price) { 200 }
+  let(:invalid_price) { plan_clase.price + 10 }
 
   it "should create 3 month" do
     pack = StudentPack.register_for(student, Time.new(2015, 7, 10), plan_3_meses.price)
@@ -72,11 +76,12 @@ RSpec.describe StudentPack, type: :model do
     expect(student_pack.max_courses).to eq(3)
   end
 
-  it "should not create pack when no plan is found" do
+  it "should create pack with equivalent classes when no plan is found" do
     pack = StudentPack.register_for(student, Time.new(2015, 7, 2), invalid_price)
     student_pack = StudentPack.where(student: student).first
-    expect(student_pack).to be_nil
-    expect(pack).to be_nil
+    expect(student_pack).to_not be_nil
+    expect(pack.payment_plan).to eq(plan_otro)
+    expect(pack.max_courses).to eq(1)
   end
 
   describe "validation" do

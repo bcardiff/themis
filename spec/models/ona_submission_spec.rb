@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OnaSubmission, type: :model do
+  let!(:plan_otro) { create(:payment_plan, code: PaymentPlan::OTHER) }
   let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_3_meses) { create(:payment_plan, code: "3_MESES", price: 550, weekly_classes: 1) }
   let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1) }
 
   let(:lh_int1_jue) { create(:course, weekday: 4) }
@@ -199,14 +201,12 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   it "should register pending payment of amount" do
-    plan = create(:payment_plan, code: PaymentPlan::OTHER)
-
     submit_student({
       "student_repeat/id_kind" => "guest",
       "student_repeat/email" => "johndoe@email.com",
       "student_repeat/first_name" => "John",
       "student_repeat/do_payment" => "yes",
-      "student_repeat/payment/kind" => plan.code,
+      "student_repeat/payment/kind" => plan_otro.code,
       "student_repeat/payment/amount" => 45,
     })
 
@@ -215,7 +215,7 @@ RSpec.describe OnaSubmission, type: :model do
 
     expect(student_log.teacher).to eq(mariel)
     expect(student_log.payment_amount).to eq(45)
-    expect(student_log.payment_plan).to eq(plan)
+    expect(student_log.payment_plan).to eq(plan_otro)
 
     expect(income.payment_amount).to eq(45)
     expect(income.payment_status).to eq(TeacherCashIncome::PAYMENT_ON_TEACHER)
@@ -581,6 +581,12 @@ RSpec.describe OnaSubmission, type: :model do
   describe "student_packs check" do
     let(:card_code) { "322" }
     let(:date_in_first_week) { Date.new(2015, 8, 6) }
+    let(:date_in_second_week) { date_in_first_week + 1.week }
+    let(:date_in_third_week) { date_in_second_week + 1.week }
+    let(:date_in_fourth_week) { date_in_third_week + 1.week }
+    let(:date_in_first_week_of_second_month) { Date.new(2015, 9, 3) }
+    let(:date_in_first_week_of_third_month) { Date.new(2015, 10, 1) }
+    let(:date_in_first_week_of_fourth_month) { Date.new(2015, 11, 5) }
 
     def class_with_payment(date, plan)
       issued_class ({
@@ -590,6 +596,25 @@ RSpec.describe OnaSubmission, type: :model do
             "student_repeat/card" => card_code,
             "student_repeat/do_payment" => "yes",
             "student_repeat/payment/kind" => plan.code
+          }
+        ],
+        "course" => lh_int1_jue.code,
+        "date" => date.strftime("%Y-%m-%d"),
+        "teacher" => mariel.name
+      })
+
+      student_course_log_of date
+    end
+
+    def class_with_custom_payment(date, amount)
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => card_code,
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan_otro.code,
+            "student_repeat/payment/amount" => amount
           }
         ],
         "course" => lh_int1_jue.code,
@@ -643,7 +668,7 @@ RSpec.describe OnaSubmission, type: :model do
 
       first_log.student_pack.tap do |pack|
         expect(pack).to_not be_nil
-        expect(pack.student).to eq(Student.find_by_card("322"))
+        expect(pack.student).to eq(Student.find_by_card(card_code))
         expect(pack.payment_plan).to eq(plan_1_x_semana_4)
         expect(pack.start_date).to eq(Date.new(2015,8,1))
         expect(pack.due_date).to eq(Date.new(2015,8,31))
@@ -653,11 +678,96 @@ RSpec.describe OnaSubmission, type: :model do
       expect(StudentCourseLog.missing_payment).to_not include(first_log)
     end
 
-    it "should be ok to pay for the pack the second class of the month"
-    it "should be ok to fullfil the pay for the pack the second class of the month"
-    it "should be ok to have clases in other month of the 3 month pack"
-    it "should not be ok to have more clases than allowed"
-    it "should not be ok to have clases after the valid period"
+    it "should be ok to pay for the pack the second class of the month" do
+      first_log = class_without_payment date_in_first_week
+      second_log = class_with_payment date_in_second_week, plan_1_x_semana_4
+
+      first_log.reload
+
+      expect(StudentCourseLog.missing_payment).to_not include(first_log)
+      expect(StudentCourseLog.missing_payment).to_not include(second_log)
+
+      expect(first_log.student_pack).to_not be_nil
+      expect(first_log.student_pack).to eq(second_log.student_pack)
+    end
+
+    it "should be ok to fullfil the pay for the pack the second class of the month" do
+      partial_price = 100
+      first_log = class_with_custom_payment date_in_first_week, partial_price
+      second_log = class_with_custom_payment date_in_second_week, plan_1_x_semana_4.price - partial_price
+
+      first_log.reload
+
+      expect(StudentCourseLog.missing_payment).to be_empty
+      expect(first_log.student_pack).to eq(second_log.student_pack)
+
+      first_log.student_pack.tap do |pack|
+        expect(pack).to_not be_nil
+        expect(pack.student).to eq(Student.find_by_card(card_code))
+        expect(pack.payment_plan).to eq(plan_1_x_semana_4)
+        expect(pack.start_date).to eq(Date.new(2015,8,1))
+        expect(pack.due_date).to eq(Date.new(2015,8,31))
+        expect(pack.max_courses).to eq(4)
+      end
+    end
+
+    it "should be ok to have clases in other month of the 3 month pack" do
+      class_with_payment date_in_first_week, plan_3_meses
+      class_without_payment date_in_second_week
+      class_without_payment date_in_first_week_of_second_month
+      class_without_payment date_in_first_week_of_third_month
+
+      expect(StudentCourseLog.missing_payment).to be_empty
+    end
+
+    it "should not be ok to have more clases than allowed" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      class_without_payment date_in_second_week
+      class_without_payment date_in_third_week
+      class_without_payment date_in_fourth_week
+
+      expect(StudentCourseLog.missing_payment).to be_empty
+
+      # class_without_payment of another class
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => card_code,
+            "student_repeat/do_payment" => "no"
+          }
+        ],
+        "course" => ch_int2_jue.code,
+        "date" => date_in_fourth_week.strftime("%Y-%m-%d"),
+        "teacher" => mariel.name
+      })
+
+      expect(StudentCourseLog.missing_payment).to_not be_empty
+    end
+
+    it "should not be ok to have clases after the valid period" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      class_without_payment date_in_first_week_of_second_month
+
+      expect(StudentCourseLog.missing_payment).to_not be_empty
+    end
+
+    it "should be ok to pay two clases together in the second week" do
+      class_without_payment date_in_first_week
+      expect(StudentCourseLog.missing_payment).to_not be_empty
+
+      class_with_custom_payment date_in_first_week, plan_clase.price * 2
+      expect(StudentCourseLog.missing_payment).to be_empty
+    end
+
+    it "should not be ok to pay two clases together in the third week" do
+      class_without_payment date_in_first_week
+      class_without_payment date_in_second_week
+      expect(StudentCourseLog.missing_payment.count).to eq(2)
+
+      class_with_custom_payment date_in_third_week, plan_clase.price * 2
+      expect(StudentCourseLog.missing_payment.count).to eq(1)
+    end
   end
 
   describe "new card" do
