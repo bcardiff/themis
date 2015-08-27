@@ -579,42 +579,57 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   describe "student_packs check" do
-    it "should be ok to pay a single class" do
+    let(:card_code) { "322" }
+    let(:date_in_first_week) { Date.new(2015, 8, 6) }
+
+    def class_with_payment(date, plan)
       issued_class ({
         "student_repeat" => [
           {
             "student_repeat/id_kind" => "existing_card",
-            "student_repeat/card" => "322",
+            "student_repeat/card" => card_code,
             "student_repeat/do_payment" => "yes",
-            "student_repeat/payment/kind" => plan_clase.code
+            "student_repeat/payment/kind" => plan.code
           }
         ],
         "course" => lh_int1_jue.code,
-        "date" => "2015-08-06",
+        "date" => date.strftime("%Y-%m-%d"),
         "teacher" => mariel.name
       })
 
-      first_log = StudentCourseLog.first
+      student_course_log_of date
+    end
+
+    def class_without_payment(date)
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => card_code,
+            "student_repeat/do_payment" => "no"
+          }
+        ],
+        "course" => lh_int1_jue.code,
+        "date" => date.strftime("%Y-%m-%d"),
+        "teacher" => mariel.name
+      })
+
+      student_course_log_of date
+    end
+
+    def student_course_log_of(date)
+      Student.find_by_card(card_code).student_course_logs.includes(:course_log).where(course_logs: {date: date}).first
+    end
+
+    it "should be ok to pay a single class" do
+      first_log = class_with_payment date_in_first_week, plan_clase
 
       expect(first_log.requires_student_pack).to be_falsey
       expect(StudentCourseLog.missing_payment).to_not include(first_log)
     end
 
     it "should not be ok to take a class without a pack" do
-      issued_class ({
-        "student_repeat" => [
-          {
-            "student_repeat/id_kind" => "existing_card",
-            "student_repeat/card" => "322",
-            "student_repeat/do_payment" => "no"
-          }
-        ],
-        "course" => lh_int1_jue.code,
-        "date" => "2015-08-06",
-        "teacher" => mariel.name
-      })
-
-      first_log = StudentCourseLog.first
+      first_log = class_without_payment date_in_first_week
 
       expect(first_log.requires_student_pack).to be_truthy
       expect(first_log.student_pack).to be_nil
@@ -622,21 +637,7 @@ RSpec.describe OnaSubmission, type: :model do
     end
 
     it "should be ok to pay for the pack the first class of the month" do
-      issued_class ({
-        "student_repeat" => [
-          {
-            "student_repeat/id_kind" => "existing_card",
-            "student_repeat/card" => "322",
-            "student_repeat/do_payment" => "yes",
-            "student_repeat/payment/kind" => plan_1_x_semana_4.code
-          }
-        ],
-        "course" => lh_int1_jue.code,
-        "date" => "2015-08-06",
-        "teacher" => mariel.name
-      })
-
-      first_log = StudentCourseLog.first
+      first_log = class_with_payment date_in_first_week, plan_1_x_semana_4
 
       expect(first_log.requires_student_pack).to be_truthy
 
@@ -656,6 +657,7 @@ RSpec.describe OnaSubmission, type: :model do
     it "should be ok to fullfil the pay for the pack the second class of the month"
     it "should be ok to have clases in other month of the 3 month pack"
     it "should not be ok to have more clases than allowed"
+    it "should not be ok to have clases after the valid period"
   end
 
   describe "new card" do
