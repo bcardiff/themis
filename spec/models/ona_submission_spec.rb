@@ -768,6 +768,39 @@ RSpec.describe OnaSubmission, type: :model do
       class_with_custom_payment date_in_third_week, plan_clase.price * 2
       expect(StudentCourseLog.missing_payment.count).to eq(1)
     end
+
+    it "should be able to mark as not payed if payment was deleted" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      expect(StudentCourseLog.missing_payment).to be_empty
+
+      class_without_payment date_in_first_week
+      expect(StudentCourseLog.missing_payment).to_not be_empty
+    end
+
+    it "should be able to mark as not payed if payment was deleted on other class" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      class_without_payment date_in_second_week
+      expect(StudentCourseLog.missing_payment).to be_empty
+
+      class_without_payment date_in_first_week
+      expect(StudentCourseLog.missing_payment.count).to eq(2)
+    end
+
+    it "should be able to mark as not payed if payment was updated" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      student_log_second_week = class_without_payment date_in_second_week
+      expect(StudentCourseLog.missing_payment).to be_empty
+
+      first_class = class_with_payment date_in_first_week, plan_clase
+      expect(StudentCourseLog.missing_payment.count).to eq(1)
+      expect(StudentCourseLog.missing_payment).to include(student_log_second_week)
+      expect(first_class.requires_student_pack).to be_falsey
+    end
+
+    it "should be able to mark as not payed if payment was updated on other class"
+
+    it "should be able to have individual classes and a pack"
+    it "should handle manually created payments"
   end
 
   describe "new card" do

@@ -1,5 +1,7 @@
 module TeacherCashIncomes
   class StudentPaymentIncome < StudentCourseLogIncome
+    scope :pack_payment, -> { where.not(payment_amount: PaymentPlan.find_by(code: PaymentPlan::SINGLE_CLASS).price) }
+
     def self.find_or_initialize_by_student_course_log(student_course_log)
       find_or_initialize_by student_course_log: student_course_log do |income|
       end
@@ -14,6 +16,10 @@ module TeacherCashIncomes
       if place
         place.after_payment(self)
       end
+    end
+
+    after_update do
+      StudentPack.recalculate(student, student_course_log.course_log.date.beginning_of_month)
     end
 
     before_destroy do

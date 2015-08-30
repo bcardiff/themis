@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Teacher, type: :model do
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+
   describe "receive course money" do
     let(:teacher) { create(:teacher) }
     let(:plan) { create(:payment_plan) }

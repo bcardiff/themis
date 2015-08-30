@@ -54,7 +54,10 @@ class StudentPack < ActiveRecord::Base
 
   def self.recalculate(student, date)
     date_range = date..date.at_end_of_month
-    total = TeacherCashIncomes::StudentPaymentIncome.includes(:student_course_log).where(student_course_logs: {student_id: student.id}, date: date_range).sum(:payment_amount)
+    total = TeacherCashIncomes::StudentPaymentIncome.pack_payment()
+      .includes(:student_course_log)
+      .where(student_course_logs: {student_id: student.id}, date: date_range)
+      .sum(:payment_amount)
 
     existing_pack = student.student_packs.valid_for(date).first
     if existing_pack
