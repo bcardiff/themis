@@ -114,6 +114,10 @@ class Student < ActiveRecord::Base
     ActivityLog.where(related_type: 'Student', related_id: old_student.id).update_all(related_id: self.id)
   end
 
+  def last_student_pack
+    student_packs.order(due_date: :desc).first
+  end
+
   private
 
   def apply_format_card_code

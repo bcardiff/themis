@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'teacher_courses' => 'welcome#teacher_courses'
     get 'horarios_wp' => 'welcome#horarios_wp'
     get 'balance' => 'welcome#balance'
+    get 'missing_payments' => 'welcome#missing_payments'
 
     resources :ona_submissions, only: :index do
       member do

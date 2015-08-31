@@ -13,6 +13,9 @@ class Admin::WelcomeController < Admin::BaseController
 
     @course_teaching_expense_to_paid = School.course_teaching_expense_to_paid
     @course_teaching_expense_in_month = School.course_teaching_expense_per_month(start_date)
+
+    @student_course_logs_missing_payment = StudentCourseLog.joins(:course_log).where(course_logs: { date: start_date.at_beginning_of_month..start_date.at_end_of_month}).missing_payment.count
+    @students_missing_payment = StudentCourseLog.joins(:course_log).where(course_logs: { date: start_date.at_beginning_of_month..start_date.at_end_of_month}).missing_payment.select(:student_id).distinct.count
   end
 
   def teacher_cash_incomes
@@ -78,5 +81,8 @@ class Admin::WelcomeController < Admin::BaseController
         @net_income[period] = @net_income[period] + (@balance_cell[period][category] || 0)
       end
     end
+  end
+
+  def missing_payments
   end
 end

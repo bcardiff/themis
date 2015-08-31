@@ -61,13 +61,13 @@ class StudentPack < ActiveRecord::Base
 
     existing_pack = student.student_packs.valid_for(date).first
     if existing_pack
-      StudentCourseLog.where(student_pack_id: existing_pack.id).update_all(student_pack_id: nil)
+      student.student_course_logs.where(student_pack_id: existing_pack.id).update_all(student_pack_id: nil)
       existing_pack.destroy
     end
 
     student_pack = register_for(student, date, total)
 
-    ids = StudentCourseLog.includes(:course_log)
+    ids = student.student_course_logs.includes(:course_log)
       .where(requires_student_pack: true, course_logs: { date: date_range})
       .pluck(:id)
       .take(student_pack.max_courses)

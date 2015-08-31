@@ -49,6 +49,10 @@ class StudentCourseLog < ActiveRecord::Base
     errors.add(:teacher, "can't be blank") unless teacher
   end
 
+  def missing_payment?
+    self.requires_student_pack == true && self.student_pack == nil
+  end
+
   def self.process(course_log, teacher, payload, ona_submission, ona_submission_path)
     id_kind = payload["student_repeat/id_kind"]
     card = payload["student_repeat/cardtxt"]
