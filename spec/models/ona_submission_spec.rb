@@ -797,10 +797,42 @@ RSpec.describe OnaSubmission, type: :model do
       expect(first_class.requires_student_pack).to be_falsey
     end
 
-    it "should be able to mark as not payed if payment was updated on other class"
+    it "should be able to mark as not payed if payment was updated on other class" do
+      student_log_first_week = class_without_payment date_in_first_week
+      class_with_payment date_in_second_week, plan_1_x_semana_4
+      expect(StudentCourseLog.missing_payment).to be_empty
 
-    it "should be able to have individual classes and a pack"
-    it "should handle manually created payments"
+      second_class = class_with_payment date_in_second_week, plan_clase
+      expect(StudentCourseLog.missing_payment.count).to eq(1)
+      expect(StudentCourseLog.missing_payment).to include(student_log_first_week)
+      expect(second_class.requires_student_pack).to be_falsey
+    end
+
+    it "should be able to have individual classes and a pack" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
+      class_without_payment date_in_second_week
+      class_without_payment date_in_third_week
+      class_without_payment date_in_fourth_week
+
+      # class_with_payment of another class
+      issued_class ({
+        "student_repeat" => [
+          {
+            "student_repeat/id_kind" => "existing_card",
+            "student_repeat/card" => card_code,
+            "student_repeat/do_payment" => "yes",
+            "student_repeat/payment/kind" => plan_clase.code
+          }
+        ],
+        "course" => ch_int2_jue.code,
+        "date" => date_in_fourth_week.strftime("%Y-%m-%d"),
+        "teacher" => mariel.name
+      })
+
+      expect(StudentCourseLog.missing_payment).to be_empty
+    end
+
+    it "should handle manually created payments that must not be deleted by the system"
   end
 
   describe "new card" do
