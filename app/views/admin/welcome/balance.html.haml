@@ -1,0 +1,18 @@
+%h1 Balance
+
+%table.table.table-bordered.table-hover
+  %tr
+    %th
+    - @periods.each do |p|
+      %th.text-center= p
+  - @categories.each do |c|
+    %tr
+      %th= human_balance_category c
+      - @periods.each do |p|
+        %td.text-right= number_to_currency(@balance_cell[p][c])
+
+  %tr
+    %th
+      = human_balance_category "NetIncome"
+    - @periods.each do |p|
+      %th.text-right= number_to_currency(@net_income[p])

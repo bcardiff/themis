@@ -7,6 +7,29 @@ module ApplicationHelper
     super(number, options.reverse_merge(precision: 2, format: '%u%n'))
   end
 
+  def human_balance_category(text)
+    case text
+    when "TeacherCashIncomes::FixAmountIncome"
+      "7. Ajustes de saldo (entrega de plata)"
+    when "TeacherCashIncomes::NewCardIncome"
+      "2. Ingresos por tarjetas nuevas"
+    when "TeacherCashIncomes::PlaceCommissionExpense"
+      "5. Gastos por comisión de sala"
+    when "TeacherCashIncomes::PlaceInsuranceExpense"
+      "6. Gastos por seguro de sala"
+    when "TeacherCashIncomes::StudentPaymentIncome"
+      "1. Ingresos por clases"
+    when "TeacherPayment"
+      "3. Pagos a profesores"
+    when "TeacherOwedPayment"
+      "4. Pagos a profesores (pendientes)"
+    when "NetIncome"
+      "Ingresos neto"
+    else
+      text
+    end
+  end
+
   def text_modal(label, title, text)
     id = SecureRandom.uuid
     render partial: 'shared/text_modal', locals: { id: id, label: label , title: title, text: text }
