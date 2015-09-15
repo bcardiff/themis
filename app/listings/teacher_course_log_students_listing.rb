@@ -25,7 +25,7 @@ class TeacherCourseLogStudentsListing < Listings::Base
       res = number_to_currency payment_amount
     end
 
-    if course_log.course.place.try :has_commission?
+    if @course_log.course.place.try :has_commission?
       school_incomes = incomes.sum(:payment_amount)
       place_expenses = -incomes.where(type: 'TeacherCashIncomes::PlaceCommissionExpense').sum(:payment_amount)
       if school_incomes > 0 || place_expenses > 0
@@ -42,7 +42,9 @@ class TeacherCourseLogStudentsListing < Listings::Base
   end
 
   column '' do |student|
-    render partial: 'shared/student_course_log_actions', locals: {student: student, student_course_log: find_student_log(student) }
+    if format == :html
+      render partial: 'shared/student_course_log_actions', locals: {student: student, student_course_log: find_student_log(student) }
+    end
   end
 
   export :csv, :xls
