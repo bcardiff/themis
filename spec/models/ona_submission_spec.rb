@@ -38,6 +38,9 @@ RSpec.describe OnaSubmission, type: :model do
 
     expect(Student.count).to eq(1)
     expect(student.card_code).to eq(student_card("465"))
+    expect(Card.count).to eq(1)
+    expect(Card.first.code).to eq(student_card("465"))
+    expect(Card.first.student).to eq(student)
 
     student_course_log = course_log.student_course_logs.first
     expect(student_course_log).to_not be_nil
@@ -520,6 +523,44 @@ RSpec.describe OnaSubmission, type: :model do
 
     it "tracks the income as pending" do
       expect(mariel.owed_cash_total).to eq(TeacherCashIncomes::NewCardIncome::FEE)
+    end
+
+    it "should be able to assign new cards to same student by email" do
+      # the following week a new card is issued
+      issued_class({
+        "date" => "2015-05-21",
+        "course" => lh_int1_jue.code,
+        "teacher" => mariel.name,
+        "student_repeat" => [{
+          "student_repeat/id_kind" => "new_card",
+          "student_repeat/card" => "888",
+          "student_repeat/email" => "johndoe@email.com",
+          "student_repeat/first_name" => "John",
+        }]
+      })
+
+      expect(Student.count).to eq(1)
+      expect(Student.first.cards.map(&:code)).to eq([student_card("999"), student_card("888")])
+    end
+
+    it "should be able to assign existing card as new cards" do
+      card = create(:card)
+
+      # the following week a new card is issued
+      submission = issued_class({
+        "date" => "2015-05-21",
+        "course" => lh_int1_jue.code,
+        "teacher" => mariel.name,
+        "student_repeat" => [{
+          "student_repeat/id_kind" => "new_card",
+          "student_repeat/card" => card.code,
+          "student_repeat/email" => "johndoe@email.com",
+          "student_repeat/first_name" => "John",
+        }]
+      }, false)
+
+      expect(submission.status).to eq('error')
+      expect(submission.log).to include("#{card.code} ya fue entregada")
     end
   end
 

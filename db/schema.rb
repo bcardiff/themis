@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701131509) do
+ActiveRecord::Schema.define(version: 20150917235255) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20150701131509) do
 
   add_index "activity_logs", ["related_type", "related_id"], name: "index_activity_logs_on_related_type_and_related_id", using: :btree
   add_index "activity_logs", ["target_type", "target_id"], name: "index_activity_logs_on_target_type_and_target_id", using: :btree
+
+  create_table "cards", force: :cascade do |t|
+    t.string   "code",       limit: 255
+    t.integer  "student_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "cards", ["student_id"], name: "index_cards_on_student_id", using: :btree
 
   create_table "course_logs", force: :cascade do |t|
     t.integer  "course_id",  limit: 4
@@ -185,6 +194,7 @@ ActiveRecord::Schema.define(version: 20150701131509) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["teacher_id"], name: "index_users_on_teacher_id", using: :btree
 
+  add_foreign_key "cards", "students"
   add_foreign_key "courses", "places"
   add_foreign_key "courses", "tracks"
   add_foreign_key "student_course_logs", "course_logs"

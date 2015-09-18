@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
   has_many :activity_logs, as: :target
   has_many :student_course_logs
+  has_many :cards, dependent: :destroy
 
   UNKOWN = "N/A"
 
@@ -12,6 +13,14 @@ class Student < ActiveRecord::Base
   before_validation :nil_if_empty
   validate :avoid_changing_card_code
   validates_format_of :card_code, with: /SWC\/stu\/\d\d\d\d/, allow_nil: true
+  validate do |student|
+    cards.each do |card|
+      next if card.valid?
+      card.errors.full_messages.each do |msg|
+        errors[:base] << msg
+      end
+    end
+  end
 
   scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%") }
 
@@ -83,6 +92,12 @@ class Student < ActiveRecord::Base
       self.last_name = last_name
       self.email = email
     end
+
+    formatted_card_code = Student.format_card_code(card_code) rescue nil
+    if !formatted_card_code.blank? && self.cards.where(code: formatted_card_code).empty?
+      self.cards.build(code: formatted_card_code)
+    end
+
     if self.card_code == nil
       self.card_code = card_code
     end
