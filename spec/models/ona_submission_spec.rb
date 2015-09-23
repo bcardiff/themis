@@ -278,6 +278,66 @@ RSpec.describe OnaSubmission, type: :model do
     expect(student_log.student.email).to eq("johndoe@email.com")
   end
 
+  it "should not update the known by on second submission" do
+    submit_student({
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
+      "student_repeat/known_by" => "google",
+    })
+
+    expect(Student.count).to eq(1)
+    expect(Student.first.known_by).to eq("google")
+
+    submit_student(ch_int2_jue, {
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
+      "student_repeat/known_by" => "facebook",
+    })
+
+    expect(Student.count).to eq(1)
+    expect(Student.first.known_by).to eq("google")
+  end
+
+  it "should not update the known by on second submission if it's a new_card" do
+    submit_student({
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
+      "student_repeat/known_by" => "google",
+    })
+
+    submit_student(ch_int2_jue, {
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "245",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
+      "student_repeat/known_by" => "facebook",
+    })
+
+    expect(Student.count).to eq(1)
+    expect(Student.first.known_by).to eq("google")
+  end
+
+  it "should set the known by on if it's a new_card" do
+    submit_student({
+      "student_repeat/id_kind" => "new_card",
+      "student_repeat/card" => "245",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+      "student_repeat/last_name" => "Doe",
+      "student_repeat/known_by" => "google",
+    })
+
+    expect(Student.count).to eq(1)
+    expect(Student.first.known_by).to eq("google")
+  end
+
   it "should create guess without name if there is payment" do
     plan = create(:payment_plan)
 

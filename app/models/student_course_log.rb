@@ -50,6 +50,7 @@ class StudentCourseLog < ActiveRecord::Base
     email = payload["student_repeat/email"]
     first_name = payload["student_repeat/first_name"]
     last_name = payload["student_repeat/last_name"]
+    known_by = payload["student_repeat/known_by"]
     do_payment = payload["student_repeat/do_payment"]
     payment_kind = payload["student_repeat/payment/kind"]
     payment_amount = payload["student_repeat/payment/amount"]
@@ -69,6 +70,7 @@ class StudentCourseLog < ActiveRecord::Base
       student ||= Student.find_by_card card
       student ||= Student.find_by(email: email)
       student ||= Student.find_or_initialize_by_card card
+      student.known_by ||= known_by
       student.update_as_new_card!(first_name, last_name, email, card)
     when "existing_card"
       student ||= Student.find_or_initialize_by_card card
@@ -80,6 +82,7 @@ class StudentCourseLog < ActiveRecord::Base
       end
     when "guest"
       student ||= Student.find_or_initialize_by_email email
+      student.known_by = known_by
       student.update_as_guest!(first_name, last_name)
     else
       raise 'not supported id_kind'

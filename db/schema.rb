@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917235255) do
+ActiveRecord::Schema.define(version: 20150923165609) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150917235255) do
     t.string   "card_code",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "known_by",   limit: 255
   end
 
   create_table "teacher_cash_incomes", force: :cascade do |t|
