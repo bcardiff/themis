@@ -553,6 +553,28 @@ RSpec.describe OnaSubmission, type: :model do
     expect(Student.first.card_code).to eq(student_card("999"))
   end
 
+  it "should allow known student by email to get a new card in other class" do
+    submit_student({
+      "student_repeat/id_kind" => "guest",
+      "student_repeat/email" => "johndoe@email.com",
+      "student_repeat/first_name" => "John",
+    })
+
+    issued_class({
+      "date" => "2015-05-21",
+      "course" => lh_int1_jue.code,
+      "teacher" => mariel.name,
+      "student_repeat" => [{
+        "student_repeat/id_kind" => "new_card",
+        "student_repeat/card" => "999",
+        "student_repeat/email" => "johndoe@email.com",
+        "student_repeat/first_name" => "John",
+      }]
+    })
+
+    expect(Student.first.card_code).to eq(student_card("999"))
+  end
+
   describe "new card" do
     before(:each) do
       submit_student({

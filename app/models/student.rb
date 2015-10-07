@@ -104,6 +104,15 @@ class Student < ActiveRecord::Base
     self.save!
   end
 
+  def merge!(old_student)
+    [Card, StudentCourseLog].each do |type|
+      type.where(student_id: old_student.id).update_all(student_id: self.id)
+    end
+
+    ActivityLog.where(target_type: 'Student', target_id: old_student.id).update_all(target_id: self.id)
+    ActivityLog.where(related_type: 'Student', related_id: old_student.id).update_all(related_id: self.id)
+  end
+
   private
 
   def apply_format_card_code
