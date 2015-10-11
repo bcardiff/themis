@@ -20,7 +20,7 @@ class AdminOnaSubmissionsListing < Listings::Base
     end
   end
 
-  %w(date course teacher).each do |data_field|
+  %w(date course teacher _id).each do |data_field|
     column data_field do |s|
       s.data[data_field]
     end

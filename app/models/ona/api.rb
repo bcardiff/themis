@@ -24,7 +24,7 @@ module Ona
     end
 
     def submission_edit_url(data)
-      "https://ona.io/webform?project-id=#{Settings.ona_project_id}&instance-id=#{data["_id"]}&dataset-id=#{Settings.ona_dataset_id}"
+      "https://ona.io/#{self.user["username"]}/#{Settings.ona_project_id}/#{Settings.ona_dataset_id}/webform?instance-id=#{data["_id"]}"
     end
 
     def submission_updated_data(data)
