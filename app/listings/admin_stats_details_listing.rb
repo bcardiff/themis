@@ -1,7 +1,9 @@
 class AdminStatsDetailsListing < Listings::Base
 
   model do
-    student_course_logs = StudentCourseLog.joins(course_log: :course)
+    date_range = Date.parse(params[:from])..Date.parse(params[:to])
+
+    student_course_logs = StudentCourseLog.joins(course_log: :course).between(date_range)
     if params[:wday].present?
       wday = params[:wday].to_i
       student_course_logs = student_course_logs.where(courses: {weekday: wday})
@@ -20,7 +22,11 @@ class AdminStatsDetailsListing < Listings::Base
   column :first_name, searchable: true
   column :last_name, searchable: true
   column :email, searchable: true do |student|
-    mail_to student.email
+    if format == :html
+      mail_to student.email
+    else
+      student.email
+    end
   end
 
   column '' do |student|

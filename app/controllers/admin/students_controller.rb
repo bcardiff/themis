@@ -1,5 +1,6 @@
 class Admin::StudentsController < Admin::BaseController
   expose(:student, attributes: :student_params)
+  before_action :set_stats_range, only: [:stats, :stats_details]
 
   def update
     if student.save
@@ -23,7 +24,7 @@ class Admin::StudentsController < Admin::BaseController
     @stats_by_track = {}
     @stats_by_wday = {}
 
-    StudentCourseLog.eager_load(course_log: { course: :track }).each do |student_course_log|
+    StudentCourseLog.between(@date_range).eager_load(course_log: { course: :track }).each do |student_course_log|
       count_stat_entry @global_stats, student_course_log
 
       weekday_entry = @stats[student_course_log.course_log.course.weekday] ||= {}
@@ -63,4 +64,15 @@ class Admin::StudentsController < Admin::BaseController
   def empty_stat_entry
     { count: 0, total_count: 0, student_ids: {} }
   end
+
+  def set_stats_range
+    if params[:from].blank? || params[:to].blank?
+      default_range = view_context.recent_time_span
+      redirect_to url_for(params.merge({from: default_range.begin, to: default_range.end}))
+      return
+    end
+    @date_range = Date.parse(params[:from])..Date.parse(params[:to])
+    @stats_url_options = { from: params[:from], to: params[:to] }
+  end
+
 end

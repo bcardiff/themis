@@ -3,8 +3,8 @@
 
 %h2= "#{@track.try :code} #{Date::DAYNAMES[@wday] if @wday.present?}"
 
+%h3
+  Período
+  = @date_range
+
 = render_listing :admin_stats_details
-
-
-
-

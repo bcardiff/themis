@@ -24,6 +24,7 @@ class StudentCourseLog < ActiveRecord::Base
   validate :validate_teacher_if_paying
 
   scope :with_payment, -> { where.not(payment_status: nil) }
+  scope :between, -> (date_range) { where(course_logs: { date: date_range }) }
 
   before_destroy do
     self.incomes.each { |i| i.destroy! }

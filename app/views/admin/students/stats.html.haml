@@ -1,5 +1,9 @@
 %h1 Estadísticas. Alumnos Activos
 
+%h3
+  Período
+  = @date_range
+
 %table.table.table-bordered
   %tr
     %th
@@ -11,7 +15,7 @@
   %tr
     %th Total
     %th
-      = link_to @global_stats[:count], stats_details_admin_students_path
+      = link_to @global_stats[:count], stats_details_admin_students_path(@stats_url_options)
       \ :
       = @global_stats[:total_count]
 
@@ -19,7 +23,7 @@
       %td
         - count = @stats_by_wday[wday].try { |h| h[:count] }
         - if count
-          = link_to count, stats_details_admin_students_path(wday: wday)
+          = link_to count, stats_details_admin_students_path({wday: wday}.merge(@stats_url_options))
           \ :
           = @stats_by_wday[wday].try { |h| h[:total_count] }
 
@@ -29,7 +33,7 @@
       %td
         - count = @stats_by_track[track.code].try { |h| h[:count] }
         - if count
-          = link_to count, stats_details_admin_students_path(track_id: track.id)
+          = link_to count, stats_details_admin_students_path({track_id: track.id}.merge(@stats_url_options))
           \ :
           = @stats_by_track[track.code].try { |h| h[:total_count] }
 
@@ -37,7 +41,6 @@
         %td
           - count = @stats[wday].try { |h| h[track.code] }.try { |h| h[:count] }
           - if count
-            = link_to count, stats_details_admin_students_path(wday: wday, track_id: track.id)
+            = link_to count, stats_details_admin_students_path({wday: wday, track_id: track.id}.merge(@stats_url_options))
             \ :
             = @stats[wday].try { |h| h[track.code] }.try { |h| h[:total_count] }
-
