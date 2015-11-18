@@ -1,0 +1,10 @@
+language: ruby
+cache: bundler
+services:
+  - mysql
+bundler_args: --jobs=8 --without development
+before_script:
+  - bundle exec rake db:setup
+  - bundle exec rake db:test:prepare
+script:
+  - bundle exec rake spec
