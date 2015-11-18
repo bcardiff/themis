@@ -1,19 +1,9 @@
 class StudentPack < ActiveRecord::Base
   belongs_to :student
   belongs_to :payment_plan
-  validate :no_overlapping_dates
   has_many :student_course_logs
 
   scope :valid_for, -> (date) { where("start_date <= ? AND due_date >= ?", date, date) }
-
-  def no_overlapping_dates
-    overlapping = StudentPack.where(student: student, start_date: start_date..due_date).count
-    overlapping += StudentPack.where(student: student, due_date: start_date..due_date).count if overlapping == 0
-    overlapping += StudentPack.where(student: student).where("start_date <= ? AND due_date >= ?", start_date, due_date).count if overlapping == 0
-    if overlapping > 0
-      errors.add(:start_date, "can't overlap existing plans")
-    end
-  end
 
   def self.register_for(student, date, price)
     plan = PaymentPlan.find_by(price: price)
@@ -49,21 +39,40 @@ class StudentPack < ActiveRecord::Base
       max_courses = price / single_class_price
     end
 
-    self.create(student: student, payment_plan: plan, start_date: start_date, due_date: due_date, max_courses: max_courses)
+    self.create!(student: student, payment_plan: plan, start_date: start_date, due_date: due_date, max_courses: max_courses)
   end
 
-  def self.recalculate(student, date)
-    date_range = date..date.at_end_of_month
-    total = TeacherCashIncomes::StudentPaymentIncome.pack_payment()
-      .includes(:student_course_log)
-      .where(student_course_logs: {student_id: student.id}, date: date_range)
-      .sum(:payment_amount)
+  def total_payed
+    self.student_course_logs.sum(:payment_amount)
+  end
 
-    existing_pack = student.student_packs.valid_for(date).first
-    if existing_pack
-      student.student_course_logs.where(student_pack_id: existing_pack.id).update_all(student_pack_id: nil)
-      existing_pack.destroy
+  def self.recalculate(student_payment_income)
+    # TODO transaction!
+
+    student = student_payment_income.student
+    date = student_payment_income.date.at_beginning_of_month
+    date_range = date..date.at_end_of_month
+
+    # grab de existing student_pack if we are deleting/updateing and existing income
+    pack_to_extend = student_payment_income.student_course_log.student_pack
+    if pack_to_extend.nil?
+      # if the income is fresh, check if it should extend the last partial payment in the month
+      pack_to_extend = student.student_packs.where(start_date: date_range).last
+      pack_to_extend = nil if pack_to_extend && !pack_to_extend.payment_plan.other?
     end
+
+    total = 0
+    total = pack_to_extend.total_payed if pack_to_extend
+    unless student_payment_income.destroyed?
+      total = total + student_payment_income.payment_amount if pack_to_extend.nil? || !pack_to_extend.student_course_logs.include?(student_payment_income.student_course_log)
+    end
+
+    if pack_to_extend
+      student.student_course_logs.where(student_pack_id: pack_to_extend.id).update_all(student_pack_id: nil)
+      pack_to_extend.destroy
+    end
+
+    return if PaymentPlan.find_by(price: total).try(:single_class?)
 
     student_pack = register_for(student, date, total)
 

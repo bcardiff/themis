@@ -194,6 +194,7 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   def assign_to_pack_if_no_payment
+    return unless self.payment_amount.nil?
     StudentPack.check_assign_student_course_log(self)
   end
 

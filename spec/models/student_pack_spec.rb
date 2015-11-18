@@ -83,46 +83,4 @@ RSpec.describe StudentPack, type: :model do
     expect(pack.payment_plan).to eq(plan_otro)
     expect(pack.max_courses).to eq(1)
   end
-
-  describe "validation" do
-    it "should validate no day overlaps with exact period" do
-      create(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-
-      plan = build(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-      expect(plan).to_not be_valid
-      expect(plan).to have_error_on(:start_date)
-    end
-
-    it "should validate no day overlaps" do
-      create(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-
-      plan = build(:student_pack, student: student, start_date: Time.new(2015, 6, 1), due_date: Time.new(2015, 7, 5))
-      expect(plan).to_not be_valid
-      expect(plan).to have_error_on(:start_date)
-    end
-
-    it "should validate no day overlaps" do
-      create(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-
-      plan = build(:student_pack, student: student, start_date: Time.new(2015, 7, 15), due_date: Time.new(2015, 8, 5))
-      expect(plan).to_not be_valid
-      expect(plan).to have_error_on(:start_date)
-    end
-
-    it "should validate no day overlaps" do
-      create(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-
-      plan = build(:student_pack, student: student, start_date: Time.new(2015, 7, 15), due_date: Time.new(2015, 7, 20))
-      expect(plan).to_not be_valid
-      expect(plan).to have_error_on(:start_date)
-    end
-
-    it "should validate no day overlaps" do
-      create(:student_pack, student: student, start_date: Time.new(2015, 7, 1), due_date: Time.new(2015, 7, 31))
-
-      plan = build(:student_pack, student: student, start_date: Time.new(2015, 6, 1), due_date: Time.new(2015, 8, 20))
-      expect(plan).to_not be_valid
-      expect(plan).to have_error_on(:start_date)
-    end
- end
 end

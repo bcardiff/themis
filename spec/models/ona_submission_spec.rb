@@ -788,6 +788,17 @@ RSpec.describe OnaSubmission, type: :model do
 
     it "should be able to mark as not payed if payment was updated" do
       class_with_payment date_in_first_week, plan_1_x_semana_4
+      class_without_payment date_in_second_week
+      student_log_third_week = class_without_payment date_in_third_week
+      expect(StudentCourseLog.missing_payment).to be_empty
+
+      first_class = class_with_custom_payment date_in_first_week, plan_clase.price * 2
+      expect(StudentCourseLog.missing_payment.count).to eq(1)
+      expect(StudentCourseLog.missing_payment).to include(student_log_third_week)
+    end
+
+    it "should be able to mark as not payed if payment was updated to single class" do
+      class_with_payment date_in_first_week, plan_1_x_semana_4
       student_log_second_week = class_without_payment date_in_second_week
       expect(StudentCourseLog.missing_payment).to be_empty
 
@@ -830,6 +841,22 @@ RSpec.describe OnaSubmission, type: :model do
       })
 
       expect(StudentCourseLog.missing_payment).to be_empty
+    end
+
+    it "should be able to add another pack in parallel and consume it" do
+      class_with_payment date_in_first_week, plan_3_meses
+      class_without_payment date_in_second_week
+      class_without_payment date_in_third_week
+      class_without_payment date_in_fourth_week
+
+      class_with_payment date_in_first_week_of_second_month, plan_1_x_semana_4
+
+      pack1 = student_course_log_of(date_in_first_week).student_pack
+      pack2 = student_course_log_of(date_in_first_week_of_second_month).student_pack
+
+      expect(pack2).to_not eq(pack1)
+      expect(pack1.student_course_logs.count).to eq(4)
+      expect(pack2.student_course_logs.count).to eq(1)
     end
 
     it "should handle manually created payments that must not be deleted by the system"

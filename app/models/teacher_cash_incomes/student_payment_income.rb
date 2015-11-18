@@ -19,7 +19,7 @@ module TeacherCashIncomes
     end
 
     after_update do
-      StudentPack.recalculate(student, student_course_log.course_log.date.beginning_of_month)
+      StudentPack.recalculate(self)
     end
 
     before_destroy do
@@ -33,7 +33,7 @@ module TeacherCashIncomes
     after_destroy :update_student_packs
 
     def update_student_packs
-      StudentPack.recalculate(student, student_course_log.course_log.date.beginning_of_month)
+      StudentPack.recalculate(self)
     end
   end
 end
