@@ -115,7 +115,7 @@ class Student < ActiveRecord::Base
   end
 
   def last_student_pack
-    student_packs.order(due_date: :desc).first
+    student_packs.where("due_date < ?", Date.today).order(due_date: :desc).first
   end
 
   private
