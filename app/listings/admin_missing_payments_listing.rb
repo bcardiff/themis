@@ -1,7 +1,7 @@
 class AdminMissingPaymentsListing < Listings::Base
   # include ApplicationHelper
 
-  model { StudentCourseLog.missing_payment.includes({course_log: :course}, :student) }
+  model { StudentCourseLog.missing_payment.includes({course_log: :course}, :student).order("course_logs.date desc") }
 
   column :date do |student_course_log|
     student_course_log.course_log.date
