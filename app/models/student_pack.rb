@@ -77,7 +77,7 @@ class StudentPack < ActiveRecord::Base
     student_pack = register_for(student, date, total)
 
     ids = student.student_course_logs.includes(:course_log)
-      .where(requires_student_pack: true, course_logs: { date: date_range})
+      .missing_payment.between(date_range)
       .pluck(:id)
       .take(student_pack.max_courses)
 
@@ -85,9 +85,12 @@ class StudentPack < ActiveRecord::Base
   end
 
   def self.check_assign_student_course_log(student_course_log)
-    existing_pack = student_course_log.student.student_packs.valid_for(student_course_log.course_log.date).first
-    if existing_pack && existing_pack.student_course_logs.count < existing_pack.max_courses
-      StudentCourseLog.where(id: student_course_log.id).update_all(student_pack_id: existing_pack.try(&:id))
+    valid_packs = student_course_log.student.student_packs.valid_for(student_course_log.course_log.date).order(:due_date)
+    valid_packs.each do |existing_pack|
+      if existing_pack && existing_pack.student_course_logs.count < existing_pack.max_courses
+        StudentCourseLog.where(id: student_course_log.id).update_all(student_pack_id: existing_pack.try(&:id))
+        return
+      end
     end
   end
 end

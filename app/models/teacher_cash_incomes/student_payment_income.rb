@@ -18,10 +18,6 @@ module TeacherCashIncomes
       end
     end
 
-    after_update do
-      StudentPack.recalculate(self)
-    end
-
     before_destroy do
       place = student_course_log.course_log.course.place
       if place

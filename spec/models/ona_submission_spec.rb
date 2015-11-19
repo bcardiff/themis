@@ -588,7 +588,7 @@ RSpec.describe OnaSubmission, type: :model do
     let(:date_in_first_week_of_third_month) { Date.new(2015, 10, 1) }
     let(:date_in_first_week_of_fourth_month) { Date.new(2015, 11, 5) }
 
-    def class_with_payment(date, plan)
+    def class_with_payment(date, plan, course = lh_int1_jue)
       issued_class ({
         "student_repeat" => [
           {
@@ -598,12 +598,12 @@ RSpec.describe OnaSubmission, type: :model do
             "student_repeat/payment/kind" => plan.code
           }
         ],
-        "course" => lh_int1_jue.code,
+        "course" => course.code,
         "date" => date.strftime("%Y-%m-%d"),
         "teacher" => mariel.name
       })
 
-      student_course_log_of date
+      student_course_log_of date, course
     end
 
     def class_with_custom_payment(date, amount)
@@ -622,10 +622,10 @@ RSpec.describe OnaSubmission, type: :model do
         "teacher" => mariel.name
       })
 
-      student_course_log_of date
+      student_course_log_of date, lh_int1_jue
     end
 
-    def class_without_payment(date)
+    def class_without_payment(date, course = lh_int1_jue)
       issued_class ({
         "student_repeat" => [
           {
@@ -634,16 +634,16 @@ RSpec.describe OnaSubmission, type: :model do
             "student_repeat/do_payment" => "no"
           }
         ],
-        "course" => lh_int1_jue.code,
+        "course" => course.code,
         "date" => date.strftime("%Y-%m-%d"),
         "teacher" => mariel.name
       })
 
-      student_course_log_of date
+      student_course_log_of date, course
     end
 
-    def student_course_log_of(date)
-      Student.find_by_card(card_code).student_course_logs.includes(:course_log).where(course_logs: {date: date}).first
+    def student_course_log_of(date, course = lh_int1_jue)
+      Student.find_by_card(card_code).student_course_logs.includes(:course_log).where(course_logs: {date: date, course_id: course.id}).first
     end
 
     it "should be ok to pay a single class" do
@@ -791,7 +791,6 @@ RSpec.describe OnaSubmission, type: :model do
       class_without_payment date_in_second_week
       student_log_third_week = class_without_payment date_in_third_week
       expect(StudentCourseLog.missing_payment).to be_empty
-
       first_class = class_with_custom_payment date_in_first_week, plan_clase.price * 2
       expect(StudentCourseLog.missing_payment.count).to eq(1)
       expect(StudentCourseLog.missing_payment).to include(student_log_third_week)
@@ -817,6 +816,37 @@ RSpec.describe OnaSubmission, type: :model do
       expect(StudentCourseLog.missing_payment.count).to eq(1)
       expect(StudentCourseLog.missing_payment).to include(student_log_first_week)
       expect(second_class.requires_student_pack).to be_falsey
+    end
+
+    describe "should consume packs that are more proximate to expire first" do
+      it "when longer was created first" do
+        class_with_payment date_in_first_week, plan_3_meses
+        class_with_payment date_in_second_week, plan_1_x_semana_4
+        last_class = class_without_payment date_in_third_week
+
+        expect(last_class.student_pack.payment_plan).to eq(plan_1_x_semana_4)
+      end
+
+      it "when longer was created later" do
+        class_with_payment date_in_first_week, plan_1_x_semana_4
+        class_with_payment date_in_second_week, plan_3_meses
+        last_class = class_without_payment date_in_third_week
+
+        expect(last_class.student_pack.payment_plan).to eq(plan_1_x_semana_4)
+      end
+
+      it "should consume longer once the shorter is completely consumed" do
+        class_with_payment date_in_first_week, plan_3_meses, lh_int1_jue
+        class_with_payment date_in_first_week, plan_1_x_semana_4, ch_int2_jue
+        class_without_payment date_in_second_week, lh_int1_jue
+        c0 = class_without_payment date_in_second_week, ch_int2_jue
+        c1 = class_without_payment date_in_third_week, lh_int1_jue
+        c2 = class_without_payment date_in_third_week, ch_int2_jue
+
+        expect(c0.student_pack.payment_plan).to eq(plan_1_x_semana_4)
+        expect(c1.student_pack.payment_plan).to eq(plan_1_x_semana_4)
+        expect(c2.student_pack.payment_plan).to eq(plan_3_meses)
+      end
     end
 
     it "should be able to have individual classes and a pack" do
@@ -857,6 +887,15 @@ RSpec.describe OnaSubmission, type: :model do
       expect(pack2).to_not eq(pack1)
       expect(pack1.student_course_logs.count).to eq(4)
       expect(pack2.student_course_logs.count).to eq(1)
+    end
+
+    it "should not change pack of classes already assigned due to new paymets" do
+      c1 = class_with_payment date_in_first_week, plan_3_meses
+      c2 = class_with_payment date_in_second_week, plan_1_x_semana_4
+
+      c1.reload
+      expect(c1.student_pack.payment_plan).to eq(plan_3_meses)
+      expect(c2.student_pack.payment_plan).to eq(plan_1_x_semana_4)
     end
 
     it "should handle manually created payments that must not be deleted by the system"
