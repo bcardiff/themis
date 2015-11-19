@@ -119,14 +119,20 @@
   background-color: #e2e9e9;
 }
 
-/* 1er columna tap */
+/* 2nd columna jazz */
 #horarios .row-with-date td:nth-child(8),
 #horarios .row-no-date td:nth-child(7) {
+  background-color: #d4dbdb;
+}
+
+/* 1er columna tap */
+#horarios .row-with-date td:nth-child(9),
+#horarios .row-no-date td:nth-child(8) {
   background-color: #ebe1d4;
 }
 
 /* 2da columna tap */
-#horarios .row-with-date td:nth-child(9),
-#horarios .row-no-date td:nth-child(8) {
+#horarios .row-with-date td:nth-child(10),
+#horarios .row-no-date td:nth-child(9) {
   background-color: #f4ebdd;
 }
