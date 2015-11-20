@@ -38,11 +38,12 @@
     - side_box 'Control' do
       .row
         - side_box_data 'clases impagas' do
-          = link_to admin_missing_payments_path do
+          = link_to admin_missing_payments_path(date: @start_date) do
             = @student_course_logs_missing_payment
 
         - side_box_data 'alumnos pendientes' do
-          = @students_missing_payment
+          = link_to missing_payment_admin_students_path(date: @start_date) do
+            = @students_missing_payment
 
   .col-md-8
     = render partial: 'shared/course_logs_calendar', locals: { course_logs: @course_logs, url: :admin_course_log_path }

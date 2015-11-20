@@ -1,0 +1,7 @@
+%h1 Alumnos con pagos pendientes
+
+%h3
+  Período
+  = l(Date.parse(params[:date]), format: "%B")
+
+= render_listing :admin_students_missing_payment

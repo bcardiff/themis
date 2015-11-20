@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       collection do
         get :stats
         get :stats_details
+        get :missing_payment
       end
     end
 
