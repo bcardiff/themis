@@ -97,24 +97,40 @@ ActiveRecord::Schema.define(version: 20150930045634) do
   end
 
   create_table "student_course_logs", force: :cascade do |t|
-    t.integer  "student_id",          limit: 4
-    t.integer  "course_log_id",       limit: 4
-    t.integer  "teacher_id",          limit: 4
-    t.text     "payload",             limit: 65535
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
-    t.decimal  "payment_amount",                    precision: 10, scale: 2
-    t.integer  "payment_plan_id",     limit: 4
-    t.integer  "ona_submission_id",   limit: 4
-    t.string   "ona_submission_path", limit: 255
-    t.string   "id_kind",             limit: 255
+    t.integer  "student_id",            limit: 4
+    t.integer  "course_log_id",         limit: 4
+    t.integer  "teacher_id",            limit: 4
+    t.text     "payload",               limit: 65535
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
+    t.decimal  "payment_amount",                      precision: 10, scale: 2
+    t.integer  "payment_plan_id",       limit: 4
+    t.integer  "ona_submission_id",     limit: 4
+    t.string   "ona_submission_path",   limit: 255
+    t.string   "id_kind",               limit: 255
+    t.boolean  "requires_student_pack", limit: 1,                              default: true, null: false
+    t.integer  "student_pack_id",       limit: 4
   end
 
   add_index "student_course_logs", ["course_log_id"], name: "index_student_course_logs_on_course_log_id", using: :btree
   add_index "student_course_logs", ["ona_submission_id"], name: "index_student_course_logs_on_ona_submission_id", using: :btree
   add_index "student_course_logs", ["payment_plan_id"], name: "index_student_course_logs_on_payment_plan_id", using: :btree
   add_index "student_course_logs", ["student_id"], name: "index_student_course_logs_on_student_id", using: :btree
+  add_index "student_course_logs", ["student_pack_id"], name: "index_student_course_logs_on_student_pack_id", using: :btree
   add_index "student_course_logs", ["teacher_id"], name: "index_student_course_logs_on_teacher_id", using: :btree
+
+  create_table "student_packs", force: :cascade do |t|
+    t.integer  "student_id",      limit: 4
+    t.integer  "payment_plan_id", limit: 4
+    t.date     "start_date",                null: false
+    t.date     "due_date",                  null: false
+    t.integer  "max_courses",     limit: 4, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "student_packs", ["payment_plan_id"], name: "index_student_packs_on_payment_plan_id", using: :btree
+  add_index "student_packs", ["student_id"], name: "index_student_packs_on_student_id", using: :btree
 
   create_table "students", force: :cascade do |t|
     t.string   "first_name", limit: 255
@@ -201,8 +217,11 @@ ActiveRecord::Schema.define(version: 20150930045634) do
   add_foreign_key "student_course_logs", "course_logs"
   add_foreign_key "student_course_logs", "ona_submissions"
   add_foreign_key "student_course_logs", "payment_plans"
+  add_foreign_key "student_course_logs", "student_packs"
   add_foreign_key "student_course_logs", "students"
   add_foreign_key "student_course_logs", "teachers"
+  add_foreign_key "student_packs", "payment_plans"
+  add_foreign_key "student_packs", "students"
   add_foreign_key "teacher_cash_incomes", "course_logs"
   add_foreign_key "teacher_cash_incomes", "places"
   add_foreign_key "teacher_cash_incomes", "student_course_logs"

@@ -47,6 +47,9 @@ class Admin::StudentsController < Admin::BaseController
     @wday = params[:wday].to_i if params[:wday].present?
   end
 
+  def missing_payment
+  end
+
   private
 
   def student_params

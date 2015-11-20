@@ -118,5 +118,5 @@ payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $400", price: 400, w
 payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $180", price: 180, weekly_classes: 1
 payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $250", price: 250, weekly_classes: 1
 payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $300", price: 300, weekly_classes: 1
-payment_plan "CLASE", description: "Clase suelta $70", price: 70, weekly_classes: 1
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $70", price: 70, weekly_classes: 1
 payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1

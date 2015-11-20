@@ -2,6 +2,7 @@ class Student < ActiveRecord::Base
   has_many :activity_logs, as: :target
   has_many :student_course_logs
   has_many :cards, dependent: :destroy
+  has_many :student_packs, dependent: :delete_all
 
   UNKOWN = "N/A"
 
@@ -23,6 +24,9 @@ class Student < ActiveRecord::Base
   end
 
   scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%") }
+  scope :missing_payment, -> (date) {
+    where(id: StudentCourseLog.joins(:course_log).where(course_logs: { date: date.month_range}).missing_payment.select(:student_id))
+  }
 
   def display_name
     "#{first_name} #{last_name}"
@@ -111,6 +115,10 @@ class Student < ActiveRecord::Base
 
     ActivityLog.where(target_type: 'Student', target_id: old_student.id).update_all(target_id: self.id)
     ActivityLog.where(related_type: 'Student', related_id: old_student.id).update_all(related_id: self.id)
+  end
+
+  def last_student_pack
+    student_packs.where("due_date < ?", Date.today).order(due_date: :desc).first
   end
 
   private

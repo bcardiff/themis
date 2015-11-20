@@ -7,6 +7,7 @@ RSpec.describe Place, type: :model do
   let(:teacher) { create(:teacher) }
   let(:plan_1w) { create(:payment_plan, weekly_classes: 1) }
   let(:plan_2w) { create(:payment_plan, weekly_classes: 2) }
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
 
   it "should have commission if caballito" do
     expect(caballito.commission).to eq(0.3)

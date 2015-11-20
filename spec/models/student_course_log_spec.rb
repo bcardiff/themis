@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe StudentCourseLog, type: :model do
+  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+
   describe "factory" do
     it "should create" do
       create(:student_course_log)
@@ -33,6 +35,20 @@ RSpec.describe StudentCourseLog, type: :model do
       student_log = build(:student_course_log, teacher: nil, payment_plan: nil)
       student_log.validate
       expect(student_log).to be_valid
+    end
+  end
+
+  describe "student_packs" do
+    it "should require pack be default" do
+      student_log = create(:student_course_log)
+      expect(student_log.student_pack).to be_nil
+      expect(student_log.requires_student_pack).to be_truthy
+    end
+
+    it "should require when payed by class" do
+      student_log = create(:student_course_log, payment_plan: plan_clase)
+      expect(student_log.student_pack).to be_nil
+      expect(student_log.requires_student_pack).to be_falsey
     end
   end
 

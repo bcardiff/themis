@@ -8,4 +8,8 @@ class ActivityLogs::Student::CourseAttended < ActivityLog
   def self.for(student, course_log)
     where(target: student, related: course_log, date: course_log.date)
   end
+
+  def student_course_log
+    StudentCourseLog.find_by(student: target, course_log: related)
+  end
 end

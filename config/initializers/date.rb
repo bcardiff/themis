@@ -23,4 +23,8 @@ class Date
     return nil if str.blank?
     Date.strptime(str, "%d/%m/%Y")
   end
+
+  def month_range
+    self.at_beginning_of_month..self.at_end_of_month
+  end
 end

@@ -8,6 +8,8 @@ class StudentCourseLog < ActiveRecord::Base
   serialize :payload, JSON
   belongs_to :payment_plan
   belongs_to :ona_submission
+  belongs_to :student_pack
+
   def incomes
     # TODO unable to work with has_many and subclasses
     # has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'
@@ -15,8 +17,10 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   before_validation :clear_payment_if_no_plan
+  before_validation :set_student_pack_related_fields
   after_save :record_teacher_cash_income
   after_save :record_student_activities
+  after_save :assign_to_pack_if_no_payment
 
   validates_presence_of :student, :course_log, :id_kind
   validates :student, uniqueness: { scope: :course_log_id, message: "No puede repetirse el alumno en una clase" }
@@ -25,6 +29,7 @@ class StudentCourseLog < ActiveRecord::Base
 
   scope :with_payment, -> { where.not(payment_status: nil) }
   scope :between, -> (date_range) { where(course_logs: { date: date_range }) }
+  scope :missing_payment, -> { where(requires_student_pack: true, student_pack: nil) }
 
   before_destroy do
     self.incomes.each { |i| i.destroy! }
@@ -42,6 +47,10 @@ class StudentCourseLog < ActiveRecord::Base
     return unless payment_plan
 
     errors.add(:teacher, "can't be blank") unless teacher
+  end
+
+  def missing_payment?
+    self.requires_student_pack == true && self.student_pack == nil
   end
 
   def self.process(course_log, teacher, payload, ona_submission, ona_submission_path)
@@ -172,6 +181,21 @@ class StudentCourseLog < ActiveRecord::Base
     if self.payment_plan.nil?
       self.payment_amount = nil
     end
+  end
+
+  def set_student_pack_related_fields
+    self.requires_student_pack = if self.payment_plan
+      self.payment_plan.requires_student_pack_for_class
+    else
+      true
+    end
+
+    true # before_validation
+  end
+
+  def assign_to_pack_if_no_payment
+    return unless self.payment_amount.nil?
+    StudentPack.check_assign_student_course_log(self)
   end
 
   def can_edit?(user)

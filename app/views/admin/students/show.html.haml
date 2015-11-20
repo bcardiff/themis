@@ -12,6 +12,32 @@
       = plain_text_field 'Email', mail_to(student.email)
       = plain_text_field 'Creado', student.created_at.to_date
 
+    %hr
+    %h2 Packs vigentes
+    - student.student_packs.valid_for(Date.today).each do |pack|
+      %form.form-horizontal
+        = plain_text_field 'Desde', pack.start_date.to_date
+        = plain_text_field 'Hasta', pack.due_date.to_date
+        = plain_text_field 'Plan', pack.payment_plan.code
+        = plain_text_field 'Clases', pack.max_courses
+        = plain_text_field 'Usadas', pack.student_course_logs.count
+    - if student.student_packs.valid_for(Date.today).count == 0
+      No hay
+
+    %hr
+    %h2 Pack anterior
+    - student.last_student_pack.tap do |pack|
+      - if pack
+        %form.form-horizontal
+          = plain_text_field 'Desde', pack.start_date.to_date
+          = plain_text_field 'Hasta', pack.due_date.to_date
+          = plain_text_field 'Plan', pack.payment_plan.code
+          = plain_text_field 'Clases', pack.max_courses
+          = plain_text_field 'Usadas', pack.student_course_logs.count
+      - else
+        No hay
+
+
   .col-md-7
     %h3 Actividades
 
