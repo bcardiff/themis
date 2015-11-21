@@ -71,7 +71,10 @@ Rails.application.routes.draw do
   namespace :room do
     get '/' => 'attendance#choose_course'
     post '/open/:date/:course_id' => 'attendance#open', as: :open
-    get '/course_log/:course_log_id/teachers' => 'attendance#choose_teachers', as: :choose_teachers
+    get '/course_log/:id/teachers' => 'attendance#choose_teachers', as: :choose_teachers
+    post '/course_log/:id/teachers' => 'attendance#choose_teachers_post'
+
+    get '/course_log/:id/students' => 'attendance#students', as: :students
   end
 
   root 'welcome#index'

@@ -1,1 +1,17 @@
 %h1 Profesores
+
+= form_tag do
+  = hidden_field :id, @course_log.id
+
+  - @teachers.each_slice(3) do |ts|
+    .btn-group.btn-group-justified(data-toggle="buttons")
+      - ts.each do |teacher|
+        - checked = @course_log.teachers.include?(teacher)
+        %label.btn.btn-default.btn-lg{class: "#{'active' if checked}"}
+          %input{type: "checkbox", autocomplete: "off", name: "teacher[]", value: teacher.id, checked: checked }
+            = teacher.name
+
+  %hr
+
+  = link_to 'Atrás', room_path, class: 'btn btn-lg btn-link'
+  = submit_tag 'Siguiente', class: 'btn btn-lg btn-info'
