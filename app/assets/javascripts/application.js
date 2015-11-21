@@ -17,4 +17,7 @@
 //= require bootstrap3-autocomplete-input.min
 //= require listings
 //= require bootstrap-datepicker
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .

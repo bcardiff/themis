@@ -28,5 +28,7 @@ module Themis
     config.generators.helper = false
 
     config.action_mailer.default_url_options = Settings.default_url_options.to_h
+
+    config.react.addons = true
   end
 end

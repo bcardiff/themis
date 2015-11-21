@@ -68,6 +68,12 @@ Rails.application.routes.draw do
     resources :ona_submissions, only: :index
   end
 
+  namespace :room do
+    get '/' => 'attendance#choose_course'
+    post '/open/:date/:course_id' => 'attendance#open', as: :open
+    get '/course_log/:course_log_id/teachers' => 'attendance#choose_teachers', as: :choose_teachers
+  end
+
   root 'welcome#index'
 
   post 'ona' => 'ona#json_post'
