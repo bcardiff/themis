@@ -75,6 +75,9 @@ Rails.application.routes.draw do
     post '/course_log/:id/teachers' => 'attendance#choose_teachers_post'
 
     get '/course_log/:id/students' => 'attendance#students', as: :students
+
+    get '/course_log/:id/students/search' => 'attendance#search_student', as: :search_student
+
   end
 
   root 'welcome#index'

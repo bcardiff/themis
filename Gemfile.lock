@@ -143,6 +143,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     libv8 (3.16.14.7)
+    lodash-rails (3.10.1)
+      railties (>= 3.1)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -298,6 +300,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listings!
+  lodash-rails
   mysql2
   newrelic_rpm
   rails (= 4.2.1)

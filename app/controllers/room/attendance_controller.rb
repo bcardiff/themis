@@ -44,4 +44,23 @@ class Room::AttendanceController < Room::BaseController
   def students
     @course_log = CourseLog.find(params[:id])
   end
+
+  def search_student
+    @course_log = CourseLog.find(params[:id])
+    student = Student.find_by_card(params[:q])
+    render json: { student: student_json(student) }
+  end
+
+  private
+
+  def student_json(student)
+    return nil unless student
+
+    return {
+      card_code: student.card_code,
+      first_name: student.first_name,
+      last_name: student.last_name,
+      email: student.email
+    }
+  end
 end
