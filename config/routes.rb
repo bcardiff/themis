@@ -76,7 +76,9 @@ Rails.application.routes.draw do
 
     get '/course_log/:id/students' => 'attendance#students', as: :students
 
-    get '/course_log/:id/students/search' => 'attendance#search_student', as: :search_student
+    get '/course_log/:id/students/search' => 'attendance#search_student'
+    post '/course_log/:id/students' => 'attendance#add_student'
+    delete '/course_log/:id/students' => 'attendance#remove_student'
 
   end
 

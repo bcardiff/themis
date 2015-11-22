@@ -43,12 +43,39 @@ class Room::AttendanceController < Room::BaseController
 
   def students
     @course_log = CourseLog.find(params[:id])
+    @course_log_json = course_log_json(@course_log)
   end
 
   def search_student
     @course_log = CourseLog.find(params[:id])
     student = Student.find_by_card(params[:q])
     render json: { student: student_json(student) }
+  end
+
+  def add_student
+    course_log = CourseLog.find(params[:id])
+
+    student = Student.find_by_card(params[:card_code])
+    student_log = course_log.student_course_logs.first_or_build(student: student)
+    student_log.id_kind = "existing_card"
+    student_log.payment_plan = nil
+    student_log.save!
+
+    render json: { course_log: course_log_json(course_log) }
+  end
+
+  def remove_student
+    course_log = CourseLog.find(params[:id])
+
+    student = Student.find_by_card(params[:card_code])
+    student_log = course_log.student_course_logs.where(student: student).first
+    # TODO show error if unable to delete the student due to existing payment information
+    # for this class
+    if student_log.payment_plan.nil?
+      student_log.destroy!
+    end
+
+    render json: { course_log: course_log_json(course_log) }
   end
 
   private
@@ -61,6 +88,15 @@ class Room::AttendanceController < Room::BaseController
       first_name: student.first_name,
       last_name: student.last_name,
       email: student.email
+    }
+  end
+
+  def course_log_json(course_log)
+    return {
+      id: course_log.id,
+      teachers: course_log.teachers.map(&:name),
+      students: course_log.students.map { |s| student_json(s) } ,
+      total_students: course_log.students_count
     }
   end
 end
