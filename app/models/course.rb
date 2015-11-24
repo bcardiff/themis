@@ -15,4 +15,8 @@ class Course < ActiveRecord::Base
       code
     end
   end
+
+  def room_name
+    name.split('-')[0..1].join('-')
+  end
 end

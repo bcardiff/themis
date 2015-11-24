@@ -1,7 +1,10 @@
 $sc-highlight:  #71a9a4;
-$sc-highlight-hover: darken($sc-highlight, 20%);
 $sc-dark:       #27313D;
 $sc-font:       'Roboto', sans-serif;
+
+$track-lh: #ec3b62;
+$track-ch: #71a9a4;
+$track-tp: #fab258;
 
 @mixin fullsize {
   position: absolute;
@@ -15,6 +18,13 @@ $sc-font:       'Roboto', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@mixin button-color($color) {
+  background-color: $color;
+  &:hover, &:active {
+    background-color: darken($color, 20%);
+  }
 }
 
 body.room {
@@ -104,8 +114,9 @@ body.room {
     font-family: $sc-font;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 
     list-style: none;
     padding: 0;
@@ -113,20 +124,32 @@ body.room {
     li {
       position: relative;
 
-      flex-grow: 1;
+      flex: 100vw 1;
+
+      &:first-child:nth-last-child(n+4), &:first-child:nth-last-child(n+4) ~ li {
+        // 4 or more items, half screen each
+        flex: 40vw 1;
+      }
+
       margin: 0.3em;
       font-size: 5vh;
 
-      background-color: $sc-highlight;
+      @include button-color($sc-highlight);
+      &.lh {
+        @include button-color($track-lh);
+      }
+      &.ch {
+        @include button-color($track-ch);
+      }
+      &.tp {
+        @include button-color($track-tp);
+      }
+
       a {
         @include fullsize;
         color:white;
         text-decoration: none;
         @include flex-center;
-      }
-
-      &:hover, &:active {
-        background-color: $sc-highlight-hover;
       }
     }
   }
