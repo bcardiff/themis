@@ -1,1 +1,11 @@
-Dashboard
+- @courses_by_time.each do |time, courses|
+  .row
+    .time.col-md-2
+      = time
+    .col-md-8
+      - courses.each do |course|
+        .well.col-md-4
+          %h2= course.name
+          %p= course.code
+
+
