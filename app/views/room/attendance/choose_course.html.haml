@@ -1,15 +1,15 @@
 - content_for :header do
   %h1
+    Apertura de clase:
     = @date.to_human
-    \: Apertura de clase
 
-%ul
+%ul#course_list
   - @courses.each do |course|
     %li
       = link_to course.name, room_open_path(@date, course.id), method: :post
 
 - content_for :footer do
-  %h2 Otro dia
+  %p OTRO DÍA
 
   = link_to room_path(date: @prev_date), class: 'btn btn-default' do
     %i.glyphicon.glyphicon-chevron-left

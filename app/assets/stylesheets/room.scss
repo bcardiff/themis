@@ -1,3 +1,16 @@
+$sc-highlight:  #71a9a4;
+$sc-highlight-hover: darken($sc-highlight, 20%);
+$sc-dark:       #27313D;
+$sc-font:       'Roboto', sans-serif;
+
+@mixin fullsize {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 body.room {
   padding: 0;
 
@@ -12,12 +25,47 @@ body.room {
     padding: 1em;
   }
 
+  h1, h2 {
+    font-family: $sc-font;
+    text-transform: uppercase;
+  }
+
+
+  #logo {
+    background-image:url("logo.png");
+    width:134px;
+    min-width: 134px;
+    height:90px;
+    min-height: 90px;
+  }
+
+  #header {
+    display: flex;
+    flex-direction: row;
+
+    > :nth-child(n+2) {
+      flex-grow: 1;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  #footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    > * {
+      margin: 0 0.3em;
+    }
+  }
+
   #container {
     flex-grow: 1;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
   }
 
   table {
@@ -28,6 +76,50 @@ body.room {
       font-size: 4em;
       width: 100%;
       text-align: center;
+    }
+  }
+
+  .btn-default {
+    background-color: $sc-dark;
+    color: white;
+    border:0;
+    border-radius:0;
+  }
+
+  #course_list {
+    @include fullsize;
+
+    font-family: $sc-font;
+    // text-transform: uppercase;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    list-style: none;
+    padding: 0;
+
+    li {
+      position: relative;
+
+      flex-grow: 1;
+      margin: 0.3em;
+      font-size: 5vh;
+
+      background-color: $sc-highlight;
+      a {
+        @include fullsize;
+        color:white;
+        text-decoration: none;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:hover, &:active {
+        background-color: $sc-highlight-hover;
+      }
     }
   }
 }

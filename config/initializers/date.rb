@@ -9,9 +9,9 @@ class Date
 
   def to_human
     if year == Date.today.year
-      strftime("%a %e %b")
+      I18n.l(self, format: "%a %e %b")
     else
-      strftime("%a %e %b %Y")
+      I18n.l(self, format: "%a %e %b %Y")
     end
   end
 
