@@ -82,6 +82,10 @@ Rails.application.routes.draw do
 
   end
 
+  namespace :cashier do
+    get '/dashboard' => 'dashboard#index'
+  end
+
   root 'welcome#index'
 
   post 'ona' => 'ona#json_post'

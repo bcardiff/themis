@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   belongs_to :teacher
   belongs_to :place
 
+  delegate :cashier?, to: :teacher
+
   def teacher?
     !teacher.nil?
   end

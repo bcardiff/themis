@@ -36,4 +36,8 @@
     %li
       = link_to 'Portal Sala', place_index_path
 
+  - if current_user.cashier?
+    %li
+      = link_to 'Secretaría', cashier_dashboard_path
+
 = render template: "layouts/application"

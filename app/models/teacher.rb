@@ -55,4 +55,8 @@ class Teacher < ActiveRecord::Base
   def pay_pending_classes(date)
     teacher_course_logs.due_up_to(date).update_all(paid: true, paid_at: Time.now, paid_amount: fee)
   end
+
+  def cashier?
+    cashier
+  end
 end
