@@ -18,7 +18,7 @@ class Room::AttendanceController < Room::BaseController
 
   def choose_teachers
     @course_log = CourseLog.find(params[:id])
-    @teachers = Teacher.all.order(:name)
+    @teachers = Teacher.all.order(fee: :desc, name: :asc) # TODO use some priority
   end
 
   def choose_teachers_post

@@ -11,6 +11,12 @@ $sc-font:       'Roboto', sans-serif;
   right: 0;
 }
 
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body.room {
   padding: 0;
 
@@ -42,6 +48,7 @@ body.room {
   #header {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
 
     > :nth-child(n+2) {
       flex-grow: 1;
@@ -79,6 +86,11 @@ body.room {
     }
   }
 
+  .btn-link {
+    text-transform: uppercase;
+    color: $sc-dark;
+  }
+
   .btn-default {
     background-color: $sc-dark;
     color: white;
@@ -90,7 +102,6 @@ body.room {
     @include fullsize;
 
     font-family: $sc-font;
-    // text-transform: uppercase;
 
     display: flex;
     flex-direction: column;
@@ -111,14 +122,43 @@ body.room {
         @include fullsize;
         color:white;
         text-decoration: none;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex-center;
       }
 
       &:hover, &:active {
         background-color: $sc-highlight-hover;
+      }
+    }
+  }
+
+  #teachers_form {
+    @include fullsize;
+
+    font-family: $sc-font;
+
+    .btn-group {
+      @include fullsize;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      width: 30vw;
+      height: 12vh;
+      font-size: 5vh;
+      @include flex-center;
+      flex-grow: 1;
+      margin: 0.2em;
+
+      color:$sc-dark;
+      background-color: #e5e5e5;
+      border:none;
+      &:hover, &:active, &.active {
+        background-color:$sc-highlight;
+        color:white;
       }
     }
   }

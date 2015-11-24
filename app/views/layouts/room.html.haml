@@ -19,11 +19,11 @@
         = yield :header
 
       - if @course_log
-        %span= @course_log.date.to_human
-        %span= @course_log.course.calendar_name
-        %span= @course_log.teachers.map(&:name).join(" - ")
-        %span.flex-right
-          = link_to 'Cerrar', room_path
+        %h1= @course_log.date.to_human
+        %h1= @course_log.course.calendar_name
+        %h1= @course_log.teachers.map(&:name).join(" - ")
+        %h1
+          = link_to 'Cerrar', room_path, class: 'btn btn-lg btn-default'
 
     #container
       = yield
