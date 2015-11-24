@@ -23,7 +23,7 @@
         %h1= @course_log.course.calendar_name
         %h1= @course_log.teachers.map(&:name).join(" - ")
         %h1
-          = link_to 'Cerrar', room_path, class: 'btn btn-lg btn-default'
+          = link_to 'Cerrar', room_path, class: 'btn btn-lg btn-default', id: 'close'
 
     #container
       = yield

@@ -69,6 +69,10 @@ body.room {
     }
   }
 
+  #close {
+    width: 12vw;
+  }
+
   #footer {
     display: flex;
     flex-direction: row;
@@ -170,7 +174,7 @@ body.room {
 
     .btn {
       width: 30vw;
-      height: 12vh;
+      height: 16vh;
       font-size: 5vh;
       @include flex-center;
       flex-grow: 1;
