@@ -1,23 +1,24 @@
-%h1
-  = @date.to_human
-  \: Apertura de clase
+- content_for :header do
+  %h1
+    = @date.to_human
+    \: Apertura de clase
 
-.list-group
+%ul
   - @courses.each do |course|
-    = link_to course.name, room_open_path(@date, course.id), class: 'list-group-item', method: :post
+    %li
+      = link_to course.name, room_open_path(@date, course.id), method: :post
 
-%hr
+- content_for :footer do
+  %h2 Otro dia
 
-%h2 Otro dia
+  = link_to room_path(date: @prev_date), class: 'btn btn-default' do
+    %i.glyphicon.glyphicon-chevron-left
+    = @prev_date.to_human
 
-= link_to room_path(date: @prev_date), class: 'btn btn-default' do
-  %i.glyphicon.glyphicon-chevron-left
-  = @prev_date.to_human
+  - if @date != Date.today
+    = link_to "Hoy", room_path, class: 'btn btn-default'
 
-- if @date != Date.today
-  = link_to "Hoy", room_path, class: 'btn btn-default'
-
-- if @next_date && @next_date != Date.today
-  = link_to room_path(date: @next_date), class: 'btn btn-default' do
-    %i.glyphicon.glyphicon-chevron-right
-    = @next_date.to_human
+  - if @next_date && @next_date != Date.today
+    = link_to room_path(date: @next_date), class: 'btn btn-default' do
+      %i.glyphicon.glyphicon-chevron-right
+      = @next_date.to_human

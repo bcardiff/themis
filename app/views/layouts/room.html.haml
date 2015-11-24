@@ -11,22 +11,23 @@
     = csrf_meta_tags
   %body.room
 
-    %nav.navbar.navbar-inverse.navbar-fixed-top
-      .container-fluid
-        .navbar-header
-          = link_to 'Swing City', room_path, class: 'navbar-brand'
+    #header
+      = link_to 'Swing City', room_path
 
-        - if @course_log
-          %p.navbar-text
-            = @course_log.date.to_human
-          %p.navbar-text
-            = @course_log.course.calendar_name
-          %p.navbar-text
-            = @course_log.teachers.map(&:name).join(" - ")
+      - if content_for?(:header)
+        = yield :header
 
-        .nav.navbar-nav.navbar-right
-          %li
-            = link_to 'Cerrar', room_path
+      - if @course_log
+        %span= @course_log.date.to_human
+        %span= @course_log.course.calendar_name
+        %span= @course_log.teachers.map(&:name).join(" - ")
+        %span.flex-right
+          = link_to 'Cerrar', room_path
 
-    .container-fluid
+    #container
       = yield
+
+    - if content_for?(:footer)
+      #footer
+        %hr
+        = yield :footer
