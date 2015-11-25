@@ -171,7 +171,7 @@ var RoomStudentsAttendance = React.createClass({
         <div className="btn-group">
         {this.state.course_log.students.map(function(student){
             return (
-              <button key={student.card_code} className="btn btn-lg btn-light" onClick={function(){ this._loadExistingStudent(student); }.bind(this)}>
+              <button key={student.card_code} className={"btn btn-lg " + (student.pending_payment == true ? "btn-negative" : "btn-light") } onClick={function(){ this._loadExistingStudent(student); }.bind(this)}>
                 {student.first_name}
                 &nbsp;
                 {student.last_name}
@@ -193,7 +193,8 @@ var RoomStudentsAttendance = React.createClass({
         </h2>
       </div>);
     } else if (this.state.student) {
-      var studentAction;
+      var studentAction, paymentWarning;
+
       if (!this.containsStudent(this.state.student)) {
         studentAction = (<button className="btn btn-lg btn-positive" onClick={this.addStudent}>
           <i className="glyphicon glyphicon-thumbs-up"/> Dar Presente
@@ -204,11 +205,18 @@ var RoomStudentsAttendance = React.createClass({
         </button>);
       }
 
+      if (this.state.student.pending_payment) {
+        paymentWarning = (<h1 className="negative">
+          <i className="glyphicon glyphicon-warning-sign" /> Pasar por recepción a la salida
+        </h1>);
+      }
+
       rightPanel = (<div>
         <h1>{this.state.student.first_name}</h1>
         <h1>{this.state.student.last_name}</h1>
         <h1>{this.state.student.email}</h1>
         <h1>{this.state.student.card_code}</h1>
+        {paymentWarning}
         <div className="layout-columns student-actions">
           {studentAction}
           <button className="btn btn-lg btn-light" onClick={this._clearCurrentStudent}>

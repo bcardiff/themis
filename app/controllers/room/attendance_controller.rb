@@ -49,7 +49,7 @@ class Room::AttendanceController < Room::BaseController
   def search_student
     @course_log = CourseLog.find(params[:id])
     student = Student.find_by_card(params[:q])
-    render json: { student: student_json(student) }
+    render json: { student: student_json(@course_log, student, true) }
   end
 
   def add_student
@@ -96,14 +96,21 @@ class Room::AttendanceController < Room::BaseController
 
   private
 
-  def student_json(student)
+  def student_json(course_log, student, using_pack)
     return nil unless student
+
+    pending_payment = student.student_course_logs.missing_payment.count > 0
+
+    if !pending_payment && using_pack
+      pending_payment = student.student_packs.valid_for(course_log.date).find { |p| p.available_courses > 0 }.nil?
+    end
 
     return {
       card_code: student.card_code,
       first_name: student.first_name,
       last_name: student.last_name,
-      email: student.email
+      email: student.email,
+      pending_payment: pending_payment
     }
   end
 
@@ -111,7 +118,7 @@ class Room::AttendanceController < Room::BaseController
     return {
       id: course_log.id,
       teachers: course_log.teachers.map(&:name),
-      students: course_log.students.order(:first_name, :last_name).map { |s| student_json(s) } ,
+      students: course_log.students.order(:first_name, :last_name).map { |s| student_json(course_log, s, false) } ,
       total_students: course_log.students_count,
       untracked_students_count: course_log.untracked_students_count
     }

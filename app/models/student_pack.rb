@@ -5,6 +5,10 @@ class StudentPack < ActiveRecord::Base
 
   scope :valid_for, -> (date) { where("start_date <= ? AND due_date >= ?", date, date) }
 
+  def available_courses
+    self.max_courses - self.student_course_logs.count
+  end
+
   def self.register_for(student, date, price)
     plan = PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
