@@ -113,8 +113,8 @@ body.room {
     button {
       font-size: 10vmin;
       width: 18vmin;
-      height: 15vmin;
-      text-align: center;
+      height: 13vmin;
+      line-height: 11vmin;
       margin: 0.2vmin;
     }
   }
@@ -122,6 +122,11 @@ body.room {
   .btn {
     border:none;
     border-radius: 0;
+
+    &.disabled {
+      opacity: 0.20;
+      outline: none;
+    }
   }
 
   .btn-link {
@@ -166,6 +171,7 @@ body.room {
     position: relative;
     .btn-group {
       @include fullsize;
+      position: relative;
       flex-direction: row;
       justify-content: space-around;
       flex-wrap: wrap;
@@ -176,9 +182,13 @@ body.room {
       margin: 0.2em;
       min-width: 30%;
     }
+
+    h2 .btn {
+      display: inline-block;
+    }
   }
 
-  #toggleStudents {
+  .students-list-bottom-btn {
     width: 100%;
     font-size: 2em;
     text-transform: uppercase;

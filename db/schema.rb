@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124221557) do
+ActiveRecord::Schema.define(version: 20151125035444) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -38,11 +38,12 @@ ActiveRecord::Schema.define(version: 20151124221557) do
   add_index "cards", ["student_id"], name: "index_cards_on_student_id", using: :btree
 
   create_table "course_logs", force: :cascade do |t|
-    t.integer  "course_id",  limit: 4
+    t.integer  "course_id",                limit: 4
     t.date     "date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "missing",    limit: 1, default: false, null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.boolean  "missing",                  limit: 1, default: false, null: false
+    t.integer  "untracked_students_count", limit: 4, default: 0,     null: false
   end
 
   create_table "courses", force: :cascade do |t|

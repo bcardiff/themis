@@ -78,6 +78,22 @@ class Room::AttendanceController < Room::BaseController
     render json: { course_log: course_log_json(course_log) }
   end
 
+  def add_students_no_card
+    course_log = CourseLog.find(params[:id])
+    course_log.untracked_students_count += 1
+    course_log.save!
+    render json: { course_log: course_log_json(course_log) }
+  end
+
+  def remove_students_no_card
+    course_log = CourseLog.find(params[:id])
+    if course_log.untracked_students_count > 0
+      course_log.untracked_students_count -= 1
+    end
+    course_log.save!
+    render json: { course_log: course_log_json(course_log) }
+  end
+
   private
 
   def student_json(student)
@@ -96,7 +112,8 @@ class Room::AttendanceController < Room::BaseController
       id: course_log.id,
       teachers: course_log.teachers.map(&:name),
       students: course_log.students.order(:first_name, :last_name).map { |s| student_json(s) } ,
-      total_students: course_log.students_count
+      total_students: course_log.students_count,
+      untracked_students_count: course_log.untracked_students_count
     }
   end
 end

@@ -79,7 +79,8 @@ Rails.application.routes.draw do
     get '/course_log/:id/students/search' => 'attendance#search_student'
     post '/course_log/:id/students' => 'attendance#add_student'
     delete '/course_log/:id/students' => 'attendance#remove_student'
-
+    post '/course_log/:id/students_no_card' => 'attendance#add_students_no_card'
+    delete '/course_log/:id/students_no_card' => 'attendance#remove_students_no_card'
   end
 
   namespace :cashier do
