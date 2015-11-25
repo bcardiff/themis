@@ -180,11 +180,20 @@ body.room {
       justify-content: space-around;
       flex-wrap: wrap;
     }
+
     .btn {
       @include flex-center;
       flex-grow: 1;
       margin: 0.2em;
-      min-width: 30%;
+      min-width: 20%;
+    }
+
+    .btn-group .btn {
+      &:first-child:nth-last-child(n+23), &:first-child:nth-last-child(n+23) ~ .btn {
+        overflow: hidden;
+        max-width: 20%;
+        justify-content: flex-start;
+      }
     }
 
     h2 .btn {
