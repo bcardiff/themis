@@ -261,6 +261,18 @@ var StudentPad = React.createClass({
     this.fireChangeDebounced = _.debounce(function(){
       this._fireChange.apply(this, [this.state.card_code]);
     }, 500);
+
+    $('body').keydown(function(event) {
+      if ("0".charCodeAt(0) <= event.which && event.which <= "9".charCodeAt(0)) {
+        this.appendDigit(String.fromCharCode(event.which));
+      }
+
+      if (event.keyCode == 27 || event.keyCode == 8) {
+        this.clear();
+        event.preventDefault();
+      }
+
+    }.bind(this));
   },
 
   _performUserInput: function(new_card_code) {
