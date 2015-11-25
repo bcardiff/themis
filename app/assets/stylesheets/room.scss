@@ -1,5 +1,6 @@
 $sc-highlight:  #71a9a4;
 $sc-dark:       #27313D;
+$sc-light:      #e5e5e5;
 $sc-font:       'Roboto', sans-serif;
 
 $track-lh: #ec3b62;
@@ -27,6 +28,16 @@ $track-tp: #fab258;
   }
 }
 
+.layout-columns {
+  display: flex;
+  flex-direction: row;
+  > * {
+    flex-grow: 1;
+    width: 31vw;
+    margin: 1vw;
+  }
+}
+
 body.room {
   padding: 0;
 
@@ -38,7 +49,7 @@ body.room {
   flex-direction: column;
 
   > * {
-    padding: 1em;
+    padding: 0.5em;
   }
 
   h1, h2 {
@@ -67,6 +78,13 @@ body.room {
     h1 {
       text-align: center;
     }
+
+    .nav a {
+      color: inherit;
+      &:hover, &:active {
+        text-decoration: none;
+      }
+    }
   }
 
   #close {
@@ -89,27 +107,86 @@ body.room {
     position: relative;
   }
 
-  table {
-    td {
-      height: 4em;
-    }
+  .studentpad {
+    margin: 0 auto;
+
     button {
-      font-size: 4em;
-      width: 100%;
+      font-size: 10vmin;
+      width: 18vmin;
+      height: 15vmin;
       text-align: center;
+      margin: 0.2vmin;
     }
+  }
+
+  .btn {
+    border:none;
+    border-radius: 0;
   }
 
   .btn-link {
-    text-transform: uppercase;
     color: $sc-dark;
+    text-transform: uppercase;
   }
 
   .btn-default {
-    background-color: $sc-dark;
     color: white;
-    border:0;
-    border-radius:0;
+    background-color: $sc-dark;
+  }
+
+  .btn-light {
+    color:$sc-dark;
+    background-color: $sc-light;
+
+    &:hover, &:active, &.active {
+      background-color:$sc-highlight;
+      color:white;
+    }
+  }
+
+  .btn-positive {
+    color: white;
+    background-color: $track-ch;
+    text-transform: uppercase;
+  }
+
+  .btn-negative {
+    color: white;
+    background-color: $track-lh;
+  }
+
+  .student-actions {
+    .btn {
+      font-family: $sc-font;
+      font-size: 2em;
+    }
+  }
+
+  .students-list {
+    position: relative;
+    .btn-group {
+      @include fullsize;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .btn {
+      @include flex-center;
+      flex-grow: 1;
+      margin: 0.2em;
+      min-width: 30%;
+    }
+  }
+
+  #toggleStudents {
+    width: 100%;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-family: $sc-font;
+    margin-top: 0.5em;
+    b {
+      margin: 0 0.5em;
+    }
   }
 
   #course_list {
@@ -179,14 +256,6 @@ body.room {
       @include flex-center;
       flex-grow: 1;
       margin: 0.2em;
-
-      color:$sc-dark;
-      background-color: #e5e5e5;
-      border:none;
-      &:hover, &:active, &.active {
-        background-color:$sc-highlight;
-        color:white;
-      }
     }
   }
 }

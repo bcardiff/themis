@@ -95,7 +95,7 @@ class Room::AttendanceController < Room::BaseController
     return {
       id: course_log.id,
       teachers: course_log.teachers.map(&:name),
-      students: course_log.students.map { |s| student_json(s) } ,
+      students: course_log.students.order(:first_name, :last_name).map { |s| student_json(s) } ,
       total_students: course_log.students_count
     }
   end

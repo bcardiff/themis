@@ -34,7 +34,8 @@ var RoomStudentsAttendance = React.createClass({
       data: { card_code: this.state.student.card_code },
       success: function(data) {
         this.setState(React.addons.update(this.state, {
-          course_log: { $set: data.course_log }
+          course_log: { $set: data.course_log },
+          student: { $set: null }
         }), function(){
           this.refs.pad.clear();
         }.bind(this));
@@ -42,11 +43,11 @@ var RoomStudentsAttendance = React.createClass({
     });
   },
 
-  removeStudent: function(student) {
+  removeStudent: function() {
     $.ajax({
       method: "DELETE",
       url: "/room/course_log/" + this.state.course_log.id + "/students",
-      data: { card_code: student.card_code },
+      data: { card_code: this.state.student.card_code },
       success: function(data) {
         this.setState(React.addons.update(this.state, {
           course_log: { $set: data.course_log }
@@ -61,44 +62,77 @@ var RoomStudentsAttendance = React.createClass({
     }));
   },
 
+  _loadExistingStudent: function(student) {
+    this.setState(React.addons.update(this.state, {
+      student: { $set: student },
+      not_found_alert: { $set: false },
+      show_students: { $set: false },
+      back_to_show_students: { $set: true },
+    }));
+  },
+
   _loadSearchStudentResult: function(result) {
     this.setState(React.addons.update(this.state, {
       student: { $set: result.student },
       not_found_alert: { $set: result.student == null },
       show_students: { $set: false },
+      back_to_show_students: { $set: false },
     }));
+  },
+
+  _clearCurrentStudent: function() {
+    if (!this.state.back_to_show_students) {
+      this.refs.pad.clear();
+    } else {
+      this.setState(React.addons.update(this.state, {
+        show_students: { $set: true }
+      }));
+    }
+  },
+
+  containsStudent: function(student) {
+    return _.filter(this.state.course_log.students, _.matches({card_code: student.card_code})).length > 0;
   },
 
   render: function() {
     var rightPanel = null;
 
     if (this.state.show_students) {
-      rightPanel = (<div>
-        <ul>
+      rightPanel = (<div className="students-list">
+        <div className="btn-group">
         {this.state.course_log.students.map(function(student){
-            return (<li key={student.card_code}>
-              {student.first_name} {student.last_name}
-              &nbsp;
-              <button className="btn btn-danger" onClick={function(){this.removeStudent(student)}.bind(this)}>
-                <i className="glyphicon glyphicon-trash"/> Eliminar
-              </button>
-            </li>);
+            return (
+              <button key={student.card_code} className="btn btn-lg btn-light" onClick={function(){ this._loadExistingStudent(student); }.bind(this)}>
+                {student.first_name}
+                &nbsp;
+                {student.last_name}
+              </button>);
         }.bind(this))}
-        </ul>
+        </div>
       </div>);
     } else if (this.state.student) {
+      var studentAction;
+      if (!this.containsStudent(this.state.student)) {
+        studentAction = (<button className="btn btn-lg btn-positive" onClick={this.addStudent}>
+          <i className="glyphicon glyphicon-thumbs-up"/> Dar Presente
+        </button>);
+      } else {
+        studentAction = (<button className="btn btn-lg btn-negative" onClick={this.removeStudent}>
+          <i className="glyphicon glyphicon-thumbs-down"/> Quitar Presente
+        </button>);
+      }
+
       rightPanel = (<div>
         <h1>{this.state.student.first_name}</h1>
         <h1>{this.state.student.last_name}</h1>
         <h1>{this.state.student.email}</h1>
         <h1>{this.state.student.card_code}</h1>
-        <hr/>
-        <button className="btn btn-lg btn-primary" onClick={this.addStudent}>
-          <i className="glyphicon glyphicon-ok"/> Presente
-        </button>
-        <button className="btn btn-lg btn-default" onClick={this.refs.pad.clear}>
-          Cancelar
-        </button>
+        <div className="layout-columns student-actions">
+          {studentAction}
+          <button className="btn btn-lg btn-light" onClick={this._clearCurrentStudent}>
+            Cancelar
+          </button>
+        </div>
       </div>);
     } else if (this.state.not_found_alert) {
       rightPanel = (<div>
@@ -107,22 +141,17 @@ var RoomStudentsAttendance = React.createClass({
     }
 
     return (
-    <div>
-      <div className="row">
-        <div>
-          {this.state.course_log.teachers.join(" - ")}
-        </div>
-        <button className="btn btn-lg" onClick={this.toggleStudents}>
-          {this.state.course_log.total_students} Alumno(s)
+    <div className="layout-columns">
+      <div>
+        <StudentPad ref="pad" onChange={this.onStudentChange}/>
+        <button id="toggleStudents" className={"btn btn-light " + (this.state.show_students ? "active" : "")} onClick={this.toggleStudents}>
+          Total:
+          <b>{this.state.course_log.total_students}</b>
+          Alumno{this.state.course_log.total_students != 1 ? 's' : null}
         </button>
       </div>
-      <div className="row">
-        <div className="col-md-6">
-          <StudentPad ref="pad" onChange={this.onStudentChange}/>
-        </div>
-        <div className="col-md-6">
-          {rightPanel}
-        </div>
+      <div>
+        {rightPanel}
       </div>
     </div>);
   }
@@ -161,14 +190,14 @@ var StudentPad = React.createClass({
   },
 
   render: function() {
-    return (<div>
-      <table style={{width: 100 + '%', height: 100 + '%'}}>
+    return (
+      <table className="studentpad">
         <tbody>
           <tr>
             <td colSpan="3" style={{textAlign: 'center'}}>
               <h1>
                 <span style={{color: '#ccc'}}>SWC/stu/</span>
-                <div style={{width: 4 + 'em', display: 'inline-block', textAlign: 'left'}}>
+                <div style={{width: 3 + 'em', display: 'inline-block', textAlign: 'left'}}>
                   {this.state.card_code}<span className="blink">_</span>
                 </div>
               </h1>
@@ -192,11 +221,14 @@ var StudentPad = React.createClass({
           <tr>
             <StudentPadButton digit="" />
             <StudentPadButton digit="0" onClick={this.appendDigit}/>
-            <StudentPadButton digit="x" onClick={this.clear} />
+            <StudentPadButton onClick={this.clear}>
+              <small>
+                <i className="glyphicon glyphicon-remove-sign"/>
+              </small>
+            </StudentPadButton>
           </tr>
         </tbody>
       </table>
-    </div>
     );
   }
 });
@@ -208,12 +240,12 @@ var StudentPadButton = React.createClass({
 
   render: function() {
     if (this.props.digit == "") {
-      return <td><button>&nbsp;</button></td>;
+      return <td><button className="btn btn-default">&nbsp;</button></td>;
     }
 
     return (
       <td>
-        <button onClick={this.click}>{this.props.digit}</button>
+        <button onClick={this.click} className="btn btn-default">{this.props.children || this.props.digit}</button>
       </td>
     );
   }
