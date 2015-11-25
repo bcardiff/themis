@@ -1,12 +1,13 @@
 class Cashier::DashboardController < Cashier::BaseController
   def index
-    courses = Course.ongoing.where(weekday: Date.today.wday)
-    @courses_by_time = {}
-    courses.each do |course|
-      @courses_by_time[course.start_time] ||= []
-      @courses_by_time[course.start_time] << course
+    todays_courses = Course.ongoing.includes(:place).where(weekday: Date.today.wday)
+    @places = todays_courses.group(:place_id).map{ |c| {id: c.place_id, name: c.place.name} }
+    @courses = {}
+    todays_courses.each do |course|
+      @courses[course.start_time.to_s(:time)] ||= []
+      @courses[course.start_time.to_s(:time)] << course
     end
-    @courses_by_time = @courses_by_time.sort
+    @courses = @courses.sort
   end
 
 end

@@ -1,11 +1,21 @@
-- @courses_by_time.each do |time, courses|
+#dashboard-table
+.row
+  .col-md-1
+  -@places.each do |place|
+    .col-md-4
+      = place[:name]
+- @courses.each do |time, courses|
   .row
-    .time.col-md-2
+    .time.col-md-1
       = time
     .col-md-8
       - courses.each do |course|
-        .well.col-md-4
-          %h2= course.name
-          %p= course.code
+        -@places.each do |place|
+          - if place[:id] == course.place_id
+            .well.col-md-4.course-slot
+              %h2= course.name
+              %p= course.code
+          - else
+            .well.col-md-4.empty-slot{style:'background-color:white;'}
 
 
