@@ -23,7 +23,7 @@ class Student < ActiveRecord::Base
     end
   end
 
-  scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%") }
+  scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ? OR email LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%") }
   scope :missing_payment, -> (date) {
     where(id: StudentCourseLog.joins(:course_log).where(course_logs: { date: date.month_range}).missing_payment.select(:student_id))
   }

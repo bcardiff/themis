@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require lodash
+//= require urijs
 //= require bootstrap-sprockets
 //= require bootstrap3-typeahead.min
 //= require bootstrap3-autocomplete-input.min
