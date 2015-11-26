@@ -24,31 +24,38 @@ body {
   padding-top: 50px;
 }
 
-.missing {
-  a {
-    color: red;
-  }
-  .badge {
-    background-color: red;
-  }
-}
-
 .day {
   width: 140px;
   height: 100px;
   vertical-align: top;
   border: 1px solid #ccc;
   font-size: 0.8em;
+  color:#555555;
+
+  a {
+    color:#555555;
+  }
   .course_log {
-    span {
+    span.course-link {
       margin-left: 7px;
       width: 60px;
       display: inline-block;
-      float: left;
     }
-    label {
-      float: left;
+
+    &.missing {
+      a {
+        color: #d80000;
+      }
+      color: #d80000;
     }
+  }
+}
+
+.tooltip.top {
+  .tooltip-inner {
+    background-color:white;
+    border:1px black solid;
+    color:black;
   }
 }
 
@@ -79,5 +86,8 @@ body {
   font-size: 1.4em;
   a {
     font-size: 1.4em;
+    position: relative;
+    top: 2px;
+    margin: 0 5px;
   }
 }

@@ -86,4 +86,15 @@ module ApplicationHelper
       end
     end
   end
+
+  def side_box_data_sub(legend)
+    haml_tag :div, class: 'col-md-12' do
+      haml_tag :h3 do
+        yield
+      end
+      haml_tag :label do
+        haml_concat legend
+      end
+    end
+  end
 end

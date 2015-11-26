@@ -17,9 +17,10 @@
 
     - side_box 'Caja' do
       .row
-        - side_box_data 'en mano de profesores' do
+        - side_box_data_full 'en mano de profesores' do
           = link_to number_to_currency(@course_incomes_not_handed), admin_teachers_path
-        - side_box_data 'ingresos del mes' do
+      .row
+        - side_box_data_sub 'ingresos del mes' do
           = number_to_currency(@course_incomes_in_month)
       .row
         .col-md-12
@@ -27,9 +28,10 @@
 
     - side_box 'Salario docente' do
       .row
-        - side_box_data 'a pagar' do
+        - side_box_data_full 'a pagar' do
           = link_to number_to_currency(@course_teaching_expense_to_paid), admin_teachers_path
-        - side_box_data 'pagado en el mes' do
+      .row
+        - side_box_data_sub 'pagado en el mes' do
           = number_to_currency(@course_teaching_expense_in_month)
       .row
         .col-md-12
