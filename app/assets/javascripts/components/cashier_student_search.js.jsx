@@ -39,6 +39,7 @@ var StudentSearch = React.createClass({
       students: [],
       next_url: null,
       total_count: null,
+      new_student: null,
     }
   },
 
@@ -47,6 +48,7 @@ var StudentSearch = React.createClass({
       students: {$set: []},
       next_url: {$set: null},
       total_count: {$set: null},
+      new_student: {$set: null},
     }));
 
     if (value != '') {
@@ -56,6 +58,12 @@ var StudentSearch = React.createClass({
 
   loadMore: function() {
     this.appendPage(this.state.next_url);
+  },
+
+  showNewStudentForm: function() {
+    this.setState(React.addons.update(this.state, {
+      new_student: {$set: {}}, //TODO grab search state and initialize student
+    }));
   },
 
   appendPage: function(url) {
@@ -71,6 +79,19 @@ var StudentSearch = React.createClass({
         }));
       }.bind(this)
     });
+  },
+
+  newStudentCreate: function(student) {
+    this.setState(React.addons.update(this.state, {
+      students: {$push: [student]},
+      new_student: {$set: null},
+    }));
+  },
+
+  newStudentCancel: function() {
+    this.setState(React.addons.update(this.state, {
+      new_student: {$set: null},
+    }));
   },
 
   render: function() {
@@ -110,24 +131,117 @@ var StudentSearch = React.createClass({
         </p>
 
         {(function(){
-          var newStudentLink = (<a href="#" className="btn btn-default" role="button">Crear nuevo</a>);
+          if (this.state.new_student == null) {
+            var newStudentLink = (<a href="#" className="btn btn-default" role="button" onClick={this.showNewStudentForm}>Crear nuevo</a>);
 
-          if (this.state.total_count == null) {
-            return newStudentLink;
+            if (this.state.total_count == 0) {
+              return (<div className="thumbnail alert-danger">
+                <div className="caption">
+                  <h4>Alumno no encontrado</h4>
+                  <p>
+                    {newStudentLink}
+                  </p>
+                </div>
+              </div>);
+            } else {
+              return newStudentLink;
+            }
+          } else {
+            return (
+              <NewStudentForm student={this.state.new_student} onCancel={this.newStudentCancel} onCreate={this.newStudentCreate} />
+            );
           }
 
-          if (this.state.total_count == 0) {
-            return (<div className="thumbnail alert-danger">
-              <div className="caption">
-                <h4>Alumno no encontrado</h4>
-                <p>
-                  {newStudentLink}
-                </p>
-              </div>
-            </div>);
-          }
         }.bind(this))()}
 
+      </div>
+    );
+  }
+});
+
+var NewStudentForm = React.createClass({
+  getInitialState: function(){
+    return { student: this.props.student };
+  },
+
+  _onStudentPropChange: function(prop, value) {
+    this.setState(React.addons.update(this.state, {
+      student: {[prop]: {$set: value}}
+    }));
+  },
+
+  onCreate: function() {
+    $.ajax({
+      url: '/cashier/students',
+      method: 'POST',
+      data: {student: this.state.student},
+      success: function(data) {
+        if (data.status == 'error') {
+          this.setState(React.addons.update(this.state, {
+            student: {$set: data.student}
+          }));
+        } else {
+          this.props.onCreate(data.student);
+        }
+      }.bind(this)
+    })
+  },
+
+  render: function() {
+    var studentBind = function(prop) {
+      return {
+        value: this.state.student[prop],
+        errors: _.get(this.state.student, ['errors', prop], null),
+        onChange: function(event) {
+          this._onStudentPropChange(prop, event.target.value);
+        }.bind(this)
+      }
+    }.bind(this);
+
+    // TODO add known by
+    return (
+    <form className="form-horizontal">
+      <h3>Nuevo alumno</h3>
+
+      <StudentInputField label="Nombre" type="text" {...studentBind('first_name')} />
+      <StudentInputField label="Apellido" type="text" {...studentBind('last_name')}/>
+      <StudentInputField label="Email" type="email" {...studentBind('email')} />
+      <StudentInputField label="Tarjeta" type="text" {...studentBind('card_code')} />
+
+      <button type="submit" className="btn btn-primary" onClick={this.onCreate}>Crear alumno</button>
+      <button type="button" className="btn btn-link" onClick={this.props.onCancel}>Cancelar</button>
+    </form>
+    );
+  }
+});
+
+var StudentInputField = React.createClass({
+  render: function() {
+    var {label, errors, ...inputProps} = this.props;
+    var hasErrors = errors != null;
+    console.log(label, errors);
+
+    return (
+      <div className={classNames("form-group", {'has-error has-feedback': hasErrors})}>
+        <label htmlFor="email" className="col-sm-2 control-label">{label}</label>
+        <div className="col-sm-10">
+          <input {...inputProps} className="form-control" placeholder={label} />
+          {(function(){
+            if (hasErrors) {
+              return (
+                <span className="glyphicon glyphicon-remove form-control-feedback"></span>
+              );
+            }
+          }.bind(this))()}
+
+          {(function(){
+            if (hasErrors) {
+              return (
+                <span className="help-block">{errors.join(', ')}</span>
+              );
+            }
+          }.bind(this))()}
+        </div>
       </div>
     );
   }

@@ -85,7 +85,7 @@ Rails.application.routes.draw do
 
   namespace :cashier do
     get '/dashboard' => 'dashboard#index'
-    resources :students, only: [:index, :show]
+    resources :students, only: [:index, :show, :create]
   end
 
   root 'welcome#index'

@@ -1,5 +1,5 @@
 class Cashier::StudentsController < Cashier::BaseController
-  expose(:student)
+  expose(:student, attributes: :student_params)
 
   def index
     respond_to do |format|
@@ -20,7 +20,19 @@ class Cashier::StudentsController < Cashier::BaseController
     render 'admin/students/show'
   end
 
+  def create
+    if student.save
+      render json: {status: :ok, student: student_json(student)}
+    else
+      render json: {status: :error, student: student_json(student)}
+    end
+  end
+
   private
+
+  def student_params
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code)
+  end
 
   def student_json(student)
     {
@@ -28,6 +40,9 @@ class Cashier::StudentsController < Cashier::BaseController
       card_code: student.card_code,
       first_name: student.first_name,
       last_name: student.last_name,
-    }
+      email: student.email,
+    }.tap do |hash|
+      hash[:errors] = student.errors.to_hash unless student.valid?
+    end
   end
 end
