@@ -28,6 +28,16 @@ class Cashier::StudentsController < Cashier::BaseController
     end
   end
 
+  def single_class_payment
+    student = Student.find(params[:id])
+    student_course_log = student.student_course_logs.find(params[:student_course_log_id])
+    student_course_log.teacher = current_user.teacher
+    student_course_log.payment_plan = PaymentPlan.single_class
+    student_course_log.save!
+
+    render json: {status: :ok, student: student_json(student)}
+  end
+
   private
 
   def student_params
@@ -43,6 +53,20 @@ class Cashier::StudentsController < Cashier::BaseController
       email: student.email,
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
+
+      if student.persisted?
+        hash[:pending_payments] = {
+          this_month: student.pending_payments_count(Date.today.month_range),
+          total: student.pending_payments_count
+        }
+
+        hash[:today_pending_classes] = student.student_course_logs.missing_payment.joins(:course_log).between(Date.today).map do |student_course_log|
+          {
+            id: student_course_log.id,
+            course: student_course_log.course_log.course.code
+          }
+        end
+      end
     end
   end
 end

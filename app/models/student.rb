@@ -121,6 +121,14 @@ class Student < ActiveRecord::Base
     student_packs.where("due_date < ?", Date.today).order(due_date: :desc).first
   end
 
+  def pending_payments_count(date_range = nil)
+    if date_range
+      self.student_course_logs.missing_payment.joins(:course_log).between(date_range).count
+    else
+      self.student_course_logs.missing_payment.count
+    end
+  end
+
   private
 
   def apply_format_card_code

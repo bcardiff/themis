@@ -12,10 +12,10 @@ class AdminStudentsMissingPaymentListing < Listings::Base
     mail_to student.email
   end
   column 'Este mes' do |student|
-    student.student_course_logs.missing_payment.joins(:course_log).between(@date.month_range).count
+    student.pending_payments_count(@date.month_range)
   end
   column 'Total' do |student|
-    student.student_course_logs.missing_payment.count
+    student.pending_payments_count
   end
 
   export :xls, :csv

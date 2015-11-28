@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require lodash
 //= require urijs
+//= require q
 //= require classnames
 //= require bootstrap-sprockets
 //= require bootstrap3-typeahead.min

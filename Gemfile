@@ -55,6 +55,7 @@ gem 'kaminari'
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
   gem 'rails-assets-classnames'
+  gem 'rails-assets-q', '~> 1.0'
 end
 
 group :development, :test do

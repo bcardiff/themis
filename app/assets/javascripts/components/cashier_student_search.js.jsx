@@ -1,6 +1,6 @@
 var CashierStudentSearch = React.createClass({
   render: function() {
-    return <StudentSearch />
+    return <StudentSearch {...this.props} />
   }
 });
 
@@ -71,7 +71,6 @@ var StudentSearch = React.createClass({
       method: 'GET',
       url: url,
       success: function(data) {
-        console.log(data.items);
         this.setState(React.addons.update(this.state, {
           students: {$push: data.items},
           next_url: {$set: data.next_url},
@@ -110,16 +109,7 @@ var StudentSearch = React.createClass({
         }.bind(this))()}
 
         {this.state.students.map(function(student){
-          return (<div className="thumbnail" key={student.id}>
-            <div className="caption">
-              <div className="card_code">{student.card_code}</div>
-              <h4>{student.first_name}&nbsp;{student.last_name}</h4>
-              <p>{student.email}</p>
-              <p>
-                <a href={"/cashier/students/" + student.id} className="btn btn-default" role="button">Ir a ficha</a>
-              </p>
-            </div>
-          </div>);
+          return <StudentRecord key={student.id} student={student} single_class_price={this.props.single_class_price} />;
         }.bind(this))}
 
         <p>
@@ -135,14 +125,15 @@ var StudentSearch = React.createClass({
             var newStudentLink = (<a href="#" className="btn btn-default" role="button" onClick={this.showNewStudentForm}>Crear nuevo</a>);
 
             if (this.state.total_count == 0) {
-              return (<div className="thumbnail alert-danger">
-                <div className="caption">
+              return (<div>
+                <hr/>
                   <h4>Alumno no encontrado</h4>
                   <p>
                     {newStudentLink}
                   </p>
-                </div>
               </div>);
+            } else if (this.state.total_count != null) {
+              return (<div><hr/> {newStudentLink}</div>);
             } else {
               return newStudentLink;
             }
@@ -154,6 +145,72 @@ var StudentSearch = React.createClass({
 
         }.bind(this))()}
 
+      </div>
+    );
+  }
+});
+
+var StudentRecord = React.createClass({
+  getInitialState: function() {
+    return { student : this.props.student };
+  },
+
+  paySingleClass: function(pending_class_item) {
+    var student = this.state.student;
+    var message = "Recibir " + this.props.single_class_price + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
+    this.refs.dialog.confirm(message).then(function(){
+      $.ajax({
+        method: 'POST',
+        url: '/cashier/students/' + student.id + '/single_class_payment/' + pending_class_item.id,
+        success: function(data) {
+          if (data.success != 'error') {
+            this.setState(React.addons.update(this.state, {
+              student : { $set : data.student},
+            }));
+          }
+        }.bind(this)
+      });
+    }.bind(this));
+  },
+
+  render: function() {
+    var student = this.state.student;
+
+    return (
+      <div>
+        <hr />
+        <ConfirmDialog ref="dialog" />
+        <div className="row">
+          <div className="col-md-4">
+            <div className="card_code">{student.card_code}</div>
+            <h4>{student.first_name}&nbsp;{student.last_name}</h4>
+            <p>{student.email}</p>
+            <p>
+              <a href={"/cashier/students/" + student.id} className="btn btn-default" role="button">Ir a ficha</a>
+            </p>
+          </div>
+          <div className="col-md-4">
+            {(function(){
+              if (student.pending_payments.total > 0) {
+                return (<div className="alert alert-warning">
+                  debe <b>{student.pending_payments.this_month}</b> clases este mes y en total <b>{student.pending_payments.total}</b>
+                </div>);
+              }
+            }.bind(this))()}
+
+            {(function(){
+              if (student.today_pending_classes.length > 0) {
+                return (<div>
+                  <p>Pagar clases de hoy individualmente</p>
+                  {student.today_pending_classes.map(function(item){
+                    var onClick = function() { this.paySingleClass(item); }.bind(this);
+                    return <button key={item.id} className="btn" onClick={onClick}>{item.course}</button>;
+                  }.bind(this))}
+                </div>);
+              }
+            }.bind(this))()}
+          </div>
+        </div>
       </div>
     );
   }
