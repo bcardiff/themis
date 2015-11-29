@@ -221,7 +221,7 @@ var StudentRecord = React.createClass({
             {(function(){
               if (student.today_pending_classes.length > 0) {
                 return (<div>
-                  <p>Pagar clases de hoy individualmente</p>
+                  <p>Recibir pago de clases de hoy individualmente</p>
                   <div className="btn-group">
                   {student.today_pending_classes.map(function(item){
                     var onClick = function() { this.paySingleClass(item); }.bind(this);
