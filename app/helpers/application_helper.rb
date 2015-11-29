@@ -92,7 +92,8 @@ module ApplicationHelper
        single_class_price: number_to_currency(PaymentPlan.single_class.price),
        payment_plans: PaymentPlan.all.order(:price).to_a.select { |p| !p.other? && !p.single_class? }.map { |p|
          { code: p.code, description: p.description, price: p.price.to_f }
-       }
+       },
+       new_card_fee: number_to_currency(TeacherCashIncomes::NewCardIncome::FEE)
      }
   end
 end

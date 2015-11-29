@@ -22,6 +22,8 @@ class Cashier::StudentsController < Cashier::BaseController
 
   def create
     if student.save
+      TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, Date.today)
+
       render json: {status: :ok, student: student_json(student)}
     else
       render json: {status: :error, student: student_json(student)}

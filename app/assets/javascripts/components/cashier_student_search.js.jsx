@@ -139,7 +139,7 @@ var StudentSearch = React.createClass({
             }
           } else {
             return (
-              <NewStudentForm student={this.state.new_student} onCancel={this.newStudentCancel} onCreate={this.newStudentCreate} />
+              <NewStudentForm student={this.state.new_student} onCancel={this.newStudentCancel} onCreate={this.newStudentCreate} config={this.props.config}/>
             );
           }
 
@@ -295,7 +295,7 @@ var NewStudentForm = React.createClass({
       <StudentInputField label="Nombre" type="text" {...studentBind('first_name')} />
       <StudentInputField label="Apellido" type="text" {...studentBind('last_name')}/>
       <StudentInputField label="Email" type="email" {...studentBind('email')} />
-      <StudentInputField label="Tarjeta" type="text" {...studentBind('card_code')} />
+      <StudentInputField label="Tarjeta" type="text" {...studentBind('card_code')} hint={"En caso de completar, recuerde cobrar los " + this.props.config.new_card_fee} />
 
       <button type="submit" className="btn btn-primary" onClick={this.onCreate}>Crear alumno</button>
       <button type="button" className="btn btn-link" onClick={this.props.onCancel}>Cancelar</button>
@@ -306,9 +306,8 @@ var NewStudentForm = React.createClass({
 
 var StudentInputField = React.createClass({
   render: function() {
-    var {label, errors, ...inputProps} = this.props;
+    var {label, errors, hint, ...inputProps} = this.props;
     var hasErrors = errors != null;
-    console.log(label, errors);
 
     return (
       <div className={classNames("form-group", {'has-error has-feedback': hasErrors})}>
@@ -320,6 +319,12 @@ var StudentInputField = React.createClass({
               return (
                 <span className="glyphicon glyphicon-remove form-control-feedback"></span>
               );
+            }
+          }.bind(this))()}
+
+          {(function(){
+            if (hint) {
+              return <span className="help-block">{hint}</span>;
             }
           }.bind(this))()}
 
