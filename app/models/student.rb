@@ -109,7 +109,7 @@ class Student < ActiveRecord::Base
   end
 
   def merge!(old_student)
-    [Card, StudentCourseLog].each do |type|
+    [Card, StudentCourseLog, StudentPack, TeacherCashIncomes].each do |type|
       type.where(student_id: old_student.id).update_all(student_id: self.id)
     end
 
