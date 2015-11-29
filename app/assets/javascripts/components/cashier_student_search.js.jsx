@@ -109,7 +109,7 @@ var StudentSearch = React.createClass({
         }.bind(this))()}
 
         {this.state.students.map(function(student){
-          return <StudentRecord key={student.id} student={student} single_class_price={this.props.single_class_price} />;
+          return <StudentRecord key={student.id} student={student} config={this.props.config} />;
         }.bind(this))}
 
         <p>
@@ -157,7 +157,7 @@ var StudentRecord = React.createClass({
 
   paySingleClass: function(pending_class_item) {
     var student = this.state.student;
-    var message = "Recibir " + this.props.single_class_price + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
+    var message = "Recibir " + this.props.config.single_class_price + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
     this.refs.dialog.confirm(message).then(function(){
       $.ajax({
         method: 'POST',
@@ -173,6 +173,14 @@ var StudentRecord = React.createClass({
     }.bind(this));
   },
 
+  payPack: function(pack) {
+    var student = this.state.student;
+    var message = "Recibir Pack " + pack.description + " de " + student.first_name + " " + student.last_name;
+    this.refs.dialog.confirm(message).then(function(){
+      console.log(pack);
+    });
+  },
+
   render: function() {
     var student = this.state.student;
 
@@ -182,33 +190,46 @@ var StudentRecord = React.createClass({
         <ConfirmDialog ref="dialog" />
         <div className="row">
           <div className="col-md-4">
+            <h4>
+              <a href={"/cashier/students/" + student.id}>
+                {student.first_name}&nbsp;{student.last_name}
+              </a>
+            </h4>
             <div className="card_code">{student.card_code}</div>
-            <h4>{student.first_name}&nbsp;{student.last_name}</h4>
             <p>{student.email}</p>
-            <p>
-              <a href={"/cashier/students/" + student.id} className="btn btn-default" role="button">Ir a ficha</a>
-            </p>
-          </div>
-          <div className="col-md-4">
             {(function(){
               if (student.pending_payments.total > 0) {
-                return (<div className="alert alert-warning">
+                return (<p className="missing-payment">
+                  <span className="glyphicon glyphicon-exclamation-sign" />&nbsp;
                   debe <b>{student.pending_payments.this_month}</b> clases este mes y en total <b>{student.pending_payments.total}</b>
-                </div>);
+                </p>);
               }
             }.bind(this))()}
-
+          </div>
+          <div className="col-md-4">
             {(function(){
               if (student.today_pending_classes.length > 0) {
                 return (<div>
                   <p>Pagar clases de hoy individualmente</p>
+                  <div className="btn-group">
                   {student.today_pending_classes.map(function(item){
                     var onClick = function() { this.paySingleClass(item); }.bind(this);
-                    return <button key={item.id} className="btn" onClick={onClick}>{item.course}</button>;
+                    return <button key={item.id} className="btn btn-default" onClick={onClick}>{item.course}</button>;
                   }.bind(this))}
+                  </div>
                 </div>);
               }
             }.bind(this))()}
+          </div>
+          <div className="col-md-4">
+            <p>Recibir pago de pack</p>
+
+            <ButtonDropdown title="Elegir pack">
+              {this.props.config.payment_plans.map(function(item){
+                var onClick = function(event) { this.payPack(item); event.preventDefault(); }.bind(this);
+                return <li key={item.price}><a href="#" onClick={onClick}>{item.description}</a></li>;
+              }.bind(this))}
+            </ButtonDropdown>
           </div>
         </div>
       </div>

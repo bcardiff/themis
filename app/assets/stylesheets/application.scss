@@ -19,6 +19,7 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+$red: #d80000;
 
 body {
   padding-top: 50px;
@@ -97,6 +98,9 @@ body {
   }
 }
 
+.missing-payment {
+  color: $red;
+}
 
 .modal-wrapper {
   display: flex;
