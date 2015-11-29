@@ -177,8 +177,19 @@ var StudentRecord = React.createClass({
     var student = this.state.student;
     var message = "Recibir Pack " + pack.description + " de " + student.first_name + " " + student.last_name;
     this.refs.dialog.confirm(message).then(function(){
-      console.log(pack);
-    });
+      $.ajax({
+        method: 'POST',
+        url: '/cashier/students/' + student.id + '/pack_payment/',
+        data: { code: pack.code },
+        success: function(data) {
+          if (data.success != 'error') {
+            this.setState(React.addons.update(this.state, {
+              student : { $set : data.student},
+            }));
+          }
+        }.bind(this)
+      });
+    }.bind(this));
   },
 
   render: function() {

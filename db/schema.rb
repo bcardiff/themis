@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125035444) do
+ActiveRecord::Schema.define(version: 20151129173127) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -155,11 +155,13 @@ ActiveRecord::Schema.define(version: 20151125035444) do
     t.datetime "updated_at",                                                 null: false
     t.date     "date"
     t.integer  "place_id",              limit: 4
+    t.integer  "student_id",            limit: 4
   end
 
   add_index "teacher_cash_incomes", ["course_log_id"], name: "index_teacher_cash_incomes_on_course_log_id", using: :btree
   add_index "teacher_cash_incomes", ["place_id"], name: "index_teacher_cash_incomes_on_place_id", using: :btree
   add_index "teacher_cash_incomes", ["student_course_log_id"], name: "index_teacher_cash_incomes_on_student_course_log_id", using: :btree
+  add_index "teacher_cash_incomes", ["student_id"], name: "index_teacher_cash_incomes_on_student_id", using: :btree
   add_index "teacher_cash_incomes", ["teacher_id"], name: "index_teacher_cash_incomes_on_teacher_id", using: :btree
 
   create_table "teacher_course_logs", force: :cascade do |t|
@@ -228,6 +230,7 @@ ActiveRecord::Schema.define(version: 20151125035444) do
   add_foreign_key "teacher_cash_incomes", "course_logs"
   add_foreign_key "teacher_cash_incomes", "places"
   add_foreign_key "teacher_cash_incomes", "student_course_logs"
+  add_foreign_key "teacher_cash_incomes", "students"
   add_foreign_key "teacher_cash_incomes", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"
   add_foreign_key "teacher_course_logs", "teachers"

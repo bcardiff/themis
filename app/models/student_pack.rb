@@ -58,7 +58,7 @@ class StudentPack < ActiveRecord::Base
     date_range = date..date.at_end_of_month
 
     # grab de existing student_pack if we are deleting/updateing and existing income
-    pack_to_extend = student_payment_income.student_course_log.student_pack
+    pack_to_extend = student_payment_income.student_course_log.try :student_pack
     if pack_to_extend.nil?
       # if the income is fresh, check if it should extend the last partial payment in the month
       pack_to_extend = student.student_packs.where(start_date: date_range).last

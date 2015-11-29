@@ -38,6 +38,14 @@ class Cashier::StudentsController < Cashier::BaseController
     render json: {status: :ok, student: student_json(student)}
   end
 
+  def pack_payment
+    student = Student.find(params[:id])
+    payment_plan = PaymentPlan.find_by(code: params[:code])
+    TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, Date.today, payment_plan)
+
+    render json: {status: :ok, student: student_json(student)}
+  end
+
   private
 
   def student_params
