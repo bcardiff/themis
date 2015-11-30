@@ -16,6 +16,17 @@ class Cashier::StudentsController < Cashier::BaseController
     end
   end
 
+  def course
+    course = Course.find_by(code: params[:course])
+    course_log = course.course_logs.find_by(date: Date.today)
+
+    render json: {
+      room_name: course.room_name,
+      untracked_students_count: course_log.untracked_students_count,
+      students: course_log.students.map { |s| student_json(s) }.sort_by { |h| - h[:pending_payments][:this_month] },
+    }
+  end
+
   def show
     render 'admin/students/show'
   end
