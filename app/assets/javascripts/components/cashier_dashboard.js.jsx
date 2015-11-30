@@ -1,6 +1,6 @@
 var CashieDashboard = React.createClass({
   getInitialState: function() {
-    return { courses: [] };
+    return { courses: [], page: null };
   },
 
   onTimer: function() {
@@ -15,13 +15,27 @@ var CashieDashboard = React.createClass({
     })
   },
 
+  toggleStudentsSearch: function(event) {
+    if (this.state.page == "students_search") {
+      this.setState(React.addons.update(this.state, {
+        page : { $set : null },
+      }));
+    } else {
+      this.setState(React.addons.update(this.state, {
+        page : { $set : "students_search" },
+      }));
+    }
+
+    event.preventDefault();
+  },
+
   render: function() {
     return (
       <div className="row">
         <Timer onTimer={this.onTimer} interval={12000} />
         <div className="col-md-2">
           <div className="list-group">
-            <a href="#"className="list-group-item">
+            <a href="#" onClick={this.toggleStudentsSearch} className={classNames("list-group-item", {active: this.state.page == "students_search"})}>
               <h4><i className="glyphicon glyphicon-search" /> Alumnos</h4>
             </a>
 
@@ -37,8 +51,8 @@ var CashieDashboard = React.createClass({
               return (
                 <a href="#" className="list-group-item" key={item.course}>
                   <h4 className={titleClassName}>
-                    {item.room_name.split('-').map(function(part){
-                    return (<span>{part}<br/></span>);
+                    {item.room_name.split('-').map(function(part, index){
+                    return (<span key={index}>{part}<br/></span>);
                   }.bind(this))}</h4>
                   <small>
                     {item.start_time}
@@ -55,6 +69,13 @@ var CashieDashboard = React.createClass({
                 </a>);
             }.bind(this))}
           </div>
+        </div>
+        <div className="col-md-10">
+        {(function(){
+          if (this.state.page == "students_search") {
+            return <CashierStudentSearch {...this.props} />;
+          }
+        }.bind(this))()}
         </div>
       </div>
     );
