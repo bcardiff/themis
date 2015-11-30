@@ -85,6 +85,8 @@ Rails.application.routes.draw do
 
   namespace :cashier do
     get '/dashboard' => 'dashboard#index'
+    get '/status' => 'dashboard#status'
+    
     resources :students, only: [:index, :show, :create] do
       member do
         post 'single_class_payment/:student_course_log_id' => 'students#single_class_payment'
