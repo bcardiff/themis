@@ -29,6 +29,18 @@ var CashieDashboard = React.createClass({
     event.preventDefault();
   },
 
+  toggleCourse: function(course) {
+    if (_.get(this.state.page, "course", null) == course) {
+      this.setState(React.addons.update(this.state, {
+        page : { $set : null },
+      }));
+    } else {
+      this.setState(React.addons.update(this.state, {
+        page : { $set : { course: course } },
+      }));
+    }
+  },
+
   render: function() {
     return (
       <div className="row">
@@ -40,16 +52,20 @@ var CashieDashboard = React.createClass({
             </a>
 
             {this.state.courses.map(function(item){
-              iconClassNames = classNames("glyphicon", {
+              var selected = _.get(this.state.page, "course", null) == item;
+              
+              var iconClassNames = classNames("glyphicon", {
                 "glyphicon-time": !item.started,
-                "glyphicon-bell missing-payment": item.started && item.attention_required,
+                "glyphicon-bell": item.started && item.attention_required,
+                "missing-payment": !selected && item.started && item.attention_required,
                 "glyphicon-ok": item.started && !item.attention_required,
               })
 
-              titleClassName = classNames({"missing-payment": item.started && item.attention_required})
+              var titleClassName = classNames({"missing-payment": !selected && item.started && item.attention_required})
 
+              var onClick = function(event) { this.toggleCourse(item); event.preventDefault(); }.bind(this);
               return (
-                <a href="#" className="list-group-item" key={item.course}>
+                <a href="#" onClick={onClick} className={classNames("list-group-item", {active: selected})} key={item.course}>
                   <h4 className={titleClassName}>
                     {item.room_name.split('-').map(function(part, index){
                     return (<span key={index}>{part}<br/></span>);
@@ -72,8 +88,20 @@ var CashieDashboard = React.createClass({
         </div>
         <div className="col-md-10">
         {(function(){
+          if (this.state.page == null) return;
+
           if (this.state.page == "students_search") {
             return <CashierStudentSearch {...this.props} />;
+          } else if (_.get(this.state.page, "course", null) != null) {
+            var course = this.state.page.course;
+            if (!course.started) {
+              return (<div>
+                <h1>{course.room_name}</h1>
+                <p>Aún no hay datos</p>
+              </div>);
+            } else {
+              return <CashierCourseDetails {...this.props} course={course.course} />;
+            }
           }
         }.bind(this))()}
         </div>
