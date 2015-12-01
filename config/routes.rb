@@ -91,6 +91,7 @@ Rails.application.routes.draw do
       member do
         post 'single_class_payment/:student_course_log_id' => 'students#single_class_payment'
         post 'pack_payment' => 'students#pack_payment'
+        post 'track_in_course_log' => 'students#track_in_course_log'
       end
       collection do
         get 'course'

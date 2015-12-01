@@ -21,6 +21,7 @@ class Cashier::StudentsController < Cashier::BaseController
     course_log = course.course_logs.find_by(date: Date.today)
 
     render json: {
+      course_log_id: course_log.id,
       room_name: course.room_name,
       untracked_students_count: course_log.untracked_students_count,
       students: course_log.students.map { |s| student_json(s) }.sort_by { |h| - h[:pending_payments][:this_month] },
@@ -55,6 +56,22 @@ class Cashier::StudentsController < Cashier::BaseController
     student = Student.find(params[:id])
     payment_plan = PaymentPlan.find_by(code: params[:code])
     TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, Date.today, payment_plan)
+
+    render json: {status: :ok, student: student_json(student)}
+  end
+
+  def track_in_course_log
+    student = Student.find(params[:id])
+    course_log = CourseLog.find(params[:course_log_id])
+
+    course_log.student_course_logs.create!({
+      student: student,
+      payment_plan: nil,
+      id_kind: (student.card_code.blank? ? "guest" : "existing_card")
+    })
+
+    course_log.untracked_students_count -= 1 # TODO if params[:untracked]
+    course_log.save!
 
     render json: {status: :ok, student: student_json(student)}
   end

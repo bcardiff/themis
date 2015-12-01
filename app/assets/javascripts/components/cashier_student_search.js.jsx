@@ -34,6 +34,13 @@ var DebouncedInput = React.createClass({
 });
 
 var StudentSearch = React.createClass({
+
+  getDefaultProps: function() {
+    return {
+      onStudentChosen: null
+    };
+  },
+
   getInitialState: function(){
     return {
       students: [],
@@ -60,10 +67,11 @@ var StudentSearch = React.createClass({
     this.appendPage(this.state.next_url);
   },
 
-  showNewStudentForm: function() {
+  showNewStudentForm: function(event) {
     this.setState(React.addons.update(this.state, {
       new_student: {$set: {}}, //TODO grab search state and initialize student
     }));
+    event.preventDefault();
   },
 
   appendPage: function(url) {
@@ -85,6 +93,10 @@ var StudentSearch = React.createClass({
       students: {$push: [student]},
       new_student: {$set: null},
     }));
+
+    if (this.props.onStudentChosen) {
+      this.props.onStudentChosen(student);
+    }
   },
 
   newStudentCancel: function() {
@@ -109,7 +121,7 @@ var StudentSearch = React.createClass({
         }.bind(this))()}
 
         {this.state.students.map(function(student){
-          return <StudentRecord key={student.id} student={student} config={this.props.config} />;
+          return <StudentRecord key={student.id} student={student} config={this.props.config} onStudentChosen={this.props.onStudentChosen} />;
         }.bind(this))}
 
         <p>
@@ -150,13 +162,9 @@ var StudentSearch = React.createClass({
   }
 });
 
-var StudentRecord = React.createClass({
-  getInitialState: function() {
-    return { student : this.props.student };
-  },
-
+var StudentPaymentControls = React.createClass({
   paySingleClass: function(pending_class_item) {
-    var student = this.state.student;
+    var student = this.props.student;
     var message = "Recibir " + this.props.config.single_class_price + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
     this.refs.dialog.confirm(message).then(function(){
       $.ajax({
@@ -164,9 +172,7 @@ var StudentRecord = React.createClass({
         url: '/cashier/students/' + student.id + '/single_class_payment/' + pending_class_item.id,
         success: function(data) {
           if (data.success != 'error') {
-            this.setState(React.addons.update(this.state, {
-              student : { $set : data.student},
-            }));
+            this.props.onStudentUpdated(data.student);
           }
         }.bind(this)
       });
@@ -174,7 +180,7 @@ var StudentRecord = React.createClass({
   },
 
   payPack: function(pack) {
-    var student = this.state.student;
+    var student = this.props.student;
     var message = "Recibir Pack " + pack.description + " de " + student.first_name + " " + student.last_name;
     this.refs.dialog.confirm(message).then(function(){
       $.ajax({
@@ -183,13 +189,68 @@ var StudentRecord = React.createClass({
         data: { code: pack.code },
         success: function(data) {
           if (data.success != 'error') {
-            this.setState(React.addons.update(this.state, {
-              student : { $set : data.student},
-            }));
+            this.props.onStudentUpdated(data.student);
           }
         }.bind(this)
       });
     }.bind(this));
+  },
+
+  render: function() {
+    var student = this.props.student;
+
+    return (
+      <div className="row">
+        <ConfirmDialog ref="dialog" />
+        <div className="col-md-6">
+          {(function(){
+            if (student.today_pending_classes.length > 0) {
+              return (<div>
+                <p>Recibir pago de clases de hoy individualmente</p>
+                <div className="btn-group">
+                {student.today_pending_classes.map(function(item){
+                  var onClick = function() { this.paySingleClass(item); }.bind(this);
+                  return <button key={item.id} className="btn btn-default" onClick={onClick}>{item.course}</button>;
+                }.bind(this))}
+                </div>
+              </div>);
+            }
+          }.bind(this))()}
+        </div>
+        <div className="col-md-6">
+          <p>Recibir pago de pack</p>
+
+          <ButtonDropdown title="Elegir pack">
+            {this.props.config.payment_plans.map(function(item){
+              var onClick = function(event) { this.payPack(item); event.preventDefault(); }.bind(this);
+              return <li key={item.price}><a href="#" onClick={onClick}>{item.description}</a></li>;
+            }.bind(this))}
+          </ButtonDropdown>
+        </div>
+      </div>
+    );
+  }
+});
+
+var StudentRecord = React.createClass({
+  getInitialState: function() {
+    return { student : this.props.student };
+  },
+
+  studentUpdated: function(student) {
+    this.setState(React.addons.update(this.state, {
+      student : { $set : student},
+    }));
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(React.addons.update(this.state, {
+      student : { $set : nextProps.student},
+    }));
+  },
+
+  pickStudent: function() {
+    this.props.onStudentChosen(this.state.student);
   },
 
   render: function() {
@@ -198,7 +259,6 @@ var StudentRecord = React.createClass({
     return (
       <div>
         <hr />
-        <ConfirmDialog ref="dialog" />
         <div className="row">
           <div className="col-md-4">
             <h4>
@@ -217,30 +277,18 @@ var StudentRecord = React.createClass({
               }
             }.bind(this))()}
           </div>
-          <div className="col-md-4">
+          <div className="col-md-8">
             {(function(){
-              if (student.today_pending_classes.length > 0) {
-                return (<div>
-                  <p>Recibir pago de clases de hoy individualmente</p>
-                  <div className="btn-group">
-                  {student.today_pending_classes.map(function(item){
-                    var onClick = function() { this.paySingleClass(item); }.bind(this);
-                    return <button key={item.id} className="btn btn-default" onClick={onClick}>{item.course}</button>;
-                  }.bind(this))}
+              if (this.props.onStudentChosen == null) {
+                return <StudentPaymentControls student={student} config={this.props.config} onStudentUpdated={this.studentUpdated} />;
+              } else {
+                return (<div className="row">
+                  <div className="col-md-offset-9 col-md-2">
+                    <button className="btn btn-default" onClick={this.pickStudent}>Elegir</button>
                   </div>
                 </div>);
               }
             }.bind(this))()}
-          </div>
-          <div className="col-md-4">
-            <p>Recibir pago de pack</p>
-
-            <ButtonDropdown title="Elegir pack">
-              {this.props.config.payment_plans.map(function(item){
-                var onClick = function(event) { this.payPack(item); event.preventDefault(); }.bind(this);
-                return <li key={item.price}><a href="#" onClick={onClick}>{item.description}</a></li>;
-              }.bind(this))}
-            </ButtonDropdown>
           </div>
         </div>
       </div>
