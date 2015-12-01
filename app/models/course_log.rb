@@ -18,7 +18,7 @@ class CourseLog < ActiveRecord::Base
   delegate :calendar_name, to: :course
 
   def students_count
-    self.student_course_logs.count
+    self.student_course_logs.count + self.untracked_students_count
   end
 
   def validate_course_date

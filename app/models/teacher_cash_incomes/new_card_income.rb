@@ -8,6 +8,10 @@ module TeacherCashIncomes
       end
     end
 
+    def self.create_cashier_card_payment!(teacher, student, date)
+      create!(teacher: teacher, date: date, student: student, payment_amount: FEE)
+    end
+
     def kind_description
       "Nueva tarjeta"
     end

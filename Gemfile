@@ -48,6 +48,15 @@ gem 'rest-client'
 gem 'newrelic_rpm'
 gem 'bootstrap3_autocomplete_input'
 gem 'bootstrap-datepicker-rails'
+gem 'react-rails'
+gem 'lodash-rails'
+gem 'kaminari'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-urijs'
+  gem 'rails-assets-classnames'
+  gem 'rails-assets-q', '~> 1.0'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

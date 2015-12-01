@@ -36,4 +36,14 @@
     %li
       = link_to 'Portal Sala', place_index_path
 
+  - if current_user.cashier?
+    %li
+      = link_to 'Mesa de entrada', cashier_dashboard_path
+
+  - if current_user.can_access_room_area?
+    %li
+      = link_to room_path, target: '_blank' do
+        Asistencia
+        %i.glyphicon.glyphicon-new-window
+
 = render template: "layouts/application"

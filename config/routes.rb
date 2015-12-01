@@ -68,6 +68,41 @@ Rails.application.routes.draw do
     resources :ona_submissions, only: :index
   end
 
+  namespace :room do
+    get '/sign_in' => 'base#session_new', as: :login
+    post '/sign_in' => 'base#session_create'
+
+    get '/' => 'attendance#choose_course'
+    post '/open/:date/:course_id' => 'attendance#open', as: :open
+    get '/course_log/:id/teachers' => 'attendance#choose_teachers', as: :choose_teachers
+    post '/course_log/:id/teachers' => 'attendance#choose_teachers_post'
+
+    get '/course_log/:id/students' => 'attendance#students', as: :students
+
+    get '/course_log/:id/students/search' => 'attendance#search_student'
+    post '/course_log/:id/students' => 'attendance#add_student'
+    delete '/course_log/:id/students' => 'attendance#remove_student'
+    post '/course_log/:id/students_no_card' => 'attendance#add_students_no_card'
+    delete '/course_log/:id/students_no_card' => 'attendance#remove_students_no_card'
+  end
+
+  namespace :cashier do
+    get '/dashboard' => 'dashboard#index'
+    get '/status' => 'dashboard#status'
+    get '/owed_cash' => 'dashboard#owed_cash'
+
+    resources :students, only: [:index, :show, :create] do
+      member do
+        post 'single_class_payment/:student_course_log_id' => 'students#single_class_payment'
+        post 'pack_payment' => 'students#pack_payment'
+        post 'track_in_course_log' => 'students#track_in_course_log'
+      end
+      collection do
+        get 'course'
+      end
+    end
+  end
+
   root 'welcome#index'
 
   post 'ona' => 'ona#json_post'

@@ -12,9 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require lodash
+//= require urijs
+//= require q
+//= require classnames
 //= require bootstrap-sprockets
 //= require bootstrap3-typeahead.min
 //= require bootstrap3-autocomplete-input.min
 //= require listings
 //= require bootstrap-datepicker
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .

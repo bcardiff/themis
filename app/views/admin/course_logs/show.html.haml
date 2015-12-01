@@ -11,7 +11,9 @@
   - unless course_log.missing
     = plain_text_field 'Profesores' do
       %label.badge= course_log.teachers.count
+      = course_log.teachers.map { |t| t.name }.join(', ')
 
+    = plain_text_field 'Recaudación' do
       = render_listing :teacher_course_log_teachers
 
     = plain_text_field 'Alumnos' do

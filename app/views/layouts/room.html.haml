@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %title Glims
+    = stylesheet_link_tag    'https://fonts.googleapis.com/css?family=Roboto:300'
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body.room
+
+    #header
+      = link_to '', room_path, id: 'logo'
+
+      - if content_for?(:header)
+        = yield :header
+
+      - if @course_log
+        %h1= @course_log.date.to_human
+        %h1= @course_log.course.calendar_name
+        %h1.nav
+          = link_to room_choose_teachers_path(@course_log) do
+            = @course_log.teachers.map(&:name).join(" - ")
+        %h1
+          = link_to 'Cerrar', room_path, class: 'btn btn-lg btn-default', id: 'close'
+
+    #container
+      = yield
+
+    - if content_for?(:footer)
+      #footer
+        = yield :footer

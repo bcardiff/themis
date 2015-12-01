@@ -1,7 +1,7 @@
 class ActivityLogs::Student::Payment < ActivityLog
-  def self.record(student, student_course_log)
-    find_or_create_by(target: student, related: student_course_log, date: student_course_log.course_log.date).tap do |log|
-      log.description = "Abonó #{student_course_log.payment_amount} a #{student_course_log.teacher.name}."
+  def self.record(student, student_course_log_or_income)
+    find_or_create_by(target: student, related: student_course_log_or_income, date: student_course_log_or_income.date).tap do |log|
+      log.description = "Abonó #{student_course_log_or_income.payment_amount} a #{student_course_log_or_income.teacher.name}."
       log.save!
     end
   end

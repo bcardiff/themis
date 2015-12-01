@@ -6,6 +6,7 @@ set :repo_url, 'git@github.com:bcardiff/themis.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"]
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/home/swingcit/themis'
@@ -67,4 +68,3 @@ namespace :deploy do
   end
 
 end
-

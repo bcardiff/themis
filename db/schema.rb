@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930045634) do
+ActiveRecord::Schema.define(version: 20151129173127) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -38,11 +38,12 @@ ActiveRecord::Schema.define(version: 20150930045634) do
   add_index "cards", ["student_id"], name: "index_cards_on_student_id", using: :btree
 
   create_table "course_logs", force: :cascade do |t|
-    t.integer  "course_id",  limit: 4
+    t.integer  "course_id",                limit: 4
     t.date     "date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "missing",    limit: 1, default: false, null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.boolean  "missing",                  limit: 1, default: false, null: false
+    t.integer  "untracked_students_count", limit: 4, default: 0,     null: false
   end
 
   create_table "courses", force: :cascade do |t|
@@ -154,11 +155,13 @@ ActiveRecord::Schema.define(version: 20150930045634) do
     t.datetime "updated_at",                                                 null: false
     t.date     "date"
     t.integer  "place_id",              limit: 4
+    t.integer  "student_id",            limit: 4
   end
 
   add_index "teacher_cash_incomes", ["course_log_id"], name: "index_teacher_cash_incomes_on_course_log_id", using: :btree
   add_index "teacher_cash_incomes", ["place_id"], name: "index_teacher_cash_incomes_on_place_id", using: :btree
   add_index "teacher_cash_incomes", ["student_course_log_id"], name: "index_teacher_cash_incomes_on_student_course_log_id", using: :btree
+  add_index "teacher_cash_incomes", ["student_id"], name: "index_teacher_cash_incomes_on_student_id", using: :btree
   add_index "teacher_cash_incomes", ["teacher_id"], name: "index_teacher_cash_incomes_on_teacher_id", using: :btree
 
   create_table "teacher_course_logs", force: :cascade do |t|
@@ -177,9 +180,11 @@ ActiveRecord::Schema.define(version: 20150930045634) do
   create_table "teachers", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "card",       limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
     t.decimal  "fee",                    precision: 10, scale: 2
+    t.boolean  "cashier",    limit: 1,                            default: false, null: false
+    t.integer  "priority",   limit: 4
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -225,6 +230,7 @@ ActiveRecord::Schema.define(version: 20150930045634) do
   add_foreign_key "teacher_cash_incomes", "course_logs"
   add_foreign_key "teacher_cash_incomes", "places"
   add_foreign_key "teacher_cash_incomes", "student_course_logs"
+  add_foreign_key "teacher_cash_incomes", "students"
   add_foreign_key "teacher_cash_incomes", "teachers"
   add_foreign_key "teacher_course_logs", "course_logs"
   add_foreign_key "teacher_course_logs", "teachers"

@@ -1,0 +1,284 @@
+$sc-highlight:  #71a9a4;
+$sc-dark:       #27313D;
+$sc-light:      #e5e5e5;
+$sc-font:       'Roboto', sans-serif;
+
+$track-lh: #ec3b62;
+$track-ch: #71a9a4;
+$track-tp: #fab258;
+
+@mixin fullsize {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-color($color) {
+  background-color: $color;
+  &:hover, &:active {
+    background-color: darken($color, 20%);
+  }
+}
+
+.layout-columns {
+  display: flex;
+  flex-direction: row;
+  > * {
+    flex-grow: 1;
+    width: 31vw;
+    margin: 1vw;
+  }
+}
+
+body.room {
+  padding: 0;
+
+  height: 100vh;
+  width: 100vw;
+
+
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    padding: 0.5em;
+  }
+
+  h1, h2 {
+    font-family: $sc-font;
+    text-transform: uppercase;
+  }
+
+
+  #logo {
+    background-image:image-url("logo.png");
+    width:134px;
+    min-width: 134px;
+    height:90px;
+    min-height: 90px;
+  }
+
+  #header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    > :nth-child(n+2) {
+      flex-grow: 1;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .nav a {
+      color: inherit;
+      &:hover, &:active {
+        text-decoration: none;
+      }
+    }
+  }
+
+  #close {
+    width: 12vw;
+  }
+
+  #footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    > * {
+      margin: 0 0.3em;
+    }
+  }
+
+  #container {
+    flex-grow: 1;
+
+    position: relative;
+  }
+
+  .studentpad {
+    margin: 0 auto;
+
+    button {
+      font-size: 10vmin;
+      width: 18vmin;
+      height: 13vmin;
+      line-height: 11vmin;
+      margin: 0.2vmin;
+    }
+  }
+
+  .btn {
+    border:none;
+    border-radius: 0;
+
+    &.disabled {
+      opacity: 0.20;
+      outline: none;
+    }
+  }
+
+  .btn-link {
+    color: $sc-dark;
+    text-transform: uppercase;
+  }
+
+  .btn-default {
+    color: white;
+    background-color: $sc-dark;
+  }
+
+  .btn-light {
+    color:$sc-dark;
+    background-color: $sc-light;
+
+    &:hover, &:active, &.active {
+      background-color:$sc-highlight;
+      color:white;
+    }
+  }
+
+  .btn-positive {
+    color: white;
+    background-color: $track-ch;
+    text-transform: uppercase;
+  }
+
+  .btn-negative {
+    color: white;
+    background-color: $track-lh;
+  }
+
+  .negative {
+    color: $track-lh;
+  }
+
+  .student-actions {
+    .btn {
+      font-family: $sc-font;
+      font-size: 2em;
+    }
+  }
+
+  .students-list {
+    position: relative;
+    .btn-group {
+      @include fullsize;
+      position: relative;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      @include flex-center;
+      flex-grow: 1;
+      margin: 0.2em;
+      min-width: 20%;
+    }
+
+    .btn-group .btn {
+      &:first-child:nth-last-child(n+23), &:first-child:nth-last-child(n+23) ~ .btn {
+        overflow: hidden;
+        max-width: 20%;
+        justify-content: flex-start;
+      }
+    }
+
+    h2 .btn {
+      display: inline-block;
+    }
+  }
+
+  .students-list-bottom-btn {
+    width: 100%;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-family: $sc-font;
+    margin-top: 0.5em;
+    b {
+      margin: 0 0.5em;
+    }
+  }
+
+  #course_list {
+    @include fullsize;
+
+    font-family: $sc-font;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    list-style: none;
+    padding: 0;
+
+    li {
+      position: relative;
+
+      flex: 100vw 1;
+
+      &:first-child:nth-last-child(n+4), &:first-child:nth-last-child(n+4) ~ li {
+        // 4 or more items, half screen each
+        flex: 40vw 1;
+      }
+
+      margin: 0.3em;
+      font-size: 5vh;
+
+      @include button-color($sc-highlight);
+      &.lh {
+        @include button-color($track-lh);
+      }
+      &.ch {
+        @include button-color($track-ch);
+      }
+      &.tp {
+        @include button-color($track-tp);
+      }
+
+      a {
+        @include fullsize;
+        color:white;
+        text-decoration: none;
+        @include flex-center;
+      }
+    }
+  }
+
+  #teachers_form {
+    @include fullsize;
+
+    font-family: $sc-font;
+
+    .btn-group {
+      @include fullsize;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      width: 30vw;
+      height: 16vh;
+      font-size: 5vh;
+      @include flex-center;
+      flex-grow: 1;
+      margin: 0.2em;
+    }
+  }
+}

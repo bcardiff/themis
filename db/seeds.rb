@@ -49,17 +49,18 @@ def place(name, attributes)
   end
 end
 
-teacher 'Mariel', fee: 230
-teacher 'Manuel', fee: 230
-teacher 'Juani', fee: 230
-teacher 'Candela', fee: 175
-teacher 'Mariano', fee: 175
-teacher 'Celeste', fee: 175
-teacher 'Nanchi', fee: 175
-teacher 'Sol', fee: 175
-teacher 'Majo', fee: 175
-teacher 'Brian', fee: 175
-teacher 'Otro', fee: 0
+teacher 'Mariel', fee: 230, cashier: true, priority: 1
+teacher 'Manuel', fee: 230, priority: 1
+teacher 'Juani', fee: 230, priority: 1
+teacher 'Candela', fee: 175, priority: 2
+teacher 'Mariano', fee: 175, priority: 2
+teacher 'Celeste', fee: 175, priority: 2
+teacher 'Nanchi', fee: 175, priority: 2
+teacher 'Sol', fee: 175, priority: 2
+teacher 'Majo', fee: 175, priority: 0
+teacher 'Brian', fee: 175, cashier: true, priority: 0
+teacher 'Otro', fee: 0, priority: 2
+teacher 'Martina', fee: 0, cashier: true, priority: 0
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"

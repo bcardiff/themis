@@ -1,0 +1,15 @@
+= form_tag room_choose_teachers_path(@course_log), id: 'teachers_form' do
+  .btn-group(data-toggle="buttons")
+    - @teachers.each do |teacher|
+      - checked = @course_log.teachers.include?(teacher)
+      %label.btn.btn-light{class: "#{'active' if checked}"}
+        %input{type: "checkbox", autocomplete: "off", name: "teacher[]", value: teacher.id, checked: checked }
+          = teacher.name
+
+- content_for :footer do
+
+  = link_to 'Atrás', room_path, class: 'btn btn-link'
+
+  = link_to '#', class: 'btn btn-lg btn-default', onclick: "$('form:first').submit()" do
+    Siguiente
+    %i.glyphicon.glyphicon-chevron-right

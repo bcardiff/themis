@@ -10,6 +10,8 @@ class StudentCourseLog < ActiveRecord::Base
   belongs_to :ona_submission
   belongs_to :student_pack
 
+  delegate :date, to: :course_log
+
   def incomes
     # TODO unable to work with has_many and subclasses
     # has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'

@@ -1,0 +1,10 @@
+.panel.panel-default
+  .panel-heading
+    %h4 Ingresar
+  .panel-body
+    = form_tag do
+      .form-group
+        = label_tag :secret, 'Contraseña'
+        = password_field_tag :secret, '', class: 'form-control'
+
+      = submit_tag "Ingresar", class: 'btn btn-primary'

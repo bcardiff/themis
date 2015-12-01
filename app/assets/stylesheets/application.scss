@@ -19,6 +19,7 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+$red: #d80000;
 
 body {
   padding-top: 50px;
@@ -90,4 +91,37 @@ body {
     top: 2px;
     margin: 0 5px;
   }
+}
+
+.blink {
+  animation: blink 1s steps(2, start) infinite;
+  -webkit-animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.missing-payment {
+  color: $red;
+}
+
+.modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
 }

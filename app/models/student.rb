@@ -23,7 +23,7 @@ class Student < ActiveRecord::Base
     end
   end
 
-  scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%") }
+  scope :autocomplete, -> (q) { where("first_name LIKE ? OR last_name LIKE ? OR card_code LIKE ? OR email LIKE ?", "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%") }
   scope :missing_payment, -> (date) {
     where(id: StudentCourseLog.joins(:course_log).where(course_logs: { date: date.month_range}).missing_payment.select(:student_id))
   }
@@ -109,7 +109,7 @@ class Student < ActiveRecord::Base
   end
 
   def merge!(old_student)
-    [Card, StudentCourseLog].each do |type|
+    [Card, StudentCourseLog, StudentPack, TeacherCashIncomes].each do |type|
       type.where(student_id: old_student.id).update_all(student_id: self.id)
     end
 
@@ -119,6 +119,14 @@ class Student < ActiveRecord::Base
 
   def last_student_pack
     student_packs.where("due_date < ?", Date.today).order(due_date: :desc).first
+  end
+
+  def pending_payments_count(date_range = nil)
+    if date_range
+      self.student_course_logs.missing_payment.joins(:course_log).between(date_range).count
+    else
+      self.student_course_logs.missing_payment.count
+    end
   end
 
   private

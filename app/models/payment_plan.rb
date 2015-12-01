@@ -10,6 +10,10 @@ class PaymentPlan < ActiveRecord::Base
     self.code == SINGLE_CLASS
   end
 
+  def self.single_class
+    find_by(code: SINGLE_CLASS)
+  end
+
   def price_or_fallback(amount)
     self.other? ? amount : self.price
   end
