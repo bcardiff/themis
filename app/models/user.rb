@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def place?
     !place.nil?
   end
+
+  def can_access_room_area?
+    admin? || cashier?
+  end
 end

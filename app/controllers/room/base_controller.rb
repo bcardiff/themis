@@ -19,7 +19,7 @@ class Room::BaseController < ApplicationController
   protected
 
   def check_access
-    unless is_room_signed?
+    if !is_room_signed? && !current_user.try(:can_access_room_area?)
       redirect_to room_login_path
     end
   end
