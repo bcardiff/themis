@@ -18,7 +18,7 @@ class AdminTeacherCashIncomesListing < Listings::Base
 
   column 'Curso' do |income|
     if income.respond_to?(:course_log)
-      income.course_log.calendar_name
+      income.course_log.try(:calendar_name)
     end
   end
 
