@@ -3,7 +3,15 @@ var CashieDashboard = React.createClass({
     return { courses: [], page: null };
   },
 
-  onTimer: function() {
+  // onTimer: function() {
+  //   this._updateStatus();
+  // },
+
+  componentWillMount: function() {
+    this._updateStatus();
+  },
+
+  _updateStatus: function() {
     $.ajax({
       url: '/cashier/status',
       method: 'GET',
@@ -42,18 +50,22 @@ var CashieDashboard = React.createClass({
   },
 
   render: function() {
+        // <Timer onTimer={this.onTimer} interval={12000} />
     return (
       <div className="row">
-        <Timer onTimer={this.onTimer} interval={12000} />
         <div className="col-md-2">
           <div className="list-group">
             <a href="#" onClick={this.toggleStudentsSearch} className={classNames("list-group-item", {active: this.state.page == "students_search"})}>
               <h4><i className="glyphicon glyphicon-search" /> Alumnos</h4>
             </a>
 
+            <a href="#" className="list-group-item" onClick={function(event) { window.location.reload(); event.preventDefault(); }}>
+              <h4><i className="glyphicon glyphicon-refresh" /> Recargar</h4>
+            </a>
+
             {this.state.courses.map(function(item){
               var selected = _.get(this.state.page, "course", null) == item;
-              
+
               var iconClassNames = classNames("glyphicon", {
                 "glyphicon-time": !item.started,
                 "glyphicon-bell": item.started && item.attention_required,
@@ -71,11 +83,7 @@ var CashieDashboard = React.createClass({
                     return (<span key={index}>{part}<br/></span>);
                   }.bind(this))}</h4>
                   <small>
-                    {item.start_time}
-                  </small>
-                  <br/>
-                  <small>
-                    <i className={iconClassNames} />&nbsp;
+                    {item.start_time}&nbsp;<i className={iconClassNames} />&nbsp;
                     {(function(){
                       if (item.started) {
                         return <span><i className="glyphicon glyphicon-user"/> {item.students_count}</span>;

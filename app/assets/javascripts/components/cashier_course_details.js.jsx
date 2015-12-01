@@ -65,7 +65,7 @@ var CashierCourseDetails = React.createClass({
           var trackStudent = function(student){
             this.trackStudent(student);
           }.bind(this);
-          return <UntrackedStudentRecord key={this.state.top_students.length + "." + i} course_log_id={course_log.course_log_id} config={this.props.config} onStudentIdentified={trackStudent} />
+          return <UntrackedStudentRecord key={i} course_log_id={course_log.course_log_id} config={this.props.config} onStudentIdentified={trackStudent} />
         }.bind(this))}
 
         {course_log.students.map(function(student){
@@ -77,8 +77,19 @@ var CashierCourseDetails = React.createClass({
 });
 
 var UntrackedStudentRecord = React.createClass({
+  getInitialState: function() {
+    return { show_search: false };
+  },
+
   studentChosen: function(student) {
     this.props.onStudentIdentified(student);
+    this.toggleSearch(); // force clear search
+  },
+
+  toggleSearch: function() {
+    this.setState(React.addons.update(this.state, {
+      show_search : { $set : !this.state.show_search },
+    }));
   },
 
   render: function() {
@@ -93,14 +104,19 @@ var UntrackedStudentRecord = React.createClass({
 
           </div>
           <div className="col-md-4">
-            <button className="btn btn-default">Identificar</button>
+            <button onClick={this.toggleSearch} className={classNames("btn btn-default", {"active": this.state.show_search})}>Identificar</button>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-10 col-md-offset-1">
-            <StudentSearch config={this.props.config} onStudentChosen={this.studentChosen} />
-          </div>
-        </div>
+        {(function(){
+          if (this.state.show_search) {
+            return (
+            <div className="row">
+              <div className="col-md-10 col-md-offset-1">
+                <StudentSearch config={this.props.config} onStudentChosen={this.studentChosen} />
+              </div>
+            </div>);
+          }
+        }.bind(this))()}
       </div>
     );
   }
