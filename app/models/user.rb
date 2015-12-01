@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   delegate :cashier?, to: :teacher, allow_nil: true
 
   def teacher?
-    !teacher.nil?
+    !teacher.nil? && teacher.fee > 0
   end
 
   def place?
