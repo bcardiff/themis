@@ -1,6 +1,6 @@
-var CashieDashboard = React.createClass({
+var CashierDashboard = React.createClass({
   getInitialState: function() {
-    return { courses: [], page: null };
+    return { courses: [], page: null, owed_cash_total: null };
   },
 
   // onTimer: function() {
@@ -18,6 +18,7 @@ var CashieDashboard = React.createClass({
       success: function(data) {
         this.setState(React.addons.update(this.state, {
           courses : { $set : data.courses },
+          owed_cash_total: { $set : data.owed_cash_total },
         }));
       }.bind(this)
     })
@@ -92,6 +93,10 @@ var CashieDashboard = React.createClass({
                   </small>
                 </a>);
             }.bind(this))}
+
+            <a href="/cashier/owed_cash" className="list-group-item">
+              <h4><i className="glyphicon glyphicon-usd" /> {this.state.owed_cash_total}</h4>
+            </a>
           </div>
         </div>
         <div className="col-md-10">

@@ -2,11 +2,16 @@ class Cashier::DashboardController < Cashier::BaseController
   def index
   end
 
+  def owed_cash
+    teacher_owed_cash current_user.teacher
+  end
+
   def status
     date = Date.today
     courses = Course.ongoing.includes(:place).where(weekday: date.wday).order(:start_time)
 
     render json: {
+      owed_cash_total: current_user.teacher.owed_cash_total.to_i,
       courses: courses.map { |course|
         course_log = CourseLog.find_or_initialize_by(course: course, date: date)
         { course: course.code,

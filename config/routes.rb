@@ -86,6 +86,7 @@ Rails.application.routes.draw do
   namespace :cashier do
     get '/dashboard' => 'dashboard#index'
     get '/status' => 'dashboard#status'
+    get '/owed_cash' => 'dashboard#owed_cash'
 
     resources :students, only: [:index, :show, :create] do
       member do
