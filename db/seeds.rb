@@ -61,6 +61,7 @@ teacher 'Majo', fee: 175, priority: 0
 teacher 'Brian', fee: 175, cashier: true, priority: 0
 teacher 'Otro', fee: 0, priority: 2
 teacher 'Martina', fee: 0, cashier: true, priority: 0
+teacher 'Blake', fee: 0, cashier: true, priority: 0
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
