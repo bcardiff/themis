@@ -337,7 +337,7 @@ var NewStudentForm = React.createClass({
 
     // TODO add known by
     return (
-    <form className="form-horizontal">
+    <div className="form-horizontal">
       <h3>Nuevo alumno</h3>
 
       <StudentInputField label="Nombre" type="text" {...studentBind('first_name')} />
@@ -347,7 +347,7 @@ var NewStudentForm = React.createClass({
 
       <button type="submit" className="btn btn-primary" onClick={this.onCreate}>Crear alumno</button>
       <button type="button" className="btn btn-link" onClick={this.props.onCancel}>Cancelar</button>
-    </form>
+    </div>
     );
   }
 });
