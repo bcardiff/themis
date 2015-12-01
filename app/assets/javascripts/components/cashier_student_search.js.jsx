@@ -268,6 +268,16 @@ var StudentRecord = React.createClass({
             </h4>
             <div className="card_code">{student.card_code}</div>
             <p>{student.email}</p>
+
+            {(function(){
+              if (student.available_courses > 0) {
+                return (<p>
+                  <span className="glyphicon glyphicon-ok" />&nbsp;
+                  dispone de <b>{student.available_courses}</b> clases abonadas
+                </p>);
+              }
+            }.bind(this))()}
+
             {(function(){
               if (student.pending_payments.total > 0) {
                 return (<p className="missing-payment">
