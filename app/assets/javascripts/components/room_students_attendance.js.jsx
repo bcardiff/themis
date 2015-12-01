@@ -207,7 +207,7 @@ var RoomStudentsAttendance = React.createClass({
 
       if (this.state.student.pending_payment) {
         paymentWarning = (<h1 className="negative">
-          <i className="glyphicon glyphicon-warning-sign" /> Pasar por recepción a la salida
+          <i className="glyphicon glyphicon-exclamation-sign" /> Pasar por recepción a la salida
         </h1>);
       }
 
