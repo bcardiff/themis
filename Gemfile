@@ -56,6 +56,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
   gem 'rails-assets-classnames'
   gem 'rails-assets-q', '~> 1.0'
+  gem 'rails-assets-sass-flex-mixin'
 end
 
 group :development, :test do

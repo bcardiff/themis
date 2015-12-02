@@ -55,7 +55,7 @@ var CashierDashboard = React.createClass({
     return (
       <div className="row">
         <div className="col-md-2">
-          <div className="list-group">
+          <div className="list-group cashier-dashboard-menu">
             <a href="#" onClick={this.toggleStudentsSearch} className={classNames("list-group-item", {active: this.state.page == "students_search"})}>
               <h4><i className="glyphicon glyphicon-search" /> Alumnos</h4>
             </a>

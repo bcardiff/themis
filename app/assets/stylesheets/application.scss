@@ -19,6 +19,8 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "sass-flex-mixin/flexbox";
+
 $red: #d80000;
 
 body {
@@ -113,9 +115,9 @@ body {
 }
 
 .modal-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexbox;
+  @include align-items(center);
+  @include justify-content(center);
 
   position: fixed;
   top: 0;
@@ -124,4 +126,12 @@ body {
   left: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 1050;
+}
+
+.cashier-dashboard-menu {
+  h4 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 16px;
+  }
 }

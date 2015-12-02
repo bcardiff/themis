@@ -1,3 +1,5 @@
+@import "sass-flex-mixin/flexbox";
+
 $sc-highlight:  #71a9a4;
 $sc-dark:       #27313D;
 $sc-light:      #e5e5e5;
@@ -16,9 +18,9 @@ $track-tp: #fab258;
 }
 
 @mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
 }
 
 @mixin button-color($color) {
@@ -29,10 +31,10 @@ $track-tp: #fab258;
 }
 
 .layout-columns {
-  display: flex;
-  flex-direction: row;
+  @include flexbox();
+  @include flex-direction(row);
   > * {
-    flex-grow: 1;
+    @include flex-grow(1);
     width: 31vw;
     margin: 1vw;
   }
@@ -41,12 +43,12 @@ $track-tp: #fab258;
 body.room {
   padding: 0;
 
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
 
 
-  display: flex;
-  flex-direction: column;
+  @include flexbox();
+  @include flex-direction(column);
 
   > * {
     padding: 0.5em;
@@ -67,12 +69,12 @@ body.room {
   }
 
   #header {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    @include flexbox();
+    @include flex-direction(row);
+    @include align-items(flex-start);
 
     > :nth-child(n+2) {
-      flex-grow: 1;
+      @include flex-grow(1);
     }
 
     h1 {
@@ -92,17 +94,17 @@ body.room {
   }
 
   #footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: baseline;
+    @include flexbox();
+    @include flex-direction(row);
+    @include justify-content(center);
+    @include align-items(baseline);
     > * {
       margin: 0 0.3em;
     }
   }
 
   #container {
-    flex-grow: 1;
+    @include flex-grow(1);
 
     position: relative;
   }
@@ -111,10 +113,10 @@ body.room {
     margin: 0 auto;
 
     button {
-      font-size: 10vmin;
+      font-size: 9vmin;
       width: 18vmin;
-      height: 13vmin;
-      line-height: 11vmin;
+      height: 11vmin;
+      line-height: 10vmin;
       margin: 0.2vmin;
     }
   }
@@ -168,6 +170,13 @@ body.room {
     .btn {
       font-family: $sc-font;
       font-size: 2em;
+
+      &:first-child {
+        @include flex(2);
+      }
+      &:last-child {
+        @include flex(1);
+      }
     }
   }
 
@@ -176,14 +185,14 @@ body.room {
     .btn-group {
       @include fullsize;
       position: relative;
-      flex-direction: row;
-      justify-content: space-around;
-      flex-wrap: wrap;
+      @include flex-direction(row);
+      @include justify-content(space-around);
+      @include flex-wrap(wrap);
     }
 
     .btn {
       @include flex-center;
-      flex-grow: 1;
+      @include flex-grow(1);
       margin: 0.2em;
       min-width: 20%;
     }
@@ -192,7 +201,7 @@ body.room {
       &:first-child:nth-last-child(n+23), &:first-child:nth-last-child(n+23) ~ .btn {
         overflow: hidden;
         max-width: 20%;
-        justify-content: flex-start;
+        @include justify-content(flex-start);
       }
     }
 
@@ -217,10 +226,10 @@ body.room {
 
     font-family: $sc-font;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+    @include flexbox();
+    @include flex-direction(row);
+    @include justify-content(center);
+    @include flex-wrap(wrap);
 
     list-style: none;
     padding: 0;
@@ -228,11 +237,11 @@ body.room {
     li {
       position: relative;
 
-      flex: 100vw 1;
+      @include flex(100vw, 1);
 
       &:first-child:nth-last-child(n+4), &:first-child:nth-last-child(n+4) ~ li {
         // 4 or more items, half screen each
-        flex: 40vw 1;
+        @include flex(40vw, 1);
       }
 
       margin: 0.3em;
@@ -266,10 +275,10 @@ body.room {
     .btn-group {
       @include fullsize;
 
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      flex-wrap: wrap;
+      @include flexbox();
+      @include flex-direction(row);
+      @include justify-content(space-around);
+      @include flex-wrap(wrap);
     }
 
     .btn {
@@ -277,7 +286,7 @@ body.room {
       height: 16vh;
       font-size: 5vh;
       @include flex-center;
-      flex-grow: 1;
+      @include flex-grow(1);
       margin: 0.2em;
     }
   }

@@ -262,8 +262,8 @@ var StudentRecord = React.createClass({
         <div className="row">
           <div className="col-md-4">
             <h4>
-              <a href={"/cashier/students/" + student.id}>
-                {student.first_name}&nbsp;{student.last_name}
+              <a href={"/cashier/students/" + student.id} target="_blank">
+                {student.first_name}&nbsp;{student.last_name} <small><i className="glyphicon glyphicon-new-window" /></small>
               </a>
             </h4>
             <div className="card_code">{student.card_code}</div>
@@ -282,7 +282,7 @@ var StudentRecord = React.createClass({
               if (student.pending_payments.total > 0) {
                 return (<p className="missing-payment">
                   <span className="glyphicon glyphicon-exclamation-sign" />&nbsp;
-                  debe <b>{student.pending_payments.this_month}</b> clases este mes y en total <b>{student.pending_payments.total}</b>
+                  debe <b>{student.pending_payments.this_month}</b> clases este mes. <b>{student.pending_payments.total}</b> en total
                 </p>);
               }
             }.bind(this))()}

@@ -178,6 +178,7 @@ GEM
       sprockets-rails
     rails-assets-classnames (2.2.0)
     rails-assets-q (1.4.1)
+    rails-assets-sass-flex-mixin (1.0.1)
     rails-assets-urijs (1.17.0)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
@@ -306,6 +307,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails-assets-classnames!
   rails-assets-q (~> 1.0)!
+  rails-assets-sass-flex-mixin!
   rails-assets-urijs!
   rails-i18n
   rails_config
