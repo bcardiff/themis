@@ -36,7 +36,7 @@ class StudentPack < ActiveRecord::Base
   def self.register_for(student, date, price)
     plan = PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
-    if plan
+    if plan && !plan.single_class?
       if plan.code == "3_MESES"
         due_date = (start_date + 2.months).at_end_of_month
       else
@@ -60,6 +60,9 @@ class StudentPack < ActiveRecord::Base
       end
 
       max_courses = weeks * plan.weekly_classes
+    elsif plan && plan.single_class?
+      due_date = start_date.at_end_of_month
+      max_courses = 1
     else
       single_class_price = PaymentPlan.find_by(code: PaymentPlan::SINGLE_CLASS).price
       plan = PaymentPlan.find_by(code: PaymentPlan::OTHER)
@@ -81,7 +84,7 @@ class StudentPack < ActiveRecord::Base
     date = student_payment_income.date.at_beginning_of_month
     date_range = date..date.at_end_of_month
 
-    # grab de existing student_pack if we are deleting/updateing and existing income
+    # grab the existing student_pack if we are deleting/updating and existing income
     pack_to_extend = student_payment_income.student_course_log.try :student_pack
     if pack_to_extend.nil?
       # if the income is fresh, check if it should extend the last partial payment in the month
@@ -100,7 +103,9 @@ class StudentPack < ActiveRecord::Base
       pack_to_extend.destroy
     end
 
-    return if PaymentPlan.find_by(price: total).try(:single_class?)
+    if PaymentPlan.find_by(price: total).try(:single_class?)
+      return if student_payment_income.student_course_log
+    end
 
     student_pack = register_for(student, date, total)
 
