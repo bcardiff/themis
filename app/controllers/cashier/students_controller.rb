@@ -81,7 +81,7 @@ class Cashier::StudentsController < Cashier::BaseController
   def remove_pack
     student = Student.find(params[:id])
     pack = student.student_packs.find(params[:student_pack_id])
-    pack.rollback_payment_and_pack(current_user.teacher)
+    pack.rollback_payment_and_pack(current_user)
 
     redirect_to cashier_student_path(student)
   end
