@@ -10,6 +10,8 @@ class StudentPack < ActiveRecord::Base
   end
 
   def can_rollback_payment_and_pack?(user)
+    return false
+    
     return false if !user.admin?
     return false if self.student_course_logs.count != 0
 
