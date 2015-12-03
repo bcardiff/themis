@@ -21,6 +21,9 @@
         = plain_text_field 'Plan', pack.payment_plan.code
         = plain_text_field 'Clases', pack.max_courses
         = plain_text_field 'Usadas', pack.student_course_logs.count
+        - if pack.can_rollback_payment_and_pack?(current_user.teacher)
+          = link_to 'Eliminar pack y pago', delete_pack_cashier_student_path(student, pack), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el pack y el pago asociado?'
+      %hr(style="border-top-style: dashed;")
     - if student.student_packs.valid_for(Date.today).count == 0
       No hay
 

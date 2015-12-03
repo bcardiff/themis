@@ -9,6 +9,30 @@ class StudentPack < ActiveRecord::Base
     self.max_courses - self.student_course_logs.count
   end
 
+  def can_rollback_payment_and_pack?(teacher)
+    return false unless teacher.cashier?
+    return false if self.student_course_logs.count != 0
+
+    income = TeacherCashIncomes::StudentPaymentIncome.owed.where(teacher: teacher,
+      student: self.student, payment_amount: self.payment_plan.price).first
+
+    return !income.nil?
+  end
+
+  def rollback_payment_and_pack(teacher)
+    raise "only cahiers can rollback packs payments" unless teacher.cashier?
+    raise "unable to remove started pack" unless self.student_course_logs.count == 0
+    income = TeacherCashIncomes::StudentPaymentIncome.owed.where(teacher: teacher,
+      student: self.student, payment_amount: self.payment_plan.price).first
+    raise "unable to remove since payment was no found or handed to school already" unless income
+
+    ActiveRecord::Base.transaction do
+      income.destroy!
+      self.destroy!
+      ActivityLogs::Student::Payment.where(target: self.student, related: income).first.destroy!
+    end
+  end
+
   def self.register_for(student, date, price)
     plan = PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month

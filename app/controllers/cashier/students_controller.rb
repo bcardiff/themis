@@ -37,7 +37,7 @@ class Cashier::StudentsController < Cashier::BaseController
       unless student.card_code.blank?
         TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, Date.today)
       end
-      
+
       render json: {status: :ok, student: student_json(student)}
     else
       render json: {status: :error, student: student_json(student)}
@@ -76,6 +76,14 @@ class Cashier::StudentsController < Cashier::BaseController
     course_log.save!
 
     render json: {status: :ok, student: student_json(student)}
+  end
+
+  def remove_pack
+    student = Student.find(params[:id])
+    pack = student.student_packs.find(params[:student_pack_id])
+    pack.rollback_payment_and_pack(current_user.teacher)
+
+    redirect_to cashier_student_path(student)
   end
 
   private
