@@ -20,4 +20,8 @@ class AdminUsersListing < Listings::Base
   column '' do |user|
     link_to 'editar', admin_user_path(user)
   end
+
+  column '' do |user|
+    link_to 'login', become_admin_user_path(user)
+  end
 end

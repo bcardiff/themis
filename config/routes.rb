@@ -21,7 +21,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :show, :update]
+    resources :users, only: [:index, :show, :update] do
+      member do
+        get :become
+      end
+    end
     resources :courses, only: [:index]
     resources :students, only: [:index, :show, :edit, :update, :new, :create] do
       collection do

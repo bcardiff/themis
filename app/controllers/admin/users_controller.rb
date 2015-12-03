@@ -12,6 +12,11 @@ class Admin::UsersController < Admin::BaseController
     redirect_to :admin_users
   end
 
+  def become
+    sign_in(:user, user)
+    redirect_to root_url
+  end
+
   private
 
   def user_params
