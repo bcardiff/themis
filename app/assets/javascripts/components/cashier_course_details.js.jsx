@@ -10,6 +10,12 @@ var CashierCourseDetails = React.createClass({
     this._updateCourseLogStatus();
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    window.setTimeout(function(){
+      this._updateCourseLogStatus();
+    }.bind(this), 0);
+  },
+
   _updateCourseLogStatus: function() {
     $.ajax({
       url: URI('/cashier/students/course').query({course: this.props.course}),
