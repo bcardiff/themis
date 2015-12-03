@@ -19,7 +19,7 @@ class StudentPack < ActiveRecord::Base
   end
 
   def rollback_payment_and_pack(user)
-    raise "only admins can remove packs" false if !user.admin?
+    raise "only admins can remove packs" if !user.admin?
     raise "unable to remove started pack" unless self.student_course_logs.count == 0
     income = TeacherCashIncomes::StudentPaymentIncome.owed.where(
       student: self.student, payment_amount: self.payment_plan.price).first
