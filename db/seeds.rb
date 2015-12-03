@@ -50,7 +50,7 @@ def place(name, attributes)
 end
 
 teacher 'Mariel', fee: 230, cashier: true, priority: 1
-teacher 'Manuel', fee: 230, priority: 1
+teacher 'Manuel', fee: 230, cashier: true, priority: 1
 teacher 'Juani', fee: 230, priority: 1
 teacher 'Candela', fee: 175, priority: 2
 teacher 'Mariano', fee: 175, priority: 2
