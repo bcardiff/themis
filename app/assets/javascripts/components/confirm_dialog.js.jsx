@@ -59,8 +59,8 @@ var ConfirmDialog = React.createClass({
               <p>{this.state.message}</p>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" onClick={this.hide}>Cancelar</button>
-              <button type="button" className="btn btn-primary" onClick={this.accept}>Aceptar</button>
+              <button type="button" className="btn btn-lg btn-default" onClick={this.hide}>Cancelar</button>
+              <button type="button" className="btn btn-lg btn-primary" onClick={this.accept}>Aceptar</button>
             </div>
           </div>
         </div>
