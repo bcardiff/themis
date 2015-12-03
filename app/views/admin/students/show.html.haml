@@ -14,16 +14,17 @@
 
     %hr
     %h2 Packs vigentes
-    - student.student_packs.valid_for(Date.today).each do |pack|
-      %form.form-horizontal
-        = plain_text_field 'Desde', pack.start_date.to_date
-        = plain_text_field 'Hasta', pack.due_date.to_date
+    - student.student_packs.valid_for(Date.today).each_with_index do |pack, index|
+      - unless index == 0
+        %hr(style="border-top-style: dashed;")
+      %form.form-horizontal.pack-form
+        = plain_text_field 'Id', pack.id
+        = plain_text_field 'Perído', "#{pack.start_date.to_date} - #{pack.due_date.to_date}"
         = plain_text_field 'Plan', pack.payment_plan.code
         = plain_text_field 'Clases', pack.max_courses
         = plain_text_field 'Usadas', pack.student_course_logs.count
         - if pack.can_rollback_payment_and_pack?(current_user)
           = link_to 'Eliminar pack y pago', delete_pack_cashier_student_path(student, pack), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el pack y el pago asociado?'
-      %hr(style="border-top-style: dashed;")
     - if student.student_packs.valid_for(Date.today).count == 0
       No hay
 
@@ -31,9 +32,9 @@
     %h2 Pack anterior
     - student.last_student_pack.tap do |pack|
       - if pack
-        %form.form-horizontal
-          = plain_text_field 'Desde', pack.start_date.to_date
-          = plain_text_field 'Hasta', pack.due_date.to_date
+        %form.form-horizontal.pack-form
+          = plain_text_field 'Id', pack.id
+          = plain_text_field 'Perído', "#{pack.start_date.to_date} - #{pack.due_date.to_date}"
           = plain_text_field 'Plan', pack.payment_plan.code
           = plain_text_field 'Clases', pack.max_courses
           = plain_text_field 'Usadas', pack.student_course_logs.count

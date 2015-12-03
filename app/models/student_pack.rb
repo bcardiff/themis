@@ -9,28 +9,27 @@ class StudentPack < ActiveRecord::Base
     self.max_courses - self.student_course_logs.count
   end
 
+  def rollback_candidate_payment(user)
+    incomes = TeacherCashIncomes::StudentPaymentIncome.owed.where(student: self.student, payment_amount: self.payment_plan.price)
+    if !user.admin?
+      incomes = incomes.where(teacher: user.teacher)
+    end
+    incomes.first
+  end
+
   def can_rollback_payment_and_pack?(user)
-    return false
-    
-    return false if !user.admin?
-    return false if self.student_course_logs.count != 0
-
-    income = TeacherCashIncomes::StudentPaymentIncome.owed.where(student: self.student, payment_amount: self.payment_plan.price).first
-
-    return !income.nil?
+    return !rollback_candidate_payment(user).nil?
   end
 
   def rollback_payment_and_pack(user)
-    raise "only admins can remove packs" if !user.admin?
-    raise "unable to remove started pack" unless self.student_course_logs.count == 0
-    income = TeacherCashIncomes::StudentPaymentIncome.owed.where(
-      student: self.student, payment_amount: self.payment_plan.price).first
-    raise "unable to remove since payment was no found or handed to school already" unless income
+    income = rollback_candidate_payment(user)
+    raise "unable to rollback this pack" if income.nil?
 
     ActiveRecord::Base.transaction do
-      income.destroy!
-      self.destroy!
-      ActivityLogs::Student::Payment.where(target: self.student, related: income).first.destroy!
+      student.student_course_logs.where(student_pack: self).update_all(student_pack_id: nil)
+      income.delete
+      self.delete
+      ActivityLogs::Student::Payment.where(target: self.student, related: income).first.delete
     end
   end
 
