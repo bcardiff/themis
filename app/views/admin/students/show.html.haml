@@ -4,6 +4,8 @@
     %h1= student.display_name
     %p
       = link_to 'editar', edit_admin_student_path(student)
+      - if student.pending_payments_count > 0
+        = link_to 'saldar deuda', cancel_debt_admin_student_path(student), class: 'btn btn-danger', method: :post, 'data-confirm' => '¿Seguro desea cancelar la deuda?'
 
     %form.form-horizontal
       = plain_text_field 'Tarjeta', student.card_code

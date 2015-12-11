@@ -50,6 +50,12 @@ class Admin::StudentsController < Admin::BaseController
   def missing_payment
   end
 
+  def cancel_debt
+    student = Student.find(params[:id])
+    student.student_course_logs.missing_payment.update_all(requires_student_pack: false)
+    redirect_to [:admin, student]
+  end
+
   private
 
   def student_params

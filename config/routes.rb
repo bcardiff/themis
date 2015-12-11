@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     end
     resources :courses, only: [:index]
     resources :students, only: [:index, :show, :edit, :update, :new, :create] do
+      member do
+        post :cancel_debt
+      end
       collection do
         get :stats
         get :stats_details
