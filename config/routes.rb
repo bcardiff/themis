@@ -11,7 +11,12 @@ Rails.application.routes.draw do
     get 'balance' => 'welcome#balance'
     get 'missing_payments' => 'welcome#missing_payments'
 
+    get 'ona_api/*path' => 'ona_submissions#api_forward'
+
     resources :ona_submissions, only: :index do
+      collection do
+        get :missing_forms
+      end
       member do
         post :reprocess
         post :dismiss

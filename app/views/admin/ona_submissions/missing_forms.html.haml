@@ -1,0 +1,14 @@
+:javascript
+  function postOnaForm(data) {
+    $.ajax('/ona/issued_class', {
+      method: 'POST',
+      data: JSON.stringify(data)
+    }).then(function(){
+      alert('listo, importado');
+    });
+    return false;
+  }
+
+%h1 Formularios perdidos
+
+= render_listing :admin_ona_missing_submissions

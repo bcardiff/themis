@@ -35,4 +35,14 @@ class Admin::OnaSubmissionsController < Admin::BaseController
     s = OnaSubmission.find(params[:id])
     redirect_to s.edit_data_url(@ona_api)
   end
+
+  def api_forward
+    url = params[:path]
+    url += '.' + params[:format] unless params[:format].blank?
+    url += '?' + request.query_string unless request.query_string.blank?
+    render json: @ona_api.get_json(url)
+  end
+
+  def missing_forms
+  end
 end

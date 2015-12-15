@@ -1,0 +1,4 @@
+.btn-group
+  = link_to 'importar', '#', onclick: "postOnaForm(#{data.to_json})", class: 'btn btn-default btn-xs'
+
+  = link_to 'ver en ona', ona_api.submission_edit_url(data), target: '_blank', class: 'btn btn-default btn-xs'
