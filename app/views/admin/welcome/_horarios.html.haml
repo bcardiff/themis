@@ -2,7 +2,7 @@
   %tbody
     %tr
       %td(colspan="2")
-      %td.col-lindy.titulo.lwb.rwb(colspan="4") LINDY HOP
+      %td.col-lindy.titulo.lwb.rwb(colspan="6") LINDY HOP
       %td.col-jazz.titulo.lwb.rwb(colspan="2") AUTH. JAZZ
       %td.col-tap.titulo.lwb.rwb(colspan="2") TAP
     %tr
@@ -13,8 +13,12 @@
         %span.nivel I1
       %td.col-lindy
         %span.nivel I2
-      %td.col-lindy.rwb
+      %td.col-lindy
+        %span.nivel I3
+      %td.col-lindy
         %span.nivel A
+      %td.col-lindy.rwb
+        %span.nivel A2
       %td.col-jazz.lwb<>
         %span.nivel<> P
       %td.col-jazz.rwb<>
@@ -27,7 +31,7 @@
     %tr.row-separator
       %td
 
-    - tracks = ['LH_PRIN', 'LH_INT1', 'LH_INT2', 'LH_AVAN', 'CH_PRIN', 'CH_AVAN', 'TP_PRIN', 'TP_INT1'].map { |c| Track.find_by(code: c) }
+    - tracks = ['LH_PRIN', 'LH_INT1', 'LH_INT2', 'LH_INT3', 'LH_AVAN', 'LH_AVAN2', 'CH_PRIN', 'CH_AVAN', 'TP_PRIN', 'TP_INT1'].map { |c| Track.find_by(code: c) }
     - (1..6).each do |wday|
       - courses = Course.ongoing.where(weekday: wday)
       - times = courses.pluck(:start_time).uniq.sort
@@ -49,11 +53,7 @@
       %td= local_wday(0)
       %td 21
       - place = Place.find_by(name: "Oliverio Girondo Espacio Cultural")
-      %td= render 'place', course: nil, place: place
-      %td= render 'place', course: nil, place: place
-      %td= render 'place', course: nil, place: place
-      %td
-      %td
-      %td
-      %td
-      %td
+      - 6.times do
+        %td= render 'place', course: nil, place: place
+      - 4.times do
+        %td

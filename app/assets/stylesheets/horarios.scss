@@ -97,42 +97,46 @@
   background-color: #e7e8e9;
 }
 
-/* 1er y 3er columna lindy hop */
+/* 1er, 3er y 5ta columna lindy hop */
 #horarios .row-with-date td:nth-child(3),
 #horarios .row-with-date td:nth-child(5),
+#horarios .row-with-date td:nth-child(7),
 #horarios .row-no-date td:nth-child(2),
-#horarios .row-no-date td:nth-child(4) {
+#horarios .row-no-date td:nth-child(4),
+#horarios .row-no-date td:nth-child(6) {
   background-color: #f3dcdb;
 }
 
-/* 2da y 4ta columna lindy hop */
+/* 2da, 4ta y 6ta columna lindy hop */
 #horarios .row-with-date td:nth-child(4),
 #horarios .row-with-date td:nth-child(6),
+#horarios .row-with-date td:nth-child(8),
 #horarios .row-no-date td:nth-child(3),
-#horarios .row-no-date td:nth-child(5) {
+#horarios .row-no-date td:nth-child(5),
+#horarios .row-no-date td:nth-child(7) {
   background-color: #e9d3d3;
 }
 
 /* 1er columna jazz */
-#horarios .row-with-date td:nth-child(7),
-#horarios .row-no-date td:nth-child(6) {
+#horarios .row-with-date td:nth-child(9),
+#horarios .row-no-date td:nth-child(8) {
   background-color: #e2e9e9;
 }
 
 /* 2nd columna jazz */
-#horarios .row-with-date td:nth-child(8),
-#horarios .row-no-date td:nth-child(7) {
+#horarios .row-with-date td:nth-child(10),
+#horarios .row-no-date td:nth-child(9) {
   background-color: #d4dbdb;
 }
 
 /* 1er columna tap */
-#horarios .row-with-date td:nth-child(9),
-#horarios .row-no-date td:nth-child(8) {
+#horarios .row-with-date td:nth-child(11),
+#horarios .row-no-date td:nth-child(10) {
   background-color: #ebe1d4;
 }
 
 /* 2da columna tap */
-#horarios .row-with-date td:nth-child(10),
-#horarios .row-no-date td:nth-child(9) {
+#horarios .row-with-date td:nth-child(12),
+#horarios .row-no-date td:nth-child(11) {
   background-color: #f4ebdd;
 }
