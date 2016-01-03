@@ -45,15 +45,21 @@
               %span.min<>= time.min
           - tracks.each do |track|
             %td
-              - courses.where(start_time: time, track: track).each do |course|
+              - courses.where(start_time: time, track: track).each_with_index do |course, i|
+                - if i > 0
+                  %br
                 = render 'place', course: course, place: course.place
 
 
     %tr.row-with-date
-      %td= local_wday(0)
+      %td
+        = local_wday(0)
+        *
       %td 21
       - place = Place.find_by(name: "Oliverio Girondo Espacio Cultural")
-      - 6.times do
-        %td= render 'place', course: nil, place: place
       - 4.times do
+        %td
+          = render 'place', course: nil, place: place
+          *
+      - 6.times do
         %td

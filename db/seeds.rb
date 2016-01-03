@@ -86,6 +86,7 @@ course "LH_INT1_JUE", name: "Lindy Hop - Intermedios 1 - Jueves Vera", weekday: 
 course "LH_INT1_VIE", name: "Lindy Hop - Intermedios 1 - Viernes Malcom", weekday: 5, valid_until: Date.new(2015,5,31), track: track("LH_INT1")
 course "LH_INT1_VIE_PARANA", name: "Lindy Hop - Intermedios 1 - Viernes Paraná y Córdoba", weekday: 5, track: track("LH_INT1"), place: chez_manuel, start_time: '20:30', valid_until: Date.new(2015,8,2)
 course "LH_INT1_VIE_IBERA", name: "Lindy Hop - Intermedios 1 - Viernes Iberá", weekday: 5, track: track("LH_INT1"), place: ibera, start_time: '20:00'
+course "LH_INT1_VIE_SC", name: "Lindy Hop - Intermedios 1 - Viernes Sc", weekday: 5, valid_since: Date.new(2016,1,1), track: track("LH_INT1"), place: swing_city, start_time: '20:00'
 course "LH_PRIN_VIE2", name: "Lindy Hop - Principiantes - Viernes", weekday: 5, valid_since: Date.new(2016,1,1), track: track("LH_INT1"), place: swing_city, start_time: '20:00'
 course "LH_INT1_SAB", name: "Lindy Hop - Intermedios 1 - Sábados Sc", weekday: 6, valid_since: Date.new(2015,6,1), track: track("LH_INT1"), place: swing_city, start_time: '17:00'
 
@@ -119,15 +120,16 @@ course "TP_INT1_VIE", name: "Tap - Intermedios 1 - Viernes La huella", weekday: 
 
 course "LIMBO_1", name: "Limbo 1 - Principiantes - Miércoles Sendas", weekday: 3, valid_since: Date.new(2015,7,1), track: track("LH_INT1"), place: swing_city, start_time: '20:00', hashtag: "LIMBO"
 course "LIMBO_2", name: "Limbo 2 - Intermedios 1 - Miércoles Sendas", weekday: 3, valid_since: Date.new(2015,7,1), track: track("LH_INT2"), place: swing_city, start_time: '19:00', hashtag: "LIMBO"
-course "LIMBO_3_JUE", name: "Limbo 3 - Intermedios 2 - Jueves Vera", weekday: 4, valid_since: Date.new(2015,7,1), track: track("LH_AVAN"), place: swing_city, start_time: '19:00', hashtag: "LIMBO"
+course "LIMBO_3_JUE", name: "Limbo 3 - Intermedios 2 - Jueves Vera", weekday: 4, valid_since: Date.new(2015,7,1), track: track("LH_INT3"), place: swing_city, start_time: '19:00', hashtag: "LIMBO"
 course "LIMBO_3", name: "Limbo 3 - Intermedios 2 - Viernes Vera", weekday: 5, valid_since: Date.new(2015,7,1), track: track("LH_AVAN"), place: vera, start_time: '19:00', hashtag: "LIMBO", valid_until: Date.new(2015,8,2)
 
 
-payment_plan "3_MESES", description: "3 Meses 1 x Semana $550", price: 550, weekly_classes: 1
-payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $500", price: 500, weekly_classes: 3
-payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $400", price: 400, weekly_classes: 2
-payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $180", price: 180, weekly_classes: 1
-payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $250", price: 250, weekly_classes: 1
-payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $300", price: 300, weekly_classes: 1
-payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $70", price: 70, weekly_classes: 1
+payment_plan "LIBRE", description: "1 Mes. Libre $1000", price: 1000, weekly_classes: 40
+payment_plan "3_MESES", description: "3 Meses 1 x Semana $720", price: 720, weekly_classes: 1
+payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $650", price: 650, weekly_classes: 3
+payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $520", price: 520, weekly_classes: 2
+payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $230", price: 230, weekly_classes: 1
+payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $320", price: 320, weekly_classes: 1
+payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $390", price: 390, weekly_classes: 1
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $90", price: 90, weekly_classes: 1
 payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1
