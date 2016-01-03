@@ -44,6 +44,29 @@ class Cashier::StudentsController < Cashier::BaseController
     end
   end
 
+  def update
+    self.student = Student.find(params[:id])
+    cards_count = student.cards.count
+
+    begin
+      student.first_name = student_params[:first_name]
+      student.last_name = student_params[:last_name]
+      student.email = student_params[:email]
+      student.save!
+
+      student.update_as_new_card! nil, nil, nil, student_params[:card_code]
+      if cards_count != student.cards.count
+        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, Date.today)
+        student.card_code = Student.format_card_code(student_params[:card_code])
+        student.save(validate: false)
+      end
+
+      redirect_to cashier_student_path(student)
+    rescue
+      render :edit
+    end
+  end
+
   def single_class_payment
     student = Student.find(params[:id])
     student_course_log = student.student_course_logs.find(params[:student_course_log_id])

@@ -103,7 +103,7 @@ Rails.application.routes.draw do
     get '/status' => 'dashboard#status'
     get '/owed_cash' => 'dashboard#owed_cash'
 
-    resources :students, only: [:index, :show, :create] do
+    resources :students, only: [:index, :show, :create, :edit, :update] do
       member do
         post 'single_class_payment/:student_course_log_id' => 'students#single_class_payment'
         post 'pack_payment' => 'students#pack_payment'

@@ -18,12 +18,14 @@ es-AR:
         last_name: Apellido
         card_code: Tarjeta
   activerecord:
-      attributes:
-        student:
-          first_name: Nombre
-          last_name: Apellido
-          card_code: Tarjeta
-        student_course_log:
-          teacher: Profesor
-          payment_plan: Plan
-          payment_amount: Monto
+    models:
+      student: alumno
+    attributes:
+      student:
+        first_name: Nombre
+        last_name: Apellido
+        card_code: Tarjeta
+      student_course_log:
+        teacher: Profesor
+        payment_plan: Plan
+        payment_amount: Monto
