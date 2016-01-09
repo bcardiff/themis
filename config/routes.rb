@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       end
     end
     resources :courses, only: [:index]
-    resources :students, only: [:index, :show, :edit, :update, :new, :create] do
+    resources :students, only: [:index, :show, :edit, :update, :new, :create, :destroy] do
       member do
         post :cancel_debt
       end

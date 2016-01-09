@@ -1,8 +1,8 @@
 class Student < ActiveRecord::Base
   has_many :activity_logs, as: :target
   has_many :student_course_logs
-  has_many :cards, dependent: :destroy
-  has_many :student_packs, dependent: :delete_all
+  has_many :cards
+  has_many :student_packs
 
   UNKOWN = "N/A"
 
@@ -109,12 +109,21 @@ class Student < ActiveRecord::Base
   end
 
   def merge!(old_student)
-    [Card, StudentCourseLog, StudentPack, TeacherCashIncomes].each do |type|
+    [Card, StudentCourseLog, StudentPack, TeacherCashIncome].each do |type|
       type.where(student_id: old_student.id).update_all(student_id: self.id)
     end
 
     ActivityLog.where(target_type: 'Student', target_id: old_student.id).update_all(target_id: self.id)
     ActivityLog.where(related_type: 'Student', related_id: old_student.id).update_all(related_id: self.id)
+  end
+
+  before_destroy do
+    [TeacherCashIncome, StudentCourseLog, StudentPack, Card].each do |type|
+      type.where(student_id: id).delete_all
+    end
+
+    ActivityLog.where(target_type: 'Student', target_id: id).delete_all
+    ActivityLog.where(related_type: 'Student', related_id: id).delete_all
   end
 
   def last_student_pack

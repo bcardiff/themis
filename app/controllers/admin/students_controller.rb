@@ -56,6 +56,12 @@ class Admin::StudentsController < Admin::BaseController
     redirect_to [:admin, student]
   end
 
+  def destroy
+    student = Student.find(params[:id])
+    student.destroy
+    redirect_to admin_students_path
+  end
+
   private
 
   def student_params

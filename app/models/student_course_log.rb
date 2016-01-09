@@ -141,6 +141,9 @@ class StudentCourseLog < ActiveRecord::Base
 
     case id_kind
     when "new_card"
+      if student.student_course_logs.count > 0
+        raise "unable to yank student_id: #{student.id}"
+      end
       student.destroy!
     when "guest"
       if student.student_course_logs.count == 0
