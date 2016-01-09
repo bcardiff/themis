@@ -112,7 +112,7 @@ class Cashier::StudentsController < Cashier::BaseController
   private
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by)
   end
 
   def student_json(student)

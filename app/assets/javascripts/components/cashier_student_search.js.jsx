@@ -355,6 +355,21 @@ var NewStudentForm = React.createClass({
       <StudentInputField label="Email" type="email" {...studentBind('email')} />
       <StudentInputField label="Tarjeta" type="text" {...studentBind('card_code')} hint={"En caso de completar, recuerde cobrar los " + this.props.config.new_card_fee} />
 
+      <div className="form-group">
+        <label htmlFor="known_by" className="col-sm-2 control-label">Nos conoció por</label>
+        <div className="col-sm-10">
+          <select className="form-control" value={this.state.student.known_by} onChange={function(event) {
+            this._onStudentPropChange('known_by', event.target.value);
+          }.bind(this)}>
+            <option value="">(elija una opción)</option>
+            <option value="facebook">Facebook</option>
+            <option value="google">Google</option>
+            <option value="friends">Amigos</option>
+            <option value="already_known">Ya la conocía por la escena</option>
+          </select>
+        </div>
+      </div>
+
       <button type="submit" className="btn btn-primary" onClick={this.onCreate}>Crear alumno</button>
       <button type="button" className="btn btn-link" onClick={this.props.onCancel}>Cancelar</button>
     </div>
