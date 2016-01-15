@@ -17,6 +17,8 @@ class Course < ActiveRecord::Base
   end
 
   def room_name
-    name.split('-')[0..1].join('-')
+    res = name.split('-')[0..1].join('-')
+    res += " - #{place.name}" if place && place.name != School.description
+    res
   end
 end
