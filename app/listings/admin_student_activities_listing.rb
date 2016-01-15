@@ -11,6 +11,12 @@ class AdminStudentActivitiesListing < Listings::Base
       if activity_log.student_course_log.missing_payment?
         raw '<span class="glyphicon glyphicon-warning-sign"></span>'
       end
+    when ActivityLogs::Student::Payment
+      if current_user.admin?
+        link_to activity_log_admin_students_path(activity_log), method: :delete, data: {confirm: "Seguro desea borrar el registro de pago?"} do
+          raw '<span class="glyphicon glyphicon-trash"></span>'
+        end
+      end
     end
   end
 

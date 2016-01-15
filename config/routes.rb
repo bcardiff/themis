@@ -40,6 +40,9 @@ Rails.application.routes.draw do
         get :stats
         get :stats_details
         get :missing_payment
+
+        delete 'activity_log/:id' => 'students#remove_activity_log', as: :activity_log
+        delete 'pack/:id' => 'students#remove_pack', as: :pack
       end
     end
 

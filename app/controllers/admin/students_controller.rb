@@ -62,6 +62,29 @@ class Admin::StudentsController < Admin::BaseController
     redirect_to admin_students_path
   end
 
+  def remove_activity_log
+    activity_log = ActivityLogs::Student::Payment.find(params[:id])
+    student = activity_log.target
+    activity_log.related.delete
+    activity_log.delete
+
+    redirect_to [:admin, student]
+  end
+
+  def remove_pack
+    pack = StudentPack.find(params[:id])
+    student = pack.student
+
+    ids = pack.student_course_logs.pluck(:id)
+    pack.student_course_logs.update_all(student_pack_id: nil)
+    pack.destroy
+    StudentCourseLog.where(id: ids).each do |student_course_log|
+      student_course_log.assign_to_pack_if_no_payment
+    end
+
+    redirect_to [:admin, student]
+  end
+
   private
 
   def student_params
