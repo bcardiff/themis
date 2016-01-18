@@ -83,6 +83,9 @@ class Admin::StudentsController < Admin::BaseController
     @periods.sort!
   end
 
+  def flow_stats_drops_details
+  end
+
   def missing_payment
   end
 

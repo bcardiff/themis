@@ -18,4 +18,5 @@
   %tr
     %th Dejaron
     - @periods.each do |period|
-      %td= @stats[period].try { |r| r[:drops] }
+      %td
+        = link_to @stats[period].try { |r| r[:drops] }, flow_stats_drops_details_admin_students_path(period: period)

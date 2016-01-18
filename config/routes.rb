@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         get :missing_payment
 
         get :flow_stats
+        get :flow_stats_drops_details
 
         delete 'activity_log/:id' => 'students#remove_activity_log', as: :activity_log
         delete 'pack/:id' => 'students#remove_pack', as: :pack

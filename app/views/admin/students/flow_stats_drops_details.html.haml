@@ -1,0 +1,8 @@
+%h1
+  = link_to 'Estadísticas. Flujo de Alumnos', flow_stats_admin_students_path
+
+%h2 
+  Dejaron
+  = params[:period]
+
+= render_listing :admin_flow_stats_drops_details
