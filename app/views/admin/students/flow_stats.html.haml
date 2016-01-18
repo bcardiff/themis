@@ -1,0 +1,21 @@
+= link_to "Ver alumnos activos", stats_admin_students_path
+
+%h1 Estadísticas. Flujo de Alumnos
+
+%table.table
+  %tr
+    %th
+    - @periods.each do |period|
+      %th= period
+  %tr
+    %th Nuevos
+    - @periods.each do |period|
+      %td= @stats[period].try { |r| r[:incoming] }
+  %tr
+    %th Activos
+    - @periods.each do |period|
+      %td= @stats[period].try { |r| r[:active] }
+  %tr
+    %th Dejaron
+    - @periods.each do |period|
+      %td= @stats[period].try { |r| r[:drops] }

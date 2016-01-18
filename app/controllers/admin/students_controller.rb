@@ -47,6 +47,42 @@ class Admin::StudentsController < Admin::BaseController
     @wday = params[:wday].to_i if params[:wday].present?
   end
 
+  def flow_stats
+    @periods = []
+    @stats = {}
+
+    # new_students
+    Student.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+      .select('count(*) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
+      .each { |r|
+        @periods << r[:period]
+        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]][:incoming] = r[:count]
+      }
+
+    # Activos
+    StudentCourseLog.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+      .select('count(distinct student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
+      .each { |r|
+        @periods << r[:period]
+        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]][:active] = r[:count]
+      }
+
+    # drops
+    StudentCourseLog.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+      .select('count(student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
+      .where('created_at = (SELECT MAX(t.created_at) FROM student_course_logs as t WHERE t.student_id = student_course_logs.student_id)')
+      .each { |r|
+        @periods << r[:period]
+        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]][:drops] = r[:count]
+      }
+
+    @periods.uniq!
+    @periods.sort!
+  end
+
   def missing_payment
   end
 
