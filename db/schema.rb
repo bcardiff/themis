@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129173127) do
+ActiveRecord::Schema.define(version: 20160302154705) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -185,6 +185,7 @@ ActiveRecord::Schema.define(version: 20151129173127) do
     t.decimal  "fee",                    precision: 10, scale: 2
     t.boolean  "cashier",    limit: 1,                            default: false, null: false
     t.integer  "priority",   limit: 4
+    t.datetime "deleted_at"
   end
 
   create_table "tracks", force: :cascade do |t|

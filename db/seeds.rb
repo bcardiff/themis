@@ -52,7 +52,7 @@ end
 teacher 'Mariel', fee: 270, cashier: true, priority: 1
 teacher 'Manuel', fee: 270, cashier: true, priority: 1
 teacher 'Juani', fee: 270, priority: 1
-teacher 'Candela', fee: 175, priority: 0
+teacher 'Candela', fee: 175, priority: 0, deleted_at: Date.new(2016,2,1)
 teacher 'Mariano', fee: 210, priority: 2
 teacher 'Celeste', fee: 210, priority: 2
 teacher 'Nanchi', fee: 210, priority: 2

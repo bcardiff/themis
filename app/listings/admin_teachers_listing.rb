@@ -1,6 +1,9 @@
 class AdminTeachersListing < Listings::Base
   model Teacher
 
+  scope :active, 'Activos', default: true
+  scope :all, 'Todos'
+
   column :name do |teacher|
     link_to teacher.name, admin_teacher_path(teacher)
   end

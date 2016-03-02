@@ -1,6 +1,8 @@
 class Teacher < ActiveRecord::Base
   validates_numericality_of :fee
 
+  scope :active, -> { where("deleted_at IS NULL") }
+
   has_many :teacher_course_logs
   has_many :course_logs, through: :teacher_course_logs
 
