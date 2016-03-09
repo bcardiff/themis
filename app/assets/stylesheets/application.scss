@@ -143,3 +143,22 @@ body {
 .pack-form .form-group {
   margin-bottom: 0px;
 }
+
+th.rotate {
+  /* Something you can count on */
+  height: 120px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform:
+    translate(-7px, 86px)
+    rotate(270deg);
+  width: 30px;
+}
+th.rotate > div > span {
+  border-top: 1px solid #ccc;
+  padding: 0px 10px;
+  width: 120px;
+  display: inline-block;
+}

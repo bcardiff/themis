@@ -86,6 +86,27 @@ class Admin::StudentsController < Admin::BaseController
   def flow_stats_drops_details
   end
 
+  def course_stats
+    query = StudentCourseLog.all.group('course_id, EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
+      .select('course_id, EXTRACT(YEAR FROM student_course_logs.created_at) as year, EXTRACT(WEEK FROM student_course_logs.created_at) as week, count(student_id) as count')
+      .joins(course_log: :course)
+      .where('courses.valid_until IS NULL')
+      .where('student_course_logs.created_at > ?', 3.months.ago.beginning_of_week)
+      .order('EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
+
+    @courses_by_track = Course.ongoing.includes(:track).order('tracks.code, weekday').group_by(&:track)
+
+    @data = []
+    current = nil
+    query.each do |row|
+      period = "#{row[:year]} - #{row[:week]}"
+      if current.nil? || current[:period] != period
+        @data << current = { period: period }
+      end
+      current[row[:course_id]] = row[:count]
+    end
+  end
+
   def missing_payment
   end
 

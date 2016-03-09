@@ -21,4 +21,8 @@ class Course < ActiveRecord::Base
     res += " - #{place.name}" if place && place.name != School.description
     res
   end
+
+  def name_with_track_as_context
+    code.sub("#{track.code}_", "")
+  end
 end
