@@ -1,111 +1,26 @@
-%table.horarios
-  %tbody
-    %tr.header
-      %td(colspan="2")
-      %td.col-red.titulo.lwb.rwb ESTIRAMIENTO
-      %td.col-green.titulo.lwb.rwb PREPARACIÓN FÍSICA
-      %td.col-yellow.titulo.lwb.rwb SWING KIDS
-      %td.col-red.titulo.lwb.rwb TAP KIDS
-    %tr.header
-      %td(colspan="2")
-      %td.col-red.lwb.rwb
-        %span.nivel
-      %td.col-green.lwb.rwb
-        %span.nivel
-      %td.col-yellow.lwb.rwb
-        %span.nivel
-      %td.col-red.lwb.rwb
-        %span.nivel
-    %tr.row-separator
-      %td
-
-    - tracks = ['ESTIRAMIENTO', 'PREP_FISICA', 'SWING_KIDS', 'TAP_KIDS'].map { |c| Track.find_by(code: c) }
-    - course_colors = ['red', 'green', 'yellow', 'red']
-    - (1..6).each do |wday|
-      - courses = Course.ongoing.where(weekday: wday, track_id: tracks.map(&:id))
-      - times = courses.pluck(:start_time).uniq.sort
-      - times.each_with_index do |time, index|
-        %tr
-          - if index == 0
-            %td.day{rowspan: times.count}= local_wday(wday)
-          %td.hour<
-            = time.hour
-            - if time.min != 0
-              %span.min<>= time.min
-          - tracks.each_with_index do |track, i|
-            %td.course{'class' => course_colors[i] }
-              - courses.where(start_time: time, track: track).each_with_index do |course, i|
-                - if i > 0
-                  %br
-                = render 'place', course: course, place: course.place
-
+- courses = Course.ongoing
+- hours = courses.pluck('start_time').uniq.to_a.tap { |r| r << Time.parse('2000-01-01 21:00 UTC') }.uniq.sort
+- days = (1..6).to_a.tap { |r| r << 0 }
 
 %table.horarios
   %tbody
     %tr.header
-      %td(colspan="2")
-      %td.col-red.titulo.lwb.rwb(colspan="6") LINDY HOP
-      %td.col-green.titulo.lwb.rwb(colspan="2") AUTH. JAZZ
-      %td.col-yellow.titulo.lwb.rwb(colspan="2") TAP
-    %tr.header
-      %td(colspan="2")
-      %td.col-red.lwb
-        %span.nivel P
-      %td.col-red
-        %span.nivel I1
-      %td.col-red
-        %span.nivel I2
-      %td.col-red
-        %span.nivel I3
-      %td.col-red
-        %span.nivel A
-      %td.col-red.rwb
-        %span.nivel A2
-      %td.col-green.lwb<>
-        %span.nivel<> P
-      %td.col-green.rwb<>
-        %span.nivel<> IA
-      %td.col-yellow.lwb
-        %span.nivel P
-      %td.col-yellow.rwb<>
-        %span.nivel<> I
-        %span.nivel<> IA
-    %tr.row-separator
-      %td
-
-    - tracks = ['LH_PRIN', 'LH_INT1', 'LH_INT2', 'LH_INT3', 'LH_AVAN', 'LH_AVAN2', 'CH_PRIN', 'CH_AVAN', 'TP_PRIN', 'TP_INT1'].map { |c| Track.find_by(code: c) }
-    - course_colors = ['red', 'red darker', 'red', 'red darker', 'red', 'red darker', 'green', 'green darker', 'yellow', 'yellow darker']
-    - (1..6).each do |wday|
-      - courses = Course.ongoing.where(weekday: wday, track_id: tracks.map(&:id))
-      - times = courses.pluck(:start_time).uniq.sort
-      - times.each_with_index do |time, index|
-        %tr
-          - if index == 0
-            %td.day{rowspan: times.count}= local_wday(wday)
-          %td.hour<
-            = time.hour
-            - if time.min != 0
-              %span.min<>= time.min
-          - tracks.each_with_index do |track, i|
-            %td.course{'class' => course_colors[i] }
-              - courses.where(start_time: time, track: track).each_with_index do |course, i|
-                - if i > 0
-                  %br
-                = render 'place', course: course, place: course.place
-
-
-    %tr
       %td.day
-        = local_wday(0)
-        *
-      %td.hour 21
-      - place = Place.find_by(name: "Oliverio Girondo Espacio Cultural")
-      - 6.times do |i|
-        %td.course.red{'class' => "#{"darker" if i % 2 == 1}"}
-          - if i < 5
-            = render 'place', course: nil, place: place
-            *
-      %td.course.green
-      %td.course.green.darker
-      %td.course.yellow
-      %td.course.yellow.darker
+      - days.each do |wday|
+        %td.day= local_wday(wday)
+    - hours.each do |time|
+      %tr
+        %td.header.hour<
+          = time.hour
+          - if time.min != 0
+            %span.min<>= time.min
+          - else
+            %span.min<> 00
+        - days.each do |wday|
+          %td.course
+            - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
+              %div{'class' => "#{course.track.code.downcase} #{course.track.css_prefix}"}
+                = course.track.code.sub("_", " ") + (course.hashtag.try { |s| " #{s}"} || "")
+            - if wday == 0 && time.hour == 21
+              %div.lh.swing_club
+                SWING CLUB *

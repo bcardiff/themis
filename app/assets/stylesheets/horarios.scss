@@ -16,111 +16,58 @@
   margin-left: 3px;
 }
 
-.horarios tr.header td {
+.horarios .header {
   white-space: nowrap;
   text-align: center;
-  color: white;
-}
-
-.horarios .titulo {
-  font-size: 1.3em;
-  position: relative;
-  top: 25px;
-}
-
-.horarios span.nivel {
-  margin: 0px 7px 0px 7px;
-  color: white;
-  display: inline-block;
-  border-radius: 30px;
-  background: inherit;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  position: relative;
-  top: 20px;
-}
-
-.horarios .col-red {
-  background-color: #ec3b62;
-  border-color: #ec3b62;
-}
-
-.horarios .col-green {
-  background-color: #71a9a4;
-  border-color: #71a9a4;
-}
-
-.horarios .col-yellow {
-  background-color: #fab258;
-  border-color: #fab258;
-}
-
-.horarios .lwb {
-  border-left-color: white;
-}
-
-.horarios .rwb {
-  border-right-color: white;
 }
 
 .horarios td.day, .horarios td.hour, .horarios td.course {
   vertical-align: middle;
-}
-
-.horarios td.day {
-  text-decoration: underline;
+  text-align: center;
 }
 
 .horarios td.course {
+  background-color: #eeeff2;
+  text-align: center;
+  vertical-align: top;
+  padding: 10px 3px;
   width: 115px;
+  border-radius: 2px;
 }
 
-.horarios td a {
-  color: black;
-  font-size: 0.6em;
-  font-weight: bold;
+.horarios td.hour {
+  width: 40px;
 }
 
-.horarios td a:before {
-  content:url('http://www.swingcity.com.ar/wp-content/uploads/2015/05/pin.png');
-  position:relative;
-  left:-3px;
-  top:2px;
-}
-
-/* cols de dias y horas */
 .horarios td.hour, .horarios td.day {
   background-color: #e7e8e9;
 }
 
-/* 1er, 3er y 5ta columna lindy hop */
-.horarios td.course.red {
-  background-color: #f3dcdb;
+.horarios .course > div {
+  margin: 2px;
+  background-color: black;
+  color: white;
+  border-radius: 2px;
+  white-space: nowrap;
+  padding: 2px 4px;
 }
 
-/* 2da, 4ta y 6ta columna lindy hop */
-.horarios td.course.red.darker {
-  background-color: #e9d3d3;
+.horarios .course .lh {
+  background-color: #ec3b62;
 }
 
-/* 1er columna jazz */
-.horarios td.course.green {
-  background-color: #e2e9e9;
+.horarios .course .ch {
+  background-color: #71a9a4;
 }
 
-/* 2nd columna jazz */
-.horarios td.course.green.darker {
-  background-color: #d4dbdb;
+.horarios .course .tp {
+  background-color: #fab258;
 }
 
-/* 1er columna tap */
-.horarios td.course.yellow {
-  background-color: #f4ebdd;
+.horarios .course .estiramiento, .horarios .course .prep_fisica {
+  background-color: #A1B148;
 }
 
-/* 2da columna tap */
-.horarios td.course.yellow.darker {
-  background-color: #ebe1d4;
+.horarios .course .swing_kids, .horarios .course .tap_kids {
+  background-color: #795FB6;
 }
