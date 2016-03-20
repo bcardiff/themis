@@ -1,34 +1,34 @@
 /* horarios */
 
-#horarios {
+.horarios {
   border-spacing: 0px;
   border-collapse: separate;
   font-weight: bold;
 }
 
-#horarios td {
+.horarios td {
   border: 1px solid white;
 }
 
-#horarios .min {
+.horarios .min {
   vertical-align: super;
   font-size: 0.7em;
   margin-left: 3px;
 }
 
-#horarios tr:nth-child(1) td, #horarios tr:nth-child(2) td {
+.horarios tr.header td {
   white-space: nowrap;
   text-align: center;
   color: white;
 }
 
-#horarios .titulo {
+.horarios .titulo {
   font-size: 1.3em;
   position: relative;
   top: 25px;
 }
 
-#horarios span.nivel {
+.horarios span.nivel {
   margin: 0px 7px 0px 7px;
   color: white;
   display: inline-block;
@@ -42,102 +42,85 @@
   top: 20px;
 }
 
-#horarios .col-lindy {
+.horarios .col-red {
   background-color: #ec3b62;
   border-color: #ec3b62;
 }
 
-#horarios .col-jazz {
+.horarios .col-green {
   background-color: #71a9a4;
   border-color: #71a9a4;
 }
 
-#horarios .col-tap {
+.horarios .col-yellow {
   background-color: #fab258;
   border-color: #fab258;
 }
 
-#horarios .lwb {
+.horarios .lwb {
   border-left-color: white;
 }
 
-#horarios .rwb {
+.horarios .rwb {
   border-right-color: white;
 }
 
-#horarios .row-with-date td, #horarios .row-no-date td {
+.horarios td.day, .horarios td.hour, .horarios td.course {
   vertical-align: middle;
 }
 
-#horarios .row-with-date td:nth-child(1) {
+.horarios td.day {
   text-decoration: underline;
 }
 
-#horarios .row-with-date td:nth-child(n+3), #horarios .row-no-date td:nth-child(n+2) {
+.horarios td.course {
   width: 115px;
 }
 
-#horarios td a {
+.horarios td a {
   color: black;
   font-size: 0.6em;
   font-weight: bold;
 }
 
-#horarios td a:before{
+.horarios td a:before {
   content:url('http://www.swingcity.com.ar/wp-content/uploads/2015/05/pin.png');
   position:relative;
   left:-3px;
   top:2px;
 }
 
-
 /* cols de dias y horas */
-#horarios .row-with-date td:nth-child(1),
-#horarios .row-with-date td:nth-child(2),
-#horarios .row-no-date td:nth-child(1) {
+.horarios td.hour, .horarios td.day {
   background-color: #e7e8e9;
 }
 
 /* 1er, 3er y 5ta columna lindy hop */
-#horarios .row-with-date td:nth-child(3),
-#horarios .row-with-date td:nth-child(5),
-#horarios .row-with-date td:nth-child(7),
-#horarios .row-no-date td:nth-child(2),
-#horarios .row-no-date td:nth-child(4),
-#horarios .row-no-date td:nth-child(6) {
+.horarios td.course.red {
   background-color: #f3dcdb;
 }
 
 /* 2da, 4ta y 6ta columna lindy hop */
-#horarios .row-with-date td:nth-child(4),
-#horarios .row-with-date td:nth-child(6),
-#horarios .row-with-date td:nth-child(8),
-#horarios .row-no-date td:nth-child(3),
-#horarios .row-no-date td:nth-child(5),
-#horarios .row-no-date td:nth-child(7) {
+.horarios td.course.red.darker {
   background-color: #e9d3d3;
 }
 
 /* 1er columna jazz */
-#horarios .row-with-date td:nth-child(9),
-#horarios .row-no-date td:nth-child(8) {
+.horarios td.course.green {
   background-color: #e2e9e9;
 }
 
 /* 2nd columna jazz */
-#horarios .row-with-date td:nth-child(10),
-#horarios .row-no-date td:nth-child(9) {
+.horarios td.course.green.darker {
   background-color: #d4dbdb;
 }
 
 /* 1er columna tap */
-#horarios .row-with-date td:nth-child(11),
-#horarios .row-no-date td:nth-child(10) {
-  background-color: #ebe1d4;
+.horarios td.course.yellow {
+  background-color: #f4ebdd;
 }
 
 /* 2da columna tap */
-#horarios .row-with-date td:nth-child(12),
-#horarios .row-no-date td:nth-child(11) {
-  background-color: #f4ebdd;
+.horarios td.course.yellow.darker {
+  background-color: #ebe1d4;
 }
