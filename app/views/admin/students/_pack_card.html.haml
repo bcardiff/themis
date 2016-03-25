@@ -1,0 +1,23 @@
+%form.form-horizontal.pack-form
+  = plain_text_field 'Id', pack.id
+  = plain_text_field 'Perído', "#{pack.start_date.to_date} - #{pack.due_date.to_date}"
+  = plain_text_field 'Plan', pack.payment_plan.code
+  = plain_text_field 'Clases', pack.max_courses
+  = plain_text_field 'Usadas', pack.student_course_logs.count
+
+  %ul.nav.nav-pills
+    - if AdvanceStudentPackAction.new(current_user, pack).can?
+      %li
+        = link_to advance_pack_admin_students_path(pack), method: :post do
+          %span.glyphicon.glyphicon-backward
+    - if PostponeStudentPackAction.new(current_user, pack).can?
+      %li
+        = link_to postpone_pack_admin_students_path(pack), method: :post do
+          %span.glyphicon.glyphicon-forward
+    - if pack.can_rollback_payment_and_pack?(current_user)
+      %li
+        = link_to 'Eliminar pack y pago', delete_pack_cashier_student_path(student, pack), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el pack y el pago asociado?'
+    - elsif current_user.admin?
+      %li
+        = link_to pack_admin_students_path(pack), method: :delete, data: {confirm: "Seguro desea borrar el pack?"} do
+          %span.glyphicon.glyphicon-trash

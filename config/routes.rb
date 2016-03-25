@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
         delete 'activity_log/:id' => 'students#remove_activity_log', as: :activity_log
         delete 'pack/:id' => 'students#remove_pack', as: :pack
+        post 'pack/:id/advance' => 'students#advance_pack', as: :advance_pack
+        post 'pack/:id/postpone' => 'students#postpone_pack', as: :postpone_pack
       end
     end
 

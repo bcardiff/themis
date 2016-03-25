@@ -29,6 +29,9 @@ module Themis
 
     config.action_mailer.default_url_options = Settings.default_url_options.to_h
 
+    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/actions"
+
     config.react.addons = true
   end
 end

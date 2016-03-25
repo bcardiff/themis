@@ -2,6 +2,10 @@ class Admin::StudentsController < Admin::BaseController
   expose(:student, attributes: :student_params)
   before_action :set_stats_range, only: [:stats, :stats_details]
 
+  SHARED_ACTIONS = [:advance_pack, :postpone_pack]
+  skip_before_action :only_admin, only: SHARED_ACTIONS
+  before_action :only_admin_or_cashier, only: SHARED_ACTIONS
+
   def update
     if student.save
       redirect_to admin_student_path(student)
@@ -145,7 +149,26 @@ class Admin::StudentsController < Admin::BaseController
     redirect_to [:admin, student]
   end
 
+  def advance_pack
+    with_pack do |pack|
+      AdvanceStudentPackAction.new(current_user, pack).call
+    end
+  end
+
+  def postpone_pack
+    with_pack do |pack|
+      PostponeStudentPackAction.new(current_user, pack).call
+    end
+  end
+
   private
+
+  def with_pack
+    pack = StudentPack.find(params[:id])
+    student = pack.student
+    yield pack
+    redirect_to :back
+  end
 
   def student_params
     params.require(:student).permit(:first_name, :last_name, :email, :card_code)
