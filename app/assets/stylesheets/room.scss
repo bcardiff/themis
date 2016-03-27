@@ -8,6 +8,8 @@ $sc-font:       'Roboto', sans-serif;
 $track-lh: #ec3b62;
 $track-ch: #71a9a4;
 $track-tp: #fab258;
+$track-fisica: #A1B148;
+$track-kids: #795FB6;
 
 @mixin fullsize {
   position: absolute;
@@ -257,6 +259,12 @@ body.room {
       &.tp {
         @include button-color($track-tp);
       }
+      &.ta, &.sw {
+        @include button-color($track-kids);
+      }
+      &.es, &.pr {
+        @include button-color($track-fisica);
+      }
 
       a {
         @include fullsize;
@@ -282,8 +290,8 @@ body.room {
     }
 
     .btn {
-      width: 30vw;
-      height: 16vh;
+      width: 20vw;
+      height: 13vh;
       font-size: 5vh;
       @include flex-center;
       @include flex-grow(1);

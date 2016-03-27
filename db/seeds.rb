@@ -59,10 +59,15 @@ teacher 'Nanchi', fee: 210, priority: 2
 teacher 'Sol', fee: 210, priority: 2
 teacher 'Majo', fee: 210, priority: 0
 teacher 'Brian', fee: 210, cashier: true, priority: 0
-teacher 'Otro', fee: 0, priority: 2
+teacher 'Otro', fee: 0, priority: 4
 teacher 'Martina', fee: 0, cashier: true, priority: 0
 teacher 'Blake', fee: 0, cashier: true, priority: 0
 teacher 'Victoria', fee: 210, priority: 2
+teacher 'Farru', fee: 210, priority: 3
+teacher 'Soledad', fee: 210, priority: 3
+teacher 'Edu', fee: 210, priority: 3
+teacher 'Eliana', fee: 210, priority: 3
+teacher 'Agustín', fee: 210, priority: 3
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
