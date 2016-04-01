@@ -141,7 +141,8 @@ course "SWING_KIDS_MAR", name: "Swing Kids - Martes", weekday: 2, valid_since: D
 course "SWING_KIDS_JUE", name: "Swing Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00'
 
 course "TAP_KIDS_MAR", name: "Tap Kids - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
-course "TAP_KIDS_JUE", name: "Tap Kids - Miércoles", weekday: 3, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
+course "TAP_KIDS_MIE", name: "Tap Kids - Miércoles", weekday: 3, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
+course "TAP_KIDS_JUE", name: "Tap Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), valid_until: Date.new(2016,4,2), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
 
 payment_plan "LIBRE", description: "1 Mes. Libre $1000", price: 1000, weekly_classes: 40
 payment_plan "3_MESES", description: "3 Meses 1 x Semana $720", price: 720, weekly_classes: 1
