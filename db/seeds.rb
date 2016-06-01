@@ -131,25 +131,28 @@ course "LIMBO_2", name: "Limbo 2 - Intermedios 1 - Miércoles", weekday: 3, vali
 course "LIMBO_3_JUE", name: "Limbo 3 - Intermedios 2 - Jueves", weekday: 4, valid_since: Date.new(2015,7,1), track: track("LH_INT3"), place: swing_city, start_time: '19:00', hashtag: "LIMBO"
 course "LIMBO_3", name: "Limbo 3 - Intermedios 2 - Viernes Vera", weekday: 5, valid_since: Date.new(2015,7,1), track: track("LH_AVAN"), place: vera, start_time: '19:00', hashtag: "LIMBO", valid_until: Date.new(2015,8,2)
 
-course "ESTIRA_MAR", name: "Estiramiento - Martes", weekday: 2, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '18:00'
+course "ESTIRA_MAR", name: "Estiramiento - Martes", weekday: 2, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '18:00', valid_until: Date.new(2015,5,31)
 course "ESTIRA_JUE", name: "Estiramiento - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '18:00'
 course "ESTIRA_SAB", name: "Estiramiento - Sábados", weekday: 6, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '16:00'
 
 course "PREP_SAB", name: "Preparación Física - Sábados", weekday: 6, valid_since: Date.new(2016,4,1), track: track("PREP_FISICA"), place: swing_city, start_time: '15:00'
 
-course "SWING_KIDS_MAR", name: "Swing Kids - Martes", weekday: 2, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00'
-course "SWING_KIDS_JUE", name: "Swing Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00'
+course "SWING_KIDS_MAR", name: "Swing Kids - Martes", weekday: 2, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00', valid_until: Date.new(2015,5,31)
+course "SWING_KIDS_JUE", name: "Swing Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00', valid_until: Date.new(2015,5,31)
 
 course "TAP_KIDS_MAR", name: "Tap Kids - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
 course "TAP_KIDS_MIE", name: "Tap Kids - Miércoles", weekday: 3, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
 course "TAP_KIDS_JUE", name: "Tap Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), valid_until: Date.new(2016,4,2), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
 
-payment_plan "LIBRE", description: "1 Mes. Libre $1000", price: 1000, weekly_classes: 40
-payment_plan "3_MESES", description: "3 Meses 1 x Semana $720", price: 720, weekly_classes: 1
-payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $650", price: 650, weekly_classes: 3
-payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $520", price: 520, weekly_classes: 2
-payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $230", price: 230, weekly_classes: 1
-payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $320", price: 320, weekly_classes: 1
-payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $390", price: 390, weekly_classes: 1
-payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $90", price: 90, weekly_classes: 1
+course "SWING_SENIOR_LUN", name: "Swing Senior - Lunes", weekday: 1, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00'
+course "SWING_SENIOR_MIE", name: "Swing Senior - Miércoles", weekday: 3, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00'
+
+payment_plan "LIBRE", description: "1 Mes. Libre $1100", price: 1100, weekly_classes: 40
+payment_plan "3_MESES", description: "3 Meses 1 x Semana $800", price: 800, weekly_classes: 1
+payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $750", price: 750, weekly_classes: 3
+payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $600", price: 600, weekly_classes: 2
+payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $270", price: 270, weekly_classes: 1
+payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $350", price: 350, weekly_classes: 1
+payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $450", price: 450, weekly_classes: 1
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $100", price: 100, weekly_classes: 1
 payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1

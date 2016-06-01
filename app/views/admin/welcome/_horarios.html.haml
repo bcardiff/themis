@@ -19,7 +19,7 @@
         - days.each do |wday|
           %td.course
             - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
-              %div{'class' => "#{course.track.code.downcase} #{course.track.css_prefix}"}
+              %div{'class' => course.track.css_prefix}
                 = course.track.code.sub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "")
             - if wday == 0 && time.hour == 21
               %div.lh.swing_club

@@ -10,6 +10,7 @@ $track-ch: #71a9a4;
 $track-tp: #fab258;
 $track-fisica: #A1B148;
 $track-kids: #795FB6;
+$track-senior: #828282;
 
 @mixin fullsize {
   position: absolute;
@@ -259,8 +260,11 @@ body.room {
       &.tp {
         @include button-color($track-tp);
       }
-      &.ta, &.sw {
+      &.tap_kids, &.swing_kids {
         @include button-color($track-kids);
+      }
+      &.swing_senior {
+        @include button-color($track-senior);
       }
       &.es, &.pr {
         @include button-color($track-fisica);
