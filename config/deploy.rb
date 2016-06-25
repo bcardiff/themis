@@ -4,6 +4,14 @@ lock '3.4.0'
 set :application, 'themis'
 set :repo_url, 'git@github.com:bcardiff/themis.git'
 
+set :rbenv_type, :user
+set :rbenv_ruby, '2.0.0-p648'
+# in case you want to set ruby version from the file:
+# set :rbenv_ruby, File.read('.ruby-version').strip
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"]
@@ -31,40 +39,81 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
-set :default_env, {
-  path: "$HOME/ruby/gems/bin:/usr/local/ruby20/bin:$PATH",
-  gem_path: "$HOME/ruby/gems:/usr/local/ruby20/lib64/ruby/gems/:$GEM_PATH",
-  bundle_path: "$HOME/ruby/gems",
-  bundle_disable_shared_gems: "1",
-  rails_env: "production"
-}
+set :default_env, {}
+
+set :rails_env, "production"
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :user, "swingcit"
+set :user, "appuser"
 set :use_sudo, false
 set :deploy_via, :copy
 
-namespace :deploy do
+set :puma_threads,    [4, 16]
+set :puma_workers,    0
 
-  after :finishing, :create_htaccess do
-    on roles(:web) do
-      htaccess = "#{current_path}/public/.htaccess"
-      execute "echo 'RewriteEngine On' > #{htaccess};echo 'PassengerEnabled On' >> #{htaccess}; echo 'PassengerLoadShellEnvVars On' >> #{htaccess}; echo 'PassengerAppRoot #{current_path}' >> #{htaccess}; echo 'PassengerRuby /usr/local/ruby20/bin/ruby' >> #{htaccess}; echo 'RackEnv production' >> #{htaccess}; echo '.htaccess created'"
+# Don't change these unless you know what you're doing
+set :pty,             true
+set :use_sudo,        false
+set :stage,           :production
+set :deploy_via,      :remote_cache
+set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
+set :puma_access_log, "#{release_path}/log/puma.error.log"
+set :puma_error_log,  "#{release_path}/log/puma.access.log"
+set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+set :puma_preload_app, true
+set :puma_worker_timeout, nil
+set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
-      execute "touch #{current_path}/tmp/restart.txt"
+namespace :puma do
+  desc 'Create Directories for Puma Pids and Socket'
+  task :make_dirs do
+    on roles(:app) do
+      execute "mkdir #{shared_path}/tmp/sockets -p"
+      execute "mkdir #{shared_path}/tmp/pids -p"
     end
   end
 
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
+  before :start, :make_dirs
 end
+
+namespace :deploy do
+  desc "Make sure local git is in sync with remote."
+  task :check_revision do
+    on roles(:app) do
+      unless `git rev-parse HEAD` == `git rev-parse origin/master`
+        puts "WARNING: HEAD is not the same as origin/master"
+        puts "Run `git push` to sync changes."
+        exit
+      end
+    end
+  end
+
+  desc 'Initial Deploy'
+  task :initial do
+    on roles(:app) do
+      before 'deploy:restart', 'puma:start'
+      invoke 'deploy'
+    end
+  end
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'puma:restart'
+    end
+  end
+
+  before :starting,     :check_revision
+  after  :finishing,    :compile_assets
+  after  :finishing,    :cleanup
+  after  :finishing,    :restart
+end
+
+# ps aux | grep puma    # Get puma pid
+# kill -s SIGUSR2 pid   # Restart puma
+# kill -s SIGTERM pid   # Stop puma
