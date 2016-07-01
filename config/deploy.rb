@@ -5,7 +5,7 @@ set :application, 'themis'
 set :repo_url, 'git@github.com:bcardiff/themis.git'
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.0.0-p648'
+set :rbenv_ruby, '2.2.1'
 # in case you want to set ruby version from the file:
 # set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
