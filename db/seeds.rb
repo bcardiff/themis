@@ -49,25 +49,25 @@ def place(name, attributes)
   end
 end
 
-teacher 'Mariel', fee: 270, cashier: true, priority: 1
-teacher 'Manuel', fee: 270, cashier: true, priority: 1
-teacher 'Juani', fee: 270, priority: 1
+teacher 'Mariel', fee: 300, cashier: true, priority: 1
+teacher 'Manuel', fee: 300, cashier: true, priority: 1
+teacher 'Juani', fee: 300, priority: 1
 teacher 'Candela', fee: 175, priority: 0, deleted_at: Date.new(2016,2,1)
-teacher 'Mariano', fee: 210, priority: 2
-teacher 'Celeste', fee: 210, priority: 2
-teacher 'Nanchi', fee: 210, priority: 2
-teacher 'Sol', fee: 210, priority: 2
-teacher 'Majo', fee: 210, priority: 0
-teacher 'Brian', fee: 210, cashier: true, priority: 0
+teacher 'Mariano', fee: 300, priority: 2
+teacher 'Celeste', fee: 300, priority: 2
+teacher 'Nanchi', fee: 300, priority: 2
+teacher 'Sol', fee: 300, priority: 2
+teacher 'Majo', fee: 300, priority: 0
+teacher 'Brian', fee: 300, cashier: true, priority: 0
 teacher 'Otro', fee: 0, priority: 4
 teacher 'Martina', fee: 0, cashier: true, priority: 0
 teacher 'Blake', fee: 0, cashier: true, priority: 0
-teacher 'Victoria', fee: 210, priority: 2
-teacher 'Farru', fee: 210, priority: 3
-teacher 'Soledad', fee: 210, priority: 3
-teacher 'Edu', fee: 210, priority: 3
-teacher 'Eliana', fee: 210, priority: 3
-teacher 'Agustín', fee: 210, priority: 3
+teacher 'Victoria', fee: 300, priority: 2
+teacher 'Farru', fee: 300, priority: 3
+teacher 'Soledad', fee: 300, priority: 3
+teacher 'Edu', fee: 300, priority: 3
+teacher 'Eliana', fee: 300, priority: 3
+teacher 'Agustín', fee: 300, priority: 3
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
