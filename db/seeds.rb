@@ -81,10 +81,10 @@ swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "htt
 
 
 
-course "CH_PRIN_LUN", name: "Charleston - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("CH_PRIN"), place: swing_city, start_time: '19:00'
-course "CH_PRIN_MIE", name: "Charleston - Principiantes - Miércoles", weekday: 3, track: track("CH_PRIN"), place: swing_city, start_time: '19:00'
-course "CH_AVAN_MIE", name: "Charleston - Avanzados - Miércoles", weekday: 3, track: track("CH_AVAN"), place: swing_city, start_time: '20:00'
-course "CH_AVAN_SAB", name: "Charleston - Avanzados - Sábados", weekday: 6, valid_since: Date.new(2016,1,1), track: track("CH_AVAN"), place: swing_city, start_time: '17:00'
+course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
+course "AJ_PRIN_MIE", name: "Authentic Jazz - Principiantes - Miércoles", weekday: 3, track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
+course "AJ_AVAN_MIE", name: "Authentic Jazz - Avanzados - Miércoles", weekday: 3, track: track("AJ_AVAN"), place: swing_city, start_time: '20:00'
+course "AJ_AVAN_SAB", name: "Authentic Jazz - Avanzados - Sábados", weekday: 6, valid_since: Date.new(2016,1,1), track: track("AJ_AVAN"), place: swing_city, start_time: '17:00'
 
 course "LH_INT1_LUN", name: "Lindy Hop - Intermedios 1 - Lunes", weekday: 1, track: track("LH_INT1"), place: swing_city, start_time: '20:00'
 course "LH_INT1_MAR", name: "Lindy Hop - Intermedios 1 - Martes", weekday: 2, track: track("LH_INT1"), place: swing_city, start_time: '19:00'
