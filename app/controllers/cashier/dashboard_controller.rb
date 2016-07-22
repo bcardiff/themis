@@ -8,7 +8,7 @@ class Cashier::DashboardController < Cashier::BaseController
 
   def status
     date = Date.today
-    courses = Course.ongoing.includes(:place).where(weekday: date.wday).order(:start_time)
+    courses = Course.ongoing(date).includes(:place).order(:start_time)
 
     render json: {
       owed_cash_total: current_user.teacher.owed_cash_total.to_i,

@@ -98,7 +98,7 @@ class Admin::StudentsController < Admin::BaseController
       .where('student_course_logs.created_at > ?', 3.months.ago.beginning_of_week)
       .order('EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
 
-    @courses_by_track = Course.ongoing.includes(:track).order('tracks.code, weekday').group_by(&:track)
+    @courses_by_track = Course.ongoing_or_future.includes(:track).order('tracks.code, weekday').group_by(&:track)
 
     @data = []
     current = nil

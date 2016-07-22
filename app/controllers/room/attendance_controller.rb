@@ -1,7 +1,7 @@
 class Room::AttendanceController < Room::BaseController
   def choose_course
     @date = Date.parse(params[:date]) rescue Date.today
-    @courses = Course.ongoing.where(weekday: @date.wday)
+    @courses = Course.ongoing(@date)
 
     @prev_date = @date - 1.day
     @next_date = @date < Date.today ? @date + 1.day : nil
