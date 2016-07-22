@@ -13,12 +13,7 @@ class Course < ActiveRecord::Base
   end
 
   def calendar_name
-    parts = code.split('_')
-    if parts.length > 2
-      "#{parts[0]} #{parts[1]}"
-    else
-      code
-    end
+    track.code.split('_').join(' ')
   end
 
   def room_name

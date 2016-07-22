@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :track do
-    code "MyString"
+    sequence :code do |n|
+      "track_#{n}"
+    end
   end
-
 end
