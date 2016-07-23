@@ -3,7 +3,7 @@ class AdminMissingPaymentsListing < Listings::Base
 
   model {
     @date = Date.parse(params['date'])
-    StudentCourseLog.missing_payment.includes({course_log: :course}, :student).between(@date.month_range).order("course_logs.date desc") 
+    StudentCourseLog.missing_payment.includes({course_log: :course}, :student).between(@date.month_range).order("course_logs.date desc")
   }
 
   column :date do |student_course_log|
@@ -11,7 +11,7 @@ class AdminMissingPaymentsListing < Listings::Base
   end
 
   column :course do |student_course_log|
-    student_course_log.course_log.course.calendar_name
+    student_course_log.course_log.course.name_with_wday_as_context
   end
 
   column :student do |student_course_log|

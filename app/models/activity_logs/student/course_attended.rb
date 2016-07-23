@@ -1,7 +1,7 @@
 class ActivityLogs::Student::CourseAttended < ActivityLog
   def self.record(student, course_log)
     find_or_create_by target: student, related: course_log, date: course_log.date do |log|
-      log.description = "Asistió a #{course_log.calendar_name}."
+      log.description = "Asistió a #{course_log.name_with_wday_as_context}."
     end
   end
 

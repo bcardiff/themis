@@ -25,5 +25,5 @@
   - @due_teacher_course_logs.each do |teacher_course_log|
     %tr
       %td= teacher_course_log.course_log.date.to_human
-      %td= teacher_course_log.course_log.course.calendar_name
+      %td= teacher_course_log.course_log.course.name_with_wday_as_context
       %td= number_to_currency teacher.fee

@@ -20,7 +20,7 @@
 
       - if @course_log
         %h1= @course_log.date.to_human
-        %h1= @course_log.course.calendar_name
+        %h1= @course_log.course.name_with_wday_as_context
         %h1.nav
           = link_to room_choose_teachers_path(@course_log) do
             = @course_log.teachers.map(&:name).join(" - ")

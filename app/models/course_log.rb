@@ -15,7 +15,7 @@ class CourseLog < ActiveRecord::Base
 
   scope :missing, -> { where(missing: true) }
 
-  delegate :calendar_name, to: :course
+  delegate :name_with_wday_as_context, to: :course
 
   def students_count
     self.student_course_logs.count + self.untracked_students_count

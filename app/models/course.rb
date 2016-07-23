@@ -12,7 +12,7 @@ class Course < ActiveRecord::Base
     Date.today < self.valid_since
   end
 
-  def calendar_name
+  def name_with_wday_as_context
     track.code.split('_').join(' ')
   end
 

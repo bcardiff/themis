@@ -16,7 +16,7 @@
       %td= date.to_human
       %td
         - if course_log_id
-          = CourseLog.find(course_log_id).course.calendar_name
+          = CourseLog.find(course_log_id).course.name_with_wday_as_context
         - else
           Sin curso
       %td= items.first.kind_description
