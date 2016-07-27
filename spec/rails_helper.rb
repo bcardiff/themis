@@ -6,6 +6,10 @@ require 'rspec/rails'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'capybara/rails'
+require 'capybara/poltergeist'
+# Capybara.default_driver = :selenium
+Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -52,4 +56,5 @@ RSpec.configure do |config|
 
   config.include Devise::TestHelpers, type: :controller
 
+  config.include FeatureSpecHelpers, :type => :feature
 end

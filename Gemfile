@@ -73,6 +73,11 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'timecop'
+
+  gem 'site_prism'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
 end
 
 group :development do
