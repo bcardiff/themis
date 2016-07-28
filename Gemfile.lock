@@ -114,6 +114,7 @@ GEM
     colorize (0.7.7)
     columnize (0.9.0)
     connection_pool (2.2.0)
+    database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     decent_exposure (2.3.2)
     devise (3.5.1)
@@ -335,6 +336,7 @@ DEPENDENCIES
   capistrano3-puma
   capybara
   coffee-rails (~> 4.1.0)
+  database_cleaner
   decent_exposure
   devise
   devise-bootstrap-views
