@@ -4,5 +4,6 @@ FactoryGirl.define do
       "teacher_#{n}"
     end
     fee "150"
+    priority 1
   end
 end

@@ -8,8 +8,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'capybara/poltergeist'
-# Capybara.default_driver = :selenium
-Capybara.javascript_driver = :poltergeist
+require 'capybara-screenshot/rspec'
+# if ENV["FF"]
+  Capybara.default_driver = :selenium
+# else
+  # Capybara.javascript_driver = :poltergeist
+# end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

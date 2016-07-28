@@ -76,6 +76,7 @@ group :development, :test do
 
   gem 'site_prism'
   gem 'capybara'
+  gem 'capybara-screenshot'
   gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'database_cleaner'

@@ -100,6 +100,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.13)
+      capybara (>= 1.0, < 3)
+      launchy
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
@@ -162,6 +165,8 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     libv8 (3.16.14.15)
     lodash-rails (3.10.1)
       railties (>= 3.1)
@@ -335,6 +340,7 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano3-puma
   capybara
+  capybara-screenshot
   coffee-rails (~> 4.1.0)
   database_cleaner
   decent_exposure
