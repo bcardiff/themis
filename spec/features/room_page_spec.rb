@@ -49,4 +49,38 @@ describe "room page" do
     expect(course_log.course).to eq lh_int1_today
     expect(course_log.students).to be_empty
   end
+
+  context "on a class given by a teacher" do
+    before(:each) do
+      signin_as_room
+
+      expect_page RoomCoursePicker do |page|
+        page.select_course lh_int1_description
+      end
+
+      expect_page RoomTeacherPicker do |page|
+        page.select_teacher mariel.name
+        page.submit.click
+      end
+    end
+
+    context "a student without balance go to class" do
+      before(:each) do
+        expect_page RoomStudentPicker do |page|
+          page.type_card john_doe.card_code
+          page.submit_card
+        end
+
+        john_doe.reload
+      end
+
+      it "should have a course_log" do
+        expect(john_doe.student_course_logs.count).to eq 1
+      end
+
+      it "should have a debt" do
+        expect(john_doe.student_course_logs.first.missing_payment?).to eq true
+      end
+    end
+  end
 end

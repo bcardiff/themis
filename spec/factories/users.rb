@@ -23,4 +23,13 @@ FactoryGirl.define do
     admin false
     teacher
   end
+
+  factory :cashier_user, class: User do
+    sequence :email do |n|
+      "cashier_#{n}@domain.com"
+    end
+    password "password"
+    admin false
+    teacher { create :teacher, cashier: true, priority: 0 }
+  end
 end
