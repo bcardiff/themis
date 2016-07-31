@@ -8,7 +8,7 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
 # server 'app.swingcity.com.ar', user: 'swingcit', roles: %w{app db web}
-server '162.243.234.51', user: 'appuser', roles: %w{app db web}
+server 'app.swingcity.com.ar', user: 'appuser', roles: %w{app db web}
 
 # set :deploy_to, '/home/swingcit/themis'
 # set :tmp_dir, '/home/swingcit/tmp'
