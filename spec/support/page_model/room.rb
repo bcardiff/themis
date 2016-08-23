@@ -29,7 +29,18 @@ class RoomTeacherPicker < SitePrism::Page
 end
 
 class RoomStudentPicker < SitePrism::Page
+  class StudentsList < SitePrism::Section
+    def student_button(name)
+      within root_element do
+        return first('button', text: name)
+      end
+    end
+  end
+
   set_url "/room/course_log/{id}/students"
+
+  element :total_students, ".btn.btn-light.students-list-bottom-btn"
+  section :students_list, StudentsList, ".students-list"
 
   def type_card(card_code)
     if md = /\d+/.match(card_code)
@@ -45,8 +56,18 @@ class RoomStudentPicker < SitePrism::Page
     self.wait_for_ajax
   end
 
+  def open_students_list
+    total_students.click
+    wait_for_students_list
+  end
+
   def submit_card
     click_button "Dar Presente"
+    self.wait_for_ajax
+  end
+
+  def remove_attendance
+    click_button "Quitar Presente"
     self.wait_for_ajax
   end
 end

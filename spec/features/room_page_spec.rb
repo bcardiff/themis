@@ -81,6 +81,22 @@ describe "room page" do
       it "should have a debt" do
         expect(john_doe.student_course_logs.first.missing_payment?).to eq true
       end
+
+      context "but then it is removed" do
+        before(:each) do
+          expect_page RoomStudentPicker do |page|
+            page.open_students_list
+            page.students_list.student_button(john_doe.display_name).click
+            page.remove_attendance
+          end
+
+          john_doe.reload
+        end
+
+        it "should not have a course_log" do
+          expect(john_doe.student_course_logs.count).to eq 0
+        end
+      end
     end
   end
 end
