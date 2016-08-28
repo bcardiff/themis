@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.1'
+ruby '2.2.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
@@ -44,7 +44,7 @@ gem 'listings', :github => 'manastech/listings', :branch => 'master'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'simple_form'
-gem 'rails_config'
+gem 'config'
 gem 'rest-client'
 gem 'newrelic_rpm'
 gem 'bootstrap3_autocomplete_input'
