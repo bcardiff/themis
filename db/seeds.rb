@@ -62,6 +62,7 @@ teacher 'Brian', fee: 230, cashier: true, priority: 0
 teacher 'Otro', fee: 0, priority: 4
 teacher 'Martina', fee: 0, cashier: true, priority: 0
 teacher 'Blake', fee: 0, cashier: true, priority: 0
+teacher 'Belu', fee: 0, cashier: true, priority: 0
 teacher 'Victoria', fee: 230, priority: 2
 teacher 'Farru', fee: 230, priority: 3
 teacher 'Soledad', fee: 230, priority: 3
