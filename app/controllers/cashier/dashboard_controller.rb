@@ -7,7 +7,7 @@ class Cashier::DashboardController < Cashier::BaseController
   end
 
   def status
-    date = Date.today
+    date = School.today
     courses = Course.ongoing(date).includes(:place).order(:start_time)
 
     render json: {

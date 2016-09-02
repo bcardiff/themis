@@ -28,7 +28,7 @@ class CourseLog < ActiveRecord::Base
   end
 
   def self.fill_missings
-    today = Date.today
+    today = School.today
 
     Course.joins('LEFT JOIN course_logs ON course_logs.course_id = courses.id')
       .select("courses.*, max(course_logs.date) as last")

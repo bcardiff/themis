@@ -6,11 +6,11 @@ RSpec.shared_context "swc context" do
 
   let!(:lh_int1) { create :track, code: "LH_INT1" }
   let(:lh_int1_description) { "Lindy Hop - Intermedios 1" }
-  let!(:lh_int1_today) { create :course, code: "LH_INT1_TODAY", name: "#{lh_int1_description} - Hoy", weekday: Date.today.wday }
+  let!(:lh_int1_today) { create :course, code: "LH_INT1_TODAY", name: "#{lh_int1_description} - Hoy", weekday: School.today.wday }
 
   let!(:lh_int2) { create :track, code: "LH_INT2" }
   let(:lh_int2_description) { "Lindy Hop - Intermedios 2" }
-  let!(:lh_int2_yesterday) { create :course, code: "LH_INT2_yesterday", name: "#{lh_int2_description} - Ayer", weekday: Date.today.wday - 1 }
+  let!(:lh_int2_yesterday) { create :course, code: "LH_INT2_yesterday", name: "#{lh_int2_description} - Ayer", weekday: School.today.wday - 1 }
 
   let!(:john_doe) { create :student, first_name: "John", last_name: "Doe" }
   let!(:jane_doe) { create :student, first_name: "Jane", last_name: "Doe" }

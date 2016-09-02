@@ -8,7 +8,7 @@ class Date
   end
 
   def to_human
-    if year == Date.today.year
+    if year == School.today.year
       I18n.l(self, format: "%a %e %b")
     else
       I18n.l(self, format: "%a %e %b %Y")

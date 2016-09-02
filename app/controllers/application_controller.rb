@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def teacher_owed_cash(teacher, date = Date.today)
+  def teacher_owed_cash(teacher, date = School.today)
     @date = date.to_dmy
     incomes = teacher.owed_cash(date)
     @incomes = incomes.to_a.group_by { |e| [e.date, e.course_log_id, e.type] } # TODO sort

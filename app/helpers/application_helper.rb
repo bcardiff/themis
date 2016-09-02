@@ -1,6 +1,6 @@
 module ApplicationHelper
   def recent_time_span
-    to_date = Date.today
+    to_date = School.today
     (to_date - 3.months)..to_date
   end
 

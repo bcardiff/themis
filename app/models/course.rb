@@ -6,10 +6,10 @@ class Course < ActiveRecord::Base
   validates_presence_of :weekday, :valid_since
 
   scope :ongoing, -> (date) { where('valid_until IS NULL or valid_until >= ?', date).where('valid_since <= ?', date).where(weekday: date.wday) }
-  scope :ongoing_or_future, -> { where('valid_until IS NULL or valid_until >= ?', Date.today) }
+  scope :ongoing_or_future, -> { where('valid_until IS NULL or valid_until >= ?', School.today) }
 
   def future?
-    Date.today < self.valid_since
+    School.today < self.valid_since
   end
 
   def name_with_wday_as_context

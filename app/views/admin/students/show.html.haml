@@ -14,7 +14,7 @@
       = plain_text_field 'Email', mail_to(student.email)
       = plain_text_field 'Creado', student.created_at.to_date
 
-    - future_packs = student.student_packs.where("start_date > ?", Date.today).to_a
+    - future_packs = student.student_packs.where("start_date > ?", School.today).to_a
     - if future_packs.count > 0
       %hr
       %h2 Packs futuros
@@ -25,11 +25,11 @@
 
     %hr
     %h2 Packs vigentes
-    - student.student_packs.valid_for(Date.today).each_with_index do |pack, index|
+    - student.student_packs.valid_for(School.today).each_with_index do |pack, index|
       - unless index == 0
         %hr(style="border-top-style: dashed;")
       = render 'admin/students/pack_card', pack: pack
-    - if student.student_packs.valid_for(Date.today).count == 0
+    - if student.student_packs.valid_for(School.today).count == 0
       No hay
 
     %hr

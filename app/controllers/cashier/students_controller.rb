@@ -18,7 +18,7 @@ class Cashier::StudentsController < Cashier::BaseController
 
   def course
     course = Course.find_by(code: params[:course])
-    course_log = course.course_logs.find_by(date: Date.today)
+    course_log = course.course_logs.find_by(date: School.today)
 
     render json: {
       course_log_id: course_log.id,
@@ -35,7 +35,7 @@ class Cashier::StudentsController < Cashier::BaseController
   def create
     if student.save
       unless student.card_code.blank?
-        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, Date.today)
+        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
       end
 
       render json: {status: :ok, student: student_json(student)}
@@ -56,7 +56,7 @@ class Cashier::StudentsController < Cashier::BaseController
 
       student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
       if cards_count != student.cards.count
-        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, Date.today)
+        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
         student.card_code = Student.format_card_code(student_params[:card_code])
         student.save(validate: false)
       end
@@ -80,7 +80,7 @@ class Cashier::StudentsController < Cashier::BaseController
   def pack_payment
     student = Student.find(params[:id])
     payment_plan = PaymentPlan.find_by(code: params[:code])
-    TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, Date.today, payment_plan)
+    TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, School.today, payment_plan)
 
     render json: {status: :ok, student: student_json(student)}
   end
@@ -127,13 +127,13 @@ class Cashier::StudentsController < Cashier::BaseController
 
       if student.persisted?
         hash[:pending_payments] = {
-          this_month: student.pending_payments_count(Date.today.month_range),
+          this_month: student.pending_payments_count(School.today.month_range),
           total: student.pending_payments_count
         }
 
-        hash[:available_courses] = student.student_packs.valid_for(Date.today).to_a.sum(&:available_courses)
+        hash[:available_courses] = student.student_packs.valid_for(School.today).to_a.sum(&:available_courses)
 
-        hash[:today_pending_classes] = student.student_course_logs.missing_payment.joins(:course_log).between(Date.today).map do |student_course_log|
+        hash[:today_pending_classes] = student.student_course_logs.missing_payment.joins(:course_log).between(School.today).map do |student_course_log|
           {
             id: student_course_log.id,
             course: student_course_log.course_log.course.code

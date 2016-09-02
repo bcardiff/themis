@@ -3,6 +3,10 @@ class School
     "Swing City"
   end
 
+  def self.today
+    Time.zone.today
+  end
+
   def self.course_incomes_per_month(time)
     TeacherCashIncome.handed_at_month(time).sum(:payment_amount)
   end

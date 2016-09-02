@@ -8,7 +8,7 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def owed_cash
-    date = Date.from_dmy(params[:date]) || Date.today
+    date = Date.from_dmy(params[:date]) || School.today
     teacher_owed_cash teacher, date
   end
 
@@ -18,7 +18,7 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def due_course_salary
-    date = Date.from_dmy(params[:date]) || Date.today
+    date = Date.from_dmy(params[:date]) || School.today
     @date = date.to_dmy
     @due_teacher_course_logs = order_by_course_log(teacher.teacher_course_logs.due_up_to(date))
 

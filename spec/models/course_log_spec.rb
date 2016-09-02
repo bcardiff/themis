@@ -22,7 +22,7 @@ RSpec.describe CourseLog, type: :model do
 
     context "empty history" do
       before(:each) {
-        allow(Date).to receive(:today).and_return(today)
+        allow(School).to receive(:today).and_return(today)
         CourseLog.fill_missings
       }
 
@@ -63,7 +63,7 @@ RSpec.describe CourseLog, type: :model do
 
       before(:each) {
         CourseLog.for_course_on_date(course.code, "2015-05-12")
-        allow(Date).to receive(:today).and_return(today)
+        allow(School).to receive(:today).and_return(today)
         CourseLog.fill_missings
       }
 

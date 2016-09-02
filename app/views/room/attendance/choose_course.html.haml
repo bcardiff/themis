@@ -15,10 +15,10 @@
     %i.glyphicon.glyphicon-chevron-left
     = @prev_date.to_human
 
-  - if @date != Date.today
+  - if @date != School.today
     = link_to "Hoy", room_path, class: 'btn btn-default'
 
-  - if @next_date && @next_date != Date.today
+  - if @next_date && @next_date != School.today
     = link_to room_path(date: @next_date), class: 'btn btn-default' do
       %i.glyphicon.glyphicon-chevron-right
       = @next_date.to_human

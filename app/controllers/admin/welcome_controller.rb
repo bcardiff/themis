@@ -4,7 +4,7 @@ class Admin::WelcomeController < Admin::BaseController
   def index
     CourseLog.fill_missings
 
-    @start_date = Date.parse(params['start_date']) rescue Date.today
+    @start_date = Date.parse(params['start_date']) rescue School.today
     @course_logs = School.course_logs_per_month_grouped(CourseLog, @start_date)
 
     @course_incomes_not_handed = School.course_incomes_not_handed
