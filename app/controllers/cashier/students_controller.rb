@@ -18,7 +18,7 @@ class Cashier::StudentsController < Cashier::BaseController
 
   def course
     course = Course.find_by(code: params[:course])
-    course_log = course.course_logs.find_by(date: School.today)
+    course_log = course.course_logs.find_by(date: date_or_today)
 
     render json: {
       course_log_id: course_log.id,

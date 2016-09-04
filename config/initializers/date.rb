@@ -27,4 +27,8 @@ class Date
   def month_range
     self.at_beginning_of_month..self.at_end_of_month
   end
+
+  def calendar_range
+    self.at_beginning_of_month.at_beginning_of_week..self.at_end_of_month.at_end_of_week
+  end
 end

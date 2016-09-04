@@ -14,6 +14,12 @@ class CourseLog < ActiveRecord::Base
   end
 
   scope :missing, -> { where(missing: true) }
+  scope :cashier_attention_required_untracked, -> {
+    where("untracked_students_count > 0")
+  }
+  scope :cashier_attention_required_missing_payment, -> {
+    includes(:student_course_logs).where(student_course_logs: { requires_student_pack: true, student_pack: nil})
+  }
 
   delegate :name_with_wday_as_context, to: :course
 

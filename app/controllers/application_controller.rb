@@ -23,4 +23,8 @@ class ApplicationController < ActionController::Base
   def sign_in_as_room!
     session[:room_token] = Settings.room_password
   end
+
+  def date_or_today
+    Date.from_dmy(params[:date]) || School.today
+  end
 end

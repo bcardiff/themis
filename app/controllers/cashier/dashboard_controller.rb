@@ -2,12 +2,21 @@ class Cashier::DashboardController < Cashier::BaseController
   def index
   end
 
+  def calendar
+    start_date = Date.parse(params['start_date']) rescue School.today
+    month = start_date.calendar_range
+
+    @dates_with_attention_required = Set.new
+    CourseLog.where(date: month).cashier_attention_required_untracked.select("distinct date").pluck(:date).each { |d| @dates_with_attention_required << d }
+    CourseLog.where(date: month).cashier_attention_required_missing_payment.select("distinct date").pluck(:date).each { |d| @dates_with_attention_required << d }
+  end
+
   def owed_cash
     teacher_owed_cash current_user.teacher
   end
 
   def status
-    date = School.today
+    date = date_or_today
     courses = Course.ongoing(date).includes(:place).order(:start_time)
 
     render json: {

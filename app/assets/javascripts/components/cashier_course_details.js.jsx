@@ -18,7 +18,7 @@ var CashierCourseDetails = React.createClass({
 
   _updateCourseLogStatus: function() {
     $.ajax({
-      url: URI('/cashier/students/course').query({course: this.props.course}),
+      url: URI('/cashier/students/course').query({course: this.props.course, date: this.props.config.date}),
       method: 'GET',
       success: function(data) {
         // keep students identified in this session in a different list in order

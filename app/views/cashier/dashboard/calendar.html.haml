@@ -1,0 +1,9 @@
+= month_calendar do |date|
+  .daynum
+    = date.day
+
+  - if date <= School.today
+    %center{class: "#{"attention" if @dates_with_attention_required.include?(date) }"}
+      = link_to cashier_dashboard_path(date: date.to_dmy) do
+        %h3
+          %i.glyphicon.glyphicon-inbox

@@ -14,6 +14,7 @@ var CashierDashboard = React.createClass({
   _updateStatus: function() {
     $.ajax({
       url: '/cashier/status',
+      data: { date: this.props.config.date },
       method: 'GET',
       success: function(data) {
         this.setState(React.addons.update(this.state, {
@@ -56,6 +57,10 @@ var CashierDashboard = React.createClass({
       <div className="row">
         <div className="col-md-2">
           <div className="list-group cashier-dashboard-menu">
+            <a href="/cashier/calendar" className={classNames("list-group-item", {"list-group-item-success": this.props.config.date == this.props.config.today, "list-group-item-warning": this.props.config.date != this.props.config.today})}>
+              <h4><i className="glyphicon glyphicon-calendar" /> {this.props.config.date}</h4>
+            </a>
+
             <a href="#" onClick={this.toggleStudentsSearch} className={classNames("list-group-item", {active: this.state.page == "students_search"})}>
               <h4><i className="glyphicon glyphicon-search" /> Alumnos</h4>
             </a>

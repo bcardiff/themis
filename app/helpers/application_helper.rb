@@ -104,7 +104,9 @@ module ApplicationHelper
        payment_plans: PaymentPlan.all.order(:price).to_a.select { |p| !p.other? }.map { |p|
          { code: p.code, description: p.description, price: p.price.to_f }
        },
-       new_card_fee: number_to_currency(TeacherCashIncomes::NewCardIncome::FEE)
+       new_card_fee: number_to_currency(TeacherCashIncomes::NewCardIncome::FEE),
+       date: (Date.from_dmy(params[:date]) || School.today).to_dmy,
+       today: School.today.to_dmy
      }
   end
 end
