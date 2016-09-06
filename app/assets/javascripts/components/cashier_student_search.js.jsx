@@ -366,6 +366,7 @@ var NewStudentForm = React.createClass({
             <option value="google">Google</option>
             <option value="friends">Amigos</option>
             <option value="already_known">Ya la conocía por la escena</option>
+            <option value="neighborhood">Barrio</option>
           </select>
         </div>
       </div>
