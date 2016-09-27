@@ -8,7 +8,15 @@ class StudentNotificationsPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:3000/rails/mailers/student_notifications/pack_granted
   def pack_granted
-    StudentNotifications.pack_granted(Student.first, PaymentPlan.find_by(code: "1_X_SEMANA_4"))
+    pack = StudentPack.new({
+      student: Student.first,
+      payment_plan: PaymentPlan.find_by(code: "1_X_SEMANA_4"),
+      start_date: School.today.at_beginning_of_month,
+      due_date: School.today.at_end_of_month,
+      max_courses: 4
+    })
+
+    StudentNotifications.pack_granted(pack)
   end
 
 end

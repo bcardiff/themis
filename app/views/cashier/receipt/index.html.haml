@@ -1,0 +1,14 @@
+= form_tag cashier_receipt_path, method: :post do |f|
+  = label_tag :receipt, 'Recibo'
+  = text_area_tag :receipt, @receipt, class: 'form-control', rows: 10, style: 'font-family: Courier New'
+  %br
+  = submit_tag 'Validar', class: 'btn btn-info'
+
+- if @receipt.present?
+  %br
+  - if @valid == :valid
+    %div.alert.alert-success Recibo válido
+  - elsif @valid == :invalid
+    %div.alert.alert-danger Recibo inválido
+  - elsif @valid == :format_error
+    %div.alert.alert-danger Error en el formato del recibo

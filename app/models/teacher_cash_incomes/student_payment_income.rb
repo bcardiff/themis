@@ -10,8 +10,6 @@ module TeacherCashIncomes
     def self.create_cashier_pack_payment!(teacher, student, date, payment_plan)
       create!(teacher: teacher, date: date, student: student, payment_amount: payment_plan.price).tap do |income|
         ActivityLogs::Student::Payment.record(student, income)
-
-        StudentNotifications.pack_granted(student, payment_plan).deliver_later
       end
     end
 

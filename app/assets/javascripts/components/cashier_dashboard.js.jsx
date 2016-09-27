@@ -102,6 +102,10 @@ var CashierDashboard = React.createClass({
             <a href="/cashier/owed_cash" className="list-group-item">
               <h4><i className="glyphicon glyphicon-usd" /> {this.state.owed_cash_total}</h4>
             </a>
+
+            <a href="/cashier/receipt" className="list-group-item">
+              <h4>Recibos</h4>
+            </a>
           </div>
         </div>
         <div className="col-md-10">
