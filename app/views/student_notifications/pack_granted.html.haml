@@ -1,7 +1,22 @@
-%h1= "Hola #{@student.display_name},"
+%p= "Hola #{@student.display_name},"
 
 %p
-  Te queriamos confirmar la asignación de un pack correspondiente a
+  ¿Cómo estás? ¡Te escribimos para confirmarte que sacaste un pack
   = @student_pack.payment_plan.mailer_description
+  en
+  = "#{School.description}!"
+
+%p
+  Recordá que si faltás a alguna clase la podés recuperar, dentro del mismo mes calendario.
+
+%p
+  El código de seguridad que identifica tu pack es:
 
 %pre= @receipt
+
+%p
+  Nos vemos pronto!
+
+%p
+  %i Swing City Team
+

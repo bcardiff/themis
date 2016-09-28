@@ -15,6 +15,7 @@ class StudentNotificationsPreview < ActionMailer::Preview
       due_date: School.today.at_end_of_month,
       max_courses: 4
     })
+    pack.id = 42
 
     StudentNotifications.pack_granted(pack)
   end

@@ -34,6 +34,7 @@ gem 'puma'
 
 gem 'bootstrap-sass'
 gem 'haml-rails'
+gem 'kramdown'
 gem 'simple_calendar'
 gem 'decent_exposure'
 gem 'rails-i18n'
