@@ -38,7 +38,11 @@ class Cashier::StudentsController < Cashier::BaseController
         TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
       end
 
-      StudentNotifications.welcome(student).deliver_later
+      begin
+        StudentNotifications.welcome(student).deliver_now if student.email.present?
+      rescue => ex
+        logger.warn ex
+      end
 
       render json: {status: :ok, student: student_json(student)}
     else
