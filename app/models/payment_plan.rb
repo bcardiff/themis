@@ -24,6 +24,6 @@ class PaymentPlan < ActiveRecord::Base
 
   def mailer_description
     # remove prices
-    description[/[^\$]*/].strip
+    description[/[^\$]*/].strip.downcase
   end
 end
