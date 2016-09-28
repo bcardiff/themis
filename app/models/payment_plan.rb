@@ -22,6 +22,10 @@ class PaymentPlan < ActiveRecord::Base
     self.code != SINGLE_CLASS
   end
 
+  def notify_purchase?
+    !self.other? && !self.single_class?
+  end
+
   def mailer_description
     # remove prices
     description[/[^\$]*/].strip.downcase

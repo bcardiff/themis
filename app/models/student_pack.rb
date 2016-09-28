@@ -72,7 +72,7 @@ class StudentPack < ActiveRecord::Base
 
     pack = self.create!(student: student, payment_plan: plan, start_date: start_date, due_date: due_date, max_courses: max_courses)
     begin
-      StudentNotifications.pack_granted(pack).deliver_later if plan && student.email
+      StudentNotifications.pack_granted(pack).deliver_later if plan && student.email && plan.notify_purchase?
     rescue => ex
       logger.warn ex
     end
