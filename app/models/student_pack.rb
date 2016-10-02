@@ -70,7 +70,13 @@ class StudentPack < ActiveRecord::Base
       max_courses = price / single_class_price
     end
 
-    self.create!(student: student, payment_plan: plan, start_date: start_date, due_date: due_date, max_courses: max_courses)
+    pack = self.create!(student: student, payment_plan: plan, start_date: start_date, due_date: due_date, max_courses: max_courses)
+    begin
+      StudentNotifications.pack_granted(pack).deliver_now if plan && student.email && plan.notify_purchase?
+    rescue => ex
+      logger.warn ex
+    end
+    pack
   end
 
   def total_payed

@@ -109,4 +109,8 @@ module ApplicationHelper
        today: School.today.to_dmy
      }
   end
+
+  def markdown(source)
+    Kramdown::Document.new(source).to_html.html_safe
+  end
 end

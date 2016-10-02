@@ -21,4 +21,13 @@ class PaymentPlan < ActiveRecord::Base
   def requires_student_pack_for_class
     self.code != SINGLE_CLASS
   end
+
+  def notify_purchase?
+    !self.other? && !self.single_class?
+  end
+
+  def mailer_description
+    # remove prices
+    description[/[^\$]*/].strip.downcase
+  end
 end

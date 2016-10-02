@@ -28,6 +28,7 @@ module Themis
     config.generators.helper = false
 
     config.action_mailer.default_url_options = Settings.default_url_options.to_h
+    config.action_mailer.asset_host = "http://#{Settings.default_url_options.host}"
 
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/actions"

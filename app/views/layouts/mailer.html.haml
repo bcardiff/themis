@@ -1,0 +1,21 @@
+- font_style = "font-family: arial,sans-serif; font-size: 13px;"
+- center_style = "max-width: 600px; margin: 0 auto; #{font_style}"
+- image_style = "width: 24px;"
+- link_style = "text-decoration: none; color: #000; position: relative; width: 100px; display: inline-block; text-align: left;"
+- link_span_style = "position: absolute; top: 4px; left: 30px; white-space: nowrap; #{font_style}"
+%html
+  %body
+    %center{style: center_style}
+      = image_tag 'email_logo.jpg'
+    %hr(style="boder: 1px solid black")
+    %center{style: center_style}
+      = link_to "https://www.facebook.com/baswingcity", style: link_style do
+        = image_tag 'facebook.png', style: image_style
+        %span{style: link_span_style} Facebook
+      %span(style="width: 30px; display: inline-block;") &nbsp;
+      = link_to "http://www.swingcity.com.ar", style: "#{link_style}" do
+        = image_tag 'link.png', style: image_style
+        %span{style: link_span_style} Página Web
+    %br
+    %div{style: center_style}
+      = yield

@@ -1,0 +1,19 @@
+%center
+  %p= "¡Hola #{@student.display_name}!"
+
+  %p
+    ¿Cómo estás? ¡Te escribimos para confirmarte que sacaste un pack
+    = @student_pack.payment_plan.mailer_description
+    en
+    = "#{School.description}!"
+
+  %p
+    Recordá que si faltás a alguna clase la podés recuperar, dentro del mismo mes calendario.
+
+  %p
+    ¡Nos vemos pronto!
+
+  %p
+    %i Swing City Team
+
+  %pre= @receipt
