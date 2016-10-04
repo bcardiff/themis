@@ -2,7 +2,7 @@ class StudentNotifications < ApplicationMailer
 
   def welcome(student)
     @student = student
-    mail to: @student.email, subject: "¡¡Te damos la bienvenida a !! - INFORMACIÓN IMPORTANTE"
+    mail to: @student.email, subject: "¡¡Te damos la bienvenida a #{School.description}!! - INFORMACIÓN IMPORTANTE"
   end
 
   def pack_granted(student_pack)
