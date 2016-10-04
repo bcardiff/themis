@@ -7,7 +7,7 @@ namespace :db do
     @db_params = "-p#{@db['password']} #{@db_params}" unless @db['password'].blank?
 
     file = ENV["FILE"]
-    command = "gunzip < #{Shellwords.escape(file)} | mysql #{@db_params}"
+    command = "mysql #{@db_params} < #{Shellwords.escape(file)}"
 
     Rake::Task["db:drop"].execute
     Rake::Task["db:create"].execute
