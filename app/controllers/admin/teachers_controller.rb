@@ -7,6 +7,12 @@ class Admin::TeachersController < Admin::BaseController
   def show
   end
 
+  def update
+    teacher.fee = params["teacher"]["fee"].to_f
+    teacher.save!
+    redirect_to :admin_teachers
+  end
+
   def owed_cash
     date = Date.from_dmy(params[:date]) || School.today
     teacher_owed_cash teacher, date
@@ -36,4 +42,5 @@ class Admin::TeachersController < Admin::BaseController
   def order_by_course_log(relation)
     relation.joins(:course_log).order('course_logs.date desc')
   end
+
 end

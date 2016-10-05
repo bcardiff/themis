@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :teachers, only: [:index, :show] do
+    resources :teachers, only: [:index, :show, :update] do
       member do
         get :owed_cash
         post :transfer_cash_income_money
