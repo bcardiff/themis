@@ -49,26 +49,26 @@ def place(name, attributes)
   end
 end
 
-teacher 'Mariel', fee: 300, cashier: true, priority: 1
-teacher 'Manuel', fee: 300, cashier: true, priority: 1
-teacher 'Juani', fee: 300, priority: 1
-teacher 'Candela', fee: 175, priority: 0, deleted_at: Date.new(2016,2,1)
-teacher 'Mariano', fee: 230, priority: 2
-teacher 'Celeste', fee: 230, priority: 2
-teacher 'Nanchi', fee: 230, priority: 2
-teacher 'Sol', fee: 230, priority: 2
-teacher 'Majo', fee: 230, priority: 0
-teacher 'Brian', fee: 230, cashier: true, priority: 0
-teacher 'Otro', fee: 0, priority: 4
-teacher 'Martina', fee: 0, cashier: true, priority: 0
-teacher 'Blake', fee: 0, cashier: true, priority: 0
-teacher 'Belu', fee: 0, cashier: true, priority: 0
-teacher 'Victoria', fee: 230, priority: 2
-teacher 'Farru', fee: 230, priority: 3
-teacher 'Soledad', fee: 230, priority: 3
-teacher 'Edu', fee: 230, priority: 3
-teacher 'Eliana', fee: 230, priority: 3
-teacher 'Agustín', fee: 230, priority: 3
+teacher 'Mariel', cashier: true, priority: 1
+teacher 'Manuel', cashier: true, priority: 1
+teacher 'Juani', priority: 1
+teacher 'Candela', priority: 0, deleted_at: Date.new(2016,2,1)
+teacher 'Mariano', priority: 2
+teacher 'Celeste', priority: 2
+teacher 'Nanchi', priority: 2
+teacher 'Sol', priority: 2
+teacher 'Majo', priority: 0
+teacher 'Brian', cashier: true, priority: 0
+teacher 'Otro', priority: 4
+teacher 'Martina', cashier: true, priority: 0
+teacher 'Blake', cashier: true, priority: 0
+teacher 'Belu', cashier: true, priority: 0
+teacher 'Victoria', priority: 2
+teacher 'Farru', priority: 3
+teacher 'Soledad', priority: 3
+teacher 'Edu', priority: 3
+teacher 'Eliana', priority: 3
+teacher 'Agustín', priority: 3
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
