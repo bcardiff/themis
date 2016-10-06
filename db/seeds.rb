@@ -103,6 +103,7 @@ course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves", weekday: 4, tr
 course "LH_INT2_SAB", name: "Lindy Hop - Intermedios 2 - Sábados", weekday: 6, valid_since: Date.new(2015,6,1), track: track("LH_INT2"), place: swing_city, start_time: '18:00'
 
 course "LH_INT3_MAR", name: "Lindy Hop - Intermedios 3 - Martes", weekday: 2, valid_since: Date.new(2016,1,1), track: track("LH_INT3"), place: swing_city, start_time: '20:00'
+course "LH_INT3_SAB", name: "Lindy Hop - Intermedios 3 - Sábados", weekday: 6, valid_since: Date.new(2016,10,7), track: track("LH_INT3"), place: swing_city, start_time: '16:00'
 
 course "LH_PRIN_LUN", name: "Lindy Hop - Principiantes - Lunes", weekday: 1, track: track("LH_PRIN"), place: swing_city, start_time: '19:00'
 course "LH_PRIN_MAR2", name: "Lindy Hop - Principiantes - Martes", weekday: 2, track: track("LH_PRIN"), place: swing_city, start_time: '20:00'
