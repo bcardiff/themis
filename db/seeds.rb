@@ -33,6 +33,7 @@ end
 
 def teacher(name, attributes)
   Teacher.find_or_create_by(name: name).tap do |teacher|
+    teacher.fee = 0 if teacher.new_record?
     attributes.each do |key, value|
       teacher.send "#{key}=", value
     end
