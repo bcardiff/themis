@@ -25,4 +25,8 @@ class Course < ActiveRecord::Base
   def name_with_track_as_context
     code.sub("#{track.code}_", "")
   end
+
+  def css_prefix
+    "#{track.css_prefix} #{hashtag.try &:underscore}"
+  end
 end

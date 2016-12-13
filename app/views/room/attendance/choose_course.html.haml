@@ -5,7 +5,7 @@
 
 %ul#course_list
   - @courses.each do |course|
-    %li{class: course.track.css_prefix}
+    %li{class: course.css_prefix}
       = link_to course.room_name, room_open_path(@date, course.id), method: :post
 
 - content_for :footer do

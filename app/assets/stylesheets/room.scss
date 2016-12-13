@@ -6,6 +6,7 @@ $sc-light:      #e5e5e5;
 $sc-font:       'Roboto', sans-serif;
 
 $track-lh: #ec3b62;
+$track-lh-limbo: darken($track-lh, 30%);
 $track-aj: #71a9a4;
 $track-tp: #fab258;
 $track-fisica: #A1B148;
@@ -254,6 +255,9 @@ body.room {
       @include button-color($sc-highlight);
       &.lh {
         @include button-color($track-lh);
+      }
+      &.lh.limbo {
+        @include button-color($track-lh-limbo);
       }
       &.aj {
         @include button-color($track-aj);
