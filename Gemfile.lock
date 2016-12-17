@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/manastech/listings.git
+  remote: https://github.com/manastech/listings.git
   revision: a01137244b408281f08f53ceb0cfd76df9a2fcc1
   branch: master
   specs:
@@ -383,7 +383,7 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 RUBY VERSION
-   ruby 2.2.1p85
+   ruby 2.2.6p396
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
