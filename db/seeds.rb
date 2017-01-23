@@ -64,6 +64,7 @@ teacher 'Otro', priority: 4
 teacher 'Martina', cashier: true, priority: 0
 teacher 'Blake', cashier: true, priority: 0
 teacher 'Belu', cashier: true, priority: 0
+teacher 'Lala', cashier: true, priority: 0
 teacher 'Victoria', priority: 2
 teacher 'Farru', priority: 3
 teacher 'Soledad', priority: 3
