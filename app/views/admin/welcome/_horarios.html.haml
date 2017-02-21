@@ -8,7 +8,14 @@
       %td.day
       - days.each do |wday|
         %td.day= local_wday(wday)
+    - prev_time = nil
     - hours.each do |time|
+      - if !prev_time.nil? && prev_time + 1.hour != time
+        %tr
+          %td.header.hour ...
+          - days.each do |wday|
+            %td.course
+      - prev_time = time
       %tr
         %td.header.hour<
           = time.hour
@@ -20,4 +27,4 @@
           %td.course
             - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
               %div{'class' => course.css_prefix}
-                = course.track.code.sub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "") + (course.track.code == "TAP_KIDS" ? " **" : "") + (course.future? ? "***" : "")
+                = course.track.code.sub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "") + (course.future? ? " **" : "")
