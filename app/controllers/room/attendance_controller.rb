@@ -1,7 +1,7 @@
 class Room::AttendanceController < Room::BaseController
   def choose_course
     @date = Date.parse(params[:date]) rescue School.today
-    @courses = Course.ongoing(@date)
+    @courses = Course.ongoing(@date).all.sort_by { |c| [c.track.activity_code, c.start_time] }
 
     @prev_date = @date - 1.day
     @next_date = @date < School.today ? @date + 1.day : nil

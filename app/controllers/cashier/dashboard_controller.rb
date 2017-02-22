@@ -24,7 +24,7 @@ class Cashier::DashboardController < Cashier::BaseController
       courses: courses.map { |course|
         course_log = CourseLog.find_or_initialize_by(course: course, date: date)
         { course: course.code,
-          room_name: course.room_name,
+          room_name: course.room_name(show_time: false),
           start_time: course.start_time.to_s(:time),
           students_count: course_log.students_count,
           started: course_log.persisted?,

@@ -9,11 +9,11 @@ RSpec.describe Course, type: :model do
     let(:course_balboa) { create(:course, code: 'BALBOA_SHAG_JUE', track: create(:track, code: 'BALBOA_SHAG')) }
 
     it "should grab track code" do
-      expect(course_lh_prin.name_with_wday_as_context).to eq('LH PRIN')
-      expect(course_lh_int1.name_with_wday_as_context).to eq('LH INT1')
-      expect(course_estira.name_with_wday_as_context).to eq('ESTIRAMIENTO')
-      expect(course_prep.name_with_wday_as_context).to eq('PREP FISICA')
-      expect(course_balboa.name_with_wday_as_context).to eq('BALBOA SHAG')
+      expect(course_lh_prin.name_with_wday_as_context(show_time: false)).to eq('LH PRIN')
+      expect(course_lh_int1.name_with_wday_as_context(show_time: false)).to eq('LH INT1')
+      expect(course_estira.name_with_wday_as_context(show_time: false)).to eq('ESTIRAMIENTO')
+      expect(course_prep.name_with_wday_as_context(show_time: false)).to eq('PREP FISICA')
+      expect(course_balboa.name_with_wday_as_context(show_time: false)).to eq('BALBOA SHAG')
     end
   end
 end
