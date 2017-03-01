@@ -10,9 +10,8 @@ Based on a work at [https://github.com/bcardiff/themis](https://github.com/bcard
 Install `rbenv`, `mysql` (user: root/password: blank).
 
 ```
-$ rbenv install 2.2.5
-$ ruby --version
-ruby 2.2.5p319 (2016-04-26 revision 54774) [x86_64-darwin15]
+$ rbenv install $(cat .ruby-version)
+$ rbenv shell $(cat .ruby-version)
 $ gem install bundler
 $ rbenv rehash
 $ bundle install
