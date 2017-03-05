@@ -250,7 +250,7 @@ body.room {
         @include flex(40vw, 1);
       }
 
-      margin: 0.3em;
+      margin: 0.1em;
       font-size: 5vh;
 
       @include button-color($sc-highlight);
