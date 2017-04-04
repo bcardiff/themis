@@ -42,6 +42,9 @@
 
 
   .col-md-7
-    %h3 Actividades
+    - if student.comment.present?
+      %h3 Comentarios
+      = student.comment
 
+    %h3 Actividades
     = render_listing :admin_student_activities

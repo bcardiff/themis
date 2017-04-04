@@ -58,6 +58,7 @@ class Cashier::StudentsController < Cashier::BaseController
       student.first_name = student_params[:first_name]
       student.last_name = student_params[:last_name]
       student.email = student_params[:email]
+      student.comment = student_params[:comment]
       student.save!
 
       student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
@@ -118,7 +119,7 @@ class Cashier::StudentsController < Cashier::BaseController
   private
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment)
   end
 
   def student_json(student)

@@ -1,16 +1,26 @@
 = simple_form_for([:cashier, student], html: { class: 'form-horizontal' }) do |f|
 
-  = f.input :first_name
-  = f.input :last_name
-  = f.input :email
+  .col-md-5 
+    %h1= student.display_name 
 
-  = f.input :card_code
-  %i
-    Si cambia la tarjeta recuerde cobrar los
-    = "$#{TeacherCashIncomes::NewCardIncome::FEE}"
-    por la misma.
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :email
 
-  %br
-  %br
+    = f.input :card_code
+    %i
+      Si cambia la tarjeta recuerde cobrar los
+      = "$#{TeacherCashIncomes::NewCardIncome::FEE}"
+      por la misma.
 
-  = f.button :submit
+    %br
+    %br
+
+    = f.button :submit
+  .col-md-1
+  .col-md-5
+    %br
+    %br
+    %br
+    %br
+    = f.input :comment
