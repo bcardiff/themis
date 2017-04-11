@@ -1,15 +1,3 @@
-GIT
-  remote: https://github.com/manastech/listings.git
-  revision: a01137244b408281f08f53ceb0cfd76df9a2fcc1
-  branch: master
-  specs:
-    listings (0.0.2)
-      bootstrap-kaminari-views
-      haml-rails
-      kaminari
-      rails
-      sass-rails
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -173,6 +161,12 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.15)
+    listings (0.1.7)
+      bootstrap-kaminari-views
+      haml-rails
+      kaminari
+      rails
+      sass-rails
     lodash-rails (3.10.1)
       railties (>= 3.1)
     loofah (2.0.1)
@@ -355,7 +349,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   kramdown
-  listings!
+  listings (~> 0.1.7)
   lodash-rails
   mysql2
   newrelic_rpm
@@ -383,7 +377,7 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 RUBY VERSION
-   ruby 2.2.6p396
+   ruby 2.2.7p470
 
 BUNDLED WITH
-   1.13.6
+   1.14.6

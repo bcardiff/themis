@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.6'
+ruby '2.2.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
@@ -39,7 +39,7 @@ gem 'simple_calendar'
 gem 'decent_exposure'
 gem 'rails-i18n'
 
-gem 'listings', :git => 'https://github.com/manastech/listings.git', :branch => 'master'
+gem 'listings', '~> 0.1.7'
 
 # gem 'rails_12factor', :group => :production
 gem 'devise'
