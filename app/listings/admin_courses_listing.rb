@@ -4,7 +4,7 @@ class AdminCoursesListing < Listings::Base
   model { Course.order(:weekday, :start_time, :code) }
 
   scope 'Todos', :all, default: true
-  scope 'Vigentes', :ongoing
+  scope 'Vigentes', :ongoing_or_future
 
   column :code
   column :name
