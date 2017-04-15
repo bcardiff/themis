@@ -271,19 +271,11 @@ var StudentRecord = React.createClass({
 
             {(function(){
               if (student.comment != null) {
-                return (<p>
-                  <span className="glyphicon glyphicon-comment" />&nbsp;
-                  <b>Comentario:</b> {student.comment}
-                </p>);
-              }
-            }.bind(this))()}
-
-            {(function(){
-              if (student.comment != null) {
-                return (<p>
-                  <span className="glyphicon glyphicon-time" />&nbsp;
-                  <b>Fecha Comentario:</b> {student.comment_at}
-                </p>);
+                return (<blockquote>
+                  <span className="glyphicon glyphicon-comment" />{" "}
+                  {student.comment}
+                  <footer>{student.comment_at}</footer>
+                </blockquote>);
               }
             }.bind(this))()}
 
