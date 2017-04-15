@@ -131,7 +131,7 @@ class Cashier::StudentsController < Cashier::BaseController
       last_name: student.last_name,
       email: student.email,
       comment: student.comment,
-      comment_at: student.comment_at.try { |t| DateTime.parse(t.to_s).to_date.to_human },
+      comment_at: student.comment_at.try(&:to_human),
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
 
