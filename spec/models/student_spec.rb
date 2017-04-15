@@ -217,4 +217,51 @@ RSpec.describe Student, type: :model do
       expect(Student.first.card_code).to be_nil
     end
   end
+
+  describe "comments" do
+    let(:t0) { Time.local(2017, 4, 17, 15, 30, 0) }
+    before { Timecop.freeze(t0) }
+    after { Timecop.return }
+
+    it "should have none initially" do
+      student = create(:student)
+      expect(student.comment).to be_nil
+      expect(student.comment_at).to be_nil
+    end
+
+    it "changing comment updates the comment_at" do
+      student = create(:student)
+      student.comment = "Lorem"
+      student.save!
+      expect(student.comment_at).to eq(t0)
+    end
+
+    it "not changing comment does not change comment_at" do
+      student = create(:student)
+      student.comment = "Lorem"
+      student.save!
+
+      Timecop.freeze(1.day)
+      student.reload
+      student.first_name = "other name"
+      student.comment = "Lorem"
+      student.save!
+
+      expect(student.comment_at).to eq(t0)
+    end
+
+    it "clearing comment clears the comment_at" do
+      student = create(:student)
+      student.comment = "Lorem"
+      student.save!
+
+      Timecop.freeze(1.day)
+      student.reload
+      student.comment = ""
+      student.save!
+
+      expect(student.comment).to be_nil
+      expect(student.comment_at).to be_nil
+    end
+  end
 end

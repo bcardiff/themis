@@ -53,7 +53,6 @@ class Cashier::StudentsController < Cashier::BaseController
   def update
     self.student = Student.find(params[:id])
     cards_count = student.cards.count
-    comment_old = student.comment
 
 
     begin
@@ -61,9 +60,6 @@ class Cashier::StudentsController < Cashier::BaseController
       student.last_name = student_params[:last_name]
       student.email = student_params[:email]
       student.comment = student_params[:comment]
-      if comment_old != student_params[:comment_at]
-        student.comment_at = DateTime.now
-      end
       student.save!
 
       student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
@@ -124,7 +120,7 @@ class Cashier::StudentsController < Cashier::BaseController
   private
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment, :comment_at)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment)
   end
 
   def student_json(student)
