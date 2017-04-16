@@ -260,7 +260,7 @@ var StudentRecord = React.createClass({
       <div>
         <hr />
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-8">
             <h4>
               <a href={"/cashier/students/" + student.id} target="_blank">
                 {student.first_name}&nbsp;{student.last_name} <small><i className="glyphicon glyphicon-new-window" /></small>
@@ -270,10 +270,20 @@ var StudentRecord = React.createClass({
             <p>{student.email}</p>
 
             {(function(){
+              if (student.comment != null) {
+                return (<blockquote>
+                  <span className="glyphicon glyphicon-comment" />{" "}
+                  {student.comment}
+                  <footer>{student.comment_by}, {student.comment_at}</footer>
+                </blockquote>);
+              }
+            }.bind(this))()}
+
+            {(function(){
               if (student.available_courses > 0) {
                 return (<p>
                   <span className="glyphicon glyphicon-ok" />&nbsp;
-                  dispone de <b>{student.available_courses}</b> clases abonadas
+                  Dispone de <b>{student.available_courses}</b> clases abonadas
                 </p>);
               }
             }.bind(this))()}
@@ -282,12 +292,12 @@ var StudentRecord = React.createClass({
               if (student.pending_payments.total > 0) {
                 return (<p className="missing-payment">
                   <span className="glyphicon glyphicon-exclamation-sign" />&nbsp;
-                  debe <b>{student.pending_payments.this_month}</b> clases este mes. <b>{student.pending_payments.total}</b> en total
+                  Debe <b>{student.pending_payments.this_month}</b> clases este mes. <b>{student.pending_payments.total}</b> en total
                 </p>);
               }
             }.bind(this))()}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-4">
             {(function(){
               if (this.props.onStudentChosen == null) {
                 return <StudentPaymentControls student={student} config={this.props.config} onStudentUpdated={this.studentUpdated} />;

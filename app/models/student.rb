@@ -28,6 +28,9 @@ class Student < ActiveRecord::Base
     where(id: StudentCourseLog.joins(:course_log).where(course_logs: { date: date.month_range}).missing_payment.select(:student_id))
   }
 
+  before_save :update_comment_at
+  belongs_to :comment_by, class_name: "User"
+
   def display_name
     "#{first_name} #{last_name}"
   end
@@ -152,6 +155,18 @@ class Student < ActiveRecord::Base
   def avoid_changing_card_code
     if self.card_code_changed? && !self.card_code_was.blank?
       errors.add(:card_code, "was already set")
+    end
+  end
+
+  def update_comment_at
+    if self.comment_changed?
+      if self.comment.blank?
+        self.comment_at = nil
+        self.comment = nil
+        self.comment_by = nil
+      else
+        self.comment_at = Time.now
+      end
     end
   end
 end

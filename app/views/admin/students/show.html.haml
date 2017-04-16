@@ -42,6 +42,13 @@
 
 
   .col-md-7
-    %h3 Actividades
+    - if student.comment.present?
+      %blockquote
+        %span.glyphicon.glyphicon-comment
+        = student.comment
+        %footer
+          = "#{student.comment_by.name}, "
+          = student.comment_at.try(&:to_human)
 
+    %h3 Actividades
     = render_listing :admin_student_activities

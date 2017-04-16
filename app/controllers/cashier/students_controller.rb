@@ -54,10 +54,13 @@ class Cashier::StudentsController < Cashier::BaseController
     self.student = Student.find(params[:id])
     cards_count = student.cards.count
 
+
     begin
       student.first_name = student_params[:first_name]
       student.last_name = student_params[:last_name]
       student.email = student_params[:email]
+      student.comment = student_params[:comment]
+      student.comment_by = current_user if student.comment_changed?
       student.save!
 
       student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
@@ -118,7 +121,7 @@ class Cashier::StudentsController < Cashier::BaseController
   private
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment)
   end
 
   def student_json(student)
@@ -128,6 +131,9 @@ class Cashier::StudentsController < Cashier::BaseController
       first_name: student.first_name,
       last_name: student.last_name,
       email: student.email,
+      comment: student.comment,
+      comment_at: student.comment_at.try(&:to_human),
+      comment_by: student.comment_by.try(&:name),
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
 
