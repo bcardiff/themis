@@ -20,4 +20,8 @@ class User < ActiveRecord::Base
   def can_access_room_area?
     admin? || cashier?
   end
+
+  def name
+    teacher.try(&:name) || "user:#{id}"
+  end
 end

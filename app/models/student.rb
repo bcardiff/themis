@@ -29,6 +29,7 @@ class Student < ActiveRecord::Base
   }
 
   before_save :update_comment_at
+  belongs_to :comment_by, class_name: "User"
 
   def display_name
     "#{first_name} #{last_name}"
@@ -162,6 +163,7 @@ class Student < ActiveRecord::Base
       if self.comment.blank?
         self.comment_at = nil
         self.comment = nil
+        self.comment_by = nil
       else
         self.comment_at = Time.now
       end

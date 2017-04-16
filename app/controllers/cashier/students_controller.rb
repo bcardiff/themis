@@ -60,6 +60,7 @@ class Cashier::StudentsController < Cashier::BaseController
       student.last_name = student_params[:last_name]
       student.email = student_params[:email]
       student.comment = student_params[:comment]
+      student.comment_by = current_user if student.comment_changed?
       student.save!
 
       student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
@@ -132,6 +133,7 @@ class Cashier::StudentsController < Cashier::BaseController
       email: student.email,
       comment: student.comment,
       comment_at: student.comment_at.try(&:to_human),
+      comment_by: student.comment_by.try(&:name),
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
 

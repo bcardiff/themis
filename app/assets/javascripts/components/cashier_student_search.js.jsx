@@ -274,7 +274,7 @@ var StudentRecord = React.createClass({
                 return (<blockquote>
                   <span className="glyphicon glyphicon-comment" />{" "}
                   {student.comment}
-                  <footer>{student.comment_at}</footer>
+                  <footer>{student.comment_by}, {student.comment_at}</footer>
                 </blockquote>);
               }
             }.bind(this))()}

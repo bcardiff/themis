@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410210551) do
+ActiveRecord::Schema.define(version: 20170416034546) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -134,15 +134,16 @@ ActiveRecord::Schema.define(version: 20170410210551) do
   add_index "student_packs", ["student_id"], name: "index_student_packs_on_student_id", using: :btree
 
   create_table "students", force: :cascade do |t|
-    t.string   "first_name", limit: 255
-    t.string   "last_name",  limit: 255
-    t.string   "email",      limit: 255
-    t.string   "card_code",  limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "known_by",   limit: 255
-    t.text     "comment",    limit: 65535
+    t.string   "first_name",    limit: 255
+    t.string   "last_name",     limit: 255
+    t.string   "email",         limit: 255
+    t.string   "card_code",     limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "known_by",      limit: 255
+    t.text     "comment",       limit: 65535
     t.datetime "comment_at"
+    t.integer  "comment_by_id", limit: 4
   end
 
   create_table "teacher_cash_incomes", force: :cascade do |t|
