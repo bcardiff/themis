@@ -10,6 +10,7 @@ Based on a work at [https://github.com/bcardiff/themis](https://github.com/bcard
 Install `rbenv`, `mysql` (user: root/password: blank).
 
 ```
+$ brew update && brew upgrade ruby-build
 $ rbenv install $(cat .ruby-version)
 $ rbenv shell $(cat .ruby-version)
 $ gem install bundler
