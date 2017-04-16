@@ -27,7 +27,7 @@
     %blockquote
       = f.input :comment
       %footer
-        = "#{student.comment_by.name}, "
+        = "#{student.comment_by.try(&:name)}, "
         = student.comment_at.try(&:to_human)
 
 
