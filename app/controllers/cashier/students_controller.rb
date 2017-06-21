@@ -61,9 +61,10 @@ class Cashier::StudentsController < Cashier::BaseController
       student.email = student_params[:email]
       student.comment = student_params[:comment]
       student.comment_by = current_user if student.comment_changed?
+      student.phone = student_params[:phone]
       student.save!
 
-      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
+      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code], student_params[:phone]
       if cards_count != student.cards.count
         TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
         student.card_code = Student.format_card_code(student_params[:card_code])
@@ -121,7 +122,7 @@ class Cashier::StudentsController < Cashier::BaseController
   private
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :known_by, :comment, :phone)
   end
 
   def student_json(student)
@@ -134,6 +135,7 @@ class Cashier::StudentsController < Cashier::BaseController
       comment: student.comment,
       comment_at: student.comment_at.try(&:to_human),
       comment_by: student.comment_by.try(&:name),
+      phone: student.phone,
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
 

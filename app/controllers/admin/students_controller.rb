@@ -171,7 +171,7 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :email, :card_code)
+    params.require(:student).permit(:first_name, :last_name, :email, :card_code, :phone)
   end
 
   def count_stat_entry(stat_entry, student_course_log)

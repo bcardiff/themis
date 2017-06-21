@@ -7,6 +7,7 @@ class AdminStudentsListing < Listings::Base
   column :email, searchable: true do |student|
     mail_to student.email
   end
+  column :phone  
   column :known_by
 
   column :created_at do |student|

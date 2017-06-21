@@ -12,6 +12,7 @@
       = plain_text_field 'Nombre', student.first_name
       = plain_text_field 'Apellido', student.last_name
       = plain_text_field 'Email', mail_to(student.email)
+      = plain_text_field 'Teléfono', student.phone
       = plain_text_field 'Creado', student.created_at.to_date
 
     - future_packs = student.student_packs.where("start_date > ?", School.today).to_a

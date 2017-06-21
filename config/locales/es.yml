@@ -17,6 +17,7 @@ es-AR:
         first_name: Nombre
         last_name: Apellido
         card_code: Tarjeta
+        phone: Telefono
   activerecord:
     models:
       student: alumno
@@ -26,6 +27,7 @@ es-AR:
         last_name: Apellido
         card_code: Tarjeta
         comment: Comentario
+        phone: Telefono
       student_course_log:
         teacher: Profesor
         payment_plan: Plan

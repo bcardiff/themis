@@ -4,6 +4,12 @@
 
 %h1 Estadísticas. Alumnos Activos
 
+= label_tag :date, 'Fecha desde'
+= text_field_tag :date, @date_from, :'data-provide'=>'datepicker', :'data-date-format'=>'dd/mm/yyyy', class: 'form-control'
+= label_tag :date, 'Fecha hasta'
+= text_field_tag :date, @date_to, :'data-provide'=>'datepicker', :'data-date-format'=>'dd/mm/yyyy', class: 'form-control'
+= submit_tag 'Calcular', class: 'btn btn-info'
+
 %h3
   Período
   = @date_range
