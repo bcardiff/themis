@@ -5,6 +5,7 @@
   = f.input :email
   = f.input :card_code
   = f.input :phone
+  = f.input :comment
 
   = f.button :submit
   = link_to "Delete", [:admin, student], method: :delete, data: {confirm: "Seguro desea borrar el alumno?"}

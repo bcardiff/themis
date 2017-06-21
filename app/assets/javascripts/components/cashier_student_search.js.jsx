@@ -365,6 +365,7 @@ var NewStudentForm = React.createClass({
       <StudentInputField label="Email" type="email" {...studentBind('email')} />
       <StudentInputField label="Teléfono" type="text" {...studentBind('phone')} />
       <StudentInputField label="Tarjeta" type="text" {...studentBind('card_code')} hint={"En caso de completar, recuerde cobrar los " + this.props.config.new_card_fee} />
+      <StudentInputField label="Comentario" type="text" {...studentBind('comment')} />
 
       <div className="form-group">
         <label htmlFor="known_by" className="col-sm-2 control-label">Nos conoció por</label>
