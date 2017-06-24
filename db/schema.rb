@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20170620042342) do
     t.text     "comment",       limit: 65535
     t.datetime "comment_at"
     t.integer  "comment_by_id", limit: 4
-    t.text     "phone",         limit: 65535
+    t.string   "phone",         limit: 255
   end
 
   create_table "teacher_cash_incomes", force: :cascade do |t|

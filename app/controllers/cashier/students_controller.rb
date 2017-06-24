@@ -64,7 +64,7 @@ class Cashier::StudentsController < Cashier::BaseController
       student.phone = student_params[:phone]
       student.save!
 
-      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code], student_params[:phone]
+      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
       if cards_count != student.cards.count
         TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
         student.card_code = Student.format_card_code(student_params[:card_code])
