@@ -90,6 +90,10 @@ class Admin::StudentsController < Admin::BaseController
   def flow_stats_drops_details
   end
 
+  def drop_off_stats
+
+  end
+
   def course_stats
     query = StudentCourseLog.all.group('course_id, EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
       .select('course_id, EXTRACT(YEAR FROM student_course_logs.created_at) as year, EXTRACT(WEEK FROM student_course_logs.created_at) as week, count(student_id) as count')

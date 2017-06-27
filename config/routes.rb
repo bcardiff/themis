@@ -44,6 +44,7 @@ Rails.application.routes.draw do
         get :flow_stats
         get :flow_stats_drops_details
         get :course_stats
+        get :drop_off_stats
 
         delete 'activity_log/:id' => 'students#remove_activity_log', as: :activity_log
         delete 'pack/:id' => 'students#remove_pack', as: :pack
