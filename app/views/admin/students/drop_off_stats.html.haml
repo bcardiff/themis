@@ -1,0 +1,31 @@
+%h1 Drop offs en el mes
+
+%h2
+  Semanas:
+  %b= @w1.begin.to_human
+  a
+  %b= @w3.end.to_human
+
+.row
+  .col-md-4
+    %h3 Semana 1
+    = render 'list', students: @s1
+
+  .col-md-4
+    %h3 Semana 2
+    = render 'list', students: @s2
+
+  .col-md-4
+    %h3 Semana 3
+    = render 'list', students: @s3
+
+.row
+  .col-md-6
+    %h3 Se cayeron en semana 2
+    = render 'list', students: @d2
+    %textarea.form-control= @d2.map(&:email).join(", ")
+
+  .col-md-6
+    %h3 Se cayeron en semana 3
+    = render 'list', students: @d3
+    %textarea.form-control= @d3.map(&:email).join(", ")
