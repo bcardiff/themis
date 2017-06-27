@@ -91,7 +91,16 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def drop_off_stats
+    @w1 = School.today.first_week
+    @w2 = School.today.second_week
+    @w3 = School.today.third_week
 
+    @s1 = Student.where(id: StudentCourseLog.joins(:course_log).between(@w1).select(:student_id))
+    @s2 = Student.where(id: StudentCourseLog.joins(:course_log).between(@w2).select(:student_id))
+    @s3 = Student.where(id: StudentCourseLog.joins(:course_log).between(@w3).select(:student_id))
+
+    @d2 = @s1 - @s2
+    @d3 = (@s2 - @s1) - @s3
   end
 
   def course_stats

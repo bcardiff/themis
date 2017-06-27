@@ -1,0 +1,3 @@
+.list-group
+  - students.each do |s|
+    = link_to s.display_name, admin_student_path(s), class: "list-group-item"

@@ -31,4 +31,22 @@ class Date
   def calendar_range
     self.at_beginning_of_month.at_beginning_of_week..self.at_end_of_month.at_end_of_week
   end
+
+  def first_week
+    first_day = self.beginning_of_month
+    if first_day.saturday? || first_day.sunday?
+      first_day = first_day.next_wday(1)
+    end
+    first_day..(first_day+1.week-1.day)
+  end
+
+  def second_week
+    f = first_week
+    (f.begin + 1.week)..(f.end + 1.week)
+  end
+
+  def third_week
+    f = second_week
+    (f.begin + 1.week)..(f.end + 1.week)
+  end
 end
