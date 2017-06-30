@@ -170,15 +170,15 @@ course "TAP_KIDS_JUE", name: "Tap Kids - Jueves", weekday: 4, valid_since: Date.
 
 course "SWING_SENIOR_LUN", name: "Swing Senior - Lunes", weekday: 1, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00' ,valid_until: Date.new(2017, 2, 28)
 course "SWING_SENIOR_MIE", name: "Swing Senior - Miércoles", weekday: 3, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00' ,valid_until: Date.new(2017, 2, 28)
-course "SWING_SENIOR_SAB", name: "Swing Senior - Sábados", weekday: 6, valid_since: Date.new(2017,1,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '16:00'
+course "SWING_SENIOR_SAB", name: "Swing Senior - Sábados", weekday: 6, valid_since: Date.new(2017,1,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '16:00' ,valid_until: Date.new(2017, 6, 29)
 
 
-payment_plan "LIBRE", description: "1 Mes. Libre $1300", price: 1300, weekly_classes: 40
-payment_plan "3_MESES", description: "3 Meses 1 x Semana $950", price: 950, weekly_classes: 1
-payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $900", price: 900, weekly_classes: 3
-payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $700", price: 700, weekly_classes: 2
-payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $330", price: 330, weekly_classes: 1
-payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $420", price: 420, weekly_classes: 1
-payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $520", price: 520, weekly_classes: 1
-payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $130", price: 130, weekly_classes: 1
+payment_plan "LIBRE", description: "1 Mes. Libre $1500", price: 1500, weekly_classes: 40
+payment_plan "3_MESES", description: "3 Meses 1 x Semana $1100", price: 1100, weekly_classes: 1
+payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $1050", price: 1050, weekly_classes: 3
+payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $870", price: 870, weekly_classes: 2
+payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $380", price: 380, weekly_classes: 1
+payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $500", price: 500, weekly_classes: 1
+payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $620", price: 620, weekly_classes: 1
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $150", price: 150, weekly_classes: 1
 payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1
