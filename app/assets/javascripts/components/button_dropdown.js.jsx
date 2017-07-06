@@ -5,7 +5,7 @@ var ButtonDropdown = React.createClass({
         <button type="button" className="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
           {this.props.title} <span className="caret"></span>
         </button>
-        <ul className="dropdown-menu dropdown-menu-lg">
+        <ul className="dropdown-menu dropdown-menu-right dropdown-menu-lg">
           {this.props.children}
         </ul>
       </div>
