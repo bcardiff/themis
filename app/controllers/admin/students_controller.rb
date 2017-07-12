@@ -90,6 +90,9 @@ class Admin::StudentsController < Admin::BaseController
   def flow_stats_drops_details
   end
 
+  def drop_off
+  end
+
   def drop_off_stats
     @w1 = School.today.first_week
     @w2 = School.today.second_week
