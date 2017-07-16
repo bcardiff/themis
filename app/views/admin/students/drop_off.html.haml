@@ -1,4 +1,19 @@
 %h1 Últimas asistencias por nivel
 
+.well
+  %p
+    Se muestran los alumnos que
+
+    %ul
+      %li asistieron desde mes anterior
+      %li pero que dejaron de hacerlo hace 2 semanas
+
+    Se incluye la fecha última clase de
+    %code LH_PRIN
+    y
+    %code TP_PRIN
+    junto a la cantidad de clases desde el mes anterior
+    por cada nivel.
+
 = render_listing :admin_students_recent_dropoff
 
