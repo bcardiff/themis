@@ -19,3 +19,4 @@ config/newrelic.yml
 pruebas-asistencias-pagos.xlsx
 do.sh
 vendor/cache
+stats
