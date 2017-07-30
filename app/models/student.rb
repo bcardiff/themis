@@ -28,6 +28,7 @@ class Student < ActiveRecord::Base
     where(id: StudentCourseLog.joins(:course_log).where(course_logs: { date: date.month_range}).missing_payment.select(:student_id))
   }
 
+  before_save :ensure_card
   before_save :update_comment_at
   belongs_to :comment_by, class_name: "User"
 
@@ -138,6 +139,12 @@ class Student < ActiveRecord::Base
       self.student_course_logs.missing_payment.joins(:course_log).between(date_range).count
     else
       self.student_course_logs.missing_payment.count
+    end
+  end
+
+  def ensure_card
+    if card_code && self.cards.where(code: card_code).empty?
+      self.cards.build(code: card_code)
     end
   end
 
