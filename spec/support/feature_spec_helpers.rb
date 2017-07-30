@@ -3,6 +3,7 @@ module FeatureSpecHelpers
     page = klass.new
     page.load args
     yield page if block_given?
+    sleep 0.5
   end
 
   def expect_page(klass)
@@ -10,6 +11,7 @@ module FeatureSpecHelpers
     expect(page).to be_displayed
     expect(page).to_not have_content "Request info"
     yield page if block_given?
+    sleep 0.5
   end
 
   def snapshot
