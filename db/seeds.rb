@@ -59,7 +59,7 @@ teacher 'Celeste', priority: 2
 teacher 'Nanchi', priority: 2
 teacher 'Sol', priority: 2
 teacher 'Majo', priority: 0
-teacher 'Brian', cashier: true, priority: 0
+teacher 'Brian', cashier: true, priority: 3
 teacher 'Otro', priority: 4
 teacher 'Martina', cashier: true, priority: 0
 teacher 'Blake', cashier: true, priority: 0
@@ -72,6 +72,7 @@ teacher 'Edu', priority: 3
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
 teacher 'ManuH', priority: 3
+teacher 'Carla', priority: 3
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
@@ -85,13 +86,14 @@ swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "htt
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00'
-course "AJ_AVAN_MAR", name: "Authentic Jazz - Avanzados - Martes", weekday: 2, track: track("AJ_AVAN"), place: swing_city, valid_since: Date.new(2017,1,1), start_time: '19:00'
 course "AJ_PRIN_MIE", name: "Authentic Jazz - Principiantes - Miércoles", weekday: 3, track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
+course "AJ_PRIN_SAB", name: "Authentic Jazz - Principiantes - Sábados", weekday: 6, track: track("AJ_PRIN"), place: swing_city, start_time: '17:00', valid_since: Date.new(2017,8,1)
 
 course "AJ_INT1_LUN", name: "Authentic Jazz - Intermedios 1 - Lunes mañana", weekday: 1, track: track("AJ_INT1"), place: swing_city, valid_since: Date.new(2017,6,1), start_time: '11:00'
 course "AJ_INT1_MIE", name: "Authentic Jazz - Intermedios 1 - Miércoles", weekday: 3, track: track("AJ_INT1"), place: swing_city, valid_since: Date.new(2017,1,1), start_time: '20:00'
 course "AJ_INT1_JUE", name: "Authentic Jazz - Intermedios 1 - Jueves", weekday: 4, track: track("AJ_INT1"), place: swing_city, valid_since: Date.new(2017,4,19), start_time: '19:00'
 
+course "AJ_AVAN_MAR", name: "Authentic Jazz - Avanzados - Martes", weekday: 2, track: track("AJ_AVAN"), place: swing_city, valid_since: Date.new(2017,1,1), start_time: '19:00'
 course "AJ_AVAN_MIE", name: "Authentic Jazz - Avanzados - Miércoles", weekday: 3, track: track("AJ_AVAN"), place: swing_city, start_time: '20:00', valid_until: Date.new(2016,12,31)
 course "AJ_AVAN_SAB", name: "Authentic Jazz - Avanzados - Sábados", weekday: 6, valid_since: Date.new(2016,1,1), track: track("AJ_AVAN"), place: swing_city, start_time: '17:00'
 
@@ -154,10 +156,9 @@ course "BALBOA_SHAG_JUE", name: "Balboa/Shag/20's - Jueves", weekday: 4, valid_s
 course "ESTIRA_LUN", name: "Estiramiento - Lunes", weekday: 1, valid_since: Date.new(2016,8,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '21:00'
 course "ESTIRA_LUN2", name: "Estiramiento - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '12:00'
 course "ESTIRA_MAR", name: "Estiramiento - Martes", weekday: 2, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '18:00', valid_until: Date.new(2015,5,31)
-course "ESTIRA_JUE", name: "Estiramiento - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '18:00'
+course "ESTIRA_JUE", name: "Estiramiento - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '21:00'
 course "ESTIRA_SAB", name: "Estiramiento - Sábados", weekday: 6, valid_since: Date.new(2016,4,1), valid_until: Date.new(2016,12,31), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '16:00'
 course "ESTIRA_SAB2", name: "Estiramiento - Sábados", weekday: 6, valid_since: Date.new(2017,1,1), track: track("ESTIRAMIENTO"), place: swing_city, start_time: '19:00'
-
 
 course "PREP_SAB", name: "Preparación Física - Sábados", weekday: 6, valid_since: Date.new(2016,4,1), track: track("PREP_FISICA"), place: swing_city, start_time: '15:00', valid_until: Date.new(2016,7,21)
 
@@ -172,6 +173,11 @@ course "SWING_SENIOR_LUN", name: "Swing Senior - Lunes", weekday: 1, valid_since
 course "SWING_SENIOR_MIE", name: "Swing Senior - Miércoles", weekday: 3, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00' ,valid_until: Date.new(2017, 2, 28)
 course "SWING_SENIOR_SAB", name: "Swing Senior - Sábados", weekday: 6, valid_since: Date.new(2017,1,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '16:00' ,valid_until: Date.new(2017, 6, 29)
 
+course "BLUES_PRIN_VIE", name: "Blues - Principiantes - Viernes", weekday: 5, valid_since: Date.new(2017,8,1), track: track("BLUES_PRIN"), place: swing_city, start_time: '20:00'
+
+course "AERIALS_PRIN_JUE", name: "Aerials - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("AERIALS_PRIN"), place: swing_city, start_time: '19:00'
+
+course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("LH_COREO"), place: swing_city, start_time: '20:00'
 
 payment_plan "LIBRE", description: "1 Mes. Libre $1500", price: 1500, weekly_classes: 40
 payment_plan "3_MESES", description: "3 Meses 1 x Semana $1100", price: 1100, weekly_classes: 1

@@ -6,13 +6,16 @@ $sc-light:      #e5e5e5;
 $sc-font:       'Roboto', sans-serif;
 
 $track-lh: #ec3b62;
-$track-lh-limbo: darken($track-lh, 30%);
+$track-lh-limbo: #af3a3a;
 $track-aj: #71a9a4;
 $track-tp: #fab258;
 $track-fisica: #A1B148;
 $track-kids: #795FB6;
 $track-senior: #828282;
 $track-ba: #005F42;
+$track-blues-prin: #4873b1;
+$track-aerials-prin: #ce0a24;
+$track-lh-coreo: #ce0a24;
 
 @mixin fullsize {
   position: absolute;
@@ -45,10 +48,14 @@ $track-ba: #005F42;
   }
 }
 
+html {
+  min-height: 100%;
+}
+
 body.room {
   padding: 0;
 
-  height: 90vh;
+  height: 100vh;
   width: 100vw;
 
 
@@ -77,6 +84,7 @@ body.room {
     @include flexbox();
     @include flex-direction(row);
     @include align-items(flex-start);
+    @include flex-grow(0);
     z-index: 100;
 
     > :nth-child(n+2) {
@@ -104,6 +112,7 @@ body.room {
     @include flex-direction(row);
     @include justify-content(center);
     @include align-items(baseline);
+    @include flex-grow(0);
     > * {
       margin: 0 0.3em;
     }
@@ -275,6 +284,15 @@ body.room {
       &.swing_senior {
         @include button-color($track-senior);
       }
+      &.blues_prin {
+        @include button-color($track-blues-prin);
+      }
+      &.aerials_prin {
+        @include button-color($track-aerials-prin);
+      }
+      &.lh_coreo {
+        @include button-color($track-lh-coreo);
+      }
       &.es, &.pr {
         @include button-color($track-fisica);
       }
@@ -304,11 +322,11 @@ body.room {
 
     .btn {
       width: 20vw;
-      height: 13vh;
+      height: 10vh;
       font-size: 5vh;
       @include flex-center;
       @include flex-grow(1);
-      margin: 0.2em;
+      margin: 0.1em;
     }
   }
 }
