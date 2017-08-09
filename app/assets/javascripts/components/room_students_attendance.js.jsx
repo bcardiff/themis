@@ -155,15 +155,8 @@ var RoomStudentsAttendance = React.createClass({
   },
 
   render: function() {
-    var rightPanel = null, earlyActionMsg = null, tooLateActionMsg = null;
+    var rightPanel = null;
 
-    if (new Date().getMinutes() <= 30) {
-      earlyActionMsg = (<div>
-        <h1 className="negative"><br/>¡Si das el presente ahora participás del concurso!</h1>
-      </div>);
-    } else{
-      tooLateActionMsg = <h2 className="negative"><br/><br/>¡DEMASIADO TARDE PARA EL CONCURSO!</h2>
-    }
 
     if (this.state.show_visitors_notice) {
       rightPanel = (<div>
@@ -236,10 +229,7 @@ var RoomStudentsAttendance = React.createClass({
       rightPanel = (<div>
         <h1>Alumno no encontrado</h1>
       </div>);
-    } else {
-      rightPanel = earlyActionMsg
-      tooLateActionMsg = null;
-    }
+    } 
 
     return (
     <div className="layout-columns">
@@ -255,7 +245,6 @@ var RoomStudentsAttendance = React.createClass({
         </button>
       </div>
       <div>
-        {tooLateActionMsg}
         {rightPanel}
       </div>
     </div>);
