@@ -22,9 +22,9 @@ class AdminStudentsRecentDropoffListing < Listings::Base
       .between(date_range)
       .where(tracks: {code: TRACKS})
       .select("student_id")
-    ).where.not(id:
-      StudentCourseLog.joins(:course_log).where("course_logs.date > ?", School.today - 2.weeks).select(:student_id)
-    )
+    )#.where.not(id:
+     # StudentCourseLog.joins(:course_log).where("course_logs.date > ?", School.today - 2.weeks).select(:student_id)
+     #)
   end
 
   column :card_code, searchable: true
