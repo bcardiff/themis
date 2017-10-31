@@ -110,6 +110,7 @@ course "LH_PRIN_VIE2", name: "Lindy Hop - Principiantes - Viernes", weekday: 5, 
 course "LH_INT1_SAB", name: "Lindy Hop - Intermedios 1 - Sábados", weekday: 6, valid_since: Date.new(2015,6,1), track: track("LH_INT1"), place: swing_city, start_time: '17:00'
 
 course "LH_INT2_LUN", name: "Lindy Hop - Intermedios 2 - Lunes", weekday: 1, track: track("LH_INT2"), place: swing_city, start_time: '19:00'
+course "LH_INT2_MIE", name: "Lindy Hop - Intermedios 2 - Miércoles", weekday: 3, track: track("LH_INT2"), place: swing_city, start_time: '21:00', valid_since: Date.new(2017,11,1)
 course "LH_INT2_JUE", name: "Lindy Hop - Intermedios 2 - Jueves", weekday: 4, track: track("LH_INT2"), place: swing_city, start_time: '20:00'
 course "LH_INT2_SAB", name: "Lindy Hop - Intermedios 2 - Sábados", weekday: 6, valid_since: Date.new(2015,6,1), track: track("LH_INT2"), place: swing_city, start_time: '18:00'
 
@@ -177,8 +178,9 @@ course "SWING_SENIOR_SAB", name: "Swing Senior - Sábados", weekday: 6, valid_si
 course "BLUES_PRIN_VIE", name: "Blues - Principiantes - Viernes", weekday: 5, valid_since: Date.new(2017,8,1), track: track("BLUES_PRIN"), place: swing_city, start_time: '20:00'
 
 course "AERIALS_PRIN_JUE", name: "Aerials - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("AERIALS_PRIN"), place: swing_city, start_time: '19:00'
+course "AERIALS_INT1_JUE", name: "Aerials - Intermedios 1 - Jueves", weekday: 4, valid_since: Date.new(2017,11,1), track: track("AERIALS_INT1"), place: swing_city, start_time: '20:00'
 
-course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("LH_COREO"), place: swing_city, start_time: '20:00'
+course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("LH_COREO"), place: swing_city, start_time: '20:00', valid_until: Date.new(2017, 10, 31)
 
 payment_plan "LIBRE", description: "1 Mes. Libre $1500", price: 1500, weekly_classes: 40
 payment_plan "3_MESES", description: "3 Meses 1 x Semana $1100", price: 1100, weekly_classes: 1
