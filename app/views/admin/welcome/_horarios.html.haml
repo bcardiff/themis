@@ -28,3 +28,12 @@
             - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
               %div{'class' => course.css_prefix}
                 = course.track.code.sub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "") + (course.future? ? " **" : "")
+    %tr
+      %td.practica BAILE/PRÁCTICA
+      %td.practica
+      %td.practica
+      %td.practica BAILE SOCIAL + COMPETENCIAS
+      %td.practica PRÁCTICA BLUES
+      %td.practica PRÁCTICA PRINCIPIANTES
+      %td.practica BAILE SOCIAL
+      %td.course
