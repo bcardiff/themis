@@ -25,13 +25,15 @@ var RoomStudentsAttendance = React.createClass({
       allow_visitors: { $set: false }
     }));
 
-    $.ajax({
-      url: "/room/course_log/" + this.state.course_log.id + "/students/search",
-      data: { q: card_code },
-      success: function(data) {
-        this._loadSearchStudentResult(data)
-      }.bind(this)
-    });
+    if (card_code.length >= 4) {
+      $.ajax({
+        url: "/room/course_log/" + this.state.course_log.id + "/students/search",
+        data: { q: card_code },
+        success: function(data) {
+          this._loadSearchStudentResult(data)
+        }.bind(this)
+      });
+    }
   },
 
   _post: function(options) {
@@ -229,7 +231,7 @@ var RoomStudentsAttendance = React.createClass({
       rightPanel = (<div>
         <h1>Alumno no encontrado</h1>
       </div>);
-    } 
+    }
 
     return (
     <div className="layout-columns">
