@@ -202,12 +202,13 @@ course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since
 
 course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since: Date.new(2018,1,1), track: track("INTRO_BAILE"), place: swing_city, start_time: '19:00', valid_until: nil
 
-payment_plan "LIBRE", description: "1 Mes. Libre $1500", price: 1500, weekly_classes: 40
-payment_plan "3_MESES", description: "3 Meses 1 x Semana $1100", price: 1100, weekly_classes: 1
-payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $1050", price: 1050, weekly_classes: 3
-payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $870", price: 870, weekly_classes: 2
-payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $380", price: 380, weekly_classes: 1
-payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $500", price: 500, weekly_classes: 1
-payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $620", price: 620, weekly_classes: 1
-payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $150", price: 150, weekly_classes: 1
+payment_plan "LIBRE", description: "1 Mes. Libre $1800", price: 1800, weekly_classes: 40
+payment_plan "2_MESES_LIBRE", description: "2 Meses. Libre $3000", price: 3000, weekly_classes: 40
+payment_plan "3_MESES", description: "3 Meses 1 x Semana $1300", price: 1300, weekly_classes: 1
+payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $1250", price: 1250, weekly_classes: 3
+payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $1050", price: 1050, weekly_classes: 2
+payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $450", price: 450, weekly_classes: 1
+payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $600", price: 600, weekly_classes: 1
+payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $750", price: 750, weekly_classes: 1
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $180", price: 180, weekly_classes: 1
 payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1

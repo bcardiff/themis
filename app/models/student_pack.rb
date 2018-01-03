@@ -39,6 +39,8 @@ class StudentPack < ActiveRecord::Base
     if plan && !plan.single_class?
       if plan.code == "3_MESES"
         due_date = (start_date + 2.months).at_end_of_month
+      elsif plan.code == "2_MESES_LIBRE"
+        due_date = (start_date + 1.months).at_end_of_month
       else
         due_date = start_date.at_end_of_month
       end
