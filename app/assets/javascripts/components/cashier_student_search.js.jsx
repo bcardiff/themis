@@ -373,6 +373,7 @@ var NewStudentForm = React.createClass({
           }.bind(this)}>
             <option value="">(elija una opción)</option>
             <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
             <option value="google">Google</option>
             <option value="friends">Amigos</option>
             <option value="already_known">Ya la conocía por la escena</option>
