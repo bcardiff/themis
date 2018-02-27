@@ -6,9 +6,11 @@
 
   %p
     Se incluye la fecha última clase de
-    %code LH_PRIN
-    y
-    %code TP_PRIN
+    - AdminStudentsRecentDropoffListing::TRACKS.each_with_index do |code, i|
+      - if i != 0
+        ,
+      %code= code
+
     junto a la cantidad de clases desde el mes anterior
     por cada nivel.
 

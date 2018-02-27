@@ -1,5 +1,5 @@
 class AdminStudentsRecentDropoffListing < Listings::Base
-  TRACKS = %w(LH_PRIN TP_PRIN)
+  TRACKS = %w(LH_PRIN TP_PRIN AJ_PRIN)
 
   model do
     date_range = School.today.month_range
