@@ -54,11 +54,13 @@ class Room::AttendanceController < Room::BaseController
 
   def add_student
     course_log = CourseLog.find(params[:id])
+    as_helper = params[:as_helper] == "true"
 
     student = Student.find_by_card(params[:card_code])
     student_log = course_log.student_course_logs.first_or_build(student: student)
     student_log.id_kind = "existing_card"
     student_log.payment_plan = nil
+    student_log.as_helper = as_helper
     student_log.save!
 
     render json: { course_log: course_log_json(course_log) }
@@ -96,12 +98,12 @@ class Room::AttendanceController < Room::BaseController
 
   private
 
-  def student_json(course_log, student, using_pack)
+  def student_json(course_log, student, requires_pack)
     return nil unless student
 
     pending_payment = student.student_course_logs.missing_payment.count > 0
 
-    if !pending_payment && using_pack
+    if !pending_payment && requires_pack
       pending_payment = student.student_packs.valid_for(course_log.date).find { |p| p.available_courses > 0 }.nil?
     end
 
@@ -118,7 +120,12 @@ class Room::AttendanceController < Room::BaseController
     return {
       id: course_log.id,
       teachers: course_log.teachers.map(&:name),
-      students: course_log.students.order(:first_name, :last_name).map { |s| student_json(course_log, s, false) } ,
+      students: course_log.student_course_logs.joins(:student)
+        .order("students.first_name, students.last_name").map { |s|
+          student_json(course_log, s.student, false).tap do |sj|
+            sj[:as_helper] = s.as_helper
+          end
+      } ,
       total_students: course_log.students_count,
       untracked_students_count: course_log.untracked_students_count
     }

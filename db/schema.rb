@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416034546) do
+ActiveRecord::Schema.define(version: 20180227213727) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -102,15 +102,16 @@ ActiveRecord::Schema.define(version: 20170416034546) do
     t.integer  "course_log_id",         limit: 4
     t.integer  "teacher_id",            limit: 4
     t.text     "payload",               limit: 65535
-    t.datetime "created_at",                                                                  null: false
-    t.datetime "updated_at",                                                                  null: false
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
     t.decimal  "payment_amount",                      precision: 10, scale: 2
     t.integer  "payment_plan_id",       limit: 4
     t.integer  "ona_submission_id",     limit: 4
     t.string   "ona_submission_path",   limit: 255
     t.string   "id_kind",               limit: 255
-    t.boolean  "requires_student_pack", limit: 1,                              default: true, null: false
+    t.boolean  "requires_student_pack", limit: 1,                              default: true,  null: false
     t.integer  "student_pack_id",       limit: 4
+    t.boolean  "as_helper",             limit: 1,                              default: false, null: false
   end
 
   add_index "student_course_logs", ["course_log_id"], name: "index_student_course_logs_on_course_log_id", using: :btree

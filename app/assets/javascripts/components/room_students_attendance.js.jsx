@@ -7,6 +7,7 @@ var RoomStudentsAttendance = React.createClass({
       show_students: false,
       show_visitors_notice: false,
       allow_visitors: true,
+      as_helper: false,
     }
   },
 
@@ -16,7 +17,8 @@ var RoomStudentsAttendance = React.createClass({
         student: { $set: null },
         not_found_alert: { $set: false },
         show_students: { $set: false },
-        allow_visitors: { $set: true }
+        allow_visitors: { $set: true },
+        as_helper: { $set: false },
       }));
       return;
     }
@@ -36,6 +38,12 @@ var RoomStudentsAttendance = React.createClass({
     }
   },
 
+  onToggleHelper: function() {
+    this.setState(React.addons.update(this.state, {
+      as_helper: { $set: !this.state.as_helper },
+    }))
+  },
+
   _post: function(options) {
     $.ajax({
       method: "POST",
@@ -44,7 +52,8 @@ var RoomStudentsAttendance = React.createClass({
       success: function(data) {
         this.setState(React.addons.update(this.state, {
           course_log: { $set: data.course_log },
-          student: { $set: null }
+          student: { $set: null },
+          as_helper: { $set: false },
         }), options.success);
       }.bind(this)
     });
@@ -66,7 +75,10 @@ var RoomStudentsAttendance = React.createClass({
   addStudent: function() {
     this._post({
       url: "/room/course_log/" + this.state.course_log.id + "/students",
-      data: { card_code: this.state.student.card_code },
+      data: {
+        card_code: this.state.student.card_code,
+        as_helper: this.state.as_helper
+      },
       success: function(){
         this.refs.pad.clear();
       }.bind(this)
@@ -178,6 +190,8 @@ var RoomStudentsAttendance = React.createClass({
                 {student.first_name}
                 &nbsp;
                 {student.last_name}
+                &nbsp;
+                {student.as_helper ? <i className="glyphicon glyphicon-education"/> : null}
               </button>);
         }.bind(this))}
         </div>
@@ -196,7 +210,7 @@ var RoomStudentsAttendance = React.createClass({
         </h2>
       </div>);
     } else if (this.state.student) {
-      var studentAction, paymentWarning;
+      var studentAction, paymentWarning, studentHelper;
 
       if (!this.containsStudent(this.state.student)) {
         studentAction = (<button className="btn btn-lg btn-positive" onClick={this.addStudent}>
@@ -214,12 +228,19 @@ var RoomStudentsAttendance = React.createClass({
         </h1>);
       }
 
+      if (this.state.as_helper) {
+        studentHelper = (<h1 className="color-education">
+          <i className="glyphicon glyphicon-education" /> Clase como ayudante
+        </h1>);
+      }
+
       rightPanel = (<div>
         <h1>{this.state.student.first_name}</h1>
         <h1>{this.state.student.last_name}</h1>
         <h2>{this.state.student.email}</h2>
         <h2>{this.state.student.card_code}</h2>
         {paymentWarning}
+        {studentHelper}
         <div className="layout-columns student-actions">
           {studentAction}
           <button className="btn btn-lg btn-light" onClick={this._clearCurrentStudent}>
@@ -236,8 +257,8 @@ var RoomStudentsAttendance = React.createClass({
     return (
     <div className="layout-columns">
       <div>
-        <StudentPad ref="pad" onChange={this.onStudentChange}/>
-        <button className={"btn btn-negative students-list-bottom-btn " + (this.state.allow_visitors ? "" : "disabled")} onClick={this.addStudentWithoutCard}>
+        <StudentPad ref="pad" digitsClassName={this.state.as_helper ? "bg-education" : ""} onChange={this.onStudentChange} onToggleHelper={this.onToggleHelper}/>
+        <button className={"btn btn-negative students-list-bottom-btn " + (this.state.allow_visitors && !this.state.as_helper ? "" : "disabled")} onClick={this.addStudentWithoutCard}>
           <i className="glyphicon glyphicon-barcode" /> No tengo tarjeta
         </button>
         <button className={"btn btn-light students-list-bottom-btn " + (this.state.show_students ? "active " : "")} onClick={this.toggleStudents}>
@@ -297,7 +318,15 @@ var StudentPad = React.createClass({
     this._performUserInput("");
   },
 
+  _fireToggleHelper: function() {
+    this.props.onToggleHelper();
+  },
+
   render: function() {
+    var digitButton = function(digit) {
+      return <StudentPadButton className={this.props.digitsClassName} digit={digit} onClick={this.appendDigit}/>;
+    }.bind(this)
+
     return (
       <table className="studentpad">
         <tbody>
@@ -312,23 +341,27 @@ var StudentPad = React.createClass({
             </td>
           </tr>
           <tr>
-            <StudentPadButton digit="1" onClick={this.appendDigit}/>
-            <StudentPadButton digit="2" onClick={this.appendDigit}/>
-            <StudentPadButton digit="3" onClick={this.appendDigit}/>
+            {digitButton("1")}
+            {digitButton("2")}
+            {digitButton("3")}
           </tr>
           <tr>
-            <StudentPadButton digit="4" onClick={this.appendDigit}/>
-            <StudentPadButton digit="5" onClick={this.appendDigit}/>
-            <StudentPadButton digit="6" onClick={this.appendDigit}/>
+            {digitButton("4")}
+            {digitButton("5")}
+            {digitButton("6")}
           </tr>
           <tr>
-            <StudentPadButton digit="7" onClick={this.appendDigit}/>
-            <StudentPadButton digit="8" onClick={this.appendDigit}/>
-            <StudentPadButton digit="9" onClick={this.appendDigit}/>
+            {digitButton("7")}
+            {digitButton("8")}
+            {digitButton("9")}
           </tr>
           <tr>
-            <StudentPadButton digit="" />
-            <StudentPadButton digit="0" onClick={this.appendDigit}/>
+            <StudentPadButton className="bg-education" onClick={this._fireToggleHelper}>
+              <small>
+                <i className="glyphicon glyphicon-education" />
+              </small>
+            </StudentPadButton>
+            {digitButton("0")}
             <StudentPadButton onClick={this.clear}>
               <small>
                 <i className="glyphicon glyphicon-remove-sign"/>
@@ -347,13 +380,9 @@ var StudentPadButton = React.createClass({
   },
 
   render: function() {
-    if (this.props.digit == "") {
-      return <td><button className="btn btn-default">&nbsp;</button></td>;
-    }
-
     return (
       <td>
-        <button onClick={this.click} className="btn btn-default">{this.props.children || this.props.digit}</button>
+        <button onClick={this.click} className={"btn btn-default " + this.props.className}>{this.props.children || this.props.digit}</button>
       </td>
     );
   }

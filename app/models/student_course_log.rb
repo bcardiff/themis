@@ -189,7 +189,9 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   def set_student_pack_related_fields
-    self.requires_student_pack = if self.payment_plan
+    self.requires_student_pack = if self.as_helper
+      false
+    elsif self.payment_plan
       self.payment_plan.requires_student_pack_for_class
     else
       true
