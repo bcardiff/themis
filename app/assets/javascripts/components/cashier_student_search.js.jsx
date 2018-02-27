@@ -260,7 +260,7 @@ var StudentRecord = React.createClass({
       <div>
         <hr />
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-7">
             <h4>
               <a href={"/cashier/students/" + student.id} target="_blank">
                 {student.first_name}&nbsp;{student.last_name} <small><i className="glyphicon glyphicon-new-window" /></small>
@@ -297,7 +297,7 @@ var StudentRecord = React.createClass({
               }
             }.bind(this))()}
           </div>
-          <div className="col-md-4">
+          <div className="col-md-5">
             {(function(){
               if (this.props.onStudentChosen == null) {
                 return <StudentPaymentControls student={student} config={this.props.config} onStudentUpdated={this.studentUpdated} />;
