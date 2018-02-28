@@ -270,7 +270,7 @@ body.room {
       &.lh.limbo {
         @include button-color($track-lh-limbo);
       }
-      &.lh_int1_plus, &.lh_int2_plus, &.lh_int3_plus {
+      &.lh_prin_plus, &.lh_int1_plus, &.lh_int2_plus, &.lh_int3_plus {
         @include button-color($track-plus);
       }
       &.aj {

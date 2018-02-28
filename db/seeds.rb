@@ -115,6 +115,7 @@ course "LH_PRIN_VIE2", name: "Lindy Hop - Principiantes - Viernes", weekday: 5, 
 course "LH_INT1_SAB", name: "Lindy Hop - Intermedios 1 - Sábados", weekday: 6, valid_since: Date.new(2015,6,1), track: track("LH_INT1"), place: swing_city, start_time: '17:00'
 
 course "LH_INT1_PLUS_LUN", name: "Lindy Hop - Intermedios 1+ - Lunes", weekday: 1, track: track("LH_INT1_PLUS"), place: swing_city, start_time: '21:00', valid_since: Date.new(2018,3,1), valid_until: nil
+course "LH_INT1_PLUS_MIE", name: "Lindy Hop - Intermedios 1+ - Miércoles", weekday: 3, track: track("LH_INT1_PLUS"), place: swing_city, start_time: '19:00', valid_since: Date.new(2018,3,1), valid_until: nil
 
 course "LH_INT2_LUN", name: "Lindy Hop - Intermedios 2 - Lunes", weekday: 1, track: track("LH_INT2"), place: swing_city, start_time: '19:00'
 course "LH_INT2_MIE", name: "Lindy Hop - Intermedios 2 - Miércoles", weekday: 3, track: track("LH_INT2"), place: swing_city, start_time: '21:00', valid_since: Date.new(2017,11,1)
@@ -140,7 +141,8 @@ course "LH_PRIN_VIE", name: "Lindy Hop - Principiantes - Viernes Iberá", weekda
 course "LH_PRIN_VIE2", name: "Lindy Hop - Principiantes - Viernes", weekday: 5, valid_since: Date.new(2016,1,1), track: track("LH_PRIN"), place: swing_city, start_time: '19:00'
 course "LH_PRIN_SAB", name: "Lindy Hop - Principiantes - Sábados", weekday: 6, track: track("LH_PRIN"), place: swing_city, start_time: '18:00'
 
-course "LH_PRIN_PLUS_VIE", name: "Lindy Hop - Principiantes+ - Viernes", weekday: 5, track: track("LH_PRINPLUS"), place: swing_city, start_time: '20:00', valid_since: Date.new(2018,3,1), valid_until: nil
+course "LH_PRIN_PLUS_MIE", name: "Lindy Hop - Principiantes+ - Miércoles", weekday: 3, track: track("LH_PRIN_PLUS"), place: swing_city, start_time: '20:00', valid_since: Date.new(2018,3,1), valid_until: nil
+course "LH_PRIN_PLUS_VIE", name: "Lindy Hop - Principiantes+ - Viernes", weekday: 5, track: track("LH_PRIN_PLUS"), place: swing_city, start_time: '20:00', valid_since: Date.new(2018,3,1), valid_until: nil
 
 course "LH_AVAN_LUN", name: "Lindy Hop - Avanzados - Lunes", weekday: 1, track: track("LH_AVAN"), place: swing_city, start_time: '20:00', valid_until: Date.new(2017,12,31)
 course "LH_AVAN_SAB", name: "Lindy Hop - Avanzados - Sábados", weekday: 6, valid_since: Date.new(2016,1,1), valid_until: Date.new(2016, 10, 2), track: track("LH_AVAN"), place: swing_city, start_time: '16:00'
