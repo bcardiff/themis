@@ -35,6 +35,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
       - db:/var/lib/mysql
+      - .:/src # to load backups
 
   smtp:
     image: 'djfarrelly/maildev'
