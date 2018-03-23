@@ -77,6 +77,13 @@ teacher 'ManuH', priority: 3
 teacher 'Carla', priority: 3
 teacher 'Ornella', priority: 3
 
+teacher 'Emiliano', priority: 4
+teacher 'Griselda', priority: 4
+teacher 'Lucas', priority: 4
+teacher 'Maxim', priority: 4
+teacher 'Rulock', priority: 4
+teacher 'Zai', priority: 4
+
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
 la_huella = place "La Huella", address: "Bulnes 892", link: "http://goo.gl/kT1ElX"
