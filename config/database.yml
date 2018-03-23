@@ -15,8 +15,9 @@ default: &default
   pool: 5
   username: root
   password:
-  socket: /tmp/mysql.sock
-
+  # socket: /tmp/mysql.sock
+  host: <%= ENV["DATABASE_HOST"] %>
+  
 development:
   <<: *default
   database: themis_development
@@ -27,8 +28,8 @@ development:
 test:
   <<: *default
   database: themis_test
-  username: root
-  socket: <%= ENV['TRAVIS'] == "true" ? "" : "/tmp/mysql.sock" %>
+  # username: root
+  # socket: <%= ENV['TRAVIS'] == "true" ? "" : "/tmp/mysql.sock" %>
 
 
 # As with config/secrets.yml, you never want to store sensitive information,

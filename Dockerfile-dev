@@ -1,0 +1,9 @@
+FROM instedd/nginx-rails:2.2
+
+RUN \
+  apt-get update && \
+  # node
+  curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+  apt-get install -y nodejs && \
+  # clean
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
