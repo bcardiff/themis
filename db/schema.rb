@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323222635) do
+ActiveRecord::Schema.define(version: 20180323225255) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -195,9 +195,10 @@ ActiveRecord::Schema.define(version: 20180323222635) do
   end
 
   create_table "tracks", force: :cascade do |t|
-    t.string   "code",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "code",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "course_kind", limit: 255
   end
 
   create_table "users", force: :cascade do |t|

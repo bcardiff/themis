@@ -6,8 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-def track(code)
+def track(code, attributes = {})
   Track.find_or_create_by(code: code).tap do |track|
+    attributes.each do |key, value|
+      track.send "#{key}=", value
+    end
     track.save!
   end
 end
@@ -93,6 +96,46 @@ ibera = place "Pororoca", address: "Iberá 2385", link: "http://goo.gl/Rosg56"
 chez_manuel = place "Chez Manuel", address: "Paraná y Córdoba", link: "#"
 danzas = place "Academia Integral de Danzas", address: "Av. Scalabrini Ortiz 885", link: "http://goo.gl/TyVh85"
 swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "https://goo.gl/maps/SjATQh9YyVP2"
+
+track("AERIALS_INT1", course_kind: "swing")
+track("AERIALS_PRIN", course_kind: "swing")
+track("AJ_AVAN", course_kind: "swing")
+track("AJ_INT1", course_kind: "swing")
+track("AJ_PRIN", course_kind: "swing")
+track("BALBOA_SHAG", course_kind: "swing")
+track("BLUES_INT1", course_kind: "swing")
+track("BLUES_PRIN", course_kind: "swing")
+track("ESTIRAMIENTO", course_kind: "swing")
+track("INTRO_BAILE", course_kind: "swing")
+track("LH_AVAN", course_kind: "swing")
+track("LH_AVAN2", course_kind: "swing")
+track("LH_COREO", course_kind: "swing")
+track("LH_INT1", course_kind: "swing")
+track("LH_INT1_PLUS", course_kind: "swing")
+track("LH_INT2", course_kind: "swing")
+track("LH_INT2_PLUS", course_kind: "swing")
+track("LH_INT3", course_kind: "swing")
+track("LH_INT3_PLUS", course_kind: "swing")
+track("LH_PRIN", course_kind: "swing")
+track("LH_PRIN_PLUS", course_kind: "swing")
+track("PREP_FISICA", course_kind: "swing")
+track("SWING_KIDS", course_kind: "swing")
+track("SWING_SENIOR", course_kind: "swing")
+track("TAP_KIDS", course_kind: "swing")
+track("TP_AVAN", course_kind: "swing")
+track("TP_INT1", course_kind: "swing")
+track("TP_INT2", course_kind: "swing")
+track("TP_PRIN", course_kind: "swing")
+
+track("LOCKING", course_kind: "roots")
+track("HOUSE", course_kind: "roots")
+track("WAACKING", course_kind: "roots")
+track("POPPING", course_kind: "roots")
+track("BREAKING", course_kind: "roots")
+track("HIP_HOP_PRIN", course_kind: "roots")
+track("HIP_HOP_INT", course_kind: "roots")
+
+track("AFRO", course_kind: "afro")
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00'
@@ -223,6 +266,19 @@ course "AERIALS_INT1_JUE", name: "Aerials - Intermedios 1 - Jueves", weekday: 4,
 course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("LH_COREO"), place: swing_city, start_time: '20:00', valid_until: Date.new(2017, 10, 31)
 
 course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since: Date.new(2018,1,1), track: track("INTRO_BAILE"), place: swing_city, start_time: '19:00', valid_until: nil
+
+
+course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
+course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: nil
+course "POPPING_MAR", name: "Popping - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("POPPING"), place: swing_city, start_time: '17:00', valid_until: nil
+course "WAACKING_MAR", name: "Waacking - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("WAACKING"), place: swing_city, start_time: '18:00', valid_until: nil
+course "BREAKING", name: "Breaking - Miércoles", weekday: 3, valid_since: Date.new(2018,4,1), track: track("BREAKING"), place: swing_city, start_time: '18:00', valid_until: nil
+
+course "HIP_HOP_PRIN_JUE", name: "Hip Hop - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_PRIN"), place: swing_city, start_time: '17:00', valid_until: nil
+course "HIP_HOP_INT_JUE", name: "Hip Hop - Intermedios - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_INT"), place: swing_city, start_time: '18:00', valid_until: nil
+
+course "AFRO_MAR", name: "Danza Afro - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("AFRO"), place: swing_city, start_time: '17:00', valid_until: nil
+
 
 payment_plan "LIBRE", description: "Swing: 1 Mes. Libre $1800", price: 1800, weekly_classes: 40, order: 1, course_match: "swing"
 payment_plan "2_MESES_LIBRE", description: "Swing: 2 Meses. Libre $3000", price: 3000, weekly_classes: 40, order: 1, course_match: "swing"
