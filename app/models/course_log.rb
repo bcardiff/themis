@@ -39,7 +39,9 @@ class CourseLog < ActiveRecord::Base
     Course.joins('LEFT JOIN course_logs ON course_logs.course_id = courses.id')
       .select("courses.*, max(course_logs.date) as last")
       .group("courses.id").each do |course|
-      next_date = (course.last || (course.valid_since - 1.day)).next_wday(course.weekday)
+      # avoid going to much into the past if there is no last course
+      # useful for fresh dev environments
+      next_date = (course.last || [course.valid_since - 1.day, School.today - 2.month].max).next_wday(course.weekday)
 
       while next_date < today && (course.valid_until.nil? || next_date < course.valid_until)
         for_course_on_date(course.code, next_date) do |course_log|
