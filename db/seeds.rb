@@ -60,7 +60,9 @@ teacher 'Nanchi', priority: 2
 teacher 'Sol', priority: 2
 teacher 'Majo', priority: 0
 teacher 'Brian', cashier: true, priority: 3
-teacher 'Otro', priority: 4
+
+teacher 'Otro', priority: 10
+
 teacher 'Martina', cashier: true, priority: 0
 teacher 'Blake', cashier: true, priority: 0
 teacher 'Belu', cashier: true, priority: 0
