@@ -9,10 +9,10 @@ x-defaults:
       RAILS_ENV:
       DATABASE_HOST: db
       SELENIUM_URL: http://selenium:4444/
-      SETTINGS__SMTP__ADDRESS: smtp
-      SETTINGS__SMTP__PASSWORD: smtp
-      SETTINGS__SMTP__PORT: 1025
-      SETTINGS__SMTP__USER_NAME: smtp
+      SETTINGS__SMTP_SETTINGS__ADDRESS: smtp
+      SETTINGS__SMTP_SETTINGS__PASSWORD: smtp
+      SETTINGS__SMTP_SETTINGS__PORT: 1025
+      SETTINGS__SMTP_SETTINGS__USER_NAME: smtp
     pid: host
     working_dir: /src
     depends_on:
