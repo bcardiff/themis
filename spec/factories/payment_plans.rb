@@ -4,6 +4,7 @@ FactoryGirl.define do
     description "MyString"
     price "50.00"
     weekly_classes 1
+    course_match "swing"
   end
 
 end

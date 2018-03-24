@@ -126,4 +126,8 @@ class CourseLog < ActiveRecord::Base
     teachers.select { |t| t.teacher_cash_incomes.where(course_log_id: self.id).count > 0 }.first ||
     teachers.first
   end
+
+  def course_kind
+    self.course.track.course_kind
+  end
 end

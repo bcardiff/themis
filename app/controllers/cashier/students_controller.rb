@@ -143,7 +143,7 @@ class Cashier::StudentsController < Cashier::BaseController
           total: student.pending_payments_count
         }
 
-        hash[:available_courses] = student.student_packs.valid_for(School.today).to_a.sum(&:available_courses)
+        hash[:available_courses] = student.student_packs.valid_for_date(School.today).to_a.sum(&:available_courses)
 
         hash[:today_pending_classes] = student.student_course_logs.missing_payment.joins(:course_log).between(School.today).map do |student_course_log|
           {
