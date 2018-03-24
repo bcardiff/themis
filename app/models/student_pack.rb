@@ -122,8 +122,16 @@ class StudentPack < ActiveRecord::Base
 
     student_pack = register_for(student, date, total)
 
-    ids = student.student_course_logs.includes(:course_log)
+    student_course_logs_to_assign = student
+      .student_course_logs.joins(course_log: { course: :track })
       .missing_payment.between(date_range)
+
+    if student_pack.payment_plan
+      student_course_logs_to_assign = student_course_logs_to_assign
+        .where("? like CONCAT('%',tracks.course_kind,'%')", student_pack.payment_plan.course_match)
+    end
+
+    ids = student_course_logs_to_assign
       .pluck(:id)
       .take(student_pack.max_courses)
 
