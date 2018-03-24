@@ -139,6 +139,7 @@ class StudentPack < ActiveRecord::Base
   end
 
   def self.check_assign_student_course_log(student_course_log)
+    return if student_course_log.as_helper
     valid_packs = student_course_log.student.student_packs.valid_for_course_log(student_course_log.course_log).order(:due_date)
     valid_packs.each do |existing_pack|
       if existing_pack && existing_pack.student_course_logs.count < existing_pack.max_courses
