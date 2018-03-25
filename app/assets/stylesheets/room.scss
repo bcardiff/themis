@@ -18,6 +18,15 @@ $track-blues-prin: #4873b1;
 $track-aerials-prin: #ce0a24;
 $track-lh-coreo: #ce0a24;
 
+$track-locking: #4FADEB;
+$track-house: #88219D;
+$track-waacking: #D832A8;
+$track-breaking: #E93323;
+$track-popping: #F6C242;
+$track-hip-hop: #2E6AB3;
+
+$track-danza-afro: #4EAD5B;
+
 @mixin fullsize {
   position: absolute;
   bottom: 0;
@@ -307,6 +316,28 @@ body.room {
       }
       &.estiramiento, &.pr {
         @include button-color($track-fisica);
+      }
+
+      &.locking {
+        @include button-color($track-locking);
+      }
+      &.house {
+        @include button-color($track-house);
+      }
+      &.waacking {
+        @include button-color($track-waacking);
+      }
+      &.breaking {
+        @include button-color($track-breaking);
+      }
+      &.popping {
+        @include button-color($track-popping);
+      }
+      &.hip_hop_prin, &.hip_hop_int {
+        @include button-color($track-hip-hop);
+      }
+      &.danza_afro {
+        @include button-color($track-danza-afro);
       }
 
       a {

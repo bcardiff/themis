@@ -3,7 +3,12 @@ class StudentPack < ActiveRecord::Base
   belongs_to :payment_plan
   has_many :student_course_logs
 
-  scope :valid_for, -> (date) { where("start_date <= ? AND due_date >= ?", date, date) }
+  scope :valid_for_course_log, -> (course_log) {
+    joins(:payment_plan)
+    .valid_for_date(course_log.date)
+    .where("payment_plans.course_match like ?", "%#{course_log.course_kind}%")
+  }
+  scope :valid_for_date, -> (date) { where("start_date <= ? AND due_date >= ?", date, date) }
 
   def available_courses
     self.max_courses - self.student_course_logs.count
@@ -117,8 +122,16 @@ class StudentPack < ActiveRecord::Base
 
     student_pack = register_for(student, date, total)
 
-    ids = student.student_course_logs.includes(:course_log)
+    student_course_logs_to_assign = student
+      .student_course_logs.joins(course_log: { course: :track })
       .missing_payment.between(date_range)
+
+    if student_pack.payment_plan
+      student_course_logs_to_assign = student_course_logs_to_assign
+        .where("? like CONCAT('%',tracks.course_kind,'%')", student_pack.payment_plan.course_match)
+    end
+
+    ids = student_course_logs_to_assign
       .pluck(:id)
       .take(student_pack.max_courses)
 
@@ -126,7 +139,8 @@ class StudentPack < ActiveRecord::Base
   end
 
   def self.check_assign_student_course_log(student_course_log)
-    valid_packs = student_course_log.student.student_packs.valid_for(student_course_log.course_log.date).order(:due_date)
+    return if student_course_log.as_helper
+    valid_packs = student_course_log.student.student_packs.valid_for_course_log(student_course_log.course_log).order(:due_date)
     valid_packs.each do |existing_pack|
       if existing_pack && existing_pack.student_course_logs.count < existing_pack.max_courses
         StudentCourseLog.where(id: student_course_log.id).update_all(student_pack_id: existing_pack.try(&:id))

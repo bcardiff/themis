@@ -80,7 +80,7 @@ class Cashier::StudentsController < Cashier::BaseController
     student = Student.find(params[:id])
     student_course_log = student.student_course_logs.find(params[:student_course_log_id])
     student_course_log.teacher = current_user.teacher
-    student_course_log.payment_plan = PaymentPlan.single_class
+    student_course_log.payment_plan = PaymentPlan.single_class_by_kind[student_course_log.course_log.course_kind]
     student_course_log.save!
 
     render json: {status: :ok, student: student_json(student)}
@@ -143,12 +143,13 @@ class Cashier::StudentsController < Cashier::BaseController
           total: student.pending_payments_count
         }
 
-        hash[:available_courses] = student.student_packs.valid_for(School.today).to_a.sum(&:available_courses)
+        hash[:available_courses] = student.student_packs.valid_for_date(School.today).to_a.sum(&:available_courses)
 
         hash[:today_pending_classes] = student.student_course_logs.missing_payment.joins(:course_log).between(School.today).map do |student_course_log|
           {
             id: student_course_log.id,
-            course: student_course_log.course_log.course.code
+            course: student_course_log.course_log.course.code,
+            course_kind: student_course_log.course_log.course_kind,
           }
         end
       end

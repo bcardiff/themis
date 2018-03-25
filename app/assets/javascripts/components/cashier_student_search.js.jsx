@@ -165,7 +165,7 @@ var StudentSearch = React.createClass({
 var StudentPaymentControls = React.createClass({
   paySingleClass: function(pending_class_item) {
     var student = this.props.student;
-    var message = "Recibir " + this.props.config.single_class_price + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
+    var message = "Recibir " + this.props.config.single_class_price_by_kind[pending_class_item.course_kind] + " de " + student.first_name + " " + student.last_name + " en concepto de " + pending_class_item.course;
     this.refs.dialog.confirm(message).then(function(){
       $.ajax({
         method: 'POST',

@@ -6,8 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-def track(code)
+def track(code, attributes = {})
   Track.find_or_create_by(code: code).tap do |track|
+    attributes.each do |key, value|
+      track.send "#{key}=", value
+    end
     track.save!
   end
 end
@@ -77,6 +80,13 @@ teacher 'ManuH', priority: 3
 teacher 'Carla', priority: 3
 teacher 'Ornella', priority: 3
 
+teacher 'Emiliano', priority: 4
+teacher 'Griselda', priority: 4
+teacher 'Lucas', priority: 4
+teacher 'Maxim', priority: 4
+teacher 'Rulock', priority: 4
+teacher 'Zai', priority: 4
+
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
 la_huella = place "La Huella", address: "Bulnes 892", link: "http://goo.gl/kT1ElX"
@@ -86,6 +96,46 @@ ibera = place "Pororoca", address: "Iberá 2385", link: "http://goo.gl/Rosg56"
 chez_manuel = place "Chez Manuel", address: "Paraná y Córdoba", link: "#"
 danzas = place "Academia Integral de Danzas", address: "Av. Scalabrini Ortiz 885", link: "http://goo.gl/TyVh85"
 swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "https://goo.gl/maps/SjATQh9YyVP2"
+
+track("AERIALS_INT1", course_kind: "swing")
+track("AERIALS_PRIN", course_kind: "swing")
+track("AJ_AVAN", course_kind: "swing")
+track("AJ_INT1", course_kind: "swing")
+track("AJ_PRIN", course_kind: "swing")
+track("BALBOA_SHAG", course_kind: "swing")
+track("BLUES_INT1", course_kind: "swing")
+track("BLUES_PRIN", course_kind: "swing")
+track("ESTIRAMIENTO", course_kind: "swing")
+track("INTRO_BAILE", course_kind: "swing")
+track("LH_AVAN", course_kind: "swing")
+track("LH_AVAN2", course_kind: "swing")
+track("LH_COREO", course_kind: "swing")
+track("LH_INT1", course_kind: "swing")
+track("LH_INT1_PLUS", course_kind: "swing")
+track("LH_INT2", course_kind: "swing")
+track("LH_INT2_PLUS", course_kind: "swing")
+track("LH_INT3", course_kind: "swing")
+track("LH_INT3_PLUS", course_kind: "swing")
+track("LH_PRIN", course_kind: "swing")
+track("LH_PRIN_PLUS", course_kind: "swing")
+track("PREP_FISICA", course_kind: "swing")
+track("SWING_KIDS", course_kind: "swing")
+track("SWING_SENIOR", course_kind: "swing")
+track("TAP_KIDS", course_kind: "swing")
+track("TP_AVAN", course_kind: "swing")
+track("TP_INT1", course_kind: "swing")
+track("TP_INT2", course_kind: "swing")
+track("TP_PRIN", course_kind: "swing")
+
+track("LOCKING", course_kind: "roots")
+track("HOUSE", course_kind: "roots")
+track("WAACKING", course_kind: "roots")
+track("POPPING", course_kind: "roots")
+track("BREAKING", course_kind: "roots")
+track("HIP_HOP_PRIN", course_kind: "roots")
+track("HIP_HOP_INT", course_kind: "roots")
+
+track("DANZA_AFRO", course_kind: "afro")
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00'
@@ -217,13 +267,36 @@ course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since
 
 course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since: Date.new(2018,1,1), track: track("INTRO_BAILE"), place: swing_city, start_time: '19:00', valid_until: nil
 
-payment_plan "LIBRE", description: "1 Mes. Libre $1800", price: 1800, weekly_classes: 40
-payment_plan "2_MESES_LIBRE", description: "2 Meses. Libre $3000", price: 3000, weekly_classes: 40
-payment_plan "3_MESES", description: "3 Meses 1 x Semana $1300", price: 1300, weekly_classes: 1
-payment_plan "3_X_SEMANA", description: "Mensual 3 x Semana $1250", price: 1250, weekly_classes: 3
-payment_plan "2_X_SEMANA", description: "Mensual 2 x Semana $1050", price: 1050, weekly_classes: 2
-payment_plan "1_X_SEMANA_3", description: "Mensual 1 x Semana (3 c) $450", price: 450, weekly_classes: 1
-payment_plan "1_X_SEMANA_4", description: "Mensual 1 x Semana (4 c) $600", price: 600, weekly_classes: 1
-payment_plan "1_X_SEMANA_5", description: "Mensual 1 x Semana (5 c) $750", price: 750, weekly_classes: 1
-payment_plan PaymentPlan::SINGLE_CLASS, description: "Clase suelta $180", price: 180, weekly_classes: 1
-payment_plan PaymentPlan::OTHER, description: "Otro (monto a continuación)", price: 0, weekly_classes: 1
+
+course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
+course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: nil
+course "POPPING_MAR", name: "Popping - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("POPPING"), place: swing_city, start_time: '17:00', valid_until: nil
+course "WAACKING_MAR", name: "Waacking - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("WAACKING"), place: swing_city, start_time: '18:00', valid_until: nil
+course "BREAKING", name: "Breaking - Miércoles", weekday: 3, valid_since: Date.new(2018,4,1), track: track("BREAKING"), place: swing_city, start_time: '18:00', valid_until: nil
+
+course "HIP_HOP_PRIN_JUE", name: "Hip Hop - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_PRIN"), place: swing_city, start_time: '17:00', valid_until: nil
+course "HIP_HOP_INT_JUE", name: "Hip Hop - Intermedios - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_INT"), place: swing_city, start_time: '18:00', valid_until: nil
+
+course "DANZA_AFRO_MAR", name: "Danza Afro - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("DANZA_AFRO"), place: swing_city, start_time: '17:00', valid_until: nil
+
+
+payment_plan "LIBRE", description: "Swing: 1 Mes. Libre $1800", price: 1800, weekly_classes: 40, order: 1, course_match: "swing"
+payment_plan "2_MESES_LIBRE", description: "Swing: 2 Meses. Libre $3000", price: 3000, weekly_classes: 40, order: 1, course_match: "swing"
+payment_plan "3_MESES", description: "Swing: 3 Meses 1 x Semana $1300", price: 1300, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "3_X_SEMANA", description: "Swing: Mensual 3 x Semana $1250", price: 1250, weekly_classes: 3, order: 1, course_match: "swing"
+payment_plan "2_X_SEMANA", description: "Swing: Mensual 2 x Semana $1050", price: 1050, weekly_classes: 2, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_3", description: "Swing: Mensual 1 x Semana (3 c) $450", price: 450, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_4", description: "Swing: Mensual 1 x Semana (4 c) $600", price: 600, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_5", description: "Swing: Mensual 1 x Semana (5 c) $750", price: 750, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan PaymentPlan::SINGLE_CLASS, description: "Swing: Clase suelta $180", price: 180, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan PaymentPlan::OTHER, description: "Swing: Otro (monto a continuación)", price: 0, weekly_classes: 1, order: 1, course_match: "swing"
+
+payment_plan PaymentPlan::SINGLE_CLASS_ROOTS, description: "Roots: Clase suelta $200", price: 200, weekly_classes: 1, order: 2, course_match: "roots"
+payment_plan "ROOTS__1_X_SEMANA", description: "Roots: Mensual 1 x Semana $700", price: 700, weekly_classes: 1, order: 2, course_match: "roots"
+payment_plan "ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana $1200", price: 1200, weekly_classes: 2, order: 2, course_match: "roots"
+payment_plan "ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana $1700", price: 1700, weekly_classes: 3, order: 2, course_match: "roots"
+
+payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Roots: Clase suelta de Danza Afro $230", price: 230, weekly_classes: 1, order: 3, course_match: "afro"
+payment_plan "AFRO__1_X_SEMANA", description: "Roots: Mensual 1 x Semana de Danza Afro $850", price: 850, weekly_classes: 1, order: 3, course_match: "afro"
+payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro $1400", price: 1400, weekly_classes: 1, order: 3, course_match: "afro,roots"
+payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro $2000", price: 2000, weekly_classes: 1, order: 3, course_match: "afro,roots"
