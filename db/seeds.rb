@@ -296,7 +296,7 @@ payment_plan "ROOTS__1_X_SEMANA", description: "Roots: Mensual 1 x Semana $700",
 payment_plan "ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana $1200", price: 1200, weekly_classes: 2, order: 2, course_match: "roots"
 payment_plan "ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana $1700", price: 1700, weekly_classes: 3, order: 2, course_match: "roots"
 
-payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Afro: Clase suelta $230", price: 230, weekly_classes: 1, order: 3, course_match: "afro"
-payment_plan "AFRO__1_X_SEMANA", description: "Afro: Mensual 1 x Semana $850", price: 850, weekly_classes: 1, order: 3, course_match: "afro"
-payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Afro + 1 Roots: Mensual 2 x Semana $1400", price: 1400, weekly_classes: 1, order: 3, course_match: "afro,roots"
-payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Afro + 2 Roots: Mensual 3 x Semana $2000", price: 2000, weekly_classes: 1, order: 3, course_match: "afro,roots"
+payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Roots: Clase suelta de Danza Afro $230", price: 230, weekly_classes: 1, order: 3, course_match: "afro"
+payment_plan "AFRO__1_X_SEMANA", description: "Roots: Mensual 1 x Semana de Danza Afro $850", price: 850, weekly_classes: 1, order: 3, course_match: "afro"
+payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro $1400", price: 1400, weekly_classes: 1, order: 3, course_match: "afro,roots"
+payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro $2000", price: 2000, weekly_classes: 1, order: 3, course_match: "afro,roots"
