@@ -135,7 +135,7 @@ track("BREAKING", course_kind: "roots")
 track("HIP_HOP_PRIN", course_kind: "roots")
 track("HIP_HOP_INT", course_kind: "roots")
 
-track("AFRO", course_kind: "afro")
+track("DANZA_AFRO", course_kind: "afro")
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00'
@@ -277,7 +277,7 @@ course "BREAKING", name: "Breaking - Miércoles", weekday: 3, valid_since: Date.
 course "HIP_HOP_PRIN_JUE", name: "Hip Hop - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_PRIN"), place: swing_city, start_time: '17:00', valid_until: nil
 course "HIP_HOP_INT_JUE", name: "Hip Hop - Intermedios - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_INT"), place: swing_city, start_time: '18:00', valid_until: nil
 
-course "AFRO_MAR", name: "Danza Afro - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("AFRO"), place: swing_city, start_time: '17:00', valid_until: nil
+course "DANZA_AFRO_MAR", name: "Danza Afro - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("DANZA_AFRO"), place: swing_city, start_time: '17:00', valid_until: nil
 
 
 payment_plan "LIBRE", description: "Swing: 1 Mes. Libre $1800", price: 1800, weekly_classes: 40, order: 1, course_match: "swing"

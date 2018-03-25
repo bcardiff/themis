@@ -25,7 +25,7 @@ $track-breaking: #E93323;
 $track-popping: #F6C242;
 $track-hip-hop: #2E6AB3;
 
-$track-afro: #4EAD5B;
+$track-danza-afro: #4EAD5B;
 
 @mixin fullsize {
   position: absolute;
@@ -336,8 +336,8 @@ body.room {
       &.hip_hop_prin, &.hip_hop_int {
         @include button-color($track-hip-hop);
       }
-      &.afro {
-        @include button-color($track-afro);
+      &.danza_afro {
+        @include button-color($track-danza-afro);
       }
 
       a {
