@@ -1,0 +1,27 @@
+- hours = courses.pluck('start_time').uniq.to_a.uniq.sort
+- days = (1..6).to_a.tap { |r| r << 0 }
+
+%tr.header
+  %td.day
+  - days.each do |wday|
+    %td.day= local_wday(wday)
+- prev_time = nil
+- hours.each do |time|
+  - if !prev_time.nil? && prev_time + 1.hour != time
+    %tr
+      %td.header.hour ...
+      - days.each do |wday|
+        %td.course
+  - prev_time = time
+  %tr
+    %td.header.hour<
+      = time.hour
+      - if time.min != 0
+        %span.min<>= time.min
+      - else
+        %span.min<> 00
+    - days.each do |wday|
+      %td.course
+        - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
+          %div{'class' => course.css_prefix}
+            = course.track.code.gsub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "") + (course.future? ? " **" : "")

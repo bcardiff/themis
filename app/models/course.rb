@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
 
   scope :ongoing, -> (date) { where('valid_until IS NULL or valid_until >= ?', date).where('valid_since <= ?', date).where(weekday: date.wday) }
   scope :ongoing_or_future, -> { where('valid_until IS NULL or valid_until >= ?', School.today) }
+  scope :with_course_kind, -> (kinds) { joins(:track).where(tracks: {course_kind: kinds}) }
 
   def future?
     School.today < self.valid_since

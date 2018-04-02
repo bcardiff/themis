@@ -1,33 +1,8 @@
-- courses = Course.ongoing_or_future
-- hours = courses.pluck('start_time').uniq.to_a.tap { |r| r << Time.parse('2000-01-01 21:00 UTC') }.uniq.sort
-- days = (1..6).to_a.tap { |r| r << 0 }
+/ Horarios Swing
 
 %table.horarios
   %tbody
-    %tr.header
-      %td.day
-      - days.each do |wday|
-        %td.day= local_wday(wday)
-    - prev_time = nil
-    - hours.each do |time|
-      - if !prev_time.nil? && prev_time + 1.hour != time
-        %tr
-          %td.header.hour ...
-          - days.each do |wday|
-            %td.course
-      - prev_time = time
-      %tr
-        %td.header.hour<
-          = time.hour
-          - if time.min != 0
-            %span.min<>= time.min
-          - else
-            %span.min<> 00
-        - days.each do |wday|
-          %td.course
-            - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
-              %div{'class' => course.css_prefix}
-                = course.track.code.gsub("_", " ") + (course.hashtag.try { |s| " #{s} *"} || "") + (course.future? ? " **" : "")
+    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind("swing") }
     %tr
       %td.practica BAILE/PRÁCTICA
       %td.practica
@@ -37,3 +12,12 @@
       %td.practica PRÁCTICA PRINCIPIANTES
       %td.practica BAILE SOCIAL
       %td.course
+
+%br
+%br
+
+/ Horarios Roots
+
+%table.horarios
+  %tbody
+    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind(["afro", "roots"]) }
