@@ -226,7 +226,7 @@ course "TP_INT2_LUN", name: "Tap - Intermedios 2 - Lunes mañana", weekday: 1, t
 course "TP_INT2_MAR", name: "Tap - Intermedios 2 - Martes", weekday: 2, track: track("TP_INT2"), place: swing_city, valid_until: Date.new(2017,12,31), start_time: '18:00'
 course "TP_INT2_MIE", name: "Tap - Intermedios 2 - Miércoles", weekday: 3, track: track("TP_INT2"), place: swing_city, valid_since: Date.new(2018,1,1), valid_until: nil, start_time: '11:00'
 
-course "TP_AVAN_MAR", name: "Tap - Avanzados - Martes", weekday: 2, track: track("TP_AVAN"), place: swing_city, valid_since: Date.new(2018,1,1), valid_until: nil, start_time: '18:00'
+course "TP_AVAN_MAR", name: "Tap - Avanzados - Martes", weekday: 2, track: track("TP_AVAN"), place: swing_city, valid_since: Date.new(2018,1,1), valid_until: Date.new(2018,3,31), start_time: '18:00'
 
 course "LIMBO_1", name: "Limbo 1 - Principiantes - Miércoles", weekday: 3, valid_since: Date.new(2015,7,1), track: track("LH_INT1"), place: swing_city, start_time: '20:00', hashtag: "LIMBO", valid_until: Date.new(2018,2,28)
 course "LIMBO_2", name: "Limbo 2 - Intermedios 1 - Miércoles", weekday: 3, valid_since: Date.new(2015,7,1), track: track("LH_INT2"), place: swing_city, start_time: '19:00', hashtag: "LIMBO", valid_until: Date.new(2018,2,28)
@@ -250,7 +250,7 @@ course "SWING_KIDS_MAR", name: "Swing Kids - Martes", weekday: 2, valid_since: D
 course "SWING_KIDS_JUE", name: "Swing Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), track: track("SWING_KIDS"), place: swing_city, start_time: '18:00', valid_until: Date.new(2015,5,31)
 
 course "TAP_KIDS_MAR", name: "Tap Kids - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00' , valid_until: Date.new(2017,4,1)
-course "TAP_KIDS_MIE", name: "Tap Kids - Miércoles", weekday: 3, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
+course "TAP_KIDS_MIE", name: "Tap Kids - Miércoles", weekday: 3, valid_since: Date.new(2016,4,1), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,3,31)
 course "TAP_KIDS_JUE", name: "Tap Kids - Jueves", weekday: 4, valid_since: Date.new(2016,4,1), valid_until: Date.new(2016,4,2), track: track("TAP_KIDS"), place: swing_city, start_time: '18:00'
 
 course "SWING_SENIOR_LUN", name: "Swing Senior - Lunes", weekday: 1, valid_since: Date.new(2016,7,1), track: track("SWING_SENIOR"), place: swing_city, start_time: '18:00' ,valid_until: Date.new(2017, 2, 28)
