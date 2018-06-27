@@ -14,15 +14,38 @@ Run:
 
 ```
 $ ./dev-setup.sh
+$ docker-compose up
 ```
 
 Open `http://localhost:3000`.
+
+### First time
+
+Register a user from the login form in the web.
+
+```
+$ docker-compose exec app rails console
+   > u = User.first
+   > u.admin = true
+   > u.save!
+   > exit
+```
+
+Reload the web page.
+
+### Mailing
+
+Open `http://localhost:3080` to see the emails sent from the app during development.
+
+### Running specs
 
 To run specs `$ docker-compose exec app rspec`.
 
 A selenium can be accessed via vnc at `localhost:5901` (password: secret).
 
 When restoring a backup, you can reset user password doing
+
+### Restore backups
 
 ```
 $ docker-compose exec app rake db:drop db:create
