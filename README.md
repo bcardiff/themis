@@ -53,3 +53,5 @@ $ docker-compose exec db bash
    # mysql -u root themis_development < ./path/to/backup.sql
 $ docker-compose exec app /bin/bash -c "USER=email@domain.com PASSWORD=newpassword rake app:reset_pwd"
 ```
+
+Note: If the `backup.sql` is stored in this project folder, then `/src/backup.sql` is the path to use.
