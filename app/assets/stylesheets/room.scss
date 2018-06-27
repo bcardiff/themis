@@ -293,7 +293,7 @@ body.room {
       &.aj {
         @include button-color($track-aj);
       }
-      &.ba {
+      &.ba, &.shag {
         @include button-color($track-ba);
       }
       &.tp {

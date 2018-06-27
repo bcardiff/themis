@@ -7,11 +7,19 @@
     %td.day= local_wday(wday)
 - prev_time = nil
 - hours.each do |time|
-  - if !prev_time.nil? && prev_time + 1.hour != time
-    %tr
-      %td.header.hour ...
-      - days.each do |wday|
-        %td.course
+  - if !prev_time.nil?
+    - if prev_time + 2.hour == time
+      %tr
+        %td.header.hour<
+          = prev_time.hour + 1
+          %span.min<> 00
+        - days.each do |wday|
+          %td.course
+    - elsif prev_time + 1.hour < time
+      %tr
+        %td.header.hour ...
+        - days.each do |wday|
+          %td.course
   - prev_time = time
   %tr
     %td.header.hour<
