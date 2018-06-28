@@ -81,6 +81,7 @@ teacher 'Agustín', priority: 3
 teacher 'ManuH', priority: 3
 teacher 'Carla', priority: 3
 teacher 'Ornella', priority: 3
+teacher 'Guido', priority: 3
 
 teacher 'Emiliano', priority: 4
 teacher 'Griselda', priority: 4
