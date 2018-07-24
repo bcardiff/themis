@@ -75,7 +75,7 @@ teacher 'Mar Tin', cashier: true, priority: 0
 teacher 'Victoria', priority: 2
 teacher 'Farru', priority: 3
 teacher 'Soledad', priority: 3
-teacher 'Edu', priority: 3
+teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
 teacher 'ManuH', priority: 3
