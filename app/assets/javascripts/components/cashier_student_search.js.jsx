@@ -221,9 +221,9 @@ var StudentPaymentControls = React.createClass({
           <p>Recibir pago de pack</p>
 
           <ButtonDropdown title="Elegir pack">
-            {this.props.config.payment_plans.map(function(item){
+            {this.props.config.payment_plans.map(function(item, index){
               var onClick = function(event) { this.payPack(item); event.preventDefault(); }.bind(this);
-              return <li key={item.price}><a href="#" onClick={onClick}>{item.description}</a></li>;
+              return <li key={index}><a href="#" onClick={onClick}>{item.description}</a></li>;
             }.bind(this))}
           </ButtonDropdown>
         </div>

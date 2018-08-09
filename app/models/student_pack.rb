@@ -38,8 +38,8 @@ class StudentPack < ActiveRecord::Base
     end
   end
 
-  def self.register_for(student, date, price)
-    plan = PaymentPlan.find_by(price: price)
+  def self.register_for(student, date, price, payment_plan_on_cashier = nil)
+    plan = payment_plan_on_cashier || PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
     if plan && !plan.single_class?
       if plan.code == "3_MESES"
@@ -120,7 +120,7 @@ class StudentPack < ActiveRecord::Base
       return if student_payment_income.student_course_log
     end
 
-    student_pack = register_for(student, date, total)
+    student_pack = register_for(student, date, total, student_payment_income.payment_plan_on_cashier)
 
     student_course_logs_to_assign = student
       .student_course_logs.joins(course_log: { course: :track })

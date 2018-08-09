@@ -1,5 +1,7 @@
 module TeacherCashIncomes
   class StudentPaymentIncome < StudentCourseLogIncome
+    attr_accessor :payment_plan_on_cashier
+
     scope :pack_payment, -> { where.not(payment_amount: PaymentPlan.find_by(code: PaymentPlan::SINGLE_CLASS).price) }
 
     def self.find_or_initialize_by_student_course_log(student_course_log)
@@ -8,8 +10,8 @@ module TeacherCashIncomes
     end
 
     def self.create_cashier_pack_payment!(teacher, student, date, payment_plan)
-      create!(teacher: teacher, date: date, student: student, payment_amount: payment_plan.price).tap do |income|
-        ActivityLogs::Student::Payment.record(student, income)
+      create!(teacher: teacher, date: date, student: student, payment_plan_on_cashier: payment_plan, payment_amount: payment_plan.price).tap do |income|
+        ActivityLogs::Student::Payment.record_cashier_pack_payment(student, income, payment_plan)
       end
     end
 
