@@ -107,12 +107,12 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def course_stats
-    query = StudentCourseLog.all.group('course_id, EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
-      .select('course_id, EXTRACT(YEAR FROM student_course_logs.created_at) as year, EXTRACT(WEEK FROM student_course_logs.created_at) as week, count(student_id) as count')
+    query = StudentCourseLog.all.group('course_id, EXTRACT(YEAR FROM course_logs.date), EXTRACT(WEEK FROM course_logs.date)')
+      .select('course_id, EXTRACT(YEAR FROM course_logs.date) as year, EXTRACT(WEEK FROM course_logs.date) as week, count(student_id) as count')
       .joins(course_log: :course)
       .where('courses.valid_until IS NULL')
-      .where('student_course_logs.created_at > ?', 3.months.ago.beginning_of_week)
-      .order('EXTRACT(YEAR FROM student_course_logs.created_at), EXTRACT(WEEK FROM student_course_logs.created_at)')
+      .where('course_logs.date > ?', 3.months.ago.beginning_of_week.to_date)
+      .order('EXTRACT(YEAR FROM course_logs.date), EXTRACT(WEEK FROM course_logs.date)')
 
     @courses_by_track = Course.ongoing_or_future.includes(:track).order('tracks.code, weekday').group_by(&:track)
 
