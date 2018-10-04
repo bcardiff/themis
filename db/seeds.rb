@@ -275,8 +275,10 @@ course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since
 
 course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
 course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: nil
-course "POPPING_MAR", name: "Popping - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("POPPING"), place: swing_city, start_time: '17:00', valid_until: nil
-course "WAACKING_MAR", name: "Waacking - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("WAACKING"), place: swing_city, start_time: '18:00', valid_until: nil
+course "POPPING_MAR", name: "Popping - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("POPPING"), place: swing_city, start_time: '17:00', valid_until: Date.new(2018,9,30)
+course "POPPING_JUE", name: "Popping - Jueves", weekday: 4, valid_since: Date.new(2018,10,1), track: track("POPPING"), place: swing_city, start_time: '18:00', valid_until: nil
+course "WAACKING_MAR", name: "Waacking - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("WAACKING"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,9,30)
+course "WAACKING_JUE", name: "Waacking - Jueves", weekday: 4, valid_since: Date.new(2018,10,1), track: track("WAACKING"), place: swing_city, start_time: '17:00', valid_until: nil
 course "BREAKING", name: "Breaking - Miércoles", weekday: 3, valid_since: Date.new(2018,4,1), track: track("BREAKING"), place: swing_city, start_time: '18:00', valid_until: nil
 
 course "HIP_HOP_PRIN_JUE", name: "Hip Hop - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2018,4,1), track: track("HIP_HOP_PRIN"), place: swing_city, start_time: '17:00', valid_until: nil
