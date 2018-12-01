@@ -24,6 +24,7 @@ $track-waacking: #D832A8;
 $track-breaking: #E93323;
 $track-popping: #F6C242;
 $track-hip-hop: #2E6AB3;
+$track-afro-urbano: #827f06;
 
 $track-danza-afro: #4EAD5B;
 
@@ -335,6 +336,9 @@ body.room {
       }
       &.hip_hop_prin, &.hip_hop_int {
         @include button-color($track-hip-hop);
+      }
+      &.afro_urbano {
+        @include button-color($track-afro-urbano);
       }
       &.danza_afro {
         @include button-color($track-danza-afro);

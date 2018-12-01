@@ -139,6 +139,7 @@ track("POPPING", course_kind: "roots")
 track("BREAKING", course_kind: "roots")
 track("HIP_HOP_PRIN", course_kind: "roots")
 track("HIP_HOP_INT", course_kind: "roots")
+track("AFRO_URBANO", course_kind: "roots")
 
 track("DANZA_AFRO", course_kind: "afro")
 
@@ -287,6 +288,8 @@ course "HIP_HOP_INT_JUE", name: "Hip Hop - Intermedios - Jueves", weekday: 4, va
 
 course "DANZA_AFRO_MAR", name: "Danza Afro - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("DANZA_AFRO"), place: swing_city, start_time: '17:00', valid_until: nil
 
+course "AFRO_URBANO_MIE", name: "Afro Urbano - Miércoles", weekday: 3, valid_since: Date.new(2018,12,1), track: track("AFRO_URBANO"), place: swing_city, start_time: '18:00', valid_until: nil
+course "AFRO_URBANO_VIE", name: "Afro Urbano - Viernes", weekday: 5, valid_since: Date.new(2018,12,1), track: track("AFRO_URBANO"), place: swing_city, start_time: '18:00', valid_until: nil
 
 payment_plan "LIBRE", description: "Swing: 1 Mes. Libre $2150", price: 2150, weekly_classes: 40, order: 1, course_match: "swing"
 payment_plan "2_MESES_LIBRE", description: "Swing: 2 Meses. Libre $4300", price: 4300, weekly_classes: 40, order: 1, course_match: "swing"
