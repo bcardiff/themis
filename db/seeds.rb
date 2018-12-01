@@ -74,7 +74,7 @@ teacher 'Mar Tin', cashier: true, priority: 0
 
 teacher 'Victoria', priority: 2
 teacher 'Farru', priority: 3
-teacher 'Soledad', priority: 3
+teacher 'Soledad', priority: 3, deleted_at: Date.new(2018,11,30)
 teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
@@ -85,10 +85,11 @@ teacher 'Guido', priority: 3
 
 teacher 'Emiliano', priority: 4
 teacher 'Griselda', priority: 4
-teacher 'Lucas', priority: 4
-teacher 'Maxim', priority: 4
+teacher 'Lucas', priority: 4, deleted_at: Date.new(2018,11,30)
+teacher 'Maxim', priority: 4, deleted_at: Date.new(2018,11,30)
 teacher 'Rulock', priority: 4
 teacher 'Zai', priority: 4
+teacher 'Freddy', priority: 4
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
