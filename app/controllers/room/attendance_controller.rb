@@ -18,7 +18,7 @@ class Room::AttendanceController < Room::BaseController
 
   def choose_teachers
     @course_log = CourseLog.find(params[:id])
-    @teachers = Teacher.where('priority > 0').order(:priority, :name)
+    @teachers = Teacher.active.where('priority > 0').order(:priority, :name)
   end
 
   def choose_teachers_post
