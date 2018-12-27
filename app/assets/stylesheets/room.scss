@@ -294,7 +294,7 @@ body.room {
       &.aj {
         @include button-color($track-aj);
       }
-      &.ba, &.shag {
+      &.ba, &.balboa, &.shag, &.shag_prin, &.shag_int1 {
         @include button-color($track-ba);
       }
       &.tp {
