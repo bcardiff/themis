@@ -276,6 +276,8 @@ course "BLUES_INT1_JUE", name: "Blues - Intermedios 1 - Jueves", weekday: 4, val
 course "BALBOA_LUN", name: "Balboa - Lunes", weekday: 1, valid_since: Date.new(2019,1,1), track: track("BALBOA"), place: swing_city, start_time: '20:00'
 
 course "AERIALS_PRIN_JUE", name: "Aerials - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("AERIALS_PRIN"), place: swing_city, start_time: '19:00', valid_until: Date.new(2018,12,31)
+course "AERIALS_PRIN_JUE2", name: "Aerials - Principiantes - Jueves", weekday: 4, valid_since: Date.new(2019,2,1), track: track("AERIALS_PRIN"), place: swing_city, start_time: '19:00', valid_until: nil
+
 course "AERIALS_INT1_JUE", name: "Aerials - Intermedios 1 - Jueves", weekday: 4, valid_since: Date.new(2017,11,1), valid_until: Date.new(2017,12,31), track: track("AERIALS_INT1"), place: swing_city, start_time: '20:00'
 
 course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since: Date.new(2017,8,1), track: track("LH_COREO"), place: swing_city, start_time: '20:00', valid_until: Date.new(2017, 10, 31)
@@ -285,6 +287,7 @@ course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since
 
 course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
 course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,12,31)
+course "HOUSE_LUN2", name: "House - Lunes", weekday: 1, valid_since: Date.new(2019,2,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: nil
 course "POPPING_MAR", name: "Popping - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("POPPING"), place: swing_city, start_time: '17:00', valid_until: Date.new(2018,9,30)
 course "POPPING_JUE", name: "Popping - Jueves", weekday: 4, valid_since: Date.new(2018,10,1), track: track("POPPING"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,11,30)
 course "WAACKING_MAR", name: "Waacking - Martes", weekday: 2, valid_since: Date.new(2018,4,1), track: track("WAACKING"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,9,30)
