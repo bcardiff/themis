@@ -1,0 +1,33 @@
+%h1
+  = teacher.name
+  >
+  Actividad del mes
+
+%h2
+  Desde
+  = @date.month_range.begin.to_human
+  hasta
+  = @date.month_range.end.to_human
+
+%p
+  = link_to "Anterior", month_activity_admin_teacher_path(teacher: teacher, date: @date - 1.month)
+  \ -
+  = link_to "Siguiente", month_activity_admin_teacher_path(teacher: teacher, date: @date + 1.month)
+
+- @tracks.each do |track|
+  %h3= track.code
+
+  %table.table
+    %tr
+      %th Fecha
+      %th Curso
+      %th Docentes
+      %th Alumnos pagos
+      %th Alumnos ayudantes
+    - @course_logs.select { |c| c.course.track ==  track }.sort_by(&:date).each do |course_log|
+      %tr
+        %td= course_log.date.to_dmy
+        %td= course_log.course.code
+        %td= course_log.teachers.count
+        %td= course_log.student_course_logs.where(as_helper: false).count
+        %td= course_log.student_course_logs.where(as_helper: true).count

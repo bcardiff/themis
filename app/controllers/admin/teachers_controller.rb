@@ -37,6 +37,13 @@ class Admin::TeachersController < Admin::BaseController
     redirect_to admin_teacher_path(teacher)
   end
 
+  def month_activity
+    @date = ((Date.parse(params[:date]) rescue nil) || (School.today.at_beginning_of_month - 1.day)).at_beginning_of_month
+
+    @course_logs = teacher.course_logs.where(date: @date.month_range)
+    @tracks = Track.where(id: Course.where(id: @course_logs.select(:course_id)).select(:track_id)).order(:code)
+  end
+
   private
 
   def order_by_course_log(relation)

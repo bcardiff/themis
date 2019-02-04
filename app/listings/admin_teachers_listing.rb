@@ -21,6 +21,10 @@ class AdminTeachersListing < Listings::Base
     link_to number_to_currency(teacher.due_salary_total), due_course_salary_admin_teacher_path(teacher)
   end
 
+  column 'Actividad mensual' do |teacher|
+    link_to 'ver', month_activity_admin_teacher_path(teacher)
+  end
+
   # column do |teacher|
   #   link_to 'clases', teach_log_admin_teacher_path(teacher)
   # end

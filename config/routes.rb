@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
         get :due_course_salary
         post :pay_pending_classes
+
+        get :month_activity
       end
     end
 
