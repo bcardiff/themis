@@ -1,21 +1,11 @@
-language: ruby
-dist: trusty
-sudo: false
-cache: bundler
+language: minimal
 services:
-  - mysql
-bundler_args: --jobs=8 --without development
+  - docker
 before_script:
-  - wget https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz
-  - mkdir geckodriver
-  - tar -xzf geckodriver-v0.18.0-linux64.tar.gz -C geckodriver
-  - export PATH=$PATH:$PWD/geckodriver
-
-  - bundle exec rake db:setup
-  - bundle exec rake db:test:prepare
-
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - docker-compose build
+  - docker-compose up -d db
+  - docker-compose up -d selenium
+  - docker-compose run --rm --no-deps app ./bin/setup
+  - docker-compose run --rm --no-deps app rake db:test:prepare
 script:
-  - bundle exec rake spec
+  - docker-compose run app bundle exec rake spec

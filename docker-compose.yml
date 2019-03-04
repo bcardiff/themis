@@ -44,13 +44,10 @@ services:
       - '3080:3080'
 
   selenium:
-    image: selenium/standalone-firefox-debug
-    # image: selenium/standalone-firefox
+    image: selenium/standalone-firefox
     shm_size: 2g
     volumes:
       - .:/app
-    ports:
-      - '5901:5900'
 
 volumes:
   db:
