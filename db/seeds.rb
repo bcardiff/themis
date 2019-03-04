@@ -134,6 +134,7 @@ track("TP_AVAN", course_kind: "swing")
 track("TP_INT1", course_kind: "swing")
 track("TP_INT2", course_kind: "swing")
 track("TP_PRIN", course_kind: "swing")
+track("TALLER", course_kind: "swing")
 
 track("LOCKING", course_kind: "roots")
 track("HOUSE", course_kind: "roots")
@@ -286,6 +287,7 @@ course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since
 
 course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since: Date.new(2018,1,1), track: track("INTRO_BAILE"), place: swing_city, start_time: '19:00', valid_until: Date.new(2018,12,31)
 
+course "TALLER_VIE", name: "Entendiendo la Música - Viérnes", weekday: 5, valid_since: Date.new(2019,3,1), track: track("TALLER"), place: swing_city, start_time: '19:00', valid_until: Date.new(2019,3,31)
 
 course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
 course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,12,31)
