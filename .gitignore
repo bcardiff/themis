@@ -20,3 +20,5 @@ pruebas-asistencias-pagos.xlsx
 do.sh
 vendor/cache
 stats
+
+docker-compose.override.yml
