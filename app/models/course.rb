@@ -37,4 +37,19 @@ class Course < ActiveRecord::Base
   def short_time
     "#{self.start_time.hour}hs"
   end
+
+  def self.next_code(track, wday)
+    prefix = "#{track.code}_#{I18n.t('date.abbr_day_names')[wday].upcase}"
+    used_codes = Course.where("code LIKE '#{prefix}%'").pluck(:code)
+
+    index = 1
+    res = prefix
+
+    while used_codes.include?(res)
+      index += 1
+      res = "#{prefix}#{index}"
+    end
+
+    res
+  end
 end

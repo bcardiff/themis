@@ -19,6 +19,23 @@ RSpec.describe Course, type: :model do
     end
   end
 
+  describe ".next_code" do
+    let!(:lh_avan) { create(:track, code: "LH_AVAN") }
+
+    it "should use next available number" do
+      expect(Course.next_code(lh_avan, 1)).to eq("LH_AVAN_LUN")
+
+      create(:course, code: "LH_AVAN_LUN")
+      expect(Course.next_code(lh_avan, 1)).to eq("LH_AVAN_LUN2")
+      expect(Course.next_code(lh_avan, 2)).to eq("LH_AVAN_MAR")
+
+      create(:course, code: "LH_AVAN_LUN3")
+      expect(Course.next_code(lh_avan, 1)).to eq("LH_AVAN_LUN2")
+      create(:course, code: "LH_AVAN_LUN2")
+      expect(Course.next_code(lh_avan, 1)).to eq("LH_AVAN_LUN4")
+    end
+  end
+
   describe "calendar name" do
     let(:course_lh_prin) { create(:course, code: 'LH_PRIN_JUE', track: create(:track, code: 'LH_PRIN', name: 'Lindy Hop - Principiantes')) }
     let(:course_lh_int1) { create(:course, code: 'LH_INT1_JUE', track: create(:track, code: 'LH_INT1', name: 'Lindy Hop - Intermedios')) }
