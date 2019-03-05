@@ -22,7 +22,7 @@ class Cashier::StudentsController < Cashier::BaseController
 
     render json: {
       course_log_id: course_log.id,
-      room_name: course.room_name,
+      description: course.description(:track, :place, :time),
       untracked_students_count: course_log.untracked_students_count,
       students: course_log.students.map { |s| student_json(s) }.sort_by { |h| - h[:pending_payments][:this_month] },
     }

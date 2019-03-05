@@ -32,15 +32,6 @@ class Course < ActiveRecord::Base
     parts.compact.join(' - ')
   end
 
-  def room_name(options = {})
-    options.reverse_merge!(show_time: true)
-
-    res = name.split('-')[0..-2].join('-')
-    res += " - #{place.name}" if place && place.name != School.description
-    res += " (#{self.short_time})" if options[:show_time]
-    res
-  end
-
   def short_time
     "#{self.start_time.hour}hs"
   end
