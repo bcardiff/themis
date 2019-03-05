@@ -17,9 +17,9 @@ class Course < ActiveRecord::Base
     parts = (components || []).map do |part_name|
       case part_name
       when :track
-        track.name
+        "#{track.name}#{" - #{hashtag}" if hashtag.present?}"
       when :short_track
-        track.code.split('_').join(' ')
+        "#{track.code.split('_').join(' ')}#{" #{hashtag}" if hashtag.present?}"
       when :weekday
         "#{I18n.t('date.day_names')[weekday].titleize}#{" mañana" if start_time.hour <= 12}"
       when :time
