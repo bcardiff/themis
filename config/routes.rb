@@ -31,7 +31,11 @@ Rails.application.routes.draw do
         get :become
       end
     end
-    resources :courses, only: [:index]
+    resources :courses, only: [:index] do
+      collection do
+        get :listing
+      end
+    end
     resources :students, only: [:index, :show, :edit, :update, :new, :create, :destroy] do
       member do
         post :cancel_debt

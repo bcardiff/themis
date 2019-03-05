@@ -3,8 +3,8 @@ class AdminCoursesListing < Listings::Base
 
   model { Course.order(:weekday, :start_time, :code) }
 
-  scope 'Todos', :all, default: true
-  scope 'Vigentes', :ongoing_or_future
+  scope 'Vigentes', :ongoing_or_future, default: true
+  scope 'Todos', :all
 
   column :code
   column "Descripción" do |c|

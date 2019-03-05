@@ -6,6 +6,4 @@
 
 %br
 
-%table.horarios
-  %tbody
-    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future }
+= render_listing :admin_courses
