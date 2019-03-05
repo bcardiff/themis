@@ -134,7 +134,7 @@ track("TP_AVAN", name: "Tap - Avanzados", color: "#fab258", course_kind: "swing"
 track("TP_INT1", name: "Tap - Intermedios 1", color: "#fab258", course_kind: "swing")
 track("TP_INT2", name: "Tap - Intermedios 2", color: "#fab258", course_kind: "swing")
 track("TP_PRIN", name: "Tap - Principiantes", color: "#fab258", course_kind: "swing")
-track("TALLER", name: "Entendiendo la Música", color: "#000000", course_kind: "swing")
+track("TEO_MUSICAL", name: "Teoría Musical", color: "#000000", course_kind: "swing")
 
 track("LOCKING", name: "Locking", color: "#4fadeb", course_kind: "roots")
 track("HOUSE", name: "House", color: "#88219d", course_kind: "roots")
@@ -287,7 +287,7 @@ course "LH_COREO_JUE", name: "Lindy Hop Coreo - Jueves", weekday: 4, valid_since
 
 course "INTRO_BAILE", name: "Intro al Baile - Sábados", weekday: 6, valid_since: Date.new(2018,1,1), track: track("INTRO_BAILE"), place: swing_city, start_time: '19:00', valid_until: Date.new(2018,12,31)
 
-course "TALLER_VIE", name: "Entendiendo la Música - Viérnes", weekday: 5, valid_since: Date.new(2019,3,1), track: track("TALLER"), place: swing_city, start_time: '19:00', valid_until: Date.new(2019,3,31)
+course "TEO_MUSICAL_VIE", name: "Teoría Musical - Viérnes", weekday: 5, valid_since: Date.new(2019,3,1), track: track("TEO_MUSICAL"), place: swing_city, start_time: '19:00', valid_until: Date.new(2019,3,31)
 
 course "LOCKING_LUN", name: "Locking - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("LOCKING"), place: swing_city, start_time: '17:00', valid_until: nil
 course "HOUSE_LUN", name: "House - Lunes", weekday: 1, valid_since: Date.new(2018,4,1), track: track("HOUSE"), place: swing_city, start_time: '18:00', valid_until: Date.new(2018,12,31)
