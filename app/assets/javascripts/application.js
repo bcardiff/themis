@@ -20,7 +20,9 @@
 //= require bootstrap3-typeahead.min
 //= require bootstrap3-autocomplete-input.min
 //= require listings
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require react
 //= require react_ujs
 //= require components
