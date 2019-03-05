@@ -41,10 +41,6 @@ class Course < ActiveRecord::Base
     res
   end
 
-  def name_and_time
-    "#{self.name} #{self.short_time}"
-  end
-
   def short_time
     "#{self.start_time.hour}hs"
   end
