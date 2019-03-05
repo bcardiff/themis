@@ -7,7 +7,9 @@ class AdminCoursesListing < Listings::Base
   scope 'Vigentes', :ongoing_or_future
 
   column :code
-  column :name
+  column "Descripción" do |c|
+    c.description(:track, :place)
+  end
   column :weekday do |c|
     local_wday(c.weekday)
   end

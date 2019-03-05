@@ -12,7 +12,7 @@ class AdminTeacherCoursesListing < Listings::Base
   end
 
   column 'Curso' do |teacher_course_log|
-    teacher_course_log.course_log.name_with_wday_as_context
+    teacher_course_log.course_log.course.description(:short_track, :time)
   end
 
   column 'Profesor' do |teacher_course_log|

@@ -1,10 +1,10 @@
 = month_calendar do |date|
   .daynum
     = date.day
-  - (course_logs[date] || []).sort_by(&:name_with_wday_as_context).each do |course_log|
+  - (course_logs[date] || []).sort_by { |c| c.course.description(:time, :short_track) }.each do |course_log|
     %div.course_log{"class" => "#{'missing' if course_log.missing}"}
       %span.course-link
-        = link_to course_log.name_with_wday_as_context(show_time: false), self.send(url, course_log)
+        = link_to course_log.course.description(:short_track), self.send(url, course_log)
       - unless course_log.missing
         - tooltip_text = "Profes: #{course_log.teachers.map(&:name).join(", ")}"
         %span.glyphicon.glyphicon-user{"data-toggle"=> "tooltip", "data-placement"=>"top", title: tooltip_text}

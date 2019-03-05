@@ -13,13 +13,23 @@ class Course < ActiveRecord::Base
     School.today < self.valid_since
   end
 
-  def name_with_wday_as_context(options = {})
-    options.reverse_merge!(show_time: true)
+  def description(*components)
+    parts = (components || []).map do |part_name|
+      case part_name
+      when :track
+        track.name
+      when :short_track
+        track.code.split('_').join(' ')
+      when :weekday
+        "#{I18n.t('date.day_names')[weekday].titleize}#{" mañana" if start_time.hour <= 12}"
+      when :time
+        short_time
+      when :place
+        place.name if place && place.name != School.description
+      end
+    end
 
-    res = track.code.split('_').join(' ')
-    res += "#{'*' if self.hashtag}"
-    res += " #{self.short_time}" if options[:show_time]
-    res
+    parts.compact.join(' - ')
   end
 
   def room_name(options = {})

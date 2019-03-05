@@ -10,8 +10,8 @@ class AdminMissingPaymentsListing < Listings::Base
     student_course_log.course_log.date
   end
 
-  column :course_log do |student_course_log|
-    student_course_log.course_log.course.name_with_wday_as_context
+  column "Curso" do |student_course_log|
+    student_course_log.course_log.course.description(:track, :weekday, :time)
   end
 
   column :student do |student_course_log|

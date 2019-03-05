@@ -18,7 +18,7 @@ class AdminTeacherCashIncomesListing < Listings::Base
 
   column 'Curso' do |income|
     if income.respond_to?(:course_log)
-      income.course_log.try(:name_with_wday_as_context)
+      income.course_log.try { |c| c.course.description(:short_track, :time) }
     end
   end
 
