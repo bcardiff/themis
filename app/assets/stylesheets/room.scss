@@ -1,32 +1,10 @@
 @import "sass-flex-mixin/flexbox";
 
 $sc-highlight:  #71a9a4;
+$sc-warning:  #ec3b62;
 $sc-dark:       #27313D;
 $sc-light:      #e5e5e5;
 $sc-font:       'Roboto', sans-serif;
-
-$track-lh: #ec3b62;
-$track-lh-limbo: #af3a3a;
-$track-plus: #af3a3a;
-$track-aj: #71a9a4;
-$track-tp: #fab258;
-$track-fisica: #5B9BD5;
-$track-kids: #795FB6;
-$track-senior: #828282;
-$track-ba: #005F42;
-$track-blues-prin: #4873b1;
-$track-aerials-prin: #ce0a24;
-$track-lh-coreo: #ce0a24;
-
-$track-locking: #4FADEB;
-$track-house: #88219D;
-$track-waacking: #D832A8;
-$track-breaking: #E93323;
-$track-popping: #F6C242;
-$track-hip-hop: #2E6AB3;
-$track-afro-urbano: #827f06;
-
-$track-danza-afro: #4EAD5B;
 
 @mixin fullsize {
   position: absolute;
@@ -40,13 +18,6 @@ $track-danza-afro: #4EAD5B;
   @include flexbox();
   @include justify-content(center);
   @include align-items(center);
-}
-
-@mixin button-color($color) {
-  background-color: $color;
-  &:hover, &:active {
-    background-color: darken($color, 20%);
-  }
 }
 
 .layout-columns {
@@ -187,17 +158,17 @@ body.room {
 
   .btn-positive {
     color: white;
-    background-color: $track-aj;
+    background-color: $sc-highlight;
     text-transform: uppercase;
   }
 
   .btn-negative {
     color: white;
-    background-color: $track-lh;
+    background-color: $sc-warning;
   }
 
   .negative {
-    color: $track-lh;
+    color: $sc-warning;
   }
 
   .student-actions {
@@ -280,69 +251,6 @@ body.room {
 
       margin: 0.1em;
       font-size: 5vh;
-
-      @include button-color($sc-highlight);
-      &.lh {
-        @include button-color($track-lh);
-      }
-      &.lh.limbo {
-        @include button-color($track-lh-limbo);
-      }
-      &.lh_prin_plus, &.lh_int1_plus, &.lh_int2_plus, &.lh_int3_plus {
-        @include button-color($track-plus);
-      }
-      &.aj {
-        @include button-color($track-aj);
-      }
-      &.ba, &.balboa, &.shag, &.shag_prin, &.shag_int1 {
-        @include button-color($track-ba);
-      }
-      &.tp {
-        @include button-color($track-tp);
-      }
-      &.tap_kids, &.swing_kids {
-        @include button-color($track-kids);
-      }
-      &.swing_senior {
-        @include button-color($track-senior);
-      }
-      &.blues_prin, &.blues_int1 {
-        @include button-color($track-blues-prin);
-      }
-      &.aerials_prin {
-        @include button-color($track-aerials-prin);
-      }
-      &.lh_coreo {
-        @include button-color($track-lh-coreo);
-      }
-      &.estiramiento, &.pr {
-        @include button-color($track-fisica);
-      }
-
-      &.locking {
-        @include button-color($track-locking);
-      }
-      &.house {
-        @include button-color($track-house);
-      }
-      &.waacking {
-        @include button-color($track-waacking);
-      }
-      &.breaking {
-        @include button-color($track-breaking);
-      }
-      &.popping {
-        @include button-color($track-popping);
-      }
-      &.hip_hop_prin, &.hip_hop_int {
-        @include button-color($track-hip-hop);
-      }
-      &.afro_urbano {
-        @include button-color($track-afro-urbano);
-      }
-      &.danza_afro {
-        @include button-color($track-danza-afro);
-      }
 
       a {
         @include fullsize;

@@ -114,4 +114,21 @@ module ApplicationHelper
   def markdown(source)
     Kramdown::Document.new(source).to_html.html_safe
   end
+
+  def darken_color(color, amount)
+    color = Sass::Script::Value::Color.from_hex(color)
+    color.with(lightness: [color.lightness * (100 - amount) / 100, 0].max).inspect
+  end
+
+  def tracks_color_css
+    Track.all.map do |t|
+      css_class = t.css_class
+      css_color = t.color.presence || "#777777"
+      css_color_darken = darken_color(css_color, 20)
+
+%(
+.#{css_class} { background-color: #{css_color}; }
+.#{css_class}:hover, .#{css_class}:active { background-color: #{css_color_darken}; })
+    end.join
+  end
 end

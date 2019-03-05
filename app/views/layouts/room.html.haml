@@ -8,6 +8,7 @@
     %title Glims
     = stylesheet_link_tag    'https://fonts.googleapis.com/css?family=Roboto:300'
     = stylesheet_link_tag    'application', media: 'all'
+    %style{type: "text/css", media: "all"}= tracks_color_css
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body.room

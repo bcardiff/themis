@@ -35,8 +35,4 @@ class Course < ActiveRecord::Base
   def short_time
     "#{self.start_time.hour}hs"
   end
-
-  def css_prefix
-    "#{track.css_prefix} #{hashtag.try &:underscore}"
-  end
 end
