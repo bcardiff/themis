@@ -6,13 +6,13 @@
   %tr
     %th(rowspan=2) Semana
     - @courses_by_track.each do |track, courses|
-      %th{colspan: courses.count}= track.code
+      %th{colspan: courses.count, style: "border: 1px solid #ccc"}= track.code
   %tr
     - @courses_by_track.each do |track, courses|
       - courses.each do |course|
         %th.rotate
           %div
-            %span= course.name_with_track_as_context
+            %span= course.description(:weekday, :time)
   - @data.each do |row|
     %tr
       %th(style="white-space: nowrap;")= row[:period]
