@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  validates_presence_of :code
+  validates :code, presence: true, uniqueness: true, format: { with: /\A[\w\_]+\z/ }
 
   def css_class
     "track_#{code.downcase}"

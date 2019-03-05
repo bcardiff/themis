@@ -4,7 +4,9 @@ FactoryGirl.define do
       "course_#{n}"
     end
     track
-    code { name }
+    sequence :code do |n|
+      "#{track.code}_#{n}"
+    end
     weekday { 1 }
     valid_since { Date.new(2015, 5, 1) }
     start_time { '19:00' }

@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Course, type: :model do
+  let!(:a_course) { create(:course) }
+
+  describe "code" do
+    it "is required" do
+      expect(build(:course, code: '')).to_not be_valid
+      expect(build(:course, code: nil)).to_not be_valid
+    end
+
+    it "is unique" do
+      expect(build(:course, code: a_course.code)).to_not be_valid
+    end
+
+    it "is an identifier" do
+      expect(build(:course, code: "some invalid")).to_not be_valid
+      expect(build(:course, code: "some_valid_9")).to be_valid
+    end
+  end
+
   describe "calendar name" do
     let(:course_lh_prin) { create(:course, code: 'LH_PRIN_JUE', track: create(:track, code: 'LH_PRIN', name: 'Lindy Hop - Principiantes')) }
     let(:course_lh_int1) { create(:course, code: 'LH_INT1_JUE', track: create(:track, code: 'LH_INT1', name: 'Lindy Hop - Intermedios')) }
