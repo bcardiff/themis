@@ -150,6 +150,7 @@ track("DANZA_AFRO", name: "Danza Afro", color: "#4ead5b", course_kind: "afro")
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00', valid_until: Date.new(2018,12,31)
+course "AJ_PRIN_LUN3", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2019,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '11:00', valid_until: nil
 course "AJ_PRIN_MIE", name: "Authentic Jazz - Principiantes - Miércoles", weekday: 3, track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_SAB", name: "Authentic Jazz - Principiantes - Sábados", weekday: 6, track: track("AJ_PRIN"), place: swing_city, start_time: '17:00', valid_since: Date.new(2017,8,1), valid_until: Date.new(2017,12,31)
 course "AJ_PRIN_SAB2", name: "Authentic Jazz - Principiantes - Sábados", weekday: 6, track: track("AJ_PRIN"), place: swing_city, start_time: '18:00', valid_since: Date.new(2018,1,1), valid_until: nil
@@ -196,6 +197,7 @@ course "LH_INT3_PLUS_SAB", name: "Lindy Hop - Intermedios 3+ - Sábados", weekda
 
 course "LH_PRIN_LUN", name: "Lindy Hop - Principiantes - Lunes", weekday: 1, track: track("LH_PRIN"), place: swing_city, start_time: '19:00'
 course "LH_PRIN_LUN2", name: "Lindy Hop - Principiantes - Lunes mañana", weekday: 1, track: track("LH_PRIN"), place: swing_city, start_time: '11:00', valid_since: Date.new(2017,3,1), valid_until: Date.new(2018,12,31)
+course "LH_PRIN_LUN3", name: "Lindy Hop - Principiantes - Lunes mañana", weekday: 1, track: track("LH_PRIN"), place: swing_city, start_time: '12:00', valid_since: Date.new(2019,3,1), valid_until: nil
 course "LH_PRIN_MAR2", name: "Lindy Hop - Principiantes - Martes", weekday: 2, track: track("LH_PRIN"), place: swing_city, start_time: '20:00'
 course "LH_PRIN_MIE2", name: "Lindy Hop - Principiantes - Miércoles", weekday: 3, track: track("LH_PRIN"), place: swing_city, start_time: '20:00'
 course "LH_PRIN_MIE", name: "Lindy Hop - Principiantes - Miércoles colmegna", weekday: 3, valid_until: Date.new(2015,5,31), track: track("LH_PRIN"), place: swing_city, start_time: '8:00'
@@ -215,6 +217,7 @@ course "LH_AVAN2_MAR", name: "Lindy Hop - Avanzados 2 - Martes", weekday: 2, val
 
 course "TP_PRIN_LUN", name: "Tap - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("TP_PRIN"), place: swing_city, start_time: '20:00'
 course "TP_PRIN_LUN2", name: "Tap - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("TP_PRIN"), place: swing_city, start_time: '10:00', valid_until: Date.new(2018,12,31)
+course "TP_PRIN_LUN3", name: "Tap - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2019,3,1), track: track("TP_PRIN"), place: swing_city, start_time: '11:00', valid_until: nil
 course "TP_PRIN_MAR", name: "Tap - Principiantes - Martes La huella", weekday: 2, valid_until: Date.new(2015,5,31), track: track("TP_PRIN"), place: la_huella, start_time: '8:00'
 course "TP_PRIN_MAR2", name: "Tap - Principiantes - Martes", weekday: 2, valid_since: Date.new(2016,1,1), valid_until: Date.new(2016,12,31), track: track("TP_PRIN"), place: swing_city, start_time: '19:00'
 course "TP_PRIN_MAR3", name: "Tap - Principiantes - Martes", weekday: 2, valid_since: Date.new(2017,1,1), track: track("TP_PRIN"), place: swing_city, start_time: '20:00'
@@ -226,6 +229,7 @@ course "TP_INT1_LUN", name: "Tap - Intermedios 1 - Lunes mañana", weekday: 1, t
 course "TP_INT1_LUN3", name: "Tap - Intermedios 1 - Lunes mañana", weekday: 1, track: track("TP_INT1"), place: swing_city, valid_since: Date.new(2018,2,1), start_time: '12:00', valid_until: Date.new(2018,12,31)
 course "TP_INT1_LUN2", name: "Tap - Intermedios 1 - Lunes", weekday: 1, track: track("TP_INT1"), place: swing_city, valid_since: Date.new(2018,1,1), valid_until: Date.new(2018,1,31), start_time: '21:00'
 course "TP_INT1_LUN4", name: "Tap - Intermedios 1 - Lunes", weekday: 1, track: track("TP_INT1"), place: swing_city, valid_since: Date.new(2018,2,1), valid_until: nil, start_time: '18:00'
+course "TP_INT1_LUN5", name: "Tap - Intermedios 1 - Lunes mañana", weekday: 1, track: track("TP_INT1"), place: swing_city, valid_since: Date.new(2019,3,1), start_time: '12:00', valid_until: nil
 course "TP_INT1_MAR", name: "Tap - Intermedios 1 - Martes", weekday: 2, track: track("TP_INT1"), place: swing_city, valid_until: Date.new(2016,12,31), start_time: '18:00'
 course "TP_INT1_MAR2", name: "Tap - Intermedios 1 - Martes", weekday: 2, valid_since: Date.new(2017,1,1), track: track("TP_INT1"), place: swing_city, start_time: '19:00'
 course "TP_INT1_MIE", name: "Tap - Intermedios 1 - Miércoles", weekday: 3, track: track("TP_INT1"), place: swing_city, valid_since: Date.new(2017,8,23), valid_until: Date.new(2017,12,31), start_time: '11:00'
