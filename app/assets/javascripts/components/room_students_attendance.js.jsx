@@ -1,5 +1,5 @@
 var RoomStudentsAttendance = React.createClass({
-  getInitialState: function(){
+  getInitialState: function () {
     return {
       student: null,
       not_found_alert: false,
@@ -11,7 +11,7 @@ var RoomStudentsAttendance = React.createClass({
     }
   },
 
-  onStudentChange: function(card_code) {
+  onStudentChange: function (card_code) {
     if (card_code == "") {
       this.setState(React.addons.update(this.state, {
         student: { $set: null },
@@ -31,25 +31,25 @@ var RoomStudentsAttendance = React.createClass({
       $.ajax({
         url: "/room/course_log/" + this.state.course_log.id + "/students/search",
         data: { q: card_code },
-        success: function(data) {
+        success: function (data) {
           this._loadSearchStudentResult(data)
         }.bind(this)
       });
     }
   },
 
-  onToggleHelper: function() {
+  onToggleHelper: function () {
     this.setState(React.addons.update(this.state, {
       as_helper: { $set: !this.state.as_helper },
     }))
   },
 
-  _post: function(options) {
+  _post: function (options) {
     $.ajax({
       method: "POST",
       url: options.url,
       data: options.data,
-      success: function(data) {
+      success: function (data) {
         this.setState(React.addons.update(this.state, {
           course_log: { $set: data.course_log },
           student: { $set: null },
@@ -59,12 +59,12 @@ var RoomStudentsAttendance = React.createClass({
     });
   },
 
-  _delete: function(options) {
+  _delete: function (options) {
     $.ajax({
       method: "DELETE",
       url: options.url,
       data: options.data,
-      success: function(data) {
+      success: function (data) {
         this.setState(React.addons.update(this.state, {
           course_log: { $set: data.course_log }
         }));
@@ -72,39 +72,39 @@ var RoomStudentsAttendance = React.createClass({
     });
   },
 
-  addStudent: function() {
+  addStudent: function () {
     this._post({
       url: "/room/course_log/" + this.state.course_log.id + "/students",
       data: {
         card_code: this.state.student.card_code,
         as_helper: this.state.as_helper
       },
-      success: function(){
+      success: function () {
         this.refs.pad.clear();
       }.bind(this)
     });
   },
 
-  removeStudent: function() {
+  removeStudent: function () {
     this._delete({
       url: "/room/course_log/" + this.state.course_log.id + "/students",
       data: { card_code: this.state.student.card_code },
     });
   },
 
-  addStudentWithoutCardQuick: function() {
+  addStudentWithoutCardQuick: function () {
     this.addStudentWithoutCard(true);
   },
 
-  addStudentWithoutCard: function(skip_notice) {
+  addStudentWithoutCard: function (skip_notice) {
     if (!this.state.allow_visitors) {
       return;
     }
 
     this._post({
       url: "/room/course_log/" + this.state.course_log.id + "/students_no_card",
-      data: { },
-      success: function(){
+      data: {},
+      success: function () {
         if (skip_notice != true) {
           this.setState(React.addons.update(this.state, {
             show_visitors_notice: { $set: true },
@@ -115,28 +115,28 @@ var RoomStudentsAttendance = React.createClass({
     });
   },
 
-  hideVisitorsNotice: function() {
+  hideVisitorsNotice: function () {
     this.setState(React.addons.update(this.state, {
       show_visitors_notice: { $set: false },
       allow_visitors: { $set: true }
     }));
   },
 
-  removeStudentWithoutCard: function() {
+  removeStudentWithoutCard: function () {
     this._delete({
       url: "/room/course_log/" + this.state.course_log.id + "/students_no_card",
-      data: { },
+      data: {},
     });
   },
 
-  toggleStudents: function() {
+  toggleStudents: function () {
     this.setState(React.addons.update(this.state, {
       show_students: { $set: !this.state.show_students },
       show_visitors_notice: { $set: false }
     }));
   },
 
-  _loadExistingStudent: function(student) {
+  _loadExistingStudent: function (student) {
     this.setState(React.addons.update(this.state, {
       student: { $set: student },
       not_found_alert: { $set: false },
@@ -145,7 +145,7 @@ var RoomStudentsAttendance = React.createClass({
     }));
   },
 
-  _loadSearchStudentResult: function(result) {
+  _loadSearchStudentResult: function (result) {
     this.setState(React.addons.update(this.state, {
       student: { $set: result.student },
       not_found_alert: { $set: result.student == null },
@@ -154,7 +154,7 @@ var RoomStudentsAttendance = React.createClass({
     }));
   },
 
-  _clearCurrentStudent: function() {
+  _clearCurrentStudent: function () {
     if (!this.state.back_to_show_students) {
       this.refs.pad.clear();
     } else {
@@ -164,11 +164,11 @@ var RoomStudentsAttendance = React.createClass({
     }
   },
 
-  containsStudent: function(student) {
-    return _.filter(this.state.course_log.students, _.matches({card_code: student.card_code})).length > 0;
+  containsStudent: function (student) {
+    return _.filter(this.state.course_log.students, _.matches({ card_code: student.card_code })).length > 0;
   },
 
-  render: function() {
+  render: function () {
     var rightPanel = null;
 
 
@@ -178,33 +178,33 @@ var RoomStudentsAttendance = React.createClass({
         <h1>No olvides pasar por recepción a la salida</h1>
 
         <button className="btn btn-lg btn-positive students-list-bottom-btn" onClick={this.hideVisitorsNotice}>
-          <i className="glyphicon glyphicon-thumbs-up"/> Ok, Listo
+          <i className="glyphicon glyphicon-thumbs-up" /> Ok, Listo
         </button>
       </div>);
     } else if (this.state.show_students) {
       rightPanel = (<div className="students-list">
         <div className="btn-group">
-        {this.state.course_log.students.map(function(student){
+          {this.state.course_log.students.map(function (student) {
             return (
-              <button key={student.card_code} className={"btn btn-lg " + (student.pending_payment == true ? "btn-negative" : "btn-light") } onClick={function(){ this._loadExistingStudent(student); }.bind(this)}>
+              <button key={student.card_code} className={"btn btn-lg " + (student.pending_payment == true ? "btn-negative" : "btn-light")} onClick={function () { this._loadExistingStudent(student); }.bind(this)}>
                 {student.first_name}
                 &nbsp;
                 {student.last_name}
                 &nbsp;
-                {student.as_helper ? <i className="glyphicon glyphicon-education"/> : null}
+                {student.as_helper ? <i className="glyphicon glyphicon-education" /> : null}
               </button>);
-        }.bind(this))}
+          }.bind(this))}
         </div>
-        <hr/>
+        <hr />
         <h2 className="text-right">
           {this.state.course_log.untracked_students_count} Alumno{this.state.course_log.untracked_students_count != 1 ? 's' : null} sin tarjeta
           <div>
             <button className="btn btn-lg btn-light" onClick={this.removeStudentWithoutCard}>
-              <i className="glyphicon glyphicon-minus"/>
+              <i className="glyphicon glyphicon-minus" />
             </button>
 
             <button className="btn btn-lg btn-light" onClick={this.addStudentWithoutCardQuick}>
-              <i className="glyphicon glyphicon-plus"/>
+              <i className="glyphicon glyphicon-plus" />
             </button>
           </div>
         </h2>
@@ -214,11 +214,11 @@ var RoomStudentsAttendance = React.createClass({
 
       if (!this.containsStudent(this.state.student)) {
         studentAction = (<button className="btn btn-lg btn-positive" onClick={this.addStudent}>
-          <i className="glyphicon glyphicon-thumbs-up"/> Dar Presente
+          <i className="glyphicon glyphicon-thumbs-up" /> Dar Presente
         </button>);
       } else {
         studentAction = (<button className="btn btn-lg btn-negative" onClick={this.removeStudent}>
-          <i className="glyphicon glyphicon-thumbs-down"/> Quitar Presente
+          <i className="glyphicon glyphicon-thumbs-down" /> Quitar Presente
         </button>);
       }
 
@@ -255,38 +255,44 @@ var RoomStudentsAttendance = React.createClass({
     }
 
     return (
-    <div className="layout-columns">
-      <div>
-        <StudentPad ref="pad" digitsClassName={this.state.as_helper ? "bg-education" : ""} onChange={this.onStudentChange} onToggleHelper={this.onToggleHelper}/>
-        <button className={"btn btn-negative students-list-bottom-btn " + (this.state.allow_visitors && !this.state.as_helper ? "" : "disabled")} onClick={this.addStudentWithoutCard}>
-          <i className="glyphicon glyphicon-barcode" /> No tengo tarjeta
-        </button>
-        <button className={"btn btn-light students-list-bottom-btn " + (this.state.show_students ? "active " : "")} onClick={this.toggleStudents}>
-          Total:
+      <div className="layout-columns">
+        <div>
+          <StudentPad ref="pad" digitsClassName={this.state.as_helper ? "bg-education" : ""} onChange={this.onStudentChange} onToggleHelper={this.onToggleHelper} />
+          {(function () {
+            if (this.state.as_helper) {
+              return (<span className={"btn btn-link students-list-bottom-btn color-education"}>estoy de ayudante</span>)
+            } else {
+              return (<button className={"btn btn-negative students-list-bottom-btn " + (this.state.allow_visitors && !this.state.as_helper ? "" : "disabled")} onClick={this.addStudentWithoutCard}>
+                <i className="glyphicon glyphicon-barcode" /> No tengo tarjeta
+            </button>);
+            }
+          }.bind(this))()}
+          <button className={"btn btn-light students-list-bottom-btn " + (this.state.show_students ? "active " : "")} onClick={this.toggleStudents}>
+            Total:
           <b>{this.state.course_log.total_students}</b>
-          Alumno{this.state.course_log.total_students != 1 ? 's' : null}
-        </button>
-      </div>
-      <div>
-        {rightPanel}
-      </div>
-    </div>);
+            Alumno{this.state.course_log.total_students != 1 ? 's' : null}
+          </button>
+        </div>
+        <div>
+          {rightPanel}
+        </div>
+      </div>);
   }
 });
 
 var StudentPad = React.createClass({
 
-  getInitialState: function(){
+  getInitialState: function () {
     return { card_code: "" }
   },
 
   // debounce: http://stackoverflow.com/a/24679479/30948
-  componentWillMount: function() {
-    this.fireChangeDebounced = _.debounce(function(){
+  componentWillMount: function () {
+    this.fireChangeDebounced = _.debounce(function () {
       this._fireChange.apply(this, [this.state.card_code]);
     }, 500);
 
-    $('body').keydown(function(event) {
+    $('body').keydown(function (event) {
       if ("0".charCodeAt(0) <= event.which && event.which <= "9".charCodeAt(0)) {
         this.appendDigit(String.fromCharCode(event.which));
       }
@@ -299,42 +305,42 @@ var StudentPad = React.createClass({
     }.bind(this));
   },
 
-  _performUserInput: function(new_card_code) {
+  _performUserInput: function (new_card_code) {
     this.setState(React.addons.update(this.state, {
       card_code: { $set: new_card_code }
     }));
     this.fireChangeDebounced();
   },
 
-  _fireChange: function(card_code) {
+  _fireChange: function (card_code) {
     this.props.onChange(card_code);
   },
 
-  appendDigit: function(digit) {
+  appendDigit: function (digit) {
     this._performUserInput(this.state.card_code + digit);
   },
 
-  clear: function() {
+  clear: function () {
     this._performUserInput("");
   },
 
-  _fireToggleHelper: function() {
+  _fireToggleHelper: function () {
     this.props.onToggleHelper();
   },
 
-  render: function() {
-    var digitButton = function(digit) {
-      return <StudentPadButton className={this.props.digitsClassName} digit={digit} onClick={this.appendDigit}/>;
+  render: function () {
+    var digitButton = function (digit) {
+      return <StudentPadButton className={this.props.digitsClassName} digit={digit} onClick={this.appendDigit} />;
     }.bind(this)
 
     return (
       <table className="studentpad">
         <tbody>
           <tr>
-            <td colSpan="3" style={{textAlign: 'center'}}>
+            <td colSpan="3" style={{ textAlign: 'center' }}>
               <h1>
-                <span style={{color: '#ccc'}}>SWC/stu/</span>
-                <div style={{width: 3 + 'em', display: 'inline-block', textAlign: 'left'}}>
+                <span style={{ color: '#ccc' }}>SWC/stu/</span>
+                <div style={{ width: 3 + 'em', display: 'inline-block', textAlign: 'left' }}>
                   {this.state.card_code}<span className="blink">_</span>
                 </div>
               </h1>
@@ -364,7 +370,7 @@ var StudentPad = React.createClass({
             {digitButton("0")}
             <StudentPadButton onClick={this.clear}>
               <small>
-                <i className="glyphicon glyphicon-remove-sign"/>
+                <i className="glyphicon glyphicon-remove-sign" />
               </small>
             </StudentPadButton>
           </tr>
@@ -375,11 +381,11 @@ var StudentPad = React.createClass({
 });
 
 var StudentPadButton = React.createClass({
-  click: function() {
+  click: function () {
     this.props.onClick(this.props.digit);
   },
 
-  render: function() {
+  render: function () {
     return (
       <td>
         <button onClick={this.click} className={"btn btn-default " + this.props.className}>{this.props.children || this.props.digit}</button>
