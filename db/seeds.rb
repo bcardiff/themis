@@ -66,9 +66,9 @@ teacher 'Brian', cashier: true, priority: 3
 
 teacher 'Otro', priority: 10
 
-teacher 'Martina', cashier: true, priority: 0
-teacher 'Blake', cashier: true, priority: 0
-teacher 'Belu', cashier: true, priority: 0
+teacher 'Martina', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
+teacher 'Blake', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
+teacher 'Belu', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Lala', cashier: true, priority: 0
 teacher 'Mar Tin', cashier: true, priority: 0
 
@@ -82,14 +82,15 @@ teacher 'ManuH', priority: 3
 teacher 'Carla', priority: 3
 teacher 'Ornella', priority: 3
 teacher 'Guido', priority: 3
+teacher 'Agus Giralt', priority: 3
 
 teacher 'Emiliano', priority: 4
 teacher 'Griselda', priority: 4
 teacher 'Lucas', priority: 4, deleted_at: Date.new(2018,11,30)
 teacher 'Maxim', priority: 4, deleted_at: Date.new(2018,11,30)
 teacher 'Rulock', priority: 4
-teacher 'Zai', priority: 4
-teacher 'Freddy', priority: 4
+teacher 'Zai', priority: 4, deleted_at: Date.new(2019,3,1)
+teacher 'Freddy', priority: 4, deleted_at: Date.new(2019,3,1)
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
