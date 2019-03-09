@@ -1,4 +1,7 @@
 class Admin::CoursesController < Admin::BaseController
+  before_filter :set_valid_since_options, only: [:new, :create]
+  before_filter :set_valid_until_options, only: [:show, :update]
+
   def index
   end
 
@@ -20,9 +23,32 @@ class Admin::CoursesController < Admin::BaseController
     end
   end
 
+  def show
+    @course = Course.find(params[:id])
+  end
+
+  def update
+    @course = Course.find(params[:id])
+    @course.valid_until = params[:course][:valid_until]
+
+    if @course.save
+      redirect_to admin_courses_path
+    else
+      render :show
+    end
+  end
+
   private
 
   def course_params
     params.require(:course).permit(:track_id, :weekday, :start_time, :valid_since)
+  end
+
+  def set_valid_since_options
+    @valid_since_options = [School.today.at_beginning_of_month, (School.today + 1.month).at_beginning_of_month]
+  end
+
+  def set_valid_until_options
+    @valid_until_options = [nil, School.today.at_end_of_month, School.today]
   end
 end

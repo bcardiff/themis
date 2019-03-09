@@ -36,6 +36,7 @@ es-AR:
         weekday: Día de la semana
         start_time: Hora inicio
         valid_since: Fecha desde
+        valid_until: Fecha cierre
   date:
     abbr_day_names: # we wanted them without tilde: mié / sáb.
       - dom
