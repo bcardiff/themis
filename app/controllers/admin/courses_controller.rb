@@ -38,6 +38,15 @@ class Admin::CoursesController < Admin::BaseController
     end
   end
 
+  def destroy
+    @course = Course.find(params[:id])
+    if @course.can_destroy?
+      @course.destroy
+    end
+
+    redirect_to admin_courses_path
+  end
+
   private
 
   def course_params

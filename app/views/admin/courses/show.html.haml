@@ -8,3 +8,6 @@
 
   = f.input :valid_until, as: :radio_buttons, collection: @valid_until_options.map { |v| [v || "(ninguna)", v] }
   = f.button :submit, "Actualizar fecha de cierre"
+
+  - if @course.can_destroy?
+    = link_to 'Eliminar curso', admin_course_path(@course), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el curso?'

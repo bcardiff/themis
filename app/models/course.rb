@@ -15,6 +15,10 @@ class Course < ActiveRecord::Base
     School.today < self.valid_since
   end
 
+  def can_destroy?
+    course_logs.count == 0
+  end
+
   def description(*components)
     parts = (components || []).map do |part_name|
       case part_name
