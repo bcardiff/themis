@@ -1,5 +1,5 @@
 - hours = courses.pluck('start_time').uniq.to_a.uniq.sort
-- days = (1..6).to_a.tap { |r| r << 0 }
+- days = School.weekdays
 
 %tr.header
   %td.day

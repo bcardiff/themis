@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+.horarios a, .horarios a:hover {
+  text-decoration: none;
+}
+
 .horarios td {
   border: 1px solid white;
 }
@@ -56,4 +60,16 @@
   vertical-align: middle;
   text-align: center;
   padding: 10px 3px;
+}
+
+.horarios div.create_course {
+  background-color: #ffffff;
+  border: 1px dashed black;
+  color: black;
+  font-weight: normal;
+  visibility: hidden;
+}
+
+.horarios td:hover div.create_course {
+  visibility: visible;
 }

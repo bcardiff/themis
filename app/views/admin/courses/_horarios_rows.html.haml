@@ -1,5 +1,5 @@
 - hours = courses.pluck('start_time').uniq.to_a.uniq.sort
-- days = (1..6).to_a.tap { |r| r << 0 }
+- days = School.weekdays
 
 %tr.header
   %td.day
@@ -33,3 +33,7 @@
         - courses.includes(:track).where(weekday: wday, start_time: time).order('tracks.code').each do |course|
           %div{'class' => course.track.css_class}
             = course.description(:short_track) + (course.future? ? " **" : "")
+        = link_to new_admin_course_path(weekday: wday, start_time: time.strftime("%H:%M")) do
+          %div{class: 'create_course'}
+            + Agregar
+

@@ -1,0 +1,8 @@
+= simple_form_for([:admin, @course], html: { class: 'form-horizontal' }) do |f|
+
+  = f.association :track, collection: Track.order(:course_kind, :code)
+  = f.input :weekday, collection: School.weekdays.map { |wday| [local_wday(wday).titleize, wday] }
+  = f.input :start_time, as: :string
+  = f.input :valid_since, as: :radio_buttons, collection: [School.today.at_beginning_of_month, (School.today + 1.month).at_beginning_of_month]
+
+  = f.button :submit

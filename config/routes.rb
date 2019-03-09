@@ -31,7 +31,7 @@ Rails.application.routes.draw do
         get :become
       end
     end
-    resources :courses, only: [:index] do
+    resources :courses, only: [:index, :new, :create] do
       collection do
         get :listing
       end
