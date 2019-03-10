@@ -55,6 +55,10 @@ class StudentPack < ActiveRecord::Base
         weeks = 3
       when "1_X_SEMANA_4"
         weeks = 4
+      when "1_X_SEMANA_4_SALE_30"
+        weeks = 4
+      when "1_X_SEMANA_4_SALE_50"
+        weeks = 4
       when "1_X_SEMANA_5"
         weeks = 5
       else

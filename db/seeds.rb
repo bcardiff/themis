@@ -318,9 +318,12 @@ payment_plan "3_X_SEMANA", description: "Swing: Mensual 3 x Semana $1900", price
 payment_plan "2_X_SEMANA", description: "Swing: Mensual 2 x Semana $1700", price: 1700, weekly_classes: 2, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_3", description: "Swing: Mensual 1 x Semana (3 c) $680", price: 680, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_4", description: "Swing: Mensual 1 x Semana (4 c) $900", price: 900, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_4_SALE_30", description: "Swing: Mensual 1 x Semana (4 c) -30% $630", price: 630, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_4_SALE_50", description: "Swing: Mensual 1 x Semana (4 c) -50% $450", price: 450, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_5", description: "Swing: Mensual 1 x Semana (5 c) $1120", price: 1120, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan PaymentPlan::SINGLE_CLASS, description: "Swing: Clase suelta $270", price: 270, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan PaymentPlan::OTHER, description: "Swing: Otro (monto a continuación)", price: 0, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan PaymentPlan::SINGLE_CLASS_FREE, description: "Swing: Clase bonificada $0", price: 0, weekly_classes: 1, order: 1, course_match: "swing"
 
 payment_plan PaymentPlan::SINGLE_CLASS_ROOTS, description: "Roots: Clase suelta $270", price: 270, weekly_classes: 1, order: 2, course_match: "roots"
 payment_plan "ROOTS__1_X_SEMANA", description: "Roots: Mensual 1 x Semana $900", price: 900, weekly_classes: 1, order: 2, course_match: "roots"
