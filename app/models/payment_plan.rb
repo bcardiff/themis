@@ -5,6 +5,8 @@ class PaymentPlan < ActiveRecord::Base
   SINGLE_CLASS_ROOTS = "ROOTS__CLASE"
   SINGLE_CLASS_AFRO = "AFRO__CLASE"
 
+  validates :price, numericality: true
+
   scope :single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS, SINGLE_CLASS_FREE]) }
 
   def other?
@@ -37,5 +39,10 @@ class PaymentPlan < ActiveRecord::Base
 
   def mailer_description
     description.downcase
+  end
+
+  def self.updatable_prices
+    PaymentPlan.all.order(:order, :price)
+      .to_a.select { |p| !p.other? && p.code != SINGLE_CLASS_FREE }
   end
 end

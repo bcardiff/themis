@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
     get 'ona_api/*path' => 'ona_submissions#api_forward'
 
+    get 'pricing' => 'welcome#pricing', as: :pricing
+    post 'pricing' => 'welcome#pricing_update'
+
     resources :ona_submissions, only: :index do
       collection do
         get :missing_forms

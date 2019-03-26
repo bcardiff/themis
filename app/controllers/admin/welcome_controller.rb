@@ -85,4 +85,30 @@ class Admin::WelcomeController < Admin::BaseController
 
   def missing_payments
   end
+
+  def pricing
+    @payment_plans = PaymentPlan.updatable_prices
+  end
+
+  def pricing_update
+    @payment_plans = PaymentPlan.updatable_prices
+
+    ActiveRecord::Base.transaction do
+      begin
+        params[:payment_plans].values.each do |entry|
+          @payment_plans.select { |p| p.id == entry["id"].to_i }.first.price = entry["price"]
+        end
+
+        @payment_plans.each &:save!
+      rescue => e
+        logger.warn e
+        flash.now[:error] = "Error al actualizar precios"
+        render "pricing"
+        return
+      end
+    end
+
+    flash[:notice] = "Precios actualizados"
+    redirect_to admin_pricing_path
+  end
 end

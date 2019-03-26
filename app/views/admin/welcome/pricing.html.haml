@@ -1,0 +1,20 @@
+%h1 Precios
+
+= form_tag html: { class: "form-horizontal" } do |f|
+  %table.table
+    %thead
+      %tr
+        %th Cursos
+        %th Descripción
+        %th Precio
+    %tbody
+      - @payment_plans.each_with_index do |payment_plan, index|
+        %tr
+          %td= payment_plan.course_match
+          %td= payment_plan.description
+          %td
+            = hidden_field_tag "payment_plans[#{index}]id", payment_plan.id
+            .form-group{class: "#{"has-error" if payment_plan.invalid?}"}
+              = text_field_tag "payment_plans[#{index}]price", payment_plan.price.to_i , class: "form-control"
+
+  = submit_tag "Actualizar", class: "btn btn-primary"
