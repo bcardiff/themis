@@ -9,3 +9,8 @@ before_script:
   - docker-compose run --rm --no-deps app rake db:test:prepare
 script:
   - docker-compose run app bundle exec rake spec
+deploy:
+  provider: script
+  script: "./build.sh"
+  on:
+    all_branches: true
