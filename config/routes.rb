@@ -127,6 +127,8 @@ Rails.application.routes.draw do
     get '/receipt' => 'receipt#index'
     post '/receipt' => 'receipt#validate'
 
+    post '/open_course' => 'dashboard#open_course'
+
     resources :students, only: [:index, :show, :create, :edit, :update] do
       member do
         post 'single_class_payment/:student_course_log_id' => 'students#single_class_payment'

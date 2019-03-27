@@ -25,6 +25,22 @@ var CashierDashboard = React.createClass({
     })
   },
 
+  _openCourse: function (course_code) {
+    $.ajax({
+      url: '/cashier/open_course',
+      data: { date: this.props.config.date, course: course_code },
+      method: 'POST',
+      success: function (data) {
+        let opened_course = _.filter(data.courses, _.matches({ course: course_code }))[0];
+
+        this.setState(React.addons.update(this.state, {
+          courses: { $set: data.courses },
+          page: { $set: { course: opened_course } },
+        }));
+      }.bind(this)
+    })
+  },
+
   toggleStudentsSearch: function (event) {
     if (this.state.page == "students_search") {
       this.setState(React.addons.update(this.state, {
@@ -116,9 +132,12 @@ var CashierDashboard = React.createClass({
             } else if (_.get(this.state.page, "course", null) != null) {
               var course = this.state.page.course;
               if (!course.started) {
+                var onClick = function (event) { this._openCourse(course.course); }.bind(this);
+
                 return (<div>
                   <h1>{course.description}</h1>
                   <p>Aún no hay datos</p>
+                  <button onClick={onClick} className="btn btn-primary">Abrir curso</button>
                 </div>);
               } else {
                 return <CashierCourseDetails {...this.props} course={course.course} />;
