@@ -55,9 +55,22 @@ var CashierCourseDetails = React.createClass({
     }.bind(this));
   },
 
+  _addUntrackedStudent: function () {
+    $.ajax({
+      url: '/room/course_log/' + this.state.course_log.course_log_id + '/students_no_card',
+      data: {},
+      method: 'POST',
+      success: function (data) {
+        this._updateCourseLogStatus();
+      }.bind(this)
+    });
+  },
+
   render: function () {
     var course_log = this.state.course_log;
     var untracked_students = this.state.untracked_students;
+
+    var onClickAddUntrackedStudent = function (event) { this._addUntrackedStudent(); }.bind(this);
 
     return (
       <div>
@@ -77,6 +90,9 @@ var CashierCourseDetails = React.createClass({
         {course_log.students.map(function (student) {
           return <StudentRecord key={student.id} student={student} config={this.props.config} />;
         }.bind(this))}
+
+        <br />
+        <button onClick={onClickAddUntrackedStudent} className="btn btn-primary">Agregar asistencia</button>
       </div>
     );
   }
