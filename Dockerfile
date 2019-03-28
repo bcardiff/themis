@@ -1,5 +1,7 @@
 FROM instedd/nginx-rails:2.2
 
+ADD docker/sources.list /etc/apt/sources.list
+
 # Install gem bundle
 ADD Gemfile /app/
 ADD Gemfile.lock /app/
