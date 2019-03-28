@@ -202,7 +202,16 @@ var StudentPaymentControls = React.createClass({
     return (
       <div className="row">
         <ConfirmDialog ref="dialog" />
-        <div className="col-md-6">
+        <div className="col-md-2">
+          {(function () {
+            if (this.props.onRemoveStudent) {
+              return (<div>
+                <button className="btn btn-danger" onClick={this.props.onRemoveStudent} title="Quitar presente"><i className="glyphicon glyphicon-trash" /></button>
+              </div>)
+            }
+          }.bind(this))()}
+        </div>
+        <div className="col-md-5">
           {(function () {
             if (student.today_pending_classes.length > 0) {
               return (<div>
@@ -217,7 +226,7 @@ var StudentPaymentControls = React.createClass({
             }
           }.bind(this))()}
         </div>
-        <div className="col-md-6">
+        <div className="col-md-5">
           <p>Recibir pago de pack</p>
 
           <ButtonDropdown title="Elegir pack">
@@ -300,7 +309,7 @@ var StudentRecord = React.createClass({
           <div className="col-md-5">
             {(function () {
               if (this.props.onStudentChosen == null) {
-                return <StudentPaymentControls student={student} config={this.props.config} onStudentUpdated={this.studentUpdated} />;
+                return <StudentPaymentControls student={student} config={this.props.config} onStudentUpdated={this.studentUpdated} onRemoveStudent={this.props.onRemoveStudent} />;
               } else {
                 return (<div className="row">
                   <div className="col-md-offset-9 col-md-2">

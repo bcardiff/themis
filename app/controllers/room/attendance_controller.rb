@@ -69,7 +69,7 @@ class Room::AttendanceController < Room::BaseController
   def remove_student
     course_log = CourseLog.find(params[:id])
 
-    student = Student.find_by_card(params[:card_code])
+    student = find_student(params)
     student_log = course_log.student_course_logs.where(student: student).first
     # TODO show error if unable to delete the student due to existing payment information
     # for this class
@@ -97,6 +97,14 @@ class Room::AttendanceController < Room::BaseController
   end
 
   private
+
+  def find_student(params)
+    if params[:card_code]
+      Student.find_by_card(params[:card_code])
+    else
+      Student.find(params[:student_id])
+    end
+  end
 
   def student_json(course_log, student, requires_pack)
     return nil unless student

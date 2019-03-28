@@ -66,6 +66,28 @@ var CashierCourseDetails = React.createClass({
     });
   },
 
+  removeStudent: function (student) {
+    $.ajax({
+      method: "DELETE",
+      url: "/room/course_log/" + this.state.course_log.course_log_id + "/students",
+      data: { student_id: student.id },
+      success: function (data) {
+        this._updateCourseLogStatus();
+      }.bind(this)
+    });
+  },
+
+  removeStudentWithoutCard: function () {
+    $.ajax({
+      method: "DELETE",
+      url: "/room/course_log/" + this.state.course_log.course_log_id + "/students_no_card",
+      data: {},
+      success: function (data) {
+        this._updateCourseLogStatus();
+      }.bind(this)
+    });
+  },
+
   render: function () {
     var course_log = this.state.course_log;
     var untracked_students = this.state.untracked_students;
@@ -76,22 +98,42 @@ var CashierCourseDetails = React.createClass({
       <div>
         <h1>{course_log.description}</h1>
 
+        <ConfirmDialog ref="dialog" />
+
         {this.state.top_students.map(function (student) {
-          return <StudentRecord key={student.id} student={student} config={this.props.config} />;
+          var confirmRemoveStudent = function () {
+            this.refs.dialog.confirm("¿Desea quitar el presente de " + student.first_name + " " + student.last_name + "?").then(function () {
+              this.removeStudent(student);
+            }.bind(this));
+          }.bind(this);
+
+          return <StudentRecord key={student.id} student={student} config={this.props.config} onRemoveStudent={confirmRemoveStudent} />;
         }.bind(this))}
 
         {_.times(course_log.untracked_students_count, function (i) {
           var trackStudent = function (student) {
             this.trackStudent(student);
           }.bind(this);
-          return <UntrackedStudentRecord key={i} course_log_id={course_log.course_log_id} config={this.props.config} onStudentIdentified={trackStudent} />
+          var confirmRemoveStudentWithoutCard = function () {
+            this.refs.dialog.confirm("¿Desea quitar el presente de un alumno sin tarjeta?").then(function () {
+              this.removeStudentWithoutCard();
+            }.bind(this));
+          }.bind(this);
+          return <UntrackedStudentRecord key={i} course_log_id={course_log.course_log_id} config={this.props.config} onStudentIdentified={trackStudent} onRemoveStudentWithoutCard={confirmRemoveStudentWithoutCard} />
         }.bind(this))}
 
         {course_log.students.map(function (student) {
-          return <StudentRecord key={student.id} student={student} config={this.props.config} />;
+          var confirmRemoveStudent = function () {
+            this.refs.dialog.confirm("¿Desea quitar el presente de " + student.first_name + " " + student.last_name + "?").then(function () {
+              this.removeStudent(student);
+            }.bind(this));
+          }.bind(this);
+
+          return <StudentRecord key={student.id} student={student} config={this.props.config} onRemoveStudent={confirmRemoveStudent} />;
         }.bind(this))}
 
         <br />
+        <hr />
         <button onClick={onClickAddUntrackedStudent} className="btn btn-primary">Agregar asistencia</button>
       </div>
     );
@@ -127,6 +169,8 @@ var UntrackedStudentRecord = React.createClass({
           </div>
           <div className="col-md-4">
             <button onClick={this.toggleSearch} className={classNames("btn btn-default", { "active": this.state.show_search })}>Identificar</button>
+            &nbsp;
+            <button onClick={this.props.onRemoveStudentWithoutCard} className={"btn btn-danger"}>Quitar</button>
           </div>
         </div>
         {(function () {
