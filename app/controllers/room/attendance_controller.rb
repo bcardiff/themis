@@ -56,9 +56,9 @@ class Room::AttendanceController < Room::BaseController
     course_log = CourseLog.find(params[:id])
     as_helper = params[:as_helper] == "true"
 
-    student = Student.find_by_card(params[:card_code])
+    student = find_student(params)
     student_log = course_log.student_course_logs.first_or_build(student: student)
-    student_log.id_kind = "existing_card"
+    student_log.id_kind = student.card_code.blank? ? "guest" : "existing_card"
     student_log.payment_plan = nil
     student_log.as_helper = as_helper
     student_log.save!

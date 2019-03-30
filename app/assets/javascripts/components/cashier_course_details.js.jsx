@@ -66,6 +66,17 @@ var CashierCourseDetails = React.createClass({
     });
   },
 
+  _addTrackedStudent: function (student) {
+    $.ajax({
+      url: '/room/course_log/' + this.state.course_log.course_log_id + '/students',
+      data: { student_id: student.id },
+      method: 'POST',
+      success: function (data) {
+        this._updateCourseLogStatus();
+      }.bind(this)
+    });
+  },
+
   removeStudent: function (student) {
     $.ajax({
       method: "DELETE",
@@ -92,7 +103,8 @@ var CashierCourseDetails = React.createClass({
     var course_log = this.state.course_log;
     var untracked_students = this.state.untracked_students;
 
-    var onClickAddUntrackedStudent = function (event) { this._addUntrackedStudent(); }.bind(this);
+    var addUntrackedStudentAttendance = function () { this._addUntrackedStudent(); }.bind(this);
+    var addStudentAttendance = function (student) { this._addTrackedStudent(student); }.bind(this);
 
     return (
       <div>
@@ -132,11 +144,48 @@ var CashierCourseDetails = React.createClass({
           return <StudentRecord key={student.id} student={student} config={this.props.config} onRemoveStudent={confirmRemoveStudent} />;
         }.bind(this))}
 
-        <br />
-        <hr />
-        <button onClick={onClickAddUntrackedStudent} className="btn btn-primary">Agregar asistencia</button>
+        <AddStudentAttendance config={this.props.config} onAddStudentAttendance={addStudentAttendance} onAddUntrackedStudentAttendance={addUntrackedStudentAttendance} />
       </div>
     );
+  }
+});
+
+var AddStudentAttendance = React.createClass({
+  getInitialState: function () {
+    return { show_search: false };
+  },
+
+  studentChosen: function (student) {
+    this.props.onAddStudentAttendance(student);
+    this.toggleSearch(); // force clear search
+  },
+
+  toggleSearch: function () {
+    this.setState(React.addons.update(this.state, {
+      show_search: { $set: !this.state.show_search },
+    }));
+  },
+
+  render: function () {
+    return (
+      <div>
+        <hr />
+        <div className="btn-group">
+          <button onClick={this.toggleSearch} className={classNames("btn btn-primary", { "active": this.state.show_search })}>Agregar asistencia</button>
+          <button onClick={this.props.onAddUntrackedStudentAttendance} className="btn btn-default">Agregar asistencia sin identificar</button>
+        </div>
+        <br />
+        <br />
+
+        {(function () {
+          if (this.state.show_search) {
+            return (
+              <StudentSearch config={this.props.config} onStudentChosen={this.studentChosen} />
+            )
+          }
+        }.bind(this))()}
+      </div>
+    )
   }
 });
 
