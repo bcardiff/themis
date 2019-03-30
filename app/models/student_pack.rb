@@ -152,4 +152,42 @@ class StudentPack < ActiveRecord::Base
       end
     end
   end
+
+  def receipt
+    # check ReceiptController#validate if changed
+
+    headers = StudentPack.receipt_headers
+    data = <<-RECEIPT
+#{headers[:student]}: #{self.student.autocomplete_display_name}
+#{headers[:pack]}: #{self.payment_plan.mailer_description}
+#{headers[:due_date]}: #{self.due_date.to_dmy}
+#{headers[:receipt]}: #{self.id}.#{SecureRandom.hex(4)}
+RECEIPT
+    data = data.strip
+    data_to_sign = data.split.join
+    sep = "-" * 50
+
+    "#{sep}\n#{data}\n#{sep}\n#{headers[:sign]}: #{Digest::SHA1.hexdigest(Settings.receipt_secret_key + data_to_sign)}\n#{sep}"
+  end
+
+  def self.receipt_headers
+    case Settings.branch
+    when "sheffield"
+      {
+        student: "Student",
+        pack: "Pack",
+        due_date: "Due date",
+        receipt: "Receipt",
+        sign: "Sign"
+      }
+    else
+      {
+        student: "Alumno",
+        pack: "Pack",
+        due_date: "Vencimiento",
+        receipt: "Comprobante",
+        sign: "Firma"
+      }
+    end
+  end
 end

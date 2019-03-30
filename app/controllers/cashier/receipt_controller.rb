@@ -5,7 +5,7 @@ class Cashier::ReceiptController < Cashier::BaseController
 
   def validate
     @receipt = params[:receipt]
-    md = @receipt.match /-+([^-]+)-+\s*Firma: ([^-]+)-+/m
+    md = @receipt.match /-+([^-]+)-+\s*[^:]+: ([^-]+)-+/m
     if md
       data = md[1].strip
       data_to_sign = data.split.join

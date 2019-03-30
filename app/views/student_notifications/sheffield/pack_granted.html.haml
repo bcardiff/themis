@@ -1,0 +1,16 @@
+%center
+  %p= "Hi #{@student.display_name}!"
+
+  %p
+    This is a notification due the recent pack you got
+    = @student_pack.payment_plan.mailer_description
+    in
+    = "#{School.description}!"
+
+  %p
+    ¡See you soon!
+
+  %p
+    %i Swing City Team
+
+  %pre= @receipt

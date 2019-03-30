@@ -37,7 +37,7 @@ class Student < ActiveRecord::Base
   end
 
   def autocomplete_display_name
-    "#{display_name} (#{card_code || 'Sin Tarjeta'})"
+    "#{display_name} (#{card_code || no_card_text})"
   end
 
   def self.find_by_card(code)
@@ -174,6 +174,15 @@ class Student < ActiveRecord::Base
       else
         self.comment_at = Time.now
       end
+    end
+  end
+
+  def no_card_text
+    case Settings.branch
+    when "sheffield"
+      "No Card"
+    else
+      "Sin Tarjeta"
     end
   end
 end
