@@ -110,7 +110,8 @@ track("AJ_PRIN", name: "Authentic Jazz - Principiantes", color: "#71a9a4", cours
 track("SHAG", name: "Shag", color: "#005f42", course_kind: "swing")
 track("SHAG_PRIN", name: "Shag - Principiantes", color: "#005f42", course_kind: "swing")
 track("SHAG_INT1", name: "Shag - Intermedios 1", color: "#005f42", course_kind: "swing")
-track("BALBOA", name: "Balboa", color: "#005f42", course_kind: "swing")
+track("BALBOA_PRIN", name: "Balboa - Principiantes", color: "#005f42", course_kind: "swing")
+track("BALBOA_INT1", name: "Balboa - Intermedios 1", color: "#005f42", course_kind: "swing")
 track("BALBOA_SHAG", name: "Balboa/Shag/20's", color: "#005f42", course_kind: "swing")
 track("BLUES_INT1", name: "Blues - Intermedios 1", color: "#4873b1", course_kind: "swing")
 track("BLUES_PRIN", name: "Blues - Principiantes", color: "#4873b1", course_kind: "swing")
@@ -136,6 +137,8 @@ track("TP_INT1", name: "Tap - Intermedios 1", color: "#fab258", course_kind: "sw
 track("TP_INT2", name: "Tap - Intermedios 2", color: "#fab258", course_kind: "swing")
 track("TP_PRIN", name: "Tap - Principiantes", color: "#fab258", course_kind: "swing")
 track("TEO_MUSICAL", name: "Teoría Musical", color: "#000000", course_kind: "swing")
+track("BOOGIE_PRIN", name: "Boogie Boogie - Principiantes", color: "#fcae00", course_kind: "swing")
+track("BOOGIE_INT1", name: "Boogie Boogie - Intermedios 1", color: "#fcae00", course_kind: "swing")
 
 track("LOCKING", name: "Locking", color: "#4fadeb", course_kind: "roots")
 track("HOUSE", name: "House", color: "#88219d", course_kind: "roots")
