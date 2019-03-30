@@ -1,5 +1,7 @@
 .jumbotron
-  %h1 Bienvenido a Swing City
+  %h1
+    Bienvenido a Swing City
+    = Settings.branch.try { |v| " > #{v}" }
   - unless current_user
     %p
       ¿Tenés usuario?

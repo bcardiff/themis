@@ -15,7 +15,9 @@
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header
-          = link_to 'Glims', root_url, class: 'navbar-brand'
+          = link_to root_url, class: 'navbar-brand' do
+            Glims
+            = Settings.branch.try { |v| " > #{v}" }
 
           %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#navbar")
             %span.sr-only Toggle navigation
