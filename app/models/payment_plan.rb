@@ -8,6 +8,7 @@ class PaymentPlan < ActiveRecord::Base
   validates :price, numericality: true
 
   scope :single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS, SINGLE_CLASS_FREE]) }
+  scope :reference_single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS]) }
 
   def other?
     self.code == OTHER
@@ -22,7 +23,7 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def self.single_class_by_kind
-    single_class_payment_plans.all.index_by &:course_match
+    reference_single_class_payment_plans.all.index_by &:course_match
   end
 
   def price_or_fallback(amount)
