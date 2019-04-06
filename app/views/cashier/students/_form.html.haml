@@ -10,7 +10,7 @@
     = f.input :card_code
     %i
       Si cambia la tarjeta recuerde cobrar los
-      = "$#{TeacherCashIncomes::NewCardIncome::FEE}"
+      = "$#{FixedFee.new_card_fee}"
       por la misma.
 
     %br

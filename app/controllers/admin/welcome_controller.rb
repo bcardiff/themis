@@ -88,18 +88,25 @@ class Admin::WelcomeController < Admin::BaseController
 
   def pricing
     @payment_plans = PaymentPlan.updatable_prices
+
+    @fixed_fees = FixedFee.all
   end
 
   def pricing_update
     @payment_plans = PaymentPlan.updatable_prices
+    @fixed_fees = FixedFee.all
 
     ActiveRecord::Base.transaction do
       begin
         params[:payment_plans].values.each do |entry|
           @payment_plans.select { |p| p.id == entry["id"].to_i }.first.price = entry["price"]
         end
-
         @payment_plans.each &:save!
+
+        params[:fixed_fees].values.each do |entry|
+          @fixed_fees.select { |p| p.id == entry["id"].to_i }.first.value = entry["value"]
+        end
+        @fixed_fees.each &:save!
       rescue => e
         logger.warn e
         flash.now[:error] = "Error al actualizar precios"

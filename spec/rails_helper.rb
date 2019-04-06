@@ -59,6 +59,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+
+    create(:new_card_fixed_fee)
   end
 
   config.append_after(:each) do

@@ -53,6 +53,15 @@ def place(name, attributes)
   end
 end
 
+def fixed_fee(code, attributes)
+  FixedFee.find_or_create_by(code: code).tap do |fee|
+    attributes.each do |key, value|
+      fee.send "#{key}=", value
+    end
+    fee.save!
+  end
+end
+
 teacher 'Mariel', cashier: true, priority: 1
 teacher 'Manuel', cashier: true, priority: 1
 teacher 'Juani', priority: 1
@@ -337,3 +346,5 @@ payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Roots: Clase suelta d
 payment_plan "AFRO__1_X_SEMANA", description: "Roots: Mensual 1 x Semana de Danza Afro", price: 1100, weekly_classes: 1, order: 4, course_match: "afro"
 payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro", price: 1800, weekly_classes: 1, order: 4, course_match: "afro,roots"
 payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro", price: 2600, weekly_classes: 1, order: 4, course_match: "afro,roots"
+
+fixed_fee FixedFee::NEW_CARD, name: "Tarjeta Nueva", value: 50.0

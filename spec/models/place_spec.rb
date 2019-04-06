@@ -105,7 +105,7 @@ RSpec.describe Place, type: :model do
     end
 
     it "should split 1-commission for teacher without the card" do
-      expect(teacher.owed_cash_total).to eq(plan_1w.price * (1-caballito.commission) + TeacherCashIncomes::NewCardIncome::FEE)
+      expect(teacher.owed_cash_total).to eq(plan_1w.price * (1-caballito.commission) + FixedFee.new_card_fee)
     end
   end
 

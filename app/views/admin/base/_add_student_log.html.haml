@@ -30,7 +30,7 @@
 
         = f.hidden_field :id_kind, value: "new_card"
 
-        = plain_text_field 'Tarjeta', "Recuerde cobrar los $#{TeacherCashIncomes::NewCardIncome::FEE} por la tarjeta. Se los registra automáticamente."
+        = plain_text_field 'Tarjeta', "Recuerde cobrar los $#{FixedFee.new_card_fee} por la tarjeta. Se los registra automáticamente."
 
         = f.simple_fields_for :student do |s|
           = s.input :card_code

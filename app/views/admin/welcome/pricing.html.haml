@@ -17,4 +17,18 @@
             .form-group{class: "#{"has-error" if payment_plan.invalid?}"}
               = text_field_tag "payment_plans[#{index}]price", payment_plan.price.to_i , class: "form-control"
 
+      %tr
+        %td
+        %td
+        %td
+
+      - @fixed_fees.each_with_index do |fixed_fee, index|
+        %tr
+          %td
+          %td= fixed_fee.name
+          %td
+            = hidden_field_tag "fixed_fees[#{index}]id", fixed_fee.id
+            .form-group{class: "#{"has-error" if fixed_fee.invalid?}"}
+              = text_field_tag "fixed_fees[#{index}]value", fixed_fee.value.to_i , class: "form-control"
+
   = submit_tag "Actualizar", class: "btn btn-primary"

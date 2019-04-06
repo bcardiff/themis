@@ -930,7 +930,7 @@ RSpec.describe OnaSubmission, type: :model do
     end
 
     it "tracks the income as pending" do
-      expect(mariel.owed_cash_total).to eq(TeacherCashIncomes::NewCardIncome::FEE)
+      expect(mariel.owed_cash_total).to eq(FixedFee.new_card_fee)
     end
 
     it "should be able to assign new cards to same student by email" do
