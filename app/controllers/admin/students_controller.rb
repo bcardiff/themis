@@ -52,11 +52,16 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def flow_stats
+    start = 1.year.ago.at_beginning_of_month
+
+    filter_period = -> (relation) { relation.where('created_at >= ?', start) }
+    # filter_period = -> (relation) { relation.all }
+
     @periods = []
     @stats = {}
 
     # new_students
-    Student.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+    filter_period.call(Student).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(*) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
       .each { |r|
         @periods << r[:period]
@@ -65,7 +70,7 @@ class Admin::StudentsController < Admin::BaseController
       }
 
     # Activos
-    StudentCourseLog.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+    filter_period.call(StudentCourseLog).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(distinct student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
       .each { |r|
         @periods << r[:period]
@@ -74,7 +79,7 @@ class Admin::StudentsController < Admin::BaseController
       }
 
     # drops
-    StudentCourseLog.all.group('EXTRACT(YEAR_MONTH FROM created_at)')
+    filter_period.call(StudentCourseLog).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
       .where('created_at = (SELECT MAX(t.created_at) FROM student_course_logs as t WHERE t.student_id = student_course_logs.student_id)')
       .each { |r|
