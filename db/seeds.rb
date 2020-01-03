@@ -161,6 +161,12 @@ track("AFRO_URBANO", name: "Afro Urbano", color: "#827f06", course_kind: "roots"
 
 track("DANZA_AFRO", name: "Danza Afro", color: "#4ead5b", course_kind: "afro")
 
+track("AJ_AVAN_PLUS", name: "Authentic Jazz - Avanzados+", color: "#71a9a4", course_kind: "swing")
+track("AJ_PRIN_IMPRO", name: "Authentic Jazz - Impro", color: "#71a9a4", course_kind: "swing")
+track("AJ_CONMUSIC", name: "Authentic Jazz - Conexión Musical", color: "#71a9a4", course_kind: "swing")
+track("TP_PRIN_IMPRO", name: "Tap - Impro", color: "#fab258", course_kind: "swing")
+track("FUNKY", name: "Funky Styles", color: "#4fadeb", course_kind: "roots")
+
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
 course "AJ_PRIN_LUN2", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2017,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '10:00', valid_until: Date.new(2018,12,31)
 course "AJ_PRIN_LUN3", name: "Authentic Jazz - Principiantes - Lunes mañana", weekday: 1, valid_since: Date.new(2019,3,1), track: track("AJ_PRIN"), place: swing_city, start_time: '11:00', valid_until: nil
