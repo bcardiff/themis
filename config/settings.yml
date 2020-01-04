@@ -7,3 +7,5 @@ default_url_options:
 room_password: room
 receipt_secret_key: secret
 branch: capital
+send_emails:
+  welcome: true

@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require_relative '../lib/rails_ext/async_adapter.rb'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -34,5 +35,7 @@ module Themis
     config.autoload_paths << "#{Rails.root}/actions"
 
     config.react.addons = true
+
+    config.active_job.queue_adapter = :async
   end
 end

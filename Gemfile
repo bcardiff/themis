@@ -54,6 +54,8 @@ gem 'react-rails'
 gem 'lodash-rails'
 gem 'kaminari'
 
+gem 'concurrent-ruby', require: 'concurrent'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
   gem 'rails-assets-classnames'
