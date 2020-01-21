@@ -1,6 +1,7 @@
 %h1= @course.description(:track, :weekday, :time)
 
 = simple_form_for([:admin, @course], html: { class: 'form-horizontal' }) do |f|
+  = plain_text_field 'Lugar', @course.place.name
   = plain_text_field 'Código', @course.code
   = plain_text_field 'Programa', @course.track.name
   = plain_text_field 'Día de la semana', local_wday(@course.weekday).titleize

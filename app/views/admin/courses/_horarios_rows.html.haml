@@ -43,7 +43,7 @@
                 ↓
               - if course.future?
                 ↑
-        = link_to new_admin_course_path(weekday: wday, start_time: time.strftime("%H:%M")) do
+        = link_to new_admin_course_path(weekday: wday, start_time: time.strftime("%H:%M"), place_id: place.id) do
           %div{class: 'create_course'}
             + Agregar
 

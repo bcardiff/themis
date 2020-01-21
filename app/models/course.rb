@@ -3,7 +3,7 @@ class Course < ActiveRecord::Base
   belongs_to :place
   belongs_to :track
 
-  validates_presence_of :weekday, :valid_since, :track, :start_time
+  validates_presence_of :weekday, :valid_since, :track, :start_time, :place
 
   validates :code, presence: true, uniqueness: true, format: { with: /\A[\w\_]+\z/ }
 

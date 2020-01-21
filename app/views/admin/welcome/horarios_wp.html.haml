@@ -1,6 +1,11 @@
 %textarea{style: "width: 100%", rows: 10}= File.read(File.join(Rails.root, "app", "assets", "stylesheets", "horarios.scss")) + tracks_color_css
 
-%textarea{style: "width: 100%", rows: 10}
-  = render 'horarios'
+- Place.active.each do |place|
+  %h2= place.name
 
-= render 'horarios'
+  %textarea{style: "width: 100%", rows: 10}
+    = render partial: 'horarios', locals: { place: place }
+
+  = render partial: 'horarios', locals: { place: place }
+
+  %hr

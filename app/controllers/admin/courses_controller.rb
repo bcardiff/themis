@@ -9,7 +9,8 @@ class Admin::CoursesController < Admin::BaseController
   end
 
   def new
-    @course = Course.new(weekday: params[:weekday].to_i, start_time: params[:start_time])
+    place = Place.find(params[:place_id])
+    @course = Course.new(weekday: params[:weekday].to_i, start_time: params[:start_time], place: place)
   end
 
   def create
@@ -50,7 +51,7 @@ class Admin::CoursesController < Admin::BaseController
   private
 
   def course_params
-    params.require(:course).permit(:track_id, :weekday, :start_time, :valid_since)
+    params.require(:course).permit(:track_id, :place_id, :weekday, :start_time, :valid_since)
   end
 
   def set_valid_since_options
