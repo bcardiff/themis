@@ -9,6 +9,10 @@ class Place < ActiveRecord::Base
   has_many :ona_submission_subscriptions, as: :follower
   has_many :ona_submissions, through: :ona_submission_subscriptions
 
+  def self.default
+    find_by!(name: School.description)
+  end
+
   # School expenses due to the place
   def expenses
     TeacherCashIncome.where(place_id: self.id)

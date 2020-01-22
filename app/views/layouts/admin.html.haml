@@ -39,8 +39,19 @@
       = link_to 'Portal Sala', place_index_path
 
   - if current_user.cashier?
-    %li
-      = link_to 'Mesa de entrada', cashier_dashboard_path
+    - places = Place.active.all
+    - if places.count == 1
+      %li
+        = link_to 'Mesa de entrada', cashier_dashboard_path(place_id: places.first)
+    - else
+      %li.dropdown
+        %a.dropdown-toggle(href="#" data-toggle="dropdown")
+          Mesa de entrada
+          %span.caret
+        %ul.dropdown-menu
+          - places.each do |place|
+            %li
+              = link_to place.name, cashier_dashboard_path(place_id: place)
 
   - if current_user.can_access_room_area?
     %li

@@ -16,7 +16,7 @@
           %span.glyphicon.glyphicon-forward
     - if pack.can_rollback_payment_and_pack?(current_user)
       %li
-        = link_to 'Eliminar pack y pago', delete_pack_cashier_student_path(student, pack), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el pack y el pago asociado?'
+        = link_to 'Eliminar pack y pago', delete_pack_cashier_student_path(Place.default, student, pack), class: 'btn btn-danger', method: :delete, 'data-confirm' => '¿Seguro desea borrar el pack y el pago asociado?'
     - elsif current_user.admin?
       %li
         = link_to pack_admin_students_path(pack), method: :delete, data: {confirm: "Seguro desea borrar el pack?"} do

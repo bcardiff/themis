@@ -118,7 +118,7 @@ Rails.application.routes.draw do
     delete '/course_log/:id/students_no_card' => 'attendance#remove_students_no_card'
   end
 
-  namespace :cashier do
+  scope "/cashier/:place_id", module: :cashier, as: :cashier do
     get '/dashboard' => 'dashboard#index'
     get '/calendar' => 'dashboard#calendar'
     get '/status' => 'dashboard#status'

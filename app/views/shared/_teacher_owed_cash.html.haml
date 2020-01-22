@@ -16,7 +16,7 @@
       %td= date.to_human
       %td
         - if course_log_id
-          = CourseLog.find(course_log_id).course.description(:track, :time)
+          = CourseLog.find(course_log_id).course.description(:track, :time, :place)
         - else
           Sin curso
       %td= items.first.kind_description

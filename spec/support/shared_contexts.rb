@@ -1,4 +1,5 @@
 RSpec.shared_context "swc context" do
+  let!(:hq) { create :place, name: School.description }
   let!(:mariel) { create :teacher, name: "Mariel" }
   let!(:manuel) { create :teacher, name: "Manuel" }
 
