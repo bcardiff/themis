@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
       if current_user.admin?
         redirect_to admin_index_url
       elsif current_user.cashier?
-        redirect_to cashier_dashboard_url
+        redirect_to cashier_dashboard_url(Place.default)
       elsif current_user.teacher?
         redirect_to teacher_index_url
       elsif current_user.place?

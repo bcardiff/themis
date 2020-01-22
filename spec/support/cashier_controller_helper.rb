@@ -3,6 +3,7 @@ module CashierControllerHelper
 
   included do
     before(:each) do
+      create(:place, name: School.description)
       sign_in(create(:cashier_user))
     end
   end

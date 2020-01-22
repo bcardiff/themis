@@ -8,7 +8,7 @@ RSpec.describe Cashier::StudentsController, type: :controller do
   describe "put #update" do
     it "should create a new card income if card changes" do
       expect {
-        post :update, id: student_no_card.id, student: {
+        post :update, id: student_no_card.id, place_id: Place.default.id, student: {
             first_name: student_no_card.first_name,
             last_name: student_no_card.last_name,
             email: student_no_card.email,
@@ -22,7 +22,7 @@ RSpec.describe Cashier::StudentsController, type: :controller do
 
     it "should not create a new card income if card does not change" do
       expect {
-        post :update, id: student_with_card.id, student: {
+        post :update, id: student_with_card.id, place_id: Place.default.id, student: {
             first_name: student_with_card.first_name,
             last_name: student_with_card.last_name,
             email: student_with_card.email,
