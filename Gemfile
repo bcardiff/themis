@@ -56,12 +56,12 @@ gem 'kaminari'
 
 gem 'concurrent-ruby', require: 'concurrent'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-urijs'
-  gem 'rails-assets-classnames'
-  gem 'rails-assets-q', '~> 1.0'
-  gem 'rails-assets-sass-flex-mixin'
-end
+# source 'https://rails-assets.org' do
+  gem 'rails-assets-urijs', :path => 'vendor/rails-assets-urijs-1.17.0'
+  gem 'rails-assets-classnames', :path => 'vendor/rails-assets-classnames-2.2.0'
+  gem 'rails-assets-q', :path => 'vendor/rails-assets-q-1.4.1'
+  gem 'rails-assets-sass-flex-mixin', :path => 'vendor/rails-assets-sass-flex-mixin-1.0.1'
+# end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

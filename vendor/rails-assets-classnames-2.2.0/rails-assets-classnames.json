@@ -1,0 +1,32 @@
+{
+  "name": "rails-assets-classnames",
+  "downloads": null,
+  "version": "2.2.0",
+  "version_downloads": null,
+  "platform": "ruby",
+  "authors": "rails-assets.org",
+  "info": "A simple utility for conditionally joining classNames together",
+  
+  "licenses": "MIT",
+  
+  "metadata": {
+
+  },
+  "sha": null,
+  "project_uri": "https://github.com/JedWatson/classnames",
+  "gem_uri": null,
+  "homepage_uri": "https://github.com/JedWatson/classnames",
+  "wiki_uri": null,
+  "documentation_uri": null,
+  "mailing_list_uri": null,
+  "source_code_uri": "https://github.com/JedWatson/classnames",
+  "bug_tracker_uri": null,
+  "dependencies": {
+    "development": [
+    
+    ],
+    "runtime": [
+
+    ]
+  }
+}
