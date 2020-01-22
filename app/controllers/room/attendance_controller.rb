@@ -75,6 +75,8 @@ class Room::AttendanceController < Room::BaseController
     # for this class
     if student_log.payment_plan.nil?
       student_log.destroy!
+    else
+      logger.warn "Unable to delete student due to existing payment information #{student_log.inspect}"
     end
 
     render json: { course_log: course_log_json(course_log) }
