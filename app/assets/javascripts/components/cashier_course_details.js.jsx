@@ -99,18 +99,46 @@ var CashierCourseDetails = React.createClass({
     });
   },
 
+  updateCourseLogTeachers: function (teacherIds, done) {
+    $.ajax({
+      url: URI('/room/course_log/' + this.state.course_log.course_log_id + '/teachers.json'),
+      method: 'POST',
+      data: { teacher: teacherIds },
+      success: function (data) {
+        console.log(data);
+        this.setState(React.addons.update(this.state, {
+          course_log: { teachers: { $set: data } },
+        }));
+        done();
+      }.bind(this)
+    });
+  },
+
   render: function () {
     var course_log = this.state.course_log;
     var untracked_students = this.state.untracked_students;
 
     var addUntrackedStudentAttendance = function () { this._addUntrackedStudent(); }.bind(this);
     var addStudentAttendance = function (student) { this._addTrackedStudent(student); }.bind(this);
+    var updateCourseLogTeachers = function (teacherIds, done) { this.updateCourseLogTeachers(teacherIds, done); }.bind(this);
 
     return (
       <div>
         <h1>{course_log.description}</h1>
 
         <ConfirmDialog ref="dialog" />
+
+        {function () {
+          if (course_log.teachers) {
+            return (
+              <TeachersCoursePicker
+                config={this.props.config}
+                selectedTeachers={course_log.teachers}
+                onUpdateTeachers={updateCourseLogTeachers}
+              />
+            );
+          }
+        }.bind(this)()}
 
         {this.state.top_students.map(function (student) {
           var confirmRemoveStudent = function () {
@@ -147,6 +175,74 @@ var CashierCourseDetails = React.createClass({
         <AddStudentAttendance config={this.props.config} onAddStudentAttendance={addStudentAttendance} onAddUntrackedStudentAttendance={addUntrackedStudentAttendance} />
       </div>
     );
+  }
+});
+
+var TeachersCoursePicker = React.createClass({
+  getInitialState: function () {
+    return { editing: false };
+  },
+
+  toggleEditing: function () {
+    this.setState(React.addons.update(this.state, {
+      editing: { $set: !this.state.editing },
+    }));
+  },
+
+  resetForm: function () {
+    this.toggleEditing();
+  },
+
+  submitForm: function (event) {
+    event.preventDefault();
+
+    const teacherIds = Array.from(this.refs.form.elements)
+      .filter(f => f.name == "teacher" && f.checked)
+      .map(f => parseInt(f.value));
+
+    this.props.onUpdateTeachers(teacherIds, function () {
+      this.toggleEditing();
+    }.bind(this));
+  },
+
+  render: function () {
+    if (this.state.editing) {
+      return (
+        <div>
+          <label>Docentes</label>
+
+          <form ref="form" onReset={this.resetForm} onSubmit={this.submitForm}>
+            <div className="row">
+              {this.props.config.teachers.map(function (teacher) {
+                return (
+                  <div key={teacher.id} className="col-xs-4 col-sm-2">
+                    <div key={teacher.id} className="checkbox">
+                      <label>
+                        <input type="checkbox" name="teacher" value={teacher.id} defaultChecked={this.props.selectedTeachers.some(t => t.id == teacher.id)} /> {teacher.name}
+                      </label>
+                    </div>
+                  </div>
+                );
+              }.bind(this))}
+            </div>
+
+            <div className="btn-group">
+              <button className="btn btn-primary" type="submit">Guardar</button>
+              <button className="btn btn-default" type="reset">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <label>Docentes:&nbsp;</label>
+          {this.props.selectedTeachers.map(t => t.name).join(", ")}
+          &nbsp;
+          <button className="btn btn-default" onClick={this.toggleEditing}>Cambiar</button>
+        </div>
+      );
+    }
   }
 });
 

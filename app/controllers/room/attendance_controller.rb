@@ -25,15 +25,16 @@ class Room::AttendanceController < Room::BaseController
   def choose_teachers
     @course_log = CourseLog.find(params[:id])
     @place = @course_log.course.place
-    @teachers = Teacher.active.where('priority > 0').order(:priority, :name)
+    @teachers = Teacher.for_classes
   end
 
   def choose_teachers_post
     course_log = CourseLog.find(params[:id])
+    teacher_ids = params[:teacher].map(&:to_i)
 
     to_remove = course_log.teachers.map(&:id)
 
-    params[:teacher].map(&:to_i).each do |teacher_id|
+    teacher_ids.each do |teacher_id|
       course_log.add_teacher(Teacher.find(teacher_id).name)
       to_remove.delete(teacher_id)
     end
@@ -45,7 +46,14 @@ class Room::AttendanceController < Room::BaseController
       end
     end
 
-    redirect_to room_students_path(course_log)
+    respond_to do |format|
+      format.html do
+        redirect_to room_students_path(course_log)
+      end
+      format.json do
+        render json: course_log_teachers_json(course_log)
+      end
+    end
   end
 
   def students
@@ -137,15 +145,19 @@ class Room::AttendanceController < Room::BaseController
   def course_log_json(course_log)
     return {
       id: course_log.id,
-      teachers: course_log.teachers.map(&:name),
+      teachers: course_log_teachers_json(course_log),
       students: course_log.student_course_logs.joins(:student)
         .order("students.first_name, students.last_name").map { |s|
           student_json(course_log, s.student, false).tap do |sj|
             sj[:as_helper] = s.as_helper
           end
-      } ,
+      },
       total_students: course_log.students_count,
       untracked_students_count: course_log.untracked_students_count
     }
+  end
+
+  def course_log_teachers_json(course_log)
+    course_log.teachers.order(:name).to_a.map { |t| { id: t.id, name: t.name } }
   end
 end
