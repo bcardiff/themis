@@ -8,7 +8,7 @@
 
 - content_for :footer do
 
-  = link_to 'Atrás', room_path, class: 'btn btn-link'
+  = link_to 'Atrás', room_choose_course_path(place_id: @place), class: 'btn btn-link'
 
   = link_to '#', class: 'btn btn-lg btn-default', onclick: "$('form:first').submit()" do
     Siguiente

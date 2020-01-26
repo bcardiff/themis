@@ -1,7 +1,13 @@
 class Room::AttendanceController < Room::BaseController
+  def choose_place
+    @places = Place.active.all
+    redirect_to room_choose_course_path(@places.first) if @places.size == 1
+  end
+
   def choose_course
+    @place = Place.find(params[:place_id])
     @date = Date.parse(params[:date]) rescue School.today
-    @courses = Course.ongoing(@date).all.sort_by { |c| [c.start_time, c.track.code] }
+    @courses = Course.where(place: @place).ongoing(@date).all.sort_by { |c| [c.start_time, c.track.code] }
 
     @prev_date = @date - 1.day
     @next_date = @date < School.today ? @date + 1.day : nil
@@ -10,7 +16,7 @@ class Room::AttendanceController < Room::BaseController
   def open
     date = Date.parse(params[:date])
     course = Course.find(params[:course_id])
-
+    @place = course.place
     course_log = CourseLog.for_course_on_date(course.code, date)
 
     redirect_to room_choose_teachers_path(course_log)
@@ -18,6 +24,7 @@ class Room::AttendanceController < Room::BaseController
 
   def choose_teachers
     @course_log = CourseLog.find(params[:id])
+    @place = @course_log.course.place
     @teachers = Teacher.active.where('priority > 0').order(:priority, :name)
   end
 
@@ -43,6 +50,7 @@ class Room::AttendanceController < Room::BaseController
 
   def students
     @course_log = CourseLog.find(params[:id])
+    @place = @course_log.course.place
     @course_log_json = course_log_json(@course_log)
   end
 

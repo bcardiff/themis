@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence :name do |n|
       "course_#{n}"
     end
-    place { Place.find_or_create_by(name: School.name) }
+    place { Place.default }
     track
     sequence :code do |n|
       "#{track.code}_#{n}"

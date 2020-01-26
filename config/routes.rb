@@ -104,7 +104,8 @@ Rails.application.routes.draw do
     get '/sign_in' => 'base#session_new', as: :login
     post '/sign_in' => 'base#session_create'
 
-    get '/' => 'attendance#choose_course'
+    get '/' => 'attendance#choose_place'
+    get '/choose_course/:place_id' => 'attendance#choose_course', as: :choose_course
     post '/open/:date/:course_id' => 'attendance#open', as: :open
     get '/course_log/:id/teachers' => 'attendance#choose_teachers', as: :choose_teachers
     post '/course_log/:id/teachers' => 'attendance#choose_teachers_post'

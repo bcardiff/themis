@@ -10,7 +10,7 @@ class Place < ActiveRecord::Base
   has_many :ona_submissions, through: :ona_submission_subscriptions
 
   def self.default
-    find_by!(name: School.description)
+    find_or_create_by!(name: School.description)
   end
 
   # School expenses due to the place

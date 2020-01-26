@@ -26,7 +26,7 @@
           = link_to room_choose_teachers_path(@course_log) do
             = @course_log.teachers.map(&:name).join(" - ")
         %h1
-          = link_to 'Cerrar', room_path, class: 'btn btn-lg btn-default', id: 'close'
+          = link_to 'Cerrar', room_choose_course_path(place_id: @place), class: 'btn btn-lg btn-default', id: 'close'
 
     #container
       = yield
