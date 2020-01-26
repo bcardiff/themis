@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200120234629) do
+ActiveRecord::Schema.define(version: 20200126004847) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20200120234629) do
     t.integer  "weekday",     limit: 4
     t.date     "valid_since"
     t.date     "valid_until"
-    t.integer  "place_id",    limit: 4
+    t.integer  "place_id",    limit: 4,   null: false
     t.integer  "track_id",    limit: 4
     t.time     "start_time"
     t.string   "hashtag",     limit: 255
