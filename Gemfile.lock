@@ -212,6 +212,8 @@ GEM
       websocket-driver (>= 0.2.0)
     public_suffix (2.0.5)
     puma (2.16.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -372,6 +374,7 @@ DEPENDENCIES
   newrelic_rpm
   poltergeist
   puma
+  quiet_assets
   rails (= 4.2.1)
   rails-assets-classnames!
   rails-assets-q!
