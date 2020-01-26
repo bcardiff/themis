@@ -5,6 +5,7 @@ ADD docker/sources.list /etc/apt/sources.list
 # Install gem bundle
 ADD Gemfile /app/
 ADD Gemfile.lock /app/
+ADD vendor /app/vendor
 RUN bundle install --jobs 3 --deployment --without development test
 
 # Default environment settings
