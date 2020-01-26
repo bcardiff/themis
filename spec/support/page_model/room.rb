@@ -6,7 +6,7 @@ class RoomLogin < SitePrism::Page
 end
 
 class RoomCoursePicker < SitePrism::Page
-  set_url "/room"
+  set_url "/room/choose_course/{place_id}"
 
   def select_course(text)
     within "#course_list" do

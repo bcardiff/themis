@@ -72,7 +72,7 @@ class Cashier::StudentsController < Cashier::BaseController
         student.save(validate: false)
       end
 
-      redirect_to cashier_student_path(student)
+      redirect_to cashier_student_path(place, student)
     rescue
       render :edit
     end
@@ -117,7 +117,7 @@ class Cashier::StudentsController < Cashier::BaseController
     pack = student.student_packs.find(params[:student_pack_id])
     pack.rollback_payment_and_pack(current_user)
 
-    redirect_to cashier_student_path(student)
+    redirect_to cashier_student_path(place, student)
   end
 
   private

@@ -2,11 +2,16 @@ class Place < ActiveRecord::Base
   CABALLITO = 'La Fragua'
 
   validates_presence_of :name
+  scope :active, -> { where("deleted_at IS NULL") }
 
   has_many :courses
 
   has_many :ona_submission_subscriptions, as: :follower
   has_many :ona_submissions, through: :ona_submission_subscriptions
+
+  def self.default
+    find_or_create_by!(name: School.description)
+  end
 
   # School expenses due to the place
   def expenses

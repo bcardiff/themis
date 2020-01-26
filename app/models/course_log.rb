@@ -20,6 +20,9 @@ class CourseLog < ActiveRecord::Base
   scope :cashier_attention_required_missing_payment, -> {
     includes(:student_course_logs).where(student_course_logs: { requires_student_pack: true, student_pack: nil})
   }
+  scope :at_place, -> (place) {
+    includes(:course).where(courses: { place_id: place.id})
+  }
 
   def students_count
     self.student_course_logs.count + self.untracked_students_count

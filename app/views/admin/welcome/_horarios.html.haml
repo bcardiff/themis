@@ -2,16 +2,18 @@
 
 %table.horarios
   %tbody
-    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind("swing") }
-    %tr
-      %td.practica BAILE/PRÁCTICA
-      %td.practica
-      %td.practica
-      %td.practica BAILE SOCIAL + COMPETENCIAS
-      %td.practica PRÁCTICA BLUES
-      %td.practica PRÁCTICA PRINCIPIANTES
-      %td.course
-      %td.course
+    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind("swing").where(place: place) }
+    - if place.name == School.description
+      %tr
+        %td.practica BAILE/PRÁCTICA
+        %td.practica
+        %td.practica
+        %td.practica BAILE SOCIAL + COMPETENCIAS
+        %td.practica PRÁCTICA BLUES
+        %td.practica PRÁCTICA PRINCIPIANTES
+        %td.course
+        %td.course
+
 
 %br
 %br
@@ -20,4 +22,4 @@
 
 %table.horarios
   %tbody
-    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind(["afro", "roots"]) }
+    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future.with_course_kind(["afro", "roots"]).where(place: place) }

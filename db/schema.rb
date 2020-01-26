@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406141418) do
+ActiveRecord::Schema.define(version: 20200126004847) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20190406141418) do
     t.integer  "weekday",     limit: 4
     t.date     "valid_since"
     t.date     "valid_until"
-    t.integer  "place_id",    limit: 4
+    t.integer  "place_id",    limit: 4,   null: false
     t.integer  "track_id",    limit: 4
     t.time     "start_time"
     t.string   "hashtag",     limit: 255
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20190406141418) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "link",       limit: 255
+    t.datetime "deleted_at"
   end
 
   create_table "student_course_logs", force: :cascade do |t|
@@ -155,6 +156,18 @@ ActiveRecord::Schema.define(version: 20190406141418) do
     t.text     "comment",       limit: 65535
     t.datetime "comment_at"
     t.integer  "comment_by_id", limit: 4
+  end
+
+  create_table "students_lifespan", id: false, force: :cascade do |t|
+    t.integer "id",                limit: 4,   default: 0, null: false
+    t.string  "card_code",         limit: 255
+    t.string  "first_name",        limit: 255
+    t.string  "last_name",         limit: 255
+    t.string  "email",             limit: 255
+    t.date    "first_course_log"
+    t.date    "last_course_log"
+    t.integer "course_logs_count", limit: 8,   default: 0, null: false
+    t.integer "lifespan",          limit: 4
   end
 
   create_table "teacher_cash_incomes", force: :cascade do |t|

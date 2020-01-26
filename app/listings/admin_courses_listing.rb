@@ -18,6 +18,11 @@ class AdminCoursesListing < Listings::Base
       "#{c.start_time.hour}:#{"%02d" % c.start_time.min}"
     end
   end
+  column :place do |c|
+    name = c.place.try &:name
+    name = nil if name == School.description
+    name
+  end
   column :valid_since
   column :valid_until
 

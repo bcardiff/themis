@@ -2,7 +2,8 @@
 
 %form.form-horizontal
   = plain_text_field 'Id', course_log.id
-  = plain_text_field 'Curso', course_log.course.description(:track, :place, :weekday, :time)
+  = plain_text_field 'Lugar', course_log.course.place.name
+  = plain_text_field 'Curso', course_log.course.description(:track, :weekday, :time)
   = plain_text_field 'Fecha', course_log.date
   = plain_text_field 'Estado', course_log.status
   - place = course_log.course.place

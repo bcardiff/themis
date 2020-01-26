@@ -18,7 +18,7 @@ var CashierCourseDetails = React.createClass({
 
   _updateCourseLogStatus: function () {
     $.ajax({
-      url: URI('/cashier/students/course').query({ course: this.props.course, date: this.props.config.date }),
+      url: URI('/cashier/' + this.props.config.place_id + '/students/course').query({ course: this.props.course, date: this.props.config.date }),
       method: 'GET',
       success: function (data) {
         // keep students identified in this session in a different list in order
@@ -44,7 +44,7 @@ var CashierCourseDetails = React.createClass({
     }), function () {
 
       $.ajax({
-        url: '/cashier/students/' + student.id + '/track_in_course_log',
+        url: '/cashier/' + this.props.config.place_id + '/students/' + student.id + '/track_in_course_log',
         data: { course_log_id: this.state.course_log.course_log_id, untracked: true },
         method: 'POST',
         success: function (data) {

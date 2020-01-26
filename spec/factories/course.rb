@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence :name do |n|
       "course_#{n}"
     end
+    place { Place.default }
     track
     sequence :code do |n|
       "#{track.code}_#{n}"

@@ -100,6 +100,8 @@ module ApplicationHelper
 
   def react_component_config
      return {
+       place_id: params[:place_id],
+       place_name: Place.find(params[:place_id]).name,
        single_class_price_by_kind: PaymentPlan.single_class_by_kind
          .transform_values { |p| number_to_currency(p.price) },
        payment_plans: PaymentPlan.all.order(:order, :price).to_a.select { |p| !p.other? }.map { |p|

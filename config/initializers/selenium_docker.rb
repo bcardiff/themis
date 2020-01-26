@@ -13,11 +13,15 @@ end
 
 def setup_capybara_docker_driver_if_needed
   unless ENV['SELENIUM_URL'].nil? || ENV['SELENIUM_URL'].empty?
-    ip = `/sbin/ip route|awk '/scope/ { print $9 }'`.gsub("\n", "")
+    ip = `/sbin/ip route|awk '/scope/ { print $9 }'`.lines[0].gsub("\n", "")
 
     Capybara.default_driver = :docker_firefox
     Capybara.server_port = 55555
     Capybara.server_host = "#{ip}"
     Capybara.app_host = "http://#{ip}:#{Capybara.server_port}"
+
+    Capybara::Screenshot.register_driver(:docker_firefox) do |driver, path|
+      driver.browser.save_screenshot(path)
+    end
   end
 end

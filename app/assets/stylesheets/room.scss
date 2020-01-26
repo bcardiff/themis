@@ -20,6 +20,11 @@ $sc-font:       'Roboto', sans-serif;
   @include align-items(center);
 }
 
+@mixin bg-color-hover($selector, $color) {
+  #{$selector} { background-color: $color; }
+  #{$selector}:hover, #{$selector}:active { background-color: darken($color, 30%); }
+}
+
 .layout-columns {
   @include flexbox();
   @include flex-direction(row);
@@ -284,4 +289,9 @@ body.room {
       margin: 0.1em;
     }
   }
+
+  @include bg-color-hover(".bg-teal", #71a9a4);
+  @include bg-color-hover(".bg-red", #ec3b62);
+  @include bg-color-hover(".bg-blue", #4873b1);
+  @include bg-color-hover(".bg-yellow", #fab258);
 }

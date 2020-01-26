@@ -6,6 +6,11 @@
 
 %br
 
-%table.horarios
-  %tbody
-    = render partial: "horarios_rows", locals: { courses: Course.ongoing_or_future }
+- Place.active.each do |place|
+  %h2= place.name
+
+  %table.horarios
+    %tbody
+      = render partial: "horarios_rows", locals: { place: place, courses: Course.ongoing_or_future.where(place: place) }
+
+  %hr

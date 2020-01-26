@@ -2,24 +2,26 @@
   %h1
     Apertura de clase:
     = @date.to_human
+    \ -
+    = link_to @place.name, room_path
 
 %ul#course_list
   - @courses.each do |course|
     %li{class: course.track.css_class}
       = link_to room_open_path(@date, course.id), method: :post do
-        = course.description(:track, :place, :time)
+        = course.description(:track, :time)
 
 - content_for :footer do
   %p OTRO DÍA
 
-  = link_to room_path(date: @prev_date), class: 'btn btn-default' do
+  = link_to room_choose_course_path(date: @prev_date), class: 'btn btn-default' do
     %i.glyphicon.glyphicon-chevron-left
     = @prev_date.to_human
 
   - if @date != School.today
-    = link_to "Hoy", room_path, class: 'btn btn-default'
+    = link_to "Hoy", room_choose_course_path, class: 'btn btn-default'
 
   - if @next_date && @next_date != School.today
-    = link_to room_path(date: @next_date), class: 'btn btn-default' do
+    = link_to room_choose_course_path(date: @next_date), class: 'btn btn-default' do
       %i.glyphicon.glyphicon-chevron-right
       = @next_date.to_human

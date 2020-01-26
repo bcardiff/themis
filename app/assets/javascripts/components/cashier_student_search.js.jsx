@@ -59,7 +59,7 @@ var StudentSearch = React.createClass({
     }));
 
     if (value != '') {
-      this.appendPage(URI('/cashier/students.json').search({ q: value }).toString());
+      this.appendPage(URI('/cashier/' + this.props.config.place_id + '/students.json').search({ q: value }).toString());
     }
   },
 
@@ -169,7 +169,7 @@ var StudentPaymentControls = React.createClass({
     this.refs.dialog.confirm(message).then(function () {
       $.ajax({
         method: 'POST',
-        url: '/cashier/students/' + student.id + '/single_class_payment/' + pending_class_item.id,
+        url: '/cashier/' + this.props.config.place_id + '/students/' + student.id + '/single_class_payment/' + pending_class_item.id,
         success: function (data) {
           if (data.success != 'error') {
             this.props.onStudentUpdated(data.student);
@@ -185,7 +185,7 @@ var StudentPaymentControls = React.createClass({
     this.refs.dialog.confirm(message).then(function () {
       $.ajax({
         method: 'POST',
-        url: '/cashier/students/' + student.id + '/pack_payment/',
+        url: '/cashier/' + this.props.config.place_id + '/students/' + student.id + '/pack_payment/',
         data: { code: pack.code },
         success: function (data) {
           if (data.success != 'error') {
@@ -271,7 +271,7 @@ var StudentRecord = React.createClass({
         <div className="row">
           <div className="col-md-7">
             <h4>
-              <a href={"/cashier/students/" + student.id} target="_blank">
+              <a href={"/cashier/" + this.props.config.place_id + "/students/" + student.id} target="_blank">
                 {student.first_name}&nbsp;{student.last_name} <small><i className="glyphicon glyphicon-new-window" /></small>
               </a>
             </h4>
@@ -338,7 +338,7 @@ var NewStudentForm = React.createClass({
 
   onCreate: function () {
     $.ajax({
-      url: '/cashier/students',
+      url: '/cashier/' + this.props.config.place_id + '/students',
       method: 'POST',
       data: { student: this.state.student },
       success: function (data) {

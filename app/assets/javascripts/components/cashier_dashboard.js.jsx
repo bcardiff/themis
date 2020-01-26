@@ -13,7 +13,7 @@ var CashierDashboard = React.createClass({
 
   _updateStatus: function () {
     $.ajax({
-      url: '/cashier/status',
+      url: '/cashier/' + this.props.config.place_id + '/status',
       data: { date: this.props.config.date },
       method: 'GET',
       success: function (data) {
@@ -27,7 +27,7 @@ var CashierDashboard = React.createClass({
 
   _openCourse: function (course_code) {
     $.ajax({
-      url: '/cashier/open_course',
+      url: '/cashier/' + this.props.config.place_id + '/open_course',
       data: { date: this.props.config.date, course: course_code },
       method: 'POST',
       success: function (data) {
@@ -72,8 +72,10 @@ var CashierDashboard = React.createClass({
     return (
       <div className="row">
         <div className="col-md-2">
+          <h3>{this.props.config.place_name}</h3>
+
           <div className="list-group cashier-dashboard-menu">
-            <a href="/cashier/calendar" className={classNames("list-group-item", { "list-group-item-success": this.props.config.date == this.props.config.today, "list-group-item-warning": this.props.config.date != this.props.config.today })}>
+            <a href={'/cashier/' + this.props.config.place_id + '/calendar'} className={classNames("list-group-item", { "list-group-item-success": this.props.config.date == this.props.config.today, "list-group-item-warning": this.props.config.date != this.props.config.today })}>
               <h4><i className="glyphicon glyphicon-calendar" /> {this.props.config.date}</h4>
             </a>
 
@@ -114,11 +116,11 @@ var CashierDashboard = React.createClass({
                 </a>);
             }.bind(this))}
 
-            <a href="/cashier/owed_cash" className="list-group-item">
+            <a href={'/cashier/' + this.props.config.place_id + '/owed_cash'} className="list-group-item">
               <h4><i className="glyphicon glyphicon-usd" /> {this.state.owed_cash_total}</h4>
             </a>
 
-            <a href="/cashier/receipt" className="list-group-item">
+            <a href={'/cashier/' + this.props.config.place_id + '/receipt'} className="list-group-item">
               <h4>Recibos</h4>
             </a>
           </div>
