@@ -81,7 +81,7 @@ teacher 'Belu', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Lala', cashier: true, priority: 0
 teacher 'Mar Tin', cashier: true, priority: 0
 
-teacher 'Victoria', priority: 2
+teacher 'Victoria', cashier: true, priority: 2
 teacher 'Farru', priority: 3
 teacher 'Soledad', priority: 3, deleted_at: Date.new(2018,11,30)
 teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
@@ -89,10 +89,11 @@ teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
 teacher 'ManuH', priority: 3
 teacher 'Carla', priority: 3
-teacher 'Ornella', priority: 3
+teacher 'Ornella', cashier: true, priority: 3
 teacher 'Guido', priority: 3
 teacher 'Agus Giralt', priority: 3
 teacher 'Gaby', priority: 3
+teacher 'Santi', cashier: true, priority: 3
 
 teacher 'Emiliano', priority: 4
 teacher 'Griselda', priority: 4
