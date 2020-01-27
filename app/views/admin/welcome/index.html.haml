@@ -1,20 +1,6 @@
 .row
   .col-md-4
 
-    .well.well-sm.status-well
-      .row
-        .col-md-12
-          %h3 Recepción de formularios
-      .row
-        .col-md-12
-          - OnaSubmission.with_error.count.tap do |ona_error|
-            = link_to admin_ona_submissions_path do
-              - if ona_error > 0
-                %h1= ona_error
-                %label Errores
-              - else
-                OK
-
     - side_box 'Caja' do
       .row
         - side_box_data_full 'en mano de profesores' do

@@ -4,15 +4,6 @@
       Bienvenido
       = teacher.name
 
-    %p
-      Descargá la applicación para mandar los formularios siguiendo
-      = link_to "estas instrucciones", "https://github.com/bcardiff/themis/wiki/Swing-City--Instalaci%C3%B3n-cliente-Android"
-      \ .
-
-    %p
-      Se pueden hacer envios mediante el
-      = link_to 'formulario web', Settings.webform_url, target: '_blank'
-
     - side_box 'Efectivo' do
       .row
         - side_box_data_full "a entregar a #{School.description}" do
@@ -32,17 +23,6 @@
       / .row
       /   .col-md-12
       /     = link_to 'histórico', admin_teacher_courses_path
-
-    - side_box 'Recepción de formularios' do
-      .row
-        .col-md-12
-          - teacher.ona_submissions.with_error.count.tap do |ona_error|
-            = link_to teacher_ona_submissions_path do
-              - if ona_error > 0
-                %h1= ona_error
-                %label Errores
-              - else
-                OK
 
   .col-md-8
     = render partial: 'shared/course_logs_calendar', locals: { course_logs: @course_logs, url: :teacher_course_log_path }
