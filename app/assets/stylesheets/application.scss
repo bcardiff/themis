@@ -166,3 +166,11 @@ th.rotate > div > span {
   width: 120px;
   display: inline-block;
 }
+
+@media (min-width: 768px) {
+  .sm-dropdown-menu-right {
+    // @extend .dropdown-menu-right;
+    left: auto;
+    right: 0;
+  }
+}
