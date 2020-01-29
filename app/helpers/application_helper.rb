@@ -28,6 +28,8 @@ module ApplicationHelper
       "3. Pagos a profesores"
     when "TeacherOwedPayment"
       "4. Pagos a profesores (pendientes)"
+    when "TeacherCashIncomes::VenueRent"
+      "8. Alquiler de sala"
     when "NetIncome"
       "Ingresos neto"
     else

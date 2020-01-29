@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     get '/how_to' => 'welcome#how_to', as: :how_to
 
     get '/owed_cash' => 'welcome#owed_cash', as: :owed_cash
+    post '/accounting/venue_rent' => 'welcome#venue_rent', as: :venue_rent
 
     resources :course_logs, only: :show
 

@@ -27,4 +27,6 @@
         %td(colspan=2)
           - if income.respond_to? :student
             = income.student.display_name
+          - elsif
+            = income.description
         %td= number_to_currency income.payment_amount

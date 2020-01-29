@@ -21,6 +21,7 @@ es-AR:
     models:
       student: alumno
       course: curso
+      teacher_cash_incomes/venue_rent: Alquiler de sala
     attributes:
       student:
         first_name: Nombre
@@ -38,6 +39,9 @@ es-AR:
         valid_since: Fecha desde
         valid_until: Fecha cierre
         place: Lugar
+      teacher_cash_incomes/venue_rent:
+        payment_amount: Monto
+        description: Descripción
   date:
     abbr_day_names: # we wanted them without tilde: mié / sáb.
       - dom
