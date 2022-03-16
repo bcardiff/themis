@@ -56,8 +56,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.5.1)
-      public_suffix (~> 2.0, >= 2.0.2)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     arel (6.0.0)
     autoprefixer-rails (5.1.8)
       execjs
@@ -101,17 +101,17 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
-    capybara (2.14.4)
+    capybara (2.18.0)
       addressable
-      mime-types (>= 1.16)
+      mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
-      xpath (~> 2.0)
+      xpath (>= 2.0, < 4.0)
     capybara-screenshot (1.0.13)
       capybara (>= 1.0, < 3)
       launchy
-    childprocess (0.7.0)
+    childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
     coderay (1.1.0)
@@ -149,7 +149,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    ffi (1.9.18)
+    ffi (1.12.2)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     haml (4.0.6)
@@ -195,6 +195,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.99.3)
+    mini_mime (1.1.2)
     mini_portile2 (2.1.0)
     minitest (5.5.1)
     multi_json (1.11.0)
@@ -210,11 +211,11 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    public_suffix (2.0.5)
+    public_suffix (3.1.1)
     puma (2.16.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.8)
+    rack (1.6.13)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.1)
@@ -277,7 +278,7 @@ GEM
     rspec-support (3.2.2)
     ruby_parser (3.6.5)
       sexp_processor (~> 4.1)
-    rubyzip (1.2.1)
+    rubyzip (1.3.0)
     sass (3.4.13)
     sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -288,9 +289,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    selenium-webdriver (3.4.3)
+    selenium-webdriver (3.14.1)
       childprocess (~> 0.5)
-      rubyzip (~> 1.0)
+      rubyzip (~> 1.2, >= 1.2.2)
     sexp_processor (4.5.0)
     simple_calendar (1.1.10)
       rails (>= 3.0)
@@ -353,7 +354,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
-  capybara
+  capybara (~> 2.18.0)
   capybara-screenshot
   coffee-rails (~> 4.1.0)
   concurrent-ruby
@@ -386,7 +387,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
-  selenium-webdriver
+  selenium-webdriver (~> 3.14.1)
   simple_calendar
   simple_form
   site_prism

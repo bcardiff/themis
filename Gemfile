@@ -79,10 +79,10 @@ group :development, :test do
   gem 'timecop'
 
   gem 'site_prism'
-  gem 'capybara'
+  gem 'capybara', '~> 2.18.0'
   gem 'capybara-screenshot'
   gem 'poltergeist'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 3.14.1'
   gem 'database_cleaner'
 end
 
