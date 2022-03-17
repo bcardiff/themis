@@ -103,6 +103,8 @@ teacher 'Rulock', priority: 4
 teacher 'Zai', priority: 4, deleted_at: Date.new(2019,3,1)
 teacher 'Freddy', priority: 4, deleted_at: Date.new(2019,3,1)
 
+teacher 'Javi', cashier: true, priority: 4
+
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
 colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
 la_huella = place "La Huella", address: "Bulnes 892", link: "http://goo.gl/kT1ElX"
