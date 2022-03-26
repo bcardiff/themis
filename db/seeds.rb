@@ -64,12 +64,12 @@ end
 
 teacher 'Mariel', cashier: true, priority: 1
 teacher 'Manuel', cashier: true, priority: 1
-teacher 'Juani', priority: 1
+teacher 'Juani', priority: 1, deleted_at: Date.new(2022,3,1)
 teacher 'Candela', priority: 0, deleted_at: Date.new(2016,2,1)
 teacher 'Mariano', priority: 2
 teacher 'Celeste', priority: 2
-teacher 'Nanchi', priority: 2
-teacher 'Sol', priority: 2
+teacher 'Nanchi', priority: 2, deleted_at: Date.new(2022,3,1)
+teacher 'Sol', priority: 2, deleted_at: Date.new(2022,3,1)
 teacher 'Majo', priority: 0
 teacher 'Brian', cashier: true, priority: 3
 
@@ -78,28 +78,34 @@ teacher 'Otro', priority: 10
 teacher 'Martina', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Blake', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Belu', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
-teacher 'Lala', cashier: true, priority: 0
-teacher 'Mar Tin', cashier: true, priority: 0
+teacher 'Lala', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
+teacher 'Mar Tin', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
+teacher 'Vale K', cashier: true, priority: 0
+teacher 'Ailin', cashier: true, priority: 3
 
 teacher 'Victoria', cashier: true, priority: 2
-teacher 'Farru', priority: 3
+teacher 'Farru', priority: 3, deleted_at: Date.new(2022,3,1)
 teacher 'Soledad', priority: 3, deleted_at: Date.new(2018,11,30)
 teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
 teacher 'ManuH', priority: 3
-teacher 'Carla', priority: 3
+teacher 'Carla', priority: 3, deleted_at: Date.new(2022,3,1)
 teacher 'Ornella', cashier: true, priority: 3
 teacher 'Guido', priority: 3
 teacher 'Agus Giralt', priority: 3
 teacher 'Gaby', priority: 3
-teacher 'Santi', cashier: true, priority: 3
+teacher 'Santi', cashier: true, priority: 3, deleted_at: Date.new(2022,3,1)
 
-teacher 'Emiliano', priority: 4
-teacher 'Griselda', priority: 4
+teacher 'Santi A', priority: 3
+teacher 'Euge D', priority: 3
+teacher 'Aye R', priority: 3
+
+teacher 'Emiliano', priority: 4, deleted_at: Date.new(2022,3,1)
+teacher 'Griselda', priority: 4, deleted_at: Date.new(2022,3,1)
 teacher 'Lucas', priority: 4, deleted_at: Date.new(2018,11,30)
 teacher 'Maxim', priority: 4, deleted_at: Date.new(2018,11,30)
-teacher 'Rulock', priority: 4
+teacher 'Rulock', priority: 4, deleted_at: Date.new(2022,3,1)
 teacher 'Zai', priority: 4, deleted_at: Date.new(2019,3,1)
 teacher 'Freddy', priority: 4, deleted_at: Date.new(2019,3,1)
 
@@ -120,12 +126,17 @@ track("AERIALS_PRIN", name: "Aerials - Principiantes", color: "#ce0a24", course_
 track("AJ_AVAN", name: "Authentic Jazz - Avanzados", color: "#71a9a4", course_kind: "swing")
 track("AJ_INT1", name: "Authentic Jazz - Intermedios 1", color: "#71a9a4", course_kind: "swing")
 track("AJ_PRIN", name: "Authentic Jazz - Principiantes", color: "#71a9a4", course_kind: "swing")
+track("AJ_PRIN_PLUS", name: "Authentic Jazz - Principiantes+", color: "#71a9a4", course_kind: "swing")
+track("AJ_TP_PRIN", name: "Authentic Jazz & Tap - Principiantes", color: "#71a9a4", course_kind: "swing")
+track("AJ_TP_PRIN", name: "Authentic Jazz & Tap - Intermedios", color: "#71a9a4", course_kind: "swing")
 track("SHAG", name: "Shag", color: "#005f42", course_kind: "swing")
 track("SHAG_PRIN", name: "Shag - Principiantes", color: "#005f42", course_kind: "swing")
 track("SHAG_INT1", name: "Shag - Intermedios 1", color: "#005f42", course_kind: "swing")
-track("BALBOA_PRIN", name: "Balboa - Principiantes", color: "#005f42", course_kind: "swing")
-track("BALBOA_INT1", name: "Balboa - Intermedios 1", color: "#005f42", course_kind: "swing")
-track("BALBOA_SHAG", name: "Balboa/Shag/20's", color: "#005f42", course_kind: "swing")
+track("SHAG_TODO_NIV", name: "Shag - Todo Nivel", color: "#005f42", course_kind: "swing")
+track("BALBOA_TODO_NIV", name: "Balboa - Todo nivel", color: "#248549", course_kind: "swing")
+track("BALBOA_PRIN", name: "Balboa - Principiantes", color: "#248549", course_kind: "swing")
+track("BALBOA_INT1", name: "Balboa - Intermedios 1", color: "#248549", course_kind: "swing")
+track("BALBOA_SHAG", name: "Balboa/Shag/20's", color: "#248549", course_kind: "swing")
 track("BLUES_INT1", name: "Blues - Intermedios 1", color: "#4873b1", course_kind: "swing")
 track("BLUES_PRIN", name: "Blues - Principiantes", color: "#4873b1", course_kind: "swing")
 track("ESTIRAMIENTO", name: "Estiramiento", color: "#5b9bd5", course_kind: "swing")
@@ -152,6 +163,7 @@ track("TP_PRIN", name: "Tap - Principiantes", color: "#fab258", course_kind: "sw
 track("TEO_MUSICAL", name: "Teoría Musical", color: "#000000", course_kind: "swing")
 track("BOOGIE_PRIN", name: "Boogie Boogie - Principiantes", color: "#fcae00", course_kind: "swing")
 track("BOOGIE_INT1", name: "Boogie Boogie - Intermedios 1", color: "#fcae00", course_kind: "swing")
+track("BOOGIE_TODO_NIV", name: "Boogie Boogie - Todo nivel", color: "#fcae00", course_kind: "swing")
 
 track("LOCKING", name: "Locking", color: "#4fadeb", course_kind: "roots")
 track("HOUSE", name: "House", color: "#88219d", course_kind: "roots")
@@ -356,5 +368,15 @@ payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Roots: Clase suelta d
 payment_plan "AFRO__1_X_SEMANA", description: "Roots: Mensual 1 x Semana de Danza Afro", price: 1100, weekly_classes: 1, order: 4, course_match: "afro"
 payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro", price: 1800, weekly_classes: 1, order: 4, course_match: "afro,roots"
 payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro", price: 2600, weekly_classes: 1, order: 4, course_match: "afro,roots"
+
+payment_plan "1_X_SEMANA_3_CASH", description: "Swing: Mensual 1 x Semana (3 c) - EFECTIVO", price: 2000, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_4_CASH", description: "Swing: Mensual 1 x Semana (4 c) - EFECTIVO", price: 2600, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "1_X_SEMANA_5_CASH", description: "Swing: Mensual 1 x Semana (5 c) - EFECTIVO", price: 3200, weekly_classes: 1, order: 1, course_match: "swing"
+payment_plan "3_X_SEMANA_CASH", description: "Swing: Mensual 3 x Semana - EFECTIVO", price: 4400, weekly_classes: 3, order: 1, course_match: "swing"
+payment_plan "2_X_SEMANA_CASH", description: "Swing: Mensual 2 x Semana - EFECTIVO", price: 6200, weekly_classes: 2, order: 1, course_match: "swing"
+payment_plan "LIBRE_CASH", description: "Swing: 1 Mes. Libre - EFECTIVO", price: 10000, weekly_classes: 40, order: 1, course_match: "swing"
+payment_plan "3_MESES_CASH", description: "Swing: 3 Meses 1 x Semana - EFECTIVO", price: 0, weekly_classes: 1, order: 1, course_match: "swing"
+
+
 
 fixed_fee FixedFee::NEW_CARD, name: "Tarjeta Nueva", value: 50.0
