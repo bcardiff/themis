@@ -21,6 +21,7 @@ jobs:
           docker-compose up -d selenium
           docker-compose run --rm --no-deps app ./bin/setup
           docker-compose run --rm --no-deps app rake db:test:prepare
+          sleep 20
 
       - name: Run specs
         run: |
