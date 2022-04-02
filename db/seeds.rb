@@ -123,24 +123,42 @@ swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "htt
 
 track("AERIALS_INT1", name: "Aerials - Intermedios 1", color: "#ce0a24", course_kind: "swing")
 track("AERIALS_PRIN", name: "Aerials - Principiantes", color: "#ce0a24", course_kind: "swing")
-track("AJ_AVAN", name: "Authentic Jazz - Avanzados", color: "#71a9a4", course_kind: "swing")
-track("AJ_INT1", name: "Authentic Jazz - Intermedios 1", color: "#71a9a4", course_kind: "swing")
+
 track("AJ_PRIN", name: "Authentic Jazz - Principiantes", color: "#71a9a4", course_kind: "swing")
+track("AJ_PRIN_IMPRO", name: "Authentic Jazz - Principiantes - Impro", color: "#71a9a4", course_kind: "swing")
+track("AJ_PRIN_MUSIC_Y_COREO", name: "Authentic Jazz - Principiantes - Musicalidad y Coreo", color: "#71a9a4", course_kind: "swing")
 track("AJ_PRIN_PLUS", name: "Authentic Jazz - Principiantes+", color: "#71a9a4", course_kind: "swing")
+track("AJ_INT1", name: "Authentic Jazz - Intermedios 1", color: "#71a9a4", course_kind: "swing")
+track("AJ_INT1_RUTINAS", name: "Authentic Jazz - Intermedios - Rutinas Clásicas", color: "#71a9a4", course_kind: "swing")
+track("AJ_INT_MUSIC_Y_COREO", name: "Authentic Jazz - Intermedios - Musicalidad y Coreo", color: "#71a9a4", course_kind: "swing")
+track("AJ_INT_IMPRO", name: "Authentic Jazz - Intermedios - Impro", color: "#71a9a4", course_kind: "swing")
+track("AJ_AVAN", name: "Authentic Jazz - Avanzados", color: "#71a9a4", course_kind: "swing")
+track("AJ_AVAN_MUSIC_Y_COREO", name: "Authentic Jazz - Avanzados - Musicalidad y Coreo", color: "#71a9a4", course_kind: "swing")
+track("AJ_AVAN_IMPRO", name: "Authentic Jazz - Avanzados - Impro", color: "#71a9a4", course_kind: "swing")
+track("AJ_AVAN_PLUS", name: "Authentic Jazz - Avanzados+", color: "#71a9a4", course_kind: "swing")
+
+
 track("AJ_TP_PRIN", name: "Authentic Jazz & Tap - Principiantes", color: "#71a9a4", course_kind: "swing")
-track("AJ_TP_PRIN", name: "Authentic Jazz & Tap - Intermedios", color: "#71a9a4", course_kind: "swing")
+track("AJ_TP_INT", name: "Authentic Jazz & Tap - Intermedios", color: "#71a9a4", course_kind: "swing")
+track("AJ_TP_AVAN", name: "Authentic Jazz & Tap - Avanzados", color: "#71a9a4", course_kind: "swing")
+
 track("SHAG", name: "Shag", color: "#005f42", course_kind: "swing")
 track("SHAG_PRIN", name: "Shag - Principiantes", color: "#005f42", course_kind: "swing")
 track("SHAG_INT1", name: "Shag - Intermedios 1", color: "#005f42", course_kind: "swing")
 track("SHAG_TODO_NIV", name: "Shag - Todo Nivel", color: "#005f42", course_kind: "swing")
+
 track("BALBOA_TODO_NIV", name: "Balboa - Todo nivel", color: "#248549", course_kind: "swing")
 track("BALBOA_PRIN", name: "Balboa - Principiantes", color: "#248549", course_kind: "swing")
 track("BALBOA_INT1", name: "Balboa - Intermedios 1", color: "#248549", course_kind: "swing")
 track("BALBOA_SHAG", name: "Balboa/Shag/20's", color: "#248549", course_kind: "swing")
+
 track("BLUES_INT1", name: "Blues - Intermedios 1", color: "#4873b1", course_kind: "swing")
 track("BLUES_PRIN", name: "Blues - Principiantes", color: "#4873b1", course_kind: "swing")
+
 track("ESTIRAMIENTO", name: "Estiramiento", color: "#5b9bd5", course_kind: "swing")
+
 track("INTRO_BAILE", name: "Intro al Baile", color: "#92d050", course_kind: "swing")
+
 track("LH_AVAN", name: "Lindy Hop - Avanzados", color: "#ec3b62", course_kind: "swing")
 track("LH_AVAN2", name: "Lindy Hop - Avanzados 2", color: "#ec3b62", course_kind: "swing")
 track("LH_COREO", name: "Lindy Hop Coreo", color: "#ad0855", course_kind: "swing")
@@ -152,15 +170,20 @@ track("LH_INT3", name: "Lindy Hop - Intermedios 3", color: "#ec3b62", course_kin
 track("LH_INT3_PLUS", name: "Lindy Hop - Intermedios 3+", color: "#af3a3a", course_kind: "swing")
 track("LH_PRIN", name: "Lindy Hop - Principiantes", color: "#ec3b62", course_kind: "swing")
 track("LH_PRIN_PLUS", name: "Lindy Hop - Principiantes+", color: "#af3a3a", course_kind: "swing")
+
 track("PREP_FISICA", name: "Preparación Física", color: "#5b9bd5", course_kind: "swing")
 track("SWING_KIDS", name: "Swing Kids", color: "#795fb6", course_kind: "swing")
 track("SWING_SENIOR", name: "Swing Senior", color: "#828282", course_kind: "swing")
+
 track("TAP_KIDS", name: "Tap Kids", color: "#795fb6", course_kind: "swing")
 track("TP_AVAN", name: "Tap - Avanzados", color: "#fab258", course_kind: "swing")
 track("TP_INT1", name: "Tap - Intermedios 1", color: "#fab258", course_kind: "swing")
 track("TP_INT2", name: "Tap - Intermedios 2", color: "#fab258", course_kind: "swing")
 track("TP_PRIN", name: "Tap - Principiantes", color: "#fab258", course_kind: "swing")
+track("TP_PRIN_IMPRO", name: "Tap - Impro", color: "#fab258", course_kind: "swing")
+
 track("TEO_MUSICAL", name: "Teoría Musical", color: "#000000", course_kind: "swing")
+
 track("BOOGIE_PRIN", name: "Boogie Boogie - Principiantes", color: "#fcae00", course_kind: "swing")
 track("BOOGIE_INT1", name: "Boogie Boogie - Intermedios 1", color: "#fcae00", course_kind: "swing")
 track("BOOGIE_TODO_NIV", name: "Boogie Boogie - Todo nivel", color: "#fcae00", course_kind: "swing")
@@ -176,10 +199,6 @@ track("AFRO_URBANO", name: "Afro Urbano", color: "#827f06", course_kind: "roots"
 
 track("DANZA_AFRO", name: "Danza Afro", color: "#4ead5b", course_kind: "afro")
 
-track("AJ_AVAN_PLUS", name: "Authentic Jazz - Avanzados+", color: "#71a9a4", course_kind: "swing")
-track("AJ_PRIN_IMPRO", name: "Authentic Jazz - Impro", color: "#71a9a4", course_kind: "swing")
-track("AJ_CONMUSIC", name: "Authentic Jazz - Conexión Musical", color: "#71a9a4", course_kind: "swing")
-track("TP_PRIN_IMPRO", name: "Tap - Impro", color: "#fab258", course_kind: "swing")
 track("FUNKY", name: "Funky Styles", color: "#4fadeb", course_kind: "roots")
 
 course "AJ_PRIN_LUN", name: "Authentic Jazz - Principiantes - Lunes", weekday: 1, valid_since: Date.new(2016,4,1), track: track("AJ_PRIN"), place: swing_city, start_time: '19:00'
