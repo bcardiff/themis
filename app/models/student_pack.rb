@@ -46,6 +46,8 @@ class StudentPack < ActiveRecord::Base
         due_date = (start_date + 2.months).at_end_of_month
       elsif plan.code == "2_MESES_LIBRE"
         due_date = (start_date + 1.months).at_end_of_month
+      elsif plan.code == "3_MESES_CASH"
+        due_date = (start_date + 2.months).at_end_of_month
       else
         due_date = start_date.at_end_of_month
       end
@@ -53,13 +55,19 @@ class StudentPack < ActiveRecord::Base
       case plan.code
       when "1_X_SEMANA_3"
         weeks = 3
+      when "1_X_SEMANA_3_CASH"
+        weeks = 3
       when "1_X_SEMANA_4"
+        weeks = 4
+      when "1_X_SEMANA_4_CASH"
         weeks = 4
       when "1_X_SEMANA_4_SALE_30"
         weeks = 4
       when "1_X_SEMANA_4_SALE_50"
         weeks = 4
       when "1_X_SEMANA_5"
+        weeks = 5
+      when "1_X_SEMANA_5_CASH"
         weeks = 5
       else
         current_date = start_date
