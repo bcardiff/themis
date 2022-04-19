@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200128005404) do
+ActiveRecord::Schema.define(version: 20220419151044) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -89,14 +89,18 @@ ActiveRecord::Schema.define(version: 20200128005404) do
   end
 
   create_table "payment_plans", force: :cascade do |t|
-    t.string   "code",           limit: 255
-    t.string   "description",    limit: 255
-    t.decimal  "price",                      precision: 10, scale: 2
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.integer  "weekly_classes", limit: 4
-    t.integer  "order",          limit: 4
-    t.string   "course_match",   limit: 255
+    t.string   "code",            limit: 255
+    t.string   "description",     limit: 255
+    t.decimal  "price",                       precision: 10, scale: 2
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "weekly_classes",  limit: 4
+    t.integer  "order",           limit: 4
+    t.string   "course_match",    limit: 255
+    t.boolean  "single_class",    limit: 1
+    t.integer  "weeks",           limit: 4
+    t.integer  "due_date_months", limit: 4
+    t.datetime "deleted_at"
   end
 
   create_table "places", force: :cascade do |t|
@@ -248,7 +252,6 @@ ActiveRecord::Schema.define(version: 20200128005404) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["teacher_id"], name: "index_users_on_teacher_id", using: :btree
 
-  add_foreign_key "cards", "students"
   add_foreign_key "courses", "places"
   add_foreign_key "courses", "tracks"
   add_foreign_key "student_course_logs", "course_logs"
