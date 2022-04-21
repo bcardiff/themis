@@ -33,7 +33,6 @@ class PaymentPlan < ActiveRecord::Base
   validates :price, numericality: true
 
   scope :active, -> { where("deleted_at IS NULL") }
-  scope :single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS, SINGLE_CLASS_FREE]) }
   scope :reference_single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS]) }
 
   def other?
@@ -42,10 +41,6 @@ class PaymentPlan < ActiveRecord::Base
 
   def single_class?
     self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
-  end
-
-  def self.single_class
-    find_by(code: SINGLE_CLASS)
   end
 
   def self.single_class_by_kind
