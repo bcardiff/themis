@@ -367,8 +367,8 @@ course "AFRO_URBANO_VIE", name: "Afro Urbano - Viernes", weekday: 5, valid_since
 payment_plan "LIBRE", description: "Swing: 1 Mes. Libre", weekly_classes: 40, single_class: false, weeks: nil, due_date_months: 1, order: 1, course_match: "swing"
 payment_plan "2_MESES_LIBRE", description: "Swing: 2 Meses. Libre", weekly_classes: 40, single_class: false, weeks: nil, due_date_months: 2, order: 1, course_match: "swing"
 payment_plan "3_MESES", description: "Swing: 3 Meses 1 x Semana", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 3, order: 1, course_match: "swing"
-payment_plan "3_X_SEMANA", description: "Swing: Mensual 3 x Semana", weekly_classes: 3, single_class: false, weeks: nil, due_date_months: 3, order: 1, course_match: "swing"
-payment_plan "2_X_SEMANA", description: "Swing: Mensual 2 x Semana", weekly_classes: 2, single_class: false, weeks: nil, due_date_months: 2, order: 1, course_match: "swing"
+payment_plan "3_X_SEMANA", description: "Swing: Mensual 3 x Semana", weekly_classes: 3, single_class: false, weeks: nil, due_date_months: 1, order: 1, course_match: "swing"
+payment_plan "2_X_SEMANA", description: "Swing: Mensual 2 x Semana", weekly_classes: 2, single_class: false, weeks: nil, due_date_months: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_3", description: "Swing: Mensual 1 x Semana (3 c)", weekly_classes: 1, single_class: false, weeks: 3, due_date_months: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_4", description: "Swing: Mensual 1 x Semana (4 c)", weekly_classes: 1, single_class: false, weeks: 4, due_date_months: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_5", description: "Swing: Mensual 1 x Semana (5 c)", weekly_classes: 1, single_class: false, weeks: 5, due_date_months: 1, order: 1, course_match: "swing"
@@ -380,13 +380,13 @@ payment_plan PaymentPlan::SINGLE_CLASS_FREE, description: "Swing: Clase bonifica
 
 payment_plan PaymentPlan::SINGLE_CLASS_ROOTS, description: "Roots: Clase suelta", weekly_classes: 1, single_class: true, weeks: nil, due_date_months: nil, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
 payment_plan "ROOTS__1_X_SEMANA", description: "Roots: Mensual 1 x Semana", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 1, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
-payment_plan "ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana", weekly_classes: 2, single_class: false, weeks: nil, due_date_months: 2, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
-payment_plan "ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana", weekly_classes: 3, single_class: false, weeks: nil, due_date_months: 3, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
+payment_plan "ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana", weekly_classes: 2, single_class: false, weeks: nil, due_date_months: 1, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
+payment_plan "ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana", weekly_classes: 3, single_class: false, weeks: nil, due_date_months: 1, order: 3, course_match: "roots", deleted_at: Date.new(2022,4,1)
 
 payment_plan PaymentPlan::SINGLE_CLASS_AFRO, description: "Roots: Clase suelta de Danza Afro", weekly_classes: 1, single_class: true, weeks: nil, due_date_months: nil, order: 4, course_match: "afro", deleted_at: Date.new(2022,4,1)
 payment_plan "AFRO__1_X_SEMANA", description: "Roots: Mensual 1 x Semana de Danza Afro", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 1, order: 4, course_match: "afro", deleted_at: Date.new(2022,4,1)
-payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 2, order: 4, course_match: "afro,roots", deleted_at: Date.new(2022,4,1)
-payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 3, order: 4, course_match: "afro,roots", deleted_at: Date.new(2022,4,1)
+payment_plan "AFRO-1ROOTS__2_X_SEMANA", description: "Roots: Mensual 2 x Semana con Danza Afro", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 1, order: 4, course_match: "afro,roots", deleted_at: Date.new(2022,4,1)
+payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana con Danza Afro", weekly_classes: 1, single_class: false, weeks: nil, due_date_months: 1, order: 4, course_match: "afro,roots", deleted_at: Date.new(2022,4,1)
 
 payment_plan "1_X_SEMANA_3_CASH", description: "Swing: Mensual 1 x Semana (3 c) - EFECTIVO", weekly_classes: 1, single_class: false, weeks: 3, due_date_months: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_4_CASH", description: "Swing: Mensual 1 x Semana (4 c) - EFECTIVO", weekly_classes: 1, single_class: false, weeks: 4, due_date_months: 1, order: 1, course_match: "swing"
