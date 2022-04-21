@@ -42,7 +42,11 @@ class StudentPack < ActiveRecord::Base
     plan = payment_plan_on_cashier || PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
     if plan && !plan.single_class?
-      if plan.code == "3_MESES"
+      if !plan.due_date_months.nil?
+        # TODO after migration remove all cases and leave only the next one
+        # by default we use due_date_months == 1
+        due_date = (start_date + ((plan.due_date_months || 1) - 1).months).at_end_of_month
+      elsif plan.code == "3_MESES"
         due_date = (start_date + 2.months).at_end_of_month
       elsif plan.code == "2_MESES_LIBRE"
         due_date = (start_date + 1.months).at_end_of_month
@@ -52,29 +56,34 @@ class StudentPack < ActiveRecord::Base
         due_date = start_date.at_end_of_month
       end
 
-      case plan.code
-      when "1_X_SEMANA_3"
-        weeks = 3
-      when "1_X_SEMANA_3_CASH"
-        weeks = 3
-      when "1_X_SEMANA_4"
-        weeks = 4
-      when "1_X_SEMANA_4_CASH"
-        weeks = 4
-      when "1_X_SEMANA_4_SALE_30"
-        weeks = 4
-      when "1_X_SEMANA_4_SALE_50"
-        weeks = 4
-      when "1_X_SEMANA_5"
-        weeks = 5
-      when "1_X_SEMANA_5_CASH"
-        weeks = 5
+      if !plan.weeks.nil?
+        weeks = plan.weeks
       else
-        current_date = start_date
-        weeks = 0
-        while current_date <= due_date
-          current_date = current_date + 1.week
-          weeks += 1
+        # TODO after migration leave only the else case
+        case plan.code
+        when "1_X_SEMANA_3"
+          weeks = 3
+        when "1_X_SEMANA_3_CASH"
+          weeks = 3
+        when "1_X_SEMANA_4"
+          weeks = 4
+        when "1_X_SEMANA_4_CASH"
+          weeks = 4
+        when "1_X_SEMANA_4_SALE_30"
+          weeks = 4
+        when "1_X_SEMANA_4_SALE_50"
+          weeks = 4
+        when "1_X_SEMANA_5"
+          weeks = 5
+        when "1_X_SEMANA_5_CASH"
+          weeks = 5
+        else
+          current_date = start_date
+          weeks = 0
+          while current_date <= due_date
+            current_date = current_date + 1.week
+            weeks += 1
+          end
         end
       end
 

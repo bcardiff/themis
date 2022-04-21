@@ -40,7 +40,8 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def single_class?
-    self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
+    # TODO after migration remove hardcoded ids?
+    self.single_class || self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
   end
 
   def self.single_class_by_kind
