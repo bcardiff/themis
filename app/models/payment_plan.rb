@@ -1,3 +1,29 @@
+#
+# Algunos planes de pago tienen significado especial. Estos deberían tener una
+# `description` dado por las constantes OTHER, SINGLE_CLASS, etc.
+#
+# Cuántas clases y por cuánto tiempo es válido un pack depende del valor de varias
+# propiedades.
+#
+# (1) Si `single_class == true`, es una clase individual y se usa en el mes en curso.
+#     Por lo general son clases que se usan en el dia
+#
+# Si `single_class == false` entonces se ven los campos `weekly_classes`, `weeks` y `due_date_months`.
+#
+# `due_date_months` indica cuántos meses dura el pack. Por lo general es `1`. Esto indica que
+# termina en el mes actual. El valor `2` es el mes siguiente. O sea, es la cantidad de meses que dura el pack.
+#
+# (2) Si `weeks == nil` entonces se calcula cuántas semanas hay desde el inicio de este mes hasta el
+#     el final del mes indicado por `due_date_months`. Esa cantidad de semanas se multiplica por `weekly_classes`
+#     para determinar la cantidad de clases que corresponden a la compra del pack. En este caso dependerá del mes
+#     en curso el valor exacto. `weeks == nil` suele darse en packs de 2 y 3 meses por simplificación, y en packs
+#     de 1 mes de duración pero para 2 o 3 veces por semana.
+#
+# (3) Si `weeks != nil` entonces la cantidad de cursos corresponde exactamente a `weeks * weekly_classes`.
+#     Este caso suele darse en packs de 1 vez por semana durante 1 mes y hay packs para meses de 3, 4 y 5 semanas.
+#
+# Ver `StudentPack.register_for` que es donde se detalla esta lógica.
+#
 class PaymentPlan < ActiveRecord::Base
   OTHER = "OTRO"
   SINGLE_CLASS = "CLASE"
@@ -7,7 +33,7 @@ class PaymentPlan < ActiveRecord::Base
 
   validates :price, numericality: true
 
-  scope :single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS, SINGLE_CLASS_FREE]) }
+  scope :active, -> { where("deleted_at IS NULL") }
   scope :reference_single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS]) }
 
   def other?
@@ -15,11 +41,8 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def single_class?
-    self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
-  end
-
-  def self.single_class
-    find_by(code: SINGLE_CLASS)
+    # TODO after migration remove hardcoded ids?
+    self.single_class || self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
   end
 
   def self.single_class_by_kind
@@ -43,7 +66,7 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def self.updatable_prices
-    PaymentPlan.all.order(:order, :price)
+    PaymentPlan.active.order(:order, :price)
       .to_a.select { |p| !p.other? && p.code != SINGLE_CLASS_FREE }
   end
 end
