@@ -7,6 +7,7 @@ class PaymentPlan < ActiveRecord::Base
 
   validates :price, numericality: true
 
+  scope :active, -> { where("deleted_at IS NULL") }
   scope :single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS, SINGLE_CLASS_FREE]) }
   scope :reference_single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS]) }
 
@@ -43,7 +44,7 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def self.updatable_prices
-    PaymentPlan.all.order(:order, :price)
+    PaymentPlan.active.order(:order, :price)
       .to_a.select { |p| !p.other? && p.code != SINGLE_CLASS_FREE }
   end
 end
