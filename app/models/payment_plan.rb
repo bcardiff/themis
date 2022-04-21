@@ -16,10 +16,11 @@
 # (2) Si `weeks == nil` entonces se calcula cuántas semanas hay desde el inicio de este mes hasta el
 #     el final del mes indicado por `due_date_months`. Esa cantidad de semanas se multiplica por `weekly_classes`
 #     para determinar la cantidad de clases que corresponden a la compra del pack. En este caso dependerá del mes
-#     en curso el valor exacto. `weeks == nil` suele darse en packs de 2 y 3 meses por simplificación.
+#     en curso el valor exacto. `weeks == nil` suele darse en packs de 2 y 3 meses por simplificación, y en packs
+#     de 1 mes de duración pero para 2 o 3 veces por semana.
 #
 # (3) Si `weeks != nil` entonces la cantidad de cursos corresponde exactamente a `weeks * weekly_classes`.
-#     Este caso suele darse en packs de 1 mes y hay packs para meses de 3, 4 y 5 semanas.
+#     Este caso suele darse en packs de 1 vez por semana durante 1 mes y hay packs para meses de 3, 4 y 5 semanas.
 #
 # Ver `StudentPack.register_for` que es donde se detalla esta lógica.
 #
