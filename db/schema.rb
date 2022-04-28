@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220419151044) do
+ActiveRecord::Schema.define(version: 20220428005425) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20220419151044) do
     t.integer  "weekly_classes",  limit: 4
     t.integer  "order",           limit: 4
     t.string   "course_match",    limit: 255
-    t.boolean  "single_class",    limit: 1
+    t.boolean  "single_class",    limit: 1,                            null: false
     t.integer  "weeks",           limit: 4
     t.integer  "due_date_months", limit: 4
     t.datetime "deleted_at"

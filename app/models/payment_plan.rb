@@ -32,6 +32,7 @@ class PaymentPlan < ActiveRecord::Base
   SINGLE_CLASS_AFRO = "AFRO__CLASE"
 
   validates :price, numericality: true
+  validates :due_date_months, presence: true, if: :requires_due_date_months?
 
   scope :active, -> { where("deleted_at IS NULL") }
   scope :reference_single_class_payment_plans, -> { where(code: [SINGLE_CLASS, SINGLE_CLASS_AFRO, SINGLE_CLASS_ROOTS]) }
@@ -41,8 +42,7 @@ class PaymentPlan < ActiveRecord::Base
   end
 
   def single_class?
-    # TODO after migration remove hardcoded ids?
-    self.single_class || self.code == SINGLE_CLASS || self.code == SINGLE_CLASS_ROOTS || self.code == SINGLE_CLASS_AFRO || self.code == SINGLE_CLASS_FREE
+    self.single_class
   end
 
   def self.single_class_by_kind
@@ -55,6 +55,10 @@ class PaymentPlan < ActiveRecord::Base
 
   def requires_student_pack_for_class
     !self.single_class?
+  end
+
+  def requires_due_date_months?
+    !self.other? && !self.single_class?
   end
 
   def notify_purchase?

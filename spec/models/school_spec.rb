@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe School, type: :model do
-  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_clase) { create(:payment_plan, :single_class) }
 
   describe "courses incomes" do
     let(:teacher) { create(:teacher, fee: 100) }
-    let(:plan) { create(:payment_plan) }
+    let(:plan) { create(:payment_plan, :weekly_1_month) }
 
     it "count in the day they where transferred" do
       Timecop.freeze(Time.local(2015, 5, 15))

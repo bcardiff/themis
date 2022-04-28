@@ -8,13 +8,13 @@ RSpec.describe StudentPack, type: :model do
     end
   end
 
-  let!(:plan_3_meses) { create(:payment_plan, code: "3_MESES", price: 550, weekly_classes: 1) }
-  let!(:plan_3_x_semana) { create(:payment_plan, code: "3_X_SEMANA", price: 500, weekly_classes: 3) }
-  let!(:plan_2_x_semana) { create(:payment_plan, code: "2_X_SEMANA", price: 400, weekly_classes: 2) }
-  let!(:plan_1_x_semana_3) { create(:payment_plan, code: "1_X_SEMANA_3", price: 180, weekly_classes: 1) }
-  let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1) }
-  let!(:plan_1_x_semana_5) { create(:payment_plan, code: "1_X_SEMANA_5", price: 300, weekly_classes: 1) }
-  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_3_meses) { create(:payment_plan, code: "3_MESES", price: 550, weekly_classes: 1, due_date_months: 3) }
+  let!(:plan_3_x_semana) { create(:payment_plan, code: "3_X_SEMANA", price: 500, weekly_classes: 3, due_date_months: 1) }
+  let!(:plan_2_x_semana) { create(:payment_plan, code: "2_X_SEMANA", price: 400, weekly_classes: 2, due_date_months: 1) }
+  let!(:plan_1_x_semana_3) { create(:payment_plan, code: "1_X_SEMANA_3", price: 180, weekly_classes: 1, due_date_months: 1, weeks: 3) }
+  let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1, due_date_months: 1, weeks: 4) }
+  let!(:plan_1_x_semana_5) { create(:payment_plan, code: "1_X_SEMANA_5", price: 300, weekly_classes: 1, due_date_months: 1, weeks: 5) }
+  let!(:plan_clase) { create(:payment_plan, :single_class) }
   let!(:plan_otro) { create(:payment_plan, code: PaymentPlan::OTHER) }
 
   let(:student) { create(:student) }

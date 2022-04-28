@@ -17,7 +17,7 @@ RSpec.shared_context "swc context" do
   let!(:jane_doe) { create :student, first_name: "Jane", last_name: "Doe" }
 
   let(:single_class_price) { 100 }
-  let!(:single_class) { create :payment_plan, code: PaymentPlan::SINGLE_CLASS, description: "Clase suelta $#{single_class_price}", price: single_class_price, weekly_classes: 1 }
+  let!(:single_class) { create :payment_plan, :single_class, description: "Clase suelta $#{single_class_price}", price: single_class_price }
 
   def signin_as_room
     goto_page RoomLogin do |page|

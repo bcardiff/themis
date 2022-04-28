@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CourseLog, type: :model do
-  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_clase) { create(:payment_plan, :single_class) }
 
   it "factory works" do
     create(:course_log)
@@ -158,7 +158,7 @@ RSpec.describe CourseLog, type: :model do
     let(:caballito_course) { create(:course, weekday: 4, place: caballito) }
     let(:other_course) { create(:course, weekday: 4) }
     let(:teacher) { create(:teacher) }
-    let(:plan) { create(:payment_plan, weekly_classes: 1) }
+    let(:plan) { create(:payment_plan, weekly_classes: 1, due_date_months: 1) }
 
     context "yanking all student_course_logs" do
 

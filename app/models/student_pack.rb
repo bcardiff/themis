@@ -42,48 +42,17 @@ class StudentPack < ActiveRecord::Base
     plan = payment_plan_on_cashier || PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
     if plan && !plan.single_class?
-      if !plan.due_date_months.nil?
-        # TODO after migration remove all cases and leave only the next one
-        # by default we use due_date_months == 1
-        due_date = (start_date + ((plan.due_date_months || 1) - 1).months).at_end_of_month
-      elsif plan.code == "3_MESES"
-        due_date = (start_date + 2.months).at_end_of_month
-      elsif plan.code == "2_MESES_LIBRE"
-        due_date = (start_date + 1.months).at_end_of_month
-      elsif plan.code == "3_MESES_CASH"
-        due_date = (start_date + 2.months).at_end_of_month
-      else
-        due_date = start_date.at_end_of_month
-      end
+      # by default we use due_date_months == 1, yet all non single_class (and non other_class) should have a due_date_months
+      due_date = (start_date + ((plan.due_date_months || 1) - 1).months).at_end_of_month
 
       if !plan.weeks.nil?
         weeks = plan.weeks
       else
-        # TODO after migration leave only the else case
-        case plan.code
-        when "1_X_SEMANA_3"
-          weeks = 3
-        when "1_X_SEMANA_3_CASH"
-          weeks = 3
-        when "1_X_SEMANA_4"
-          weeks = 4
-        when "1_X_SEMANA_4_CASH"
-          weeks = 4
-        when "1_X_SEMANA_4_SALE_30"
-          weeks = 4
-        when "1_X_SEMANA_4_SALE_50"
-          weeks = 4
-        when "1_X_SEMANA_5"
-          weeks = 5
-        when "1_X_SEMANA_5_CASH"
-          weeks = 5
-        else
-          current_date = start_date
-          weeks = 0
-          while current_date <= due_date
-            current_date = current_date + 1.week
-            weeks += 1
-          end
+        current_date = start_date
+        weeks = 0
+        while current_date <= due_date
+          current_date = current_date + 1.week
+          weeks += 1
         end
       end
 
@@ -92,6 +61,8 @@ class StudentPack < ActiveRecord::Base
       due_date = start_date.at_end_of_month
       max_courses = 1
     else
+      # if it's not a known pack, we use the single class price to
+      # compute how many classes the payment should cover
       single_class_price = PaymentPlan.find_by(code: PaymentPlan::SINGLE_CLASS).price
       plan = PaymentPlan.find_by(code: PaymentPlan::OTHER)
       due_date = start_date.at_end_of_month
