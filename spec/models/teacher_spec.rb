@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Teacher, type: :model do
-  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
+  let!(:plan_clase) { create(:payment_plan, :single_class) }
 
   describe "receive course money" do
     let(:teacher) { create(:teacher) }
-    let(:plan) { create(:payment_plan) }
+    let(:plan) { create(:payment_plan, :weekly_1_month) }
 
     before do
       Timecop.freeze Time.now.at_beginning_of_minute

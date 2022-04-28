@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OnaSubmission, type: :model do
   let!(:plan_otro) { create(:payment_plan, code: PaymentPlan::OTHER) }
-  let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
-  let!(:plan_3_meses) { create(:payment_plan, code: "3_MESES", price: 550, weekly_classes: 1) }
-  let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1) }
+  let!(:plan_clase) { create(:payment_plan, :single_class) }
+  let!(:plan_3_meses) { create(:payment_plan, code: "3_MESES", price: 550, weekly_classes: 1, due_date_months: 3) }
+  let!(:plan_1_x_semana_4) { create(:payment_plan, code: "1_X_SEMANA_4", price: 250, weekly_classes: 1, due_date_months: 1, weeks: 4) }
 
   let(:lh_int1_jue) { create(:course, weekday: 4) }
   let(:ch_int2_jue) { create(:course, weekday: 4) }
@@ -222,7 +222,7 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   it "should register pending payment of amount given by the plan" do
-    plan = create(:payment_plan, price: 172)
+    plan = create(:payment_plan, price: 172, due_date_months: 1)
 
     submit_student({
       "student_repeat/id_kind" => "guest",
@@ -342,7 +342,7 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   it "should create guess without name if there is payment" do
-    plan = create(:payment_plan)
+    plan = create(:payment_plan, :weekly_1_month)
 
     submit_student({
       "student_repeat/id_kind" => "guest",
@@ -364,7 +364,7 @@ RSpec.describe OnaSubmission, type: :model do
   describe "transactional processing" do
 
     it "when teacher is missing and a payment is been submitted" do
-      plan = create(:payment_plan)
+      plan = create(:payment_plan, :weekly_1_month)
       student = create(:student)
 
       submission = issued_class({
@@ -388,7 +388,7 @@ RSpec.describe OnaSubmission, type: :model do
     end
 
     it "when a record not found do to a plan" do
-      plan = create(:payment_plan)
+      plan = create(:payment_plan, :weekly_1_month)
 
       submission = issued_class({
         "date" => "2015-05-14",
@@ -515,7 +515,7 @@ RSpec.describe OnaSubmission, type: :model do
   end
 
   it "reg bug with payment" do
-    plan = create(:payment_plan)
+    plan = create(:payment_plan, :weekly_1_month)
 
     issued_class ({
       "student_repeat" => [
