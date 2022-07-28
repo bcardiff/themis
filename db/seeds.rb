@@ -71,7 +71,7 @@ teacher 'Celeste', priority: 2
 teacher 'Nanchi', priority: 2, deleted_at: Date.new(2022,3,1)
 teacher 'Sol', priority: 2, deleted_at: Date.new(2022,3,1)
 teacher 'Majo', priority: 0
-teacher 'Brian', cashier: true, priority: 3
+teacher 'Brian', cashier: true, priority: 3, deleted_at: Date.new(2022,7,1)
 
 teacher 'Otro', priority: 10
 
@@ -80,26 +80,31 @@ teacher 'Blake', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Belu', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
 teacher 'Lala', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
 teacher 'Mar Tin', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
-teacher 'Vale K', cashier: true, priority: 0
+teacher 'Vale K', cashier: true, priority: 3
 teacher 'Ailin', cashier: true, priority: 3
 
-teacher 'Victoria', cashier: true, priority: 2
+teacher 'Victoria', cashier: true, priority: 3
 teacher 'Farru', priority: 3, deleted_at: Date.new(2022,3,1)
 teacher 'Soledad', priority: 3, deleted_at: Date.new(2018,11,30)
 teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
-teacher 'ManuH', priority: 3
+teacher 'ManuH', priority: 3 , deleted_at: Date.new(2022,7,8)
 teacher 'Carla', priority: 3, deleted_at: Date.new(2022,3,1)
 teacher 'Ornella', cashier: true, priority: 3
 teacher 'Guido', priority: 3
 teacher 'Agus Giralt', priority: 3
 teacher 'Gaby', priority: 3
-teacher 'Santi', cashier: true, priority: 3, deleted_at: Date.new(2022,3,1)
+teacher 'Santi', cashier: false, priority: 3, deleted_at: Date.new(2022,3,1)
 
 teacher 'Santi A', priority: 3
 teacher 'Euge D', priority: 3
 teacher 'Aye R', priority: 3
+teacher 'Marina', priority: 3
+teacher 'Juan C', priority: 3
+teacher 'Pulu', priority: 3
+teacher 'Pau Luc', priority: 3
+teacher 'Lu Castro', priority: 3
 
 teacher 'Emiliano', priority: 4, deleted_at: Date.new(2022,3,1)
 teacher 'Griselda', priority: 4, deleted_at: Date.new(2022,3,1)
@@ -109,17 +114,18 @@ teacher 'Rulock', priority: 4, deleted_at: Date.new(2022,3,1)
 teacher 'Zai', priority: 4, deleted_at: Date.new(2019,3,1)
 teacher 'Freddy', priority: 4, deleted_at: Date.new(2019,3,1)
 
-teacher 'Javi', cashier: true, priority: 4
+teacher 'Javi', cashier: true, priority: 3
 
-caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8"
-colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh"
-la_huella = place "La Huella", address: "Bulnes 892", link: "http://goo.gl/kT1ElX"
-vera = place "Oliverio Girondo Espacio Cultural", address: "Vera 574", link: "http://goo.gl/VgcPe6"
-sendas = place "Sendas del Sol", address: "Lambaré 990", link: "http://goo.gl/BAZsox"
-ibera = place "Pororoca", address: "Iberá 2385", link: "http://goo.gl/Rosg56"
-chez_manuel = place "Chez Manuel", address: "Paraná y Córdoba", link: "#"
-danzas = place "Academia Integral de Danzas", address: "Av. Scalabrini Ortiz 885", link: "http://goo.gl/TyVh85"
+caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8" , deleted_at: Date.new(2022,4,1)
+colmegna = place "Colmegna Spa Urbano", address: "Sarmiento 839", link: "http://goo.gl/sTPxUh", deleted_at: Date.new(2022,4,1)
+la_huella = place "La Huella", address: "Bulnes 892", link: "http://goo.gl/kT1ElX", deleted_at: Date.new(2022,4,1)
+vera = place "Oliverio Girondo Espacio Cultural", address: "Vera 574", link: "http://goo.gl/VgcPe6", deleted_at: Date.new(2022,4,1)
+sendas = place "Sendas del Sol", address: "Lambaré 990", link: "http://goo.gl/BAZsox", deleted_at: Date.new(2022,4,1)
+ibera = place "Pororoca", address: "Iberá 2385", link: "http://goo.gl/Rosg56", deleted_at: Date.new(2022,4,1)
+chez_manuel = place "Chez Manuel", address: "Paraná y Córdoba", link: "#", deleted_at: Date.new(2022,4,1)
+danzas = place "Academia Integral de Danzas", address: "Av. Scalabrini Ortiz 885", link: "http://goo.gl/TyVh85", deleted_at: Date.new(2022,4,1)
 swing_city = place "Swing City", address: "Av. Scalabrini Ortiz 103", link: "https://goo.gl/maps/SjATQh9YyVP2"
+leader_mode = place "Leader Mode", name: "Belgrano", address: "Av. Federico Lacroze 1786", link: "https://goo.gl/maps/N4MqQ18k3coT3eRz6"
 
 track("AERIALS_INT1", name: "Aerials - Intermedios 1", color: "#ce0a24", course_kind: "swing")
 track("AERIALS_PRIN", name: "Aerials - Principiantes", color: "#ce0a24", course_kind: "swing")
@@ -129,7 +135,7 @@ track("AJ_PRIN_IMPRO", name: "Authentic Jazz - Principiantes - Impro", color: "#
 track("AJ_PRIN_MUSIC_Y_COREO", name: "Authentic Jazz - Principiantes - Musicalidad y Coreo", color: "#71a9a4", course_kind: "swing")
 track("AJ_PRIN_PLUS", name: "Authentic Jazz - Principiantes+", color: "#71a9a4", course_kind: "swing")
 track("AJ_INT1", name: "Authentic Jazz - Intermedios 1", color: "#71a9a4", course_kind: "swing")
-track("AJ_INT1_RUTINAS", name: "Authentic Jazz - Intermedios - Rutinas Clásicas", color: "#71a9a4", course_kind: "swing")
+track("AJ_INT1_RUTINAS", name: "Authentic Jazz - Intermedios - Rutinas Clasicas", color: "#71a9a4", course_kind: "swing")
 track("AJ_INT_MUSIC_Y_COREO", name: "Authentic Jazz - Intermedios - Musicalidad y Coreo", color: "#71a9a4", course_kind: "swing")
 track("AJ_INT_IMPRO", name: "Authentic Jazz - Intermedios - Impro", color: "#71a9a4", course_kind: "swing")
 track("AJ_AVAN", name: "Authentic Jazz - Avanzados", color: "#71a9a4", course_kind: "swing")
@@ -391,8 +397,8 @@ payment_plan "AFRO-2ROOTS__3_X_SEMANA", description: "Roots: Mensual 3 x Semana 
 payment_plan "1_X_SEMANA_3_CASH", description: "Swing: Mensual 1 x Semana (3 c) - EFECTIVO", price: 2000, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_4_CASH", description: "Swing: Mensual 1 x Semana (4 c) - EFECTIVO", price: 2600, weekly_classes: 1, order: 1, course_match: "swing"
 payment_plan "1_X_SEMANA_5_CASH", description: "Swing: Mensual 1 x Semana (5 c) - EFECTIVO", price: 3200, weekly_classes: 1, order: 1, course_match: "swing"
-payment_plan "3_X_SEMANA_CASH", description: "Swing: Mensual 3 x Semana - EFECTIVO", price: 4400, weekly_classes: 3, order: 1, course_match: "swing"
-payment_plan "2_X_SEMANA_CASH", description: "Swing: Mensual 2 x Semana - EFECTIVO", price: 6200, weekly_classes: 2, order: 1, course_match: "swing"
+payment_plan "3_X_SEMANA_CASH", description: "Swing: Mensual 3 x Semana - EFECTIVO", price: 6200, weekly_classes: 3, order: 1, course_match: "swing"
+payment_plan "2_X_SEMANA_CASH", description: "Swing: Mensual 2 x Semana - EFECTIVO", price: 4400, weekly_classes: 2, order: 1, course_match: "swing"
 payment_plan "LIBRE_CASH", description: "Swing: 1 Mes. Libre - EFECTIVO", price: 10000, weekly_classes: 40, order: 1, course_match: "swing"
 payment_plan "3_MESES_CASH", description: "Swing: 3 Meses 1 x Semana - EFECTIVO", price: 0, weekly_classes: 1, order: 1, course_match: "swing"
 
