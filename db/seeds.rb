@@ -65,38 +65,24 @@ end
 teacher 'Mariel', cashier: true, priority: 1
 teacher 'Manuel', cashier: true, priority: 1
 teacher 'Juani', priority: 1, deleted_at: Date.new(2022,3,1)
-teacher 'Candela', priority: 0, deleted_at: Date.new(2016,2,1)
-teacher 'Mariano', priority: 2
-teacher 'Celeste', priority: 2
+teacher 'Mariano', priority: 2, cashier: true
+teacher 'Celeste', priority: 2, cashier: true
 teacher 'Nanchi', priority: 2, deleted_at: Date.new(2022,3,1)
 teacher 'Sol', priority: 2, deleted_at: Date.new(2022,3,1)
-teacher 'Majo', priority: 0
+teacher 'Majo', priority: 3
 teacher 'Brian', cashier: true, priority: 3, deleted_at: Date.new(2022,7,1)
-
 teacher 'Otro', priority: 10
 
-teacher 'Martina', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
-teacher 'Blake', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
-teacher 'Belu', cashier: true, priority: 0, deleted_at: Date.new(2019,3,1)
-teacher 'Lala', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
-teacher 'Mar Tin', cashier: true, priority: 0, deleted_at: Date.new(2022,3,1)
 teacher 'Vale K', cashier: true, priority: 3
 teacher 'Ailin', cashier: true, priority: 3
-
 teacher 'Victoria', cashier: true, priority: 3
-teacher 'Farru', priority: 3, deleted_at: Date.new(2022,3,1)
-teacher 'Soledad', priority: 3, deleted_at: Date.new(2018,11,30)
-teacher 'Edu', priority: 0, deleted_at: Date.new(2017,7,24)
 teacher 'Eliana', priority: 3
 teacher 'Agustín', priority: 3
-teacher 'ManuH', priority: 3 , deleted_at: Date.new(2022,7,8)
-teacher 'Carla', priority: 3, deleted_at: Date.new(2022,3,1)
 teacher 'Ornella', cashier: true, priority: 3
 teacher 'Guido', priority: 3
 teacher 'Agus Giralt', priority: 3
 teacher 'Gaby', priority: 3
 teacher 'Santi', cashier: false, priority: 3, deleted_at: Date.new(2022,3,1)
-
 teacher 'Santi A', priority: 3
 teacher 'Euge D', priority: 3
 teacher 'Aye R', priority: 3
@@ -105,15 +91,7 @@ teacher 'Juan C', priority: 3
 teacher 'Pulu', priority: 3
 teacher 'Pau Luc', priority: 3
 teacher 'Lu Castro', priority: 3
-
-teacher 'Emiliano', priority: 4, deleted_at: Date.new(2022,3,1)
-teacher 'Griselda', priority: 4, deleted_at: Date.new(2022,3,1)
-teacher 'Lucas', priority: 4, deleted_at: Date.new(2018,11,30)
-teacher 'Maxim', priority: 4, deleted_at: Date.new(2018,11,30)
-teacher 'Rulock', priority: 4, deleted_at: Date.new(2022,3,1)
-teacher 'Zai', priority: 4, deleted_at: Date.new(2019,3,1)
-teacher 'Freddy', priority: 4, deleted_at: Date.new(2019,3,1)
-
+teacher 'Lean L', priority: 3
 teacher 'Javi', cashier: true, priority: 3
 
 caballito = place Place::CABALLITO, address: "Rivadavia 4127", link: "https://goo.gl/maps/phcr8" , deleted_at: Date.new(2022,4,1)
