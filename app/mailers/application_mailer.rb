@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "no-reply@swingcity.com.ar"
+  default from: Settings.smtp_default_options.from
   layout 'mailer'
 end

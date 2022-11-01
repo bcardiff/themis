@@ -13,6 +13,7 @@ x-defaults:
       SETTINGS__SMTP_SETTINGS__PASSWORD: smtp
       SETTINGS__SMTP_SETTINGS__PORT: 1025
       SETTINGS__SMTP_SETTINGS__USER_NAME: smtp
+      SETTINGS__SMTP_DEFAULT_OPTIONS__FROM: info@swingcity.com.ar
     pid: host
     working_dir: /src
     depends_on:
