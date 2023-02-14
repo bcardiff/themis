@@ -281,9 +281,9 @@ body.room {
     }
 
     .btn {
-      width: 20vw;
-      height: 10vh;
-      font-size: 5vh;
+      width: 15vw;
+      height: 6vh;
+      font-size: 100%;
       @include flex-center;
       @include flex-grow(1);
       margin: 0.1em;
