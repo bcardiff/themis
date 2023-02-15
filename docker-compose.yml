@@ -3,9 +3,7 @@ version: '2.0'
 x-defaults:
   base: &base
     platform: linux/amd64
-    build:
-      context: .
-      dockerfile: Dockerfile-dev
+    image: bcardiff/themis:devenv-recovery-clean
     environment:
       RAILS_ENV:
       DATABASE_HOST: db
