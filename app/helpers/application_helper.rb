@@ -106,7 +106,7 @@ module ApplicationHelper
        place_name: Place.find(params[:place_id]).name,
        single_class_price_by_kind: PaymentPlan.single_class_by_kind
          .transform_values { |p| number_to_currency(p.price) },
-       payment_plans: PaymentPlan.all.order(:order, :price).to_a.select { |p| !p.other? && ( p.price.to_f != 0 || p.description.include?("Clase bonificada"))}.map { |p|
+       payment_plans: PaymentPlan.all.order(:order, :price).to_a.select { |p| !p.other? && ( p.price.to_f != 0 || p.description.downcase.include?("bonif"))}.map { |p|
          { code: p.code, description: p.description, price: p.price.to_f }
        },
        teachers: Teacher.for_classes.to_a.map { |t| { id: t.id, name: t.name } },
