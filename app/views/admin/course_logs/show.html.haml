@@ -7,7 +7,7 @@
   = plain_text_field 'Fecha', course_log.date
   = plain_text_field 'Estado', course_log.status
   - place = course_log.course.place
-  - if place.try :has_commission?
+  - if place.try :commission?
     = plain_text_field "Comissión #{place.name}", number_to_currency(-place.expenses.where(course_log_id: course_log.id).sum(:payment_amount))
   - unless course_log.missing
     = plain_text_field 'Profesores' do

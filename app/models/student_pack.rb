@@ -156,7 +156,7 @@ class StudentPack < ActiveRecord::Base
     valid_packs.each do |existing_pack|
       if existing_pack && existing_pack.student_course_logs.count < existing_pack.max_courses
         StudentCourseLog.where(id: student_course_log.id).update_all(student_pack_id: existing_pack.try(&:id))
-        return
+        break
       end
     end
   end

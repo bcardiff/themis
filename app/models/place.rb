@@ -56,7 +56,7 @@ class Place < ActiveRecord::Base
     TeacherCashIncomes::PlaceInsuranceExpense.where(place: self, date: date).each(&:destroy!) if insurance > 0
   end
 
-  def has_commission?
+  def commission?
     name == CABALLITO
   end
 

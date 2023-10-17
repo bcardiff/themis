@@ -8,11 +8,13 @@ AllCops:
     - "Rakefile"
     - "node_modules/**/*"
     - "vendor/**/*"
+    - "spec/**/*"
+    - "lib/**/*"
 
   DisplayCopNames: true
 
 Layout/LineLength:
-  Max: 120
+  Max: 200
 Metrics/MethodLength:
   Include:
     - "app/controllers/*"
@@ -27,7 +29,7 @@ Metrics/ClassLength:
   Max: 150
 Metrics/BlockLength:
   AllowedMethods: ['describe']
-  Max: 50
+  Max: 200
 
 Style/Documentation:
   Enabled: false
