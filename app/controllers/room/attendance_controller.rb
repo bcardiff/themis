@@ -45,7 +45,7 @@ class Room::AttendanceController < Room::BaseController
 
     to_remove.each do |teacher_id|
       teacher_course_log = course_log.teacher_course_logs.where(teacher_id: teacher_id).first
-      teacher_course_log.delete if teacher_course_log.student_course_logs.count == 0
+      teacher_course_log.delete if teacher_course_log.student_course_logs.count.zero?
     end
 
     respond_to do |format|

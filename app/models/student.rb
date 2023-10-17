@@ -62,7 +62,7 @@ class Student < ActiveRecord::Base
   def self.format_card_code(code)
     if code.blank?
       nil
-    elsif md = /\d+/.match(code)
+    elsif (md = /\d+/.match(code))
       "SWC/stu/#{md[0].to_s.rjust(4, '0')}"
     else
       raise "Invalid card format #{code}" unless code.nil?

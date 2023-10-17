@@ -34,10 +34,10 @@ class StudentCourseLog < ActiveRecord::Base
   scope :missing_payment, -> { where(requires_student_pack: true, student_pack: nil) }
 
   before_destroy do
-    incomes.each { |i| i.destroy! }
+    incomes.each(&:destroy!)
 
-    ActivityLogs::Student::CourseAttended.for(student, course_log).each { |i| i.destroy! }
-    ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
+    ActivityLogs::Student::CourseAttended.for(student, course_log).each(&:destroy!)
+    ActivityLogs::Student::Payment.for(student, self).each(&:destroy!)
   end
 
   def validate_teacher_in_course_log
@@ -145,7 +145,7 @@ class StudentCourseLog < ActiveRecord::Base
 
       student.destroy!
     when 'guest'
-      student.destroy! if student.student_course_logs.count == 0
+      student.destroy! if student.student_course_logs.count.zero?
     when 'existing_card'
       # nothing to do
     else
@@ -175,7 +175,7 @@ class StudentCourseLog < ActiveRecord::Base
       self.payment_amount = payment_plan.price_or_fallback(payment_amount)
       ActivityLogs::Student::Payment.record(student, self)
     else
-      ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
+      ActivityLogs::Student::Payment.for(student, self).each(&:destroy!)
     end
   end
 

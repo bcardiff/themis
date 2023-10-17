@@ -7,9 +7,7 @@ namespace :app do
       StudentPack.recalculate(payment)
     end
 
-    StudentCourseLog.joins(course_log: :course).missing_payment.between(month_range).each do |student_course_log|
-      student_course_log.assign_to_pack_if_no_payment
-    end
+    StudentCourseLog.joins(course_log: :course).missing_payment.between(month_range).each(&:assign_to_pack_if_no_payment)
   end
 
   def set_plan_price(code, price)

@@ -18,7 +18,7 @@ class Course < ActiveRecord::Base
   end
 
   def can_destroy?
-    course_logs.count == 0
+    course_logs.count.zero?
   end
 
   def description(*components)

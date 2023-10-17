@@ -75,8 +75,8 @@ class CourseLog < ActiveRecord::Base
         StudentCourseLog.yank(course_log, student_payload, ona_submission, "student_repeat[#{index}]")
       end
 
-      if course_log.students.count == 0
-        course_log.teacher_course_logs.each { |tcl| tcl.destroy! }
+      if course_log.students.count.zero?
+        course_log.teacher_course_logs.each(&:destroy!)
 
         course_log.missing = true
 

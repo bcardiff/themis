@@ -43,12 +43,9 @@ class RoomStudentPicker < SitePrism::Page
   section :students_list, StudentsList, '.students-list'
 
   def type_card(card_code)
-    raise "Invalid card #{card_code}" unless md = /\d+/.match(card_code)
+    raise "Invalid card #{card_code}" unless (md = /\d+/.match(card_code))
 
     card = md[0].to_s
-
-
-
 
     card.each_char do |c|
       click_button c

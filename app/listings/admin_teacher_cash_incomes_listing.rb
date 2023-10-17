@@ -12,9 +12,7 @@ class AdminTeacherCashIncomesListing < Listings::Base
     income.date.to_human
   end
 
-  column :type do |income|
-    income.kind_description
-  end
+  column :type, &:kind_description
 
   column 'Curso' do |income|
     income.course_log.try { |c| c.course.description(:short_track, :time) } if income.respond_to?(:course_log)

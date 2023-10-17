@@ -158,9 +158,7 @@ class Admin::StudentsController < Admin::BaseController
     ids = pack.student_course_logs.pluck(:id)
     pack.student_course_logs.update_all(student_pack_id: nil)
     pack.destroy
-    StudentCourseLog.where(id: ids).each do |student_course_log|
-      student_course_log.assign_to_pack_if_no_payment
-    end
+    StudentCourseLog.where(id: ids).each(&:assign_to_pack_if_no_payment)
 
     redirect_to [:admin, student]
   end
@@ -181,7 +179,7 @@ class Admin::StudentsController < Admin::BaseController
 
   def with_pack
     pack = StudentPack.find(params[:id])
-    student = pack.student
+    # student = pack.student
     yield pack
     redirect_to :back
   end

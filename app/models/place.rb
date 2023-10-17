@@ -53,7 +53,7 @@ class Place < ActiveRecord::Base
   end
 
   def after_class_yank(date)
-    TeacherCashIncomes::PlaceInsuranceExpense.where(place: self, date: date).each { |i| i.destroy! } if insurance > 0
+    TeacherCashIncomes::PlaceInsuranceExpense.where(place: self, date: date).each(&:destroy!) if insurance > 0
   end
 
   def has_commission?

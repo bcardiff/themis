@@ -31,8 +31,6 @@ class OnaSubmission < ActiveRecord::Base
 
         CourseLog.process data, self
 
-
-
         self.status = 'done'
         self.log = nil
       end
@@ -53,8 +51,6 @@ class OnaSubmission < ActiveRecord::Base
         raise "unable to yank '#{form}' form" unless form == 'issued_class'
 
         CourseLog.yank data, self
-
-
 
         self.log = nil
         self.status = 'yanked'

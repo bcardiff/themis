@@ -24,7 +24,7 @@ class Cashier::DashboardController < Cashier::BaseController
 
   def open_course
     date = Date.from_dmy(params[:date])
-    course_log = CourseLog.for_course_on_date(params[:course], date)
+    @course_log = CourseLog.for_course_on_date(params[:course], date)
 
     render json: status_json(date)
   end

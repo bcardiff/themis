@@ -41,11 +41,12 @@ class StudentPack < ActiveRecord::Base
     plan = payment_plan_on_cashier || PaymentPlan.find_by(price: price)
     start_date = date.to_date.at_beginning_of_month
     if plan && !plan.single_class?
-      due_date = if plan.code == '3_MESES'
+      due_date = case plan.code
+                 when '3_MESES'
                    (start_date + 2.months).at_end_of_month
-                 elsif plan.code == '2_MESES_LIBRE'
+                 when '2_MESES_LIBRE'
                    (start_date + 1.months).at_end_of_month
-                 elsif plan.code == '3_MESES_CASH'
+                 when '3_MESES_CASH'
                    (start_date + 2.months).at_end_of_month
                  else
                    start_date.at_end_of_month

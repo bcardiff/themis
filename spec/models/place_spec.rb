@@ -151,7 +151,7 @@ RSpec.describe Place, type: :model do
 
   def issued_class(payload, _raise = true)
     s = OnaSubmission.create form: 'issued_class', data: payload, status: 'pending'
-    result = s.process! _raise
+    # result = s.process! _raise
 
     reload_entities
 

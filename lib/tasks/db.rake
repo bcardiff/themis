@@ -21,7 +21,6 @@ namespace :db do
     @db_params = "-p#{@db['password']} #{@db_params}" unless @db['password'].blank?
 
     file = ENV.fetch('FILE', nil)
-    command = "gunzip < #{Shellwords.escape(file)} | mysql #{@db_params}"
     command = "mysqldump #{@db_params} | gzip > #{Shellwords.escape(file)}"
     system(command)
   end
