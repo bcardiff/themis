@@ -129,9 +129,7 @@ class Room::AttendanceController < Room::BaseController
 
     pending_payment = student.student_course_logs.missing_payment.count > 0
 
-    if !pending_payment && requires_pack
-      pending_payment = student.student_packs.valid_for_course_log(course_log).find { |p| p.available_courses > 0 }.nil?
-    end
+    pending_payment = student.student_packs.valid_for_course_log(course_log).find { |p| p.available_courses > 0 }.nil? if !pending_payment && requires_pack
 
     {
       card_code: student.card_code,

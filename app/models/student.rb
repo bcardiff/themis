@@ -4,7 +4,7 @@ class Student < ActiveRecord::Base
   has_many :cards
   has_many :student_packs
 
-  UNKOWN = 'N/A'
+  UNKOWN = 'N/A'.freeze
 
   validates_presence_of :first_name
   validates_uniqueness_of :card_code, allow_nil: true
@@ -75,9 +75,7 @@ class Student < ActiveRecord::Base
     end
     existing = find_by(email: email) if email
     existing ||= find_by_card(card_code) if card_code
-    if existing.nil? && email.blank? && card_code.blank?
-      existing = find_by(first_name: first_name, last_name: last_name)
-    end
+    existing = find_by(first_name: first_name, last_name: last_name) if existing.nil? && email.blank? && card_code.blank?
     if existing
       existing.first_name = first_name || existing.first_name
       existing.last_name = last_name || existing.last_name
@@ -110,9 +108,7 @@ class Student < ActiveRecord::Base
     rescue StandardError
       nil
     end
-    if !formatted_card_code.blank? && cards.where(code: formatted_card_code).empty?
-      cards.build(code: formatted_card_code)
-    end
+    cards.build(code: formatted_card_code) if !formatted_card_code.blank? && cards.where(code: formatted_card_code).empty?
 
     self.card_code = card_code if self.card_code.nil?
     save!

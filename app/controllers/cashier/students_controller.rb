@@ -40,9 +40,7 @@ class Cashier::StudentsController < Cashier::BaseController
 
   def create
     if student.save
-      unless student.card_code.blank?
-        TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
-      end
+      TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today) unless student.card_code.blank?
 
       if Settings.send_emails.welcome
         begin

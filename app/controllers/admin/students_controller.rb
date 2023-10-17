@@ -2,7 +2,7 @@ class Admin::StudentsController < Admin::BaseController
   expose(:student, attributes: :student_params)
   before_action :set_stats_range, only: %i[stats stats_details]
 
-  SHARED_ACTIONS = %i[advance_pack postpone_pack]
+  SHARED_ACTIONS = %i[advance_pack postpone_pack].freeze
   skip_before_action :only_admin, only: SHARED_ACTIONS
   before_action :only_admin_or_cashier, only: SHARED_ACTIONS
 

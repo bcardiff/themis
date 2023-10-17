@@ -6,8 +6,8 @@ class TeacherCashIncome < ActiveRecord::Base
   validates_presence_of :date
   validates_presence_of :teacher
 
-  PAYMENT_ON_TEACHER = 'teacher'
-  PAYMENT_ON_SCHOOL = 'school'
+  PAYMENT_ON_TEACHER = 'teacher'.freeze
+  PAYMENT_ON_SCHOOL = 'school'.freeze
 
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
   scope :handed, -> { where(payment_status: PAYMENT_ON_SCHOOL) }

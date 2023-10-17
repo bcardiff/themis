@@ -1,9 +1,9 @@
 class PaymentPlan < ActiveRecord::Base
-  OTHER = 'OTRO'
-  SINGLE_CLASS = 'CLASE'
-  SINGLE_CLASS_FREE = 'CLASE_BONIFICADA'
-  SINGLE_CLASS_ROOTS = 'ROOTS__CLASE'
-  SINGLE_CLASS_AFRO = 'AFRO__CLASE'
+  OTHER = 'OTRO'.freeze
+  SINGLE_CLASS = 'CLASE'.freeze
+  SINGLE_CLASS_FREE = 'CLASE_BONIFICADA'.freeze
+  SINGLE_CLASS_ROOTS = 'ROOTS__CLASE'.freeze
+  SINGLE_CLASS_AFRO = 'AFRO__CLASE'.freeze
 
   validates :price, numericality: true
 

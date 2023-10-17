@@ -1,5 +1,5 @@
 class Place < ActiveRecord::Base
-  CABALLITO = 'La Fragua'
+  CABALLITO = 'La Fragua'.freeze
 
   validates_presence_of :name
   scope :active, -> { where('deleted_at IS NULL') }

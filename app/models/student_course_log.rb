@@ -1,6 +1,6 @@
 class StudentCourseLog < ActiveRecord::Base
-  PAYMENT_ON_TEACHER = 'teacher'
-  PAYMENT_ON_CLASSES_INCOME = 'classes_income'
+  PAYMENT_ON_TEACHER = 'teacher'.freeze
+  PAYMENT_ON_CLASSES_INCOME = 'classes_income'.freeze
 
   belongs_to :student
   belongs_to :course_log
@@ -122,14 +122,14 @@ class StudentCourseLog < ActiveRecord::Base
 
   def self.yank(_course_log, payload, ona_submission, ona_submission_path)
     id_kind = payload['student_repeat/id_kind']
-    card = payload['student_repeat/cardtxt']
-    card = payload['student_repeat/card'] if card.blank?
-    email = payload['student_repeat/email']
-    first_name = payload['student_repeat/first_name']
-    last_name = payload['student_repeat/last_name']
-    do_payment = payload['student_repeat/do_payment']
-    payment_kind = payload['student_repeat/payment/kind']
-    payment_amount = payload['student_repeat/payment/amount']
+    # card = payload['student_repeat/cardtxt']
+    # card = payload['student_repeat/card'] if card.blank?
+    # email = payload['student_repeat/email']
+    # first_name = payload['student_repeat/first_name']
+    # last_name = payload['student_repeat/last_name']
+    # do_payment = payload['student_repeat/do_payment']
+    # payment_kind = payload['student_repeat/payment/kind']
+    # payment_amount = payload['student_repeat/payment/amount']
 
     existing_log = StudentCourseLog.where(ona_submission: ona_submission,
                                           ona_submission_path: ona_submission_path).first

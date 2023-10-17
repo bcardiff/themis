@@ -26,9 +26,7 @@ class TeacherCourseLogStudentsListing < Listings::Base
     if @course_log.course.place.try :commission?
       school_incomes = incomes.sum(:payment_amount)
       place_expenses = -incomes.where(type: 'TeacherCashIncomes::PlaceCommissionExpense').sum(:payment_amount)
-      if school_incomes > 0 || place_expenses > 0
-        res = "#{res} (#{number_to_currency school_incomes} / #{number_to_currency place_expenses})"
-      end
+      res = "#{res} (#{number_to_currency school_incomes} / #{number_to_currency place_expenses})" if school_incomes > 0 || place_expenses > 0
     end
 
     res
