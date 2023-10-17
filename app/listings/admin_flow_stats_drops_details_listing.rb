@@ -1,5 +1,4 @@
 class AdminFlowStatsDropsDetailsListing < Listings::Base
-
   model do
     student_course_logs = StudentCourseLog.all
       .where('EXTRACT(YEAR_MONTH FROM created_at) = ?', params[:period])

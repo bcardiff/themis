@@ -1,5 +1,5 @@
 class Home < SitePrism::Page
-  set_url "/"
+  set_url '/'
 
-  element :room_link, "a", text: "tomar asistencia"
+  element :room_link, 'a', text: 'tomar asistencia'
 end

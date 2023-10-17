@@ -1,5 +1,4 @@
 class StudentNotifications < ApplicationMailer
-
   def welcome(student)
     @student = student
     mail to: @student.email, subject: subjects[:welcome], template_path: default_template_path
@@ -15,20 +14,20 @@ class StudentNotifications < ApplicationMailer
   private
 
   def default_template_path
-    ["student_notifications/#{Settings.branch}","student_notifications"]
+    ["student_notifications/#{Settings.branch}", 'student_notifications']
   end
 
   def subjects
     case Settings.branch
-    when "sheffield"
+    when 'sheffield'
       {
         welcome: "Welcome to #{School.description}!! - IMPORTANT INFORMATION",
-        pack_granted: "#{School.description} - Pack confirmation",
+        pack_granted: "#{School.description} - Pack confirmation"
       }
     else
       {
         welcome: "¡¡Te damos la bienvenida a #{School.description}!! - INFORMACIÓN IMPORTANTE",
-        pack_granted: "#{School.description} - Confirmación Pack de clases",
+        pack_granted: "#{School.description} - Confirmación Pack de clases"
       }
     end
   end

@@ -6,7 +6,11 @@ class Room::AttendanceController < Room::BaseController
 
   def choose_course
     @place = Place.find(params[:place_id])
-    @date = Date.parse(params[:date]) rescue School.today
+    @date = begin
+      Date.parse(params[:date])
+    rescue StandardError
+      School.today
+    end
     @courses = Course.where(place: @place).ongoing(@date).all.sort_by { |c| [c.start_time, c.track.code] }
 
     @prev_date = @date - 1.day
@@ -41,9 +45,7 @@ class Room::AttendanceController < Room::BaseController
 
     to_remove.each do |teacher_id|
       teacher_course_log = course_log.teacher_course_logs.where(teacher_id: teacher_id).first
-      if teacher_course_log.student_course_logs.count == 0
-        teacher_course_log.delete
-      end
+      teacher_course_log.delete if teacher_course_log.student_course_logs.count == 0
     end
 
     respond_to do |format|
@@ -70,11 +72,11 @@ class Room::AttendanceController < Room::BaseController
 
   def add_student
     course_log = CourseLog.find(params[:id])
-    as_helper = params[:as_helper] == "true"
+    as_helper = params[:as_helper] == 'true'
 
     student = find_student(params)
     student_log = course_log.student_course_logs.first_or_build(student: student)
-    student_log.id_kind = student.card_code.blank? ? "guest" : "existing_card"
+    student_log.id_kind = student.card_code.blank? ? 'guest' : 'existing_card'
     student_log.payment_plan = nil
     student_log.as_helper = as_helper
     student_log.save!
@@ -87,7 +89,7 @@ class Room::AttendanceController < Room::BaseController
 
     student = find_student(params)
     student_log = course_log.student_course_logs.where(student: student).first
-    # TODO show error if unable to delete the student due to existing payment information
+    # TODO: show error if unable to delete the student due to existing payment information
     # for this class
     if student_log.payment_plan.nil?
       student_log.destroy!
@@ -107,9 +109,7 @@ class Room::AttendanceController < Room::BaseController
 
   def remove_students_no_card
     course_log = CourseLog.find(params[:id])
-    if course_log.untracked_students_count > 0
-      course_log.untracked_students_count -= 1
-    end
+    course_log.untracked_students_count -= 1 if course_log.untracked_students_count > 0
     course_log.save!
     render json: { course_log: course_log_json(course_log) }
   end
@@ -133,7 +133,7 @@ class Room::AttendanceController < Room::BaseController
       pending_payment = student.student_packs.valid_for_course_log(course_log).find { |p| p.available_courses > 0 }.nil?
     end
 
-    return {
+    {
       card_code: student.card_code,
       first_name: student.first_name,
       last_name: student.last_name,
@@ -143,15 +143,15 @@ class Room::AttendanceController < Room::BaseController
   end
 
   def course_log_json(course_log)
-    return {
+    {
       id: course_log.id,
       teachers: course_log_teachers_json(course_log),
       students: course_log.student_course_logs.joins(:student)
-        .order("students.first_name, students.last_name").map { |s|
-          student_json(course_log, s.student, false).tap do |sj|
-            sj[:as_helper] = s.as_helper
-          end
-      },
+        .order('students.first_name, students.last_name').map do |s|
+                  student_json(course_log, s.student, false).tap do |sj|
+                    sj[:as_helper] = s.as_helper
+                  end
+                end,
       total_students: course_log.students_count,
       untracked_students_count: course_log.untracked_students_count
     }

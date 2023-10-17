@@ -1,14 +1,12 @@
 class Admin::TeachersController < Admin::BaseController
   expose(:teacher)
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 
   def update
-    teacher.fee = params["teacher"]["fee"].to_f
+    teacher.fee = params['teacher']['fee'].to_f
     teacher.save!
     redirect_to :admin_teachers
   end
@@ -19,7 +17,7 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def transfer_cash_income_money
-    teacher.transfer_cash_income_money(params[:amount].gsub('.','').gsub(',','.').to_f, Date.from_dmy(params[:date]))
+    teacher.transfer_cash_income_money(params[:amount].gsub('.', '').gsub(',', '.').to_f, Date.from_dmy(params[:date]))
     redirect_to admin_teacher_path(teacher)
   end
 
@@ -38,7 +36,11 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def month_activity
-    @date = ((Date.parse(params[:date]) rescue nil) || (School.today.at_beginning_of_month - 1.day)).at_beginning_of_month
+    @date = (begin
+      Date.parse(params[:date])
+    rescue StandardError
+      nil
+    end || (School.today.at_beginning_of_month - 1.day)).at_beginning_of_month
 
     @course_logs = teacher.course_logs.where(date: @date.month_range)
     @tracks = Track.where(id: Course.where(id: @course_logs.select(:course_id)).select(:track_id)).order(:code)
@@ -49,5 +51,4 @@ class Admin::TeachersController < Admin::BaseController
   def order_by_course_log(relation)
     relation.joins(:course_log).order('course_logs.date desc')
   end
-
 end

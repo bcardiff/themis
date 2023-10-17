@@ -1,12 +1,10 @@
 class Admin::CoursesController < Admin::BaseController
-  before_filter :set_valid_since_options, only: [:new, :create]
-  before_filter :set_valid_until_options, only: [:show, :update]
+  before_filter :set_valid_since_options, only: %i[new create]
+  before_filter :set_valid_until_options, only: %i[show update]
 
-  def index
-  end
+  def index; end
 
-  def listing
-  end
+  def listing; end
 
   def new
     place = Place.find(params[:place_id])
@@ -41,9 +39,7 @@ class Admin::CoursesController < Admin::BaseController
 
   def destroy
     @course = Course.find(params[:id])
-    if @course.can_destroy?
-      @course.destroy
-    end
+    @course.destroy if @course.can_destroy?
 
     redirect_to admin_courses_path
   end

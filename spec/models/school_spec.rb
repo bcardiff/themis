@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe School, type: :model do
   let!(:plan_clase) { create(:payment_plan, code: PaymentPlan::SINGLE_CLASS, price: 70, weekly_classes: 1) }
 
-  describe "courses incomes" do
+  describe 'courses incomes' do
     let(:teacher) { create(:teacher, fee: 100) }
     let(:plan) { create(:payment_plan) }
 
-    it "count in the day they where transferred" do
+    it 'count in the day they where transferred' do
       Timecop.freeze(Time.local(2015, 5, 15))
       transfer_payments_for(2)
       Timecop.freeze(Time.local(2015, 5, 20))
@@ -28,23 +28,23 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe "teaching expenses" do
+  describe 'teaching expenses' do
     let(:teacher) { create(:teacher, fee: 100) }
     let(:teacher2) { create(:teacher, fee: 150) }
 
-    it "uses current fee of teachers" do
+    it 'uses current fee of teachers' do
       teacher_course_log = create(:teacher_course_log, teacher: teacher)
       create(:teacher_course_log, teacher: teacher)
       create(:teacher_course_log, teacher: teacher2)
 
       expect(teacher_course_log.paid_amount).to be_nil
 
-      expect(School.course_teaching_expense_to_paid).to eq(100*2+150)
+      expect(School.course_teaching_expense_to_paid).to eq((100 * 2) + 150)
 
       teacher.fee = 170
       teacher.save!
 
-      expect(School.course_teaching_expense_to_paid).to eq(170*2+150)
+      expect(School.course_teaching_expense_to_paid).to eq((170 * 2) + 150)
     end
   end
 end

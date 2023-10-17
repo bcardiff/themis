@@ -1,15 +1,13 @@
-require "rails-assets-q/version"
-
+require 'rails-assets-q/version'
 
 module RailsAssetsQ
-
   def self.gem_path
     Pathname(File.realpath(__FILE__)).join('../..')
   end
 
   def self.gem_spec
-    Gem::Specification::load(
-      gem_path.join("rails-assets-q.gemspec").to_s
+    Gem::Specification.load(
+      gem_path.join('rails-assets-q.gemspec').to_s
     )
   end
 
@@ -18,9 +16,7 @@ module RailsAssetsQ
   end
 
   def self.dependencies
-    [
-      
-    ]
+    []
   end
 
   if defined?(Rails)
@@ -28,7 +24,6 @@ module RailsAssetsQ
       # Rails -> use app/assets directory.
     end
   end
-
 end
 
 class RailsAssets

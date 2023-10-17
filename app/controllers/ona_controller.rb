@@ -19,5 +19,4 @@ class OnaController < ApplicationController
     data = JSON.parse(request.raw_post)
     @submission = OnaSubmission.create form: params[:action], data: data, status: 'pending'
   end
-
 end

@@ -1,10 +1,7 @@
 class Teacher::StudentsController < Teacher::BaseController
   expose(:student)
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
-
+  def show; end
 end

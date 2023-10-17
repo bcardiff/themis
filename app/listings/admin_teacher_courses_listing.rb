@@ -5,7 +5,7 @@ class AdminTeacherCoursesListing < Listings::Base
 
   scope 'Todos', :all, default: true
   scope 'Por pagar a profesor', :due
-  scope "Pagados", :paid
+  scope 'Pagados', :paid
 
   column 'Fecha Curso' do |teacher_course_log|
     teacher_course_log.course_log.date.to_human
@@ -28,5 +28,4 @@ class AdminTeacherCoursesListing < Listings::Base
   end
 
   export :xls, :csv
-
 end

@@ -1,6 +1,5 @@
 class Teacher::CourseLogsController < Teacher::BaseController
   expose(:course_log)
 
-  def show
-  end
+  def show; end
 end

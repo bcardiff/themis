@@ -1,17 +1,14 @@
 class AdminStatsDetailsListing < Listings::Base
-
   model do
     date_range = Date.parse(params[:from])..Date.parse(params[:to])
 
     student_course_logs = StudentCourseLog.joins(course_log: :course).between(date_range)
     if params[:wday].present?
       wday = params[:wday].to_i
-      student_course_logs = student_course_logs.where(courses: {weekday: wday})
+      student_course_logs = student_course_logs.where(courses: { weekday: wday })
     end
 
-    if params[:track_id]
-      student_course_logs = student_course_logs.where(courses: {track_id: params[:track_id]})
-    end
+    student_course_logs = student_course_logs.where(courses: { track_id: params[:track_id] }) if params[:track_id]
 
     student_course_logs = student_course_logs.select(:student_id)
 

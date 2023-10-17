@@ -13,14 +13,14 @@ class PlaceOnaSubmissionsListing < Listings::Base
     text_modal('ver', 'Raw Data', JSON.pretty_generate(s.data))
   end
   column :status do |s|
-    if s.status != 'done'
-      h(s.status) + h(' ') + text_modal('...', 'Error Log', s.log)
-    else
+    if s.status == 'done'
       h(s.status)
+    else
+      h(s.status) + h(' ') + text_modal('...', 'Error Log', s.log)
     end
   end
 
-  %w(date course teacher).each do |data_field|
+  %w[date course teacher].each do |data_field|
     column data_field do |s|
       s.data[data_field]
     end

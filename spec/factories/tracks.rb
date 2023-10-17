@@ -3,6 +3,6 @@ FactoryGirl.define do
     sequence :code do |n|
       "track_#{n}"
     end
-    course_kind "swing"
+    course_kind 'swing'
   end
 end

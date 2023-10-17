@@ -11,7 +11,7 @@ module TeacherCashIncomes
     end
 
     def kind_description
-      "Nueva tarjeta"
+      'Nueva tarjeta'
     end
   end
 end

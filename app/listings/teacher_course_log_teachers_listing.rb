@@ -8,5 +8,4 @@ class TeacherCourseLogTeachersListing < Listings::Base
   column 'Pagos de alumnos' do |teacher|
     number_to_currency @course_log.incomes.where(teacher: teacher).sum(:payment_amount)
   end
-
 end

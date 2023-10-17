@@ -1,10 +1,10 @@
 class School
   def self.description
-    "Swing City"
+    'Swing City'
   end
 
   def self.weekdays
-    [1,2,3,4,5,6,0]
+    [1, 2, 3, 4, 5, 6, 0]
   end
 
   def self.today

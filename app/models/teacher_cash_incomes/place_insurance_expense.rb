@@ -9,7 +9,7 @@ module TeacherCashIncomes
     end
 
     def kind_description
-      "Seguro sala"
+      'Seguro sala'
     end
   end
 end

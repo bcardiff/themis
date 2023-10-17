@@ -1,11 +1,9 @@
 class Admin::UsersController < Admin::BaseController
   expose(:user, attributes: :user_params)
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 
   def update
     user.save!

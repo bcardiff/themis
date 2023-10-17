@@ -1,7 +1,7 @@
 class Teacher < ActiveRecord::Base
   validates_numericality_of :fee
 
-  scope :active, -> { where("deleted_at IS NULL") }
+  scope :active, -> { where('deleted_at IS NULL') }
   scope :for_classes, -> { active.where('priority > 0').order(:priority, :name) }
 
   has_many :teacher_course_logs
@@ -23,14 +23,15 @@ class Teacher < ActiveRecord::Base
   end
 
   def transfer_cash_income_money(real_amount, date)
-    owed_cash_records = self.owed_cash(date)
+    owed_cash_records = owed_cash(date)
     amount = owed_cash_records.sum(:payment_amount)
     delta = real_amount - amount
 
     transferred_at = Time.now
 
     if delta != 0
-      fix_amount = TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: transferred_at, payment_amount: delta)
+      fix_amount = TeacherCashIncomes::FixAmountIncome.create!(teacher: self, date: transferred_at,
+                                                               payment_amount: delta)
       fix_amount.payment_status = TeacherCashIncome::PAYMENT_ON_SCHOOL
       fix_amount.transferred_at = transferred_at
       fix_amount.save!

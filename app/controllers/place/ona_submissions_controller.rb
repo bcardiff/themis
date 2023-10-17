@@ -1,4 +1,3 @@
 class Place::OnaSubmissionsController < Place::BaseController
-  def index
-  end
+  def index; end
 end

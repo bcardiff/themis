@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :activity_log do
-    type ""
+    type ''
     target nil
-    description "MyText"
+    description 'MyText'
   end
-
 end

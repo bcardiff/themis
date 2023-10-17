@@ -11,14 +11,15 @@ class TeacherCashIncome < ActiveRecord::Base
 
   scope :owed, -> { where(payment_status: PAYMENT_ON_TEACHER) }
   scope :handed, -> { where(payment_status: PAYMENT_ON_SCHOOL) }
-  scope :handed_at_month, -> (time) { handed.where('transferred_at >= ?', time.at_beginning_of_month).where('transferred_at < ?', time.at_beginning_of_month.next_month) }
+  scope :handed_at_month, lambda { |time|
+                            handed.where('transferred_at >= ?', time.at_beginning_of_month).where('transferred_at < ?', time.at_beginning_of_month.next_month)
+                          }
 
   before_create do
     self.payment_status = PAYMENT_ON_TEACHER
   end
 
   before_destroy do
-    self.payment_status != PAYMENT_ON_SCHOOL
+    payment_status != PAYMENT_ON_SCHOOL
   end
-
 end

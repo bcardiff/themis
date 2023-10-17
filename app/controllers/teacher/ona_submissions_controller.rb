@@ -1,4 +1,3 @@
 class Teacher::OnaSubmissionsController < Teacher::BaseController
-  def index
-  end
+  def index; end
 end

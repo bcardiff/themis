@@ -8,7 +8,7 @@ module TeacherCashIncomes
     end
 
     def kind_description
-      "Alquiler de sala"
+      'Alquiler de sala'
     end
   end
 end

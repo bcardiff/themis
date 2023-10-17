@@ -13,5 +13,4 @@ FactoryGirl.define do
       "SWC/stu/#{n}"
     end
   end
-
 end

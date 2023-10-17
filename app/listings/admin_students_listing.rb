@@ -17,5 +17,4 @@ class AdminStudentsListing < Listings::Base
   end
 
   export :csv, :xls
-
 end

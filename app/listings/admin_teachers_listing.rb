@@ -30,5 +30,4 @@ class AdminTeachersListing < Listings::Base
   # end
 
   export :csv, :xls
-
 end

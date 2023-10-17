@@ -1,8 +1,8 @@
 class Admin::StudentsController < Admin::BaseController
   expose(:student, attributes: :student_params)
-  before_action :set_stats_range, only: [:stats, :stats_details]
+  before_action :set_stats_range, only: %i[stats stats_details]
 
-  SHARED_ACTIONS = [:advance_pack, :postpone_pack]
+  SHARED_ACTIONS = %i[advance_pack postpone_pack]
   skip_before_action :only_admin, only: SHARED_ACTIONS
   before_action :only_admin_or_cashier, only: SHARED_ACTIONS
 
@@ -54,7 +54,7 @@ class Admin::StudentsController < Admin::BaseController
   def flow_stats
     start = 1.year.ago.at_beginning_of_month
 
-    filter_period = -> (relation) { relation.where('created_at >= ?', start) }
+    filter_period = ->(relation) { relation.where('created_at >= ?', start) }
     # filter_period = -> (relation) { relation.all }
 
     @periods = []
@@ -63,40 +63,38 @@ class Admin::StudentsController < Admin::BaseController
     # new_students
     filter_period.call(Student).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(*) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
-      .each { |r|
+      .each do |r|
         @periods << r[:period]
-        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]] ||= { incoming: nil, active: nil, drops: nil }
         @stats[r[:period]][:incoming] = r[:count]
-      }
+      end
 
     # Activos
     filter_period.call(StudentCourseLog).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(distinct student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
-      .each { |r|
+      .each do |r|
         @periods << r[:period]
-        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]] ||= { incoming: nil, active: nil, drops: nil }
         @stats[r[:period]][:active] = r[:count]
-      }
+      end
 
     # drops
     filter_period.call(StudentCourseLog).group('EXTRACT(YEAR_MONTH FROM created_at)')
       .select('count(student_id) as count, EXTRACT(YEAR_MONTH FROM created_at) as period')
       .where('created_at = (SELECT MAX(t.created_at) FROM student_course_logs as t WHERE t.student_id = student_course_logs.student_id)')
-      .each { |r|
+      .each do |r|
         @periods << r[:period]
-        @stats[r[:period]] ||= {incoming: nil, active: nil, drops: nil}
+        @stats[r[:period]] ||= { incoming: nil, active: nil, drops: nil }
         @stats[r[:period]][:drops] = r[:count]
-      }
+      end
 
     @periods.uniq!
     @periods.sort!
   end
 
-  def flow_stats_drops_details
-  end
+  def flow_stats_drops_details; end
 
-  def drop_off
-  end
+  def drop_off; end
 
   def drop_off_stats
     @w1 = School.today.first_week
@@ -125,15 +123,12 @@ class Admin::StudentsController < Admin::BaseController
     current = nil
     query.each do |row|
       period = "#{row[:year]} - #{row[:week]}"
-      if current.nil? || current[:period] != period
-        @data << current = { period: period }
-      end
+      @data << current = { period: period } if current.nil? || current[:period] != period
       current[row[:course_id]] = row[:count]
     end
   end
 
-  def missing_payment
-  end
+  def missing_payment; end
 
   def cancel_debt
     student = Student.find(params[:id])
@@ -197,10 +192,10 @@ class Admin::StudentsController < Admin::BaseController
 
   def count_stat_entry(stat_entry, student_course_log)
     stat_entry[:total_count] = stat_entry[:total_count] + 1
-    unless stat_entry[:student_ids][student_course_log.student_id]
-      stat_entry[:count] = stat_entry[:count] + 1
-      stat_entry[:student_ids][student_course_log.student_id] = true
-    end
+    return if stat_entry[:student_ids][student_course_log.student_id]
+
+    stat_entry[:count] = stat_entry[:count] + 1
+    stat_entry[:student_ids][student_course_log.student_id] = true
   end
 
   def empty_stat_entry
@@ -210,11 +205,10 @@ class Admin::StudentsController < Admin::BaseController
   def set_stats_range
     if params[:from].blank? || params[:to].blank?
       default_range = view_context.recent_time_span
-      redirect_to url_for(params.merge({from: default_range.begin, to: default_range.end}))
+      redirect_to url_for(params.merge({ from: default_range.begin, to: default_range.end }))
       return
     end
     @date_range = Date.parse(params[:from])..Date.parse(params[:to])
     @stats_url_options = { from: params[:from], to: params[:to] }
   end
-
 end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "room page" do
-  include_context "swc context"
+describe 'room page' do
+  include_context 'swc context'
 
-  it "can be accessed from home page using code" do
+  it 'can be accessed from home page using code' do
     goto_page Home do |page|
       page.room_link.click
     end
@@ -14,11 +14,11 @@ describe "room page" do
     end
 
     expect_page RoomCoursePicker do |page|
-      expect(page.text).to match /Apertura de clase/i
+      expect(page.text).to match(/Apertura de clase/i)
     end
   end
 
-  it "shows todays course" do
+  it 'shows todays course' do
     signin_as_room
 
     expect_page RoomCoursePicker do |page|
@@ -29,7 +29,7 @@ describe "room page" do
     end
   end
 
-  it "creates course_log with selected teacher" do
+  it 'creates course_log with selected teacher' do
     expect(CourseLog.count).to eq 0
 
     signin_as_room
@@ -50,7 +50,7 @@ describe "room page" do
     expect(course_log.students).to be_empty
   end
 
-  context "on a class given by a teacher" do
+  context 'on a class given by a teacher' do
     before(:each) do
       signin_as_room
 
@@ -64,7 +64,7 @@ describe "room page" do
       end
     end
 
-    context "a student without balance go to class" do
+    context 'a student without balance go to class' do
       before(:each) do
         expect_page RoomStudentPicker do |page|
           page.type_card john_doe.card_code
@@ -74,15 +74,15 @@ describe "room page" do
         john_doe.reload
       end
 
-      it "should have a course_log" do
+      it 'should have a course_log' do
         expect(john_doe.student_course_logs.count).to eq 1
       end
 
-      it "should have a debt" do
+      it 'should have a debt' do
         expect(john_doe.student_course_logs.first.missing_payment?).to eq true
       end
 
-      context "but then it is removed" do
+      context 'but then it is removed' do
         before(:each) do
           expect_page RoomStudentPicker do |page|
             page.open_students_list
@@ -93,7 +93,7 @@ describe "room page" do
           john_doe.reload
         end
 
-        it "should not have a course_log" do
+        it 'should not have a course_log' do
           expect(john_doe.student_course_logs.count).to eq 0
         end
       end

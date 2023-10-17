@@ -9,11 +9,11 @@ module TeacherCashIncomes
     end
 
     def kind_description
-      "Comisión sala"
+      'Comisión sala'
     end
 
     before_validation do
-      self.place = self.student_course_log.course_log.course.place
+      self.place = student_course_log.course_log.course.place
     end
   end
 end

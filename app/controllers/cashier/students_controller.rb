@@ -10,7 +10,12 @@ class Cashier::StudentsController < Cashier::BaseController
         render json: {
           total_count: students.total_count,
           items: students.map { |s| student_json(s) },
-          next_url: students.last_page? ? nil : cashier_students_path(format: :json, q: params[:q], page: students.next_page)
+          next_url: if students.last_page?
+                      nil
+                    else
+                      cashier_students_path(format: :json, q: params[:q],
+                                            page: students.next_page)
+                    end
         }
       end
     end
@@ -25,7 +30,7 @@ class Cashier::StudentsController < Cashier::BaseController
       teachers: course_log_teachers_json(course_log),
       description: course.description(:track, :place, :time),
       untracked_students_count: course_log.untracked_students_count,
-      students: course_log.students.map { |s| student_json(s) }.sort_by { |h| - h[:pending_payments][:this_month] },
+      students: course_log.students.map { |s| student_json(s) }.sort_by { |h| - h[:pending_payments][:this_month] }
     }
   end
 
@@ -42,21 +47,20 @@ class Cashier::StudentsController < Cashier::BaseController
       if Settings.send_emails.welcome
         begin
           StudentNotifications.welcome(student).deliver_later if student.email.present?
-        rescue => ex
-          logger.warn ex
+        rescue StandardError => e
+          logger.warn e
         end
       end
 
-      render json: {status: :ok, student: student_json(student)}
+      render json: { status: :ok, student: student_json(student) }
     else
-      render json: {status: :error, student: student_json(student)}
+      render json: { status: :error, student: student_json(student) }
     end
   end
 
   def update
     self.student = Student.find(params[:id])
     cards_count = student.cards.count
-
 
     begin
       student.first_name = student_params[:first_name]
@@ -66,7 +70,8 @@ class Cashier::StudentsController < Cashier::BaseController
       student.comment_by = current_user if student.comment_changed?
       student.save!
 
-      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email], student_params[:card_code]
+      student.update_as_new_card! student_params[:first_name], student_params[:last_name], student_params[:email],
+                                  student_params[:card_code]
       if cards_count != student.cards.count
         TeacherCashIncomes::NewCardIncome.create_cashier_card_payment!(current_user.teacher, student, School.today)
         student.card_code = Student.format_card_code(student_params[:card_code])
@@ -74,7 +79,7 @@ class Cashier::StudentsController < Cashier::BaseController
       end
 
       redirect_to cashier_student_path(place, student)
-    rescue
+    rescue StandardError
       render :edit
     end
   end
@@ -86,15 +91,16 @@ class Cashier::StudentsController < Cashier::BaseController
     student_course_log.payment_plan = PaymentPlan.single_class_by_kind[student_course_log.course_log.course_kind]
     student_course_log.save!
 
-    render json: {status: :ok, student: student_json(student)}
+    render json: { status: :ok, student: student_json(student) }
   end
 
   def pack_payment
     student = Student.find(params[:id])
     payment_plan = PaymentPlan.find_by(code: params[:code])
-    TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, School.today, payment_plan)
+    TeacherCashIncomes::StudentPaymentIncome.create_cashier_pack_payment!(current_user.teacher, student, School.today,
+                                                                          payment_plan)
 
-    render json: {status: :ok, student: student_json(student)}
+    render json: { status: :ok, student: student_json(student) }
   end
 
   def track_in_course_log
@@ -102,15 +108,15 @@ class Cashier::StudentsController < Cashier::BaseController
     course_log = CourseLog.find(params[:course_log_id])
 
     course_log.student_course_logs.create!({
-      student: student,
-      payment_plan: nil,
-      id_kind: (student.card_code.blank? ? "guest" : "existing_card")
-    })
+                                             student: student,
+                                             payment_plan: nil,
+                                             id_kind: (student.card_code.blank? ? 'guest' : 'existing_card')
+                                           })
 
-    course_log.untracked_students_count -= 1 # TODO if params[:untracked]
+    course_log.untracked_students_count -= 1 # TODO: if params[:untracked]
     course_log.save!
 
-    render json: {status: :ok, student: student_json(student)}
+    render json: { status: :ok, student: student_json(student) }
   end
 
   def remove_pack
@@ -136,7 +142,7 @@ class Cashier::StudentsController < Cashier::BaseController
       email: student.email,
       comment: student.comment,
       comment_at: student.comment_at.try(&:to_human),
-      comment_by: student.comment_by.try(&:name),
+      comment_by: student.comment_by.try(&:name)
     }.tap do |hash|
       hash[:errors] = student.errors.to_hash unless student.valid?
 
@@ -152,7 +158,7 @@ class Cashier::StudentsController < Cashier::BaseController
           {
             id: student_course_log.id,
             course: student_course_log.course_log.course.code,
-            course_kind: student_course_log.course_log.course_kind,
+            course_kind: student_course_log.course_log.course_kind
           }
         end
       end

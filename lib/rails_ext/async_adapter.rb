@@ -33,16 +33,16 @@ module ActiveJob
         # See {Concurrent::ThreadPoolExecutor}[http://ruby-concurrency.github.io/concurrent-ruby/Concurrent/ThreadPoolExecutor.html] for executor options.
         def initialize
           # executor_options are fixed because queue adapters are not configurable
-          executor_options = {min_threads: 1, max_threads: 1, idletime: 600.seconds}
+          executor_options = { min_threads: 1, max_threads: 1, idletime: 600.seconds }
           @scheduler = Scheduler.new(**executor_options)
         end
 
-        def enqueue(job) #:nodoc:
+        def enqueue(job) # :nodoc:
           @scheduler ||= Scheduler.new
           @scheduler.enqueue JobWrapper.new(job), queue_name: job.queue_name
         end
 
-        def enqueue_at(job, timestamp) #:nodoc:
+        def enqueue_at(job, timestamp) # :nodoc:
           @scheduler ||= Scheduler.new
           @scheduler.enqueue_at JobWrapper.new(job), timestamp, queue_name: job.queue_name
         end
@@ -50,13 +50,13 @@ module ActiveJob
         # Gracefully stop processing jobs. Finishes in-progress work and handles
         # any new jobs following the executor's fallback policy (`caller_runs`).
         # Waits for termination by default. Pass `wait: false` to continue.
-        def shutdown(wait: true) #:nodoc:
+        def shutdown(wait: true) # :nodoc:
           @scheduler ||= Scheduler.new
           @scheduler.shutdown wait: wait
         end
 
         # Used for our test suite.
-        def immediate=(immediate) #:nodoc:
+        def immediate=(immediate) # :nodoc:
           @scheduler ||= Scheduler.new
           @scheduler.immediate = immediate
         end
@@ -66,9 +66,9 @@ module ActiveJob
       # performing them in-process, but we do so anyway for parity with other
       # adapters and deployment environments. Otherwise, serialization bugs
       # may creep in undetected.
-      class JobWrapper #:nodoc:
+      class JobWrapper # :nodoc:
         def initialize(job)
-          #job.provider_job_id = SecureRandom.uuid
+          # job.provider_job_id = SecureRandom.uuid
           @job_data = job.serialize
         end
 
@@ -77,13 +77,13 @@ module ActiveJob
         end
       end
 
-      class Scheduler #:nodoc:
+      class Scheduler # :nodoc:
         DEFAULT_EXECUTOR_OPTIONS = {
-          min_threads:     0,
-          max_threads:     Concurrent.processor_count,
-          auto_terminate:  true,
-          idletime:        60, # 1 minute
-          max_queue:       0, # unlimited
+          min_threads: 0,
+          max_threads: Concurrent.processor_count,
+          auto_terminate: true,
+          idletime: 60, # 1 minute
+          max_queue: 0, # unlimited
           fallback_policy: :caller_runs # shouldn't matter -- 0 max queue
         }.freeze
 

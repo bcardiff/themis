@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def teacher_owed_cash(teacher, date = School.today)
     @date = date.to_dmy
     incomes = teacher.owed_cash(date)
-    @incomes = incomes.to_a.group_by { |e| [e.date, e.course_log_id, e.type] } # TODO sort
+    @incomes = incomes.to_a.group_by { |e| [e.date, e.course_log_id, e.type] } # TODO: sort
     @total = incomes.sum(:payment_amount)
   end
 

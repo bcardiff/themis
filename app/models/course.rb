@@ -7,12 +7,14 @@ class Course < ActiveRecord::Base
 
   validates :code, presence: true, uniqueness: true, format: { with: /\A[\w\_]+\z/ }
 
-  scope :ongoing, -> (date) { where('valid_until IS NULL or valid_until >= ?', date).where('valid_since <= ?', date).where(weekday: date.wday) }
+  scope :ongoing, lambda { |date|
+                    where('valid_until IS NULL or valid_until >= ?', date).where('valid_since <= ?', date).where(weekday: date.wday)
+                  }
   scope :ongoing_or_future, -> { where('valid_until IS NULL or valid_until >= ?', School.today) }
-  scope :with_course_kind, -> (kinds) { joins(:track).where(tracks: {course_kind: kinds}) }
+  scope :with_course_kind, ->(kinds) { joins(:track).where(tracks: { course_kind: kinds }) }
 
   def future?
-    School.today < self.valid_since
+    School.today < valid_since
   end
 
   def can_destroy?
@@ -27,7 +29,7 @@ class Course < ActiveRecord::Base
       when :short_track
         "#{track.code.split('_').join(' ')}#{" #{hashtag}" if hashtag.present?}"
       when :weekday
-        "#{I18n.t('date.day_names')[weekday].titleize}#{" mañana" if start_time.hour <= 12}"
+        "#{I18n.t('date.day_names')[weekday].titleize}#{' mañana' if start_time.hour <= 12}"
       when :time
         short_time
       when :place
@@ -39,7 +41,7 @@ class Course < ActiveRecord::Base
   end
 
   def short_time
-    "#{self.start_time.hour}hs"
+    "#{start_time.hour}hs"
   end
 
   def self.next_code(track, wday)

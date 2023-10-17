@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "login page" do
-  include_context "swc context"
+describe 'login page' do
+  include_context 'swc context'
 
-  context "when a cashier user logs in" do
+  context 'when a cashier user logs in' do
     before(:each) do
       goto_page Login do |page|
         page.email.set cajero.email
@@ -12,7 +12,7 @@ describe "login page" do
       end
     end
 
-    it "should redirect to cashier dashboard" do
+    it 'should redirect to cashier dashboard' do
       expect_page CashierDashboard
     end
   end

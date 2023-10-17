@@ -7,19 +7,17 @@ class AdminCoursesListing < Listings::Base
   scope 'Todos', :all
 
   column :code
-  column "Descripción" do |c|
+  column 'Descripción' do |c|
     c.description(:track, :place)
   end
   column :weekday do |c|
     local_wday(c.weekday)
   end
   column :start_time do |c|
-    if c.start_time
-      "#{c.start_time.hour}:#{"%02d" % c.start_time.min}"
-    end
+    "#{c.start_time.hour}:#{'%02d' % c.start_time.min}" if c.start_time
   end
   column :place do |c|
-    name = c.place.try &:name
+    name = c.place.try(&:name)
     name = nil if name == School.description
     name
   end
@@ -27,5 +25,4 @@ class AdminCoursesListing < Listings::Base
   column :valid_until
 
   export :xls, :csv
-
 end

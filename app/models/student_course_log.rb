@@ -13,9 +13,9 @@ class StudentCourseLog < ActiveRecord::Base
   delegate :date, to: :course_log
 
   def incomes
-    # TODO unable to work with has_many and subclasses
+    # TODO: unable to work with has_many and subclasses
     # has_many :incomes, class_name: 'TeacherCashIncomes::StudentCourseLogIncome'
-    TeacherCashIncome.where(student_course_log_id: self.id)
+    TeacherCashIncome.where(student_course_log_id: id)
   end
 
   before_validation :clear_payment_if_no_plan
@@ -25,16 +25,16 @@ class StudentCourseLog < ActiveRecord::Base
   after_save :assign_to_pack_if_no_payment
 
   validates_presence_of :student, :course_log, :id_kind
-  validates :student, uniqueness: { scope: :course_log_id, message: "No puede repetirse el alumno en una clase" }
+  validates :student, uniqueness: { scope: :course_log_id, message: 'No puede repetirse el alumno en una clase' }
   validate :validate_teacher_in_course_log
   validate :validate_teacher_if_paying
 
   scope :with_payment, -> { where.not(payment_status: nil) }
-  scope :between, -> (date_range) { where(course_logs: { date: date_range }) }
+  scope :between, ->(date_range) { where(course_logs: { date: date_range }) }
   scope :missing_payment, -> { where(requires_student_pack: true, student_pack: nil) }
 
   before_destroy do
-    self.incomes.each { |i| i.destroy! }
+    incomes.each { |i| i.destroy! }
 
     ActivityLogs::Student::CourseAttended.for(student, course_log).each { |i| i.destroy! }
     ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
@@ -52,39 +52,38 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   def missing_payment?
-    self.requires_student_pack == true && self.student_pack == nil
+    requires_student_pack == true && student_pack.nil?
   end
 
   def self.process(course_log, teacher, payload, ona_submission, ona_submission_path)
-    id_kind = payload["student_repeat/id_kind"]
-    card = payload["student_repeat/cardtxt"]
-    card = payload["student_repeat/card"] if card.blank?
-    email = payload["student_repeat/email"]
-    first_name = payload["student_repeat/first_name"]
-    last_name = payload["student_repeat/last_name"]
-    known_by = payload["student_repeat/known_by"]
-    do_payment = payload["student_repeat/do_payment"]
-    payment_kind = payload["student_repeat/payment/kind"]
-    payment_amount = payload["student_repeat/payment/amount"]
+    id_kind = payload['student_repeat/id_kind']
+    card = payload['student_repeat/cardtxt']
+    card = payload['student_repeat/card'] if card.blank?
+    email = payload['student_repeat/email']
+    first_name = payload['student_repeat/first_name']
+    last_name = payload['student_repeat/last_name']
+    known_by = payload['student_repeat/known_by']
+    do_payment = payload['student_repeat/do_payment']
+    payment_kind = payload['student_repeat/payment/kind']
+    payment_amount = payload['student_repeat/payment/amount']
 
     # skip empty students
     return if card.blank? and email.blank? and first_name.blank? and payment_kind.blank?
 
     # if there already was a student course log for this part of the submission
     student = nil
-    existing_log = StudentCourseLog.where(ona_submission: ona_submission, ona_submission_path: ona_submission_path).first
-    if existing_log
-      student = existing_log.student
-    end
+    existing_log = StudentCourseLog.where(ona_submission: ona_submission,
+                                          ona_submission_path: ona_submission_path).first
+    student = existing_log.student if existing_log
 
     case id_kind
-    when "new_card"
+    when 'new_card'
       student ||= Student.find_by_card card
       student ||= Student.find_by(email: email)
       student ||= Student.find_or_initialize_by_card card
       student.known_by ||= known_by
       student.update_as_new_card!(first_name, last_name, email, card)
-    when "existing_card"
+    when 'existing_card'
       student ||= Student.find_or_initialize_by_card card
       if student.new_record?
         student.first_name = Student::UNKOWN
@@ -92,7 +91,7 @@ class StudentCourseLog < ActiveRecord::Base
         student.email = nil
         student.save!
       end
-    when "guest"
+    when 'guest'
       student ||= Student.find_or_initialize_by_email email
       student.known_by = known_by
       student.update_as_guest!(first_name, last_name)
@@ -100,7 +99,7 @@ class StudentCourseLog < ActiveRecord::Base
       raise 'not supported id_kind'
     end
 
-    # TODO better error when student is nil
+    # TODO: better error when student is nil
     student_log = existing_log || course_log.student_course_logs.first_or_build(student: student)
     student_log.id_kind = id_kind
     student_log.payload = payload.to_json
@@ -109,8 +108,8 @@ class StudentCourseLog < ActiveRecord::Base
     student_log.ona_submission = ona_submission
     student_log.ona_submission_path = ona_submission_path
 
-    if do_payment == "yes"
-      # TODO error handling
+    if do_payment == 'yes'
+      # TODO: error handling
       plan = PaymentPlan.find_by!(code: payment_kind)
       student_log.payment_plan = plan
       student_log.payment_amount = plan.price_or_fallback(payment_amount)
@@ -121,18 +120,19 @@ class StudentCourseLog < ActiveRecord::Base
     student_log.save!
   end
 
-  def self.yank(course_log, payload, ona_submission, ona_submission_path)
-    id_kind = payload["student_repeat/id_kind"]
-    card = payload["student_repeat/cardtxt"]
-    card = payload["student_repeat/card"] if card.blank?
-    email = payload["student_repeat/email"]
-    first_name = payload["student_repeat/first_name"]
-    last_name = payload["student_repeat/last_name"]
-    do_payment = payload["student_repeat/do_payment"]
-    payment_kind = payload["student_repeat/payment/kind"]
-    payment_amount = payload["student_repeat/payment/amount"]
+  def self.yank(_course_log, payload, ona_submission, ona_submission_path)
+    id_kind = payload['student_repeat/id_kind']
+    card = payload['student_repeat/cardtxt']
+    card = payload['student_repeat/card'] if card.blank?
+    email = payload['student_repeat/email']
+    first_name = payload['student_repeat/first_name']
+    last_name = payload['student_repeat/last_name']
+    do_payment = payload['student_repeat/do_payment']
+    payment_kind = payload['student_repeat/payment/kind']
+    payment_amount = payload['student_repeat/payment/amount']
 
-    existing_log = StudentCourseLog.where(ona_submission: ona_submission, ona_submission_path: ona_submission_path).first
+    existing_log = StudentCourseLog.where(ona_submission: ona_submission,
+                                          ona_submission_path: ona_submission_path).first
     return unless existing_log
 
     student = existing_log.student
@@ -140,16 +140,13 @@ class StudentCourseLog < ActiveRecord::Base
     existing_log.destroy!
 
     case id_kind
-    when "new_card"
-      if student.student_course_logs.count > 0
-        raise "unable to yank student_id: #{student.id}"
-      end
+    when 'new_card'
+      raise "unable to yank student_id: #{student.id}" if student.student_course_logs.count > 0
+
       student.destroy!
-    when "guest"
-      if student.student_course_logs.count == 0
-        student.destroy!
-      end
-    when "existing_card"
+    when 'guest'
+      student.destroy! if student.student_course_logs.count == 0
+    when 'existing_card'
       # nothing to do
     else
       raise 'not supported id_kind'
@@ -157,14 +154,14 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   def record_teacher_cash_income
-    if id_kind == "new_card"
+    if id_kind == 'new_card'
       income = TeacherCashIncomes::NewCardIncome.find_or_initialize_by_student_course_log(self)
       income.save!
     end
 
     income = TeacherCashIncomes::StudentPaymentIncome.find_or_initialize_by_student_course_log(self)
     if payment_plan
-      # TODO should update only if not transfered TeacherCashIncomes?
+      # TODO: should update only if not transfered TeacherCashIncomes?
       income.payment_amount = payment_plan.price_or_fallback(payment_amount)
       income.save!
     elsif income.persisted?
@@ -175,7 +172,7 @@ class StudentCourseLog < ActiveRecord::Base
   def record_student_activities
     ActivityLogs::Student::CourseAttended.record(student, course_log)
     if payment_plan
-      self.payment_amount = self.payment_plan.price_or_fallback(self.payment_amount)
+      self.payment_amount = payment_plan.price_or_fallback(payment_amount)
       ActivityLogs::Student::Payment.record(student, self)
     else
       ActivityLogs::Student::Payment.for(student, self).each { |i| i.destroy! }
@@ -183,25 +180,26 @@ class StudentCourseLog < ActiveRecord::Base
   end
 
   def clear_payment_if_no_plan
-    if self.payment_plan.nil?
-      self.payment_amount = nil
-    end
+    return unless payment_plan.nil?
+
+    self.payment_amount = nil
   end
 
   def set_student_pack_related_fields
-    self.requires_student_pack = if self.as_helper
-      false
-    elsif self.payment_plan
-      self.payment_plan.requires_student_pack_for_class
-    else
-      true
-    end
+    self.requires_student_pack = if as_helper
+                                   false
+                                 elsif payment_plan
+                                   payment_plan.requires_student_pack_for_class
+                                 else
+                                   true
+                                 end
 
     true # before_validation
   end
 
   def assign_to_pack_if_no_payment
-    return unless self.payment_amount.nil?
+    return unless payment_amount.nil?
+
     StudentPack.check_assign_student_course_log(self)
   end
 

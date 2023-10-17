@@ -10,27 +10,24 @@ module TeacherCashIncomes
     end
 
     def self.create_cashier_pack_payment!(teacher, student, date, payment_plan)
-      create!(teacher: teacher, date: date, student: student, payment_plan_on_cashier: payment_plan, payment_amount: payment_plan.price).tap do |income|
+      create!(teacher: teacher, date: date, student: student, payment_plan_on_cashier: payment_plan,
+              payment_amount: payment_plan.price).tap do |income|
         ActivityLogs::Student::Payment.record_cashier_pack_payment(student, income, payment_plan)
       end
     end
 
     def kind_description
-      "Pago de alumno"
+      'Pago de alumno'
     end
 
     before_save do
       place = student_course_log.try { |scl| scl.course_log.course.place }
-      if place
-        place.after_payment(self)
-      end
+      place.after_payment(self) if place
     end
 
     before_destroy do
       place = student_course_log.try { |scl| scl.course_log.course.place }
-      if place
-        place.after_payment_destroy(self)
-      end
+      place.after_payment_destroy(self) if place
     end
 
     after_save :update_student_packs

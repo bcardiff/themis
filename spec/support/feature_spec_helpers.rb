@@ -9,7 +9,7 @@ module FeatureSpecHelpers
   def expect_page(klass)
     page = klass.new
     expect(page).to be_displayed
-    expect(page).to_not have_content "Request info"
+    expect(page).to_not have_content 'Request info'
     yield page if block_given?
     sleep 0.5
   end
@@ -32,6 +32,7 @@ module FeatureSpecHelpers
 
   def finished_all_ajax_requests?
     return true unless page.current_url.start_with?("http://#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}")
+
     page.evaluate_script('jQuery.active').zero?
   end
 end

@@ -1,7 +1,7 @@
 def to_csv(query, file)
   result = ActiveRecord::Base.connection.execute(query)
 
-  CSV.open(file, "wb") do |csv|
+  CSV.open(file, 'wb') do |csv|
     csv << result.fields
     result.each do |r|
       csv << r
@@ -10,14 +10,14 @@ def to_csv(query, file)
 end
 
 namespace :app do
-  desc "Restore mysql backup"
-  task stats: :environment do |t, args|
+  desc 'Restore mysql backup'
+  task stats: :environment do |_t, _args|
     # Which months a student went to a class
     # month encoded as integers YYYYMM
     #
     # | student_id | month |
-    student_months = StudentCourseLog.joins(:course_log)\
-      .select("DISTINCT student_id, YEAR(course_logs.date) * 100 + MONTH(course_logs.date) as month")\
+    student_months = StudentCourseLog.joins(:course_log) \
+      .select('DISTINCT student_id, YEAR(course_logs.date) * 100 + MONTH(course_logs.date) as month') \
       .to_sql
 
     # First and last month (YYYYMM) of each student
@@ -99,7 +99,7 @@ namespace :app do
       GROUP BY student_id
     )
 
-    this_month = School.today.year * 100 + School.today.month
+    this_month = (School.today.year * 100) + School.today.month
 
     # How is the engagement of the student towards the school.
     # Combines the lifespan of the student (first_month, last_month, month_span)
@@ -118,11 +118,11 @@ namespace :app do
       ORDER BY flm.first_month
     )
 
-    FileUtils.mkdir_p "./stats"
-    to_csv first_month, "./stats/first_month.csv"
-    to_csv last_month, "./stats/last_month.csv"
-    to_csv month_flow, "./stats/month_flow.csv"
-    to_csv month_survival, "./stats/month_survival.csv"
-    to_csv engagement, "./stats/engagement.csv"
+    FileUtils.mkdir_p './stats'
+    to_csv first_month, './stats/first_month.csv'
+    to_csv last_month, './stats/last_month.csv'
+    to_csv month_flow, './stats/month_flow.csv'
+    to_csv month_survival, './stats/month_survival.csv'
+    to_csv engagement, './stats/engagement.csv'
   end
 end

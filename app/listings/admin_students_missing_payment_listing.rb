@@ -1,8 +1,8 @@
 class AdminStudentsMissingPaymentListing < Listings::Base
-  model {
+  model do
     @date = Date.parse(params['date'])
     Student.missing_payment(@date)
-  }
+  end
 
   column :card_code
   column 'Student' do |student|
@@ -19,5 +19,4 @@ class AdminStudentsMissingPaymentListing < Listings::Base
   end
 
   export :xls, :csv
-
 end

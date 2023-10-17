@@ -8,5 +8,4 @@ class TeacherStudentsListing < Listings::Base
   column '' do |student|
     link_to 'ver', teacher_student_path(student)
   end
-
 end

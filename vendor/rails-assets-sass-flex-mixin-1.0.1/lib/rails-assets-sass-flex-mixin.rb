@@ -1,15 +1,13 @@
-require "rails-assets-sass-flex-mixin/version"
-
+require 'rails-assets-sass-flex-mixin/version'
 
 module RailsAssetsSassFlexMixin
-
   def self.gem_path
     Pathname(File.realpath(__FILE__)).join('../..')
   end
 
   def self.gem_spec
-    Gem::Specification::load(
-      gem_path.join("rails-assets-sass-flex-mixin.gemspec").to_s
+    Gem::Specification.load(
+      gem_path.join('rails-assets-sass-flex-mixin.gemspec').to_s
     )
   end
 
@@ -18,9 +16,7 @@ module RailsAssetsSassFlexMixin
   end
 
   def self.dependencies
-    [
-      
-    ]
+    []
   end
 
   if defined?(Rails)
@@ -28,7 +24,6 @@ module RailsAssetsSassFlexMixin
       # Rails -> use app/assets directory.
     end
   end
-
 end
 
 class RailsAssets

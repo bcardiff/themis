@@ -6,5 +6,4 @@ FactoryGirl.define do
     course_log { create :course_log, teacher: teacher }
     payload nil
   end
-
 end
