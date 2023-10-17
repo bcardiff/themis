@@ -35,7 +35,7 @@ class Admin::WelcomeController < Admin::BaseController
     incomes = TeacherCashIncome.select('type as kind, year(date) as year, month(date) as month, SUM(payment_amount) as amount')
       .group('type, year(date), month(date)')
     incomes.each do |income|
-      period = "#{income['year']}-#{'%02d' % income['month']}"
+      period = format('%<year>s-%<month>02d', year: income['year'], month: income['month'])
       category = income['kind']
       @categories << category
       @periods << period
@@ -50,7 +50,7 @@ class Admin::WelcomeController < Admin::BaseController
     expenses.each do |expense|
       next unless expense['amount']
 
-      period = "#{expense['year']}-#{'%02d' % expense['month']}"
+      period = format('%<year>s-%<month>02d', year: expense['year'], month: expense['month'])
       category = 'TeacherPayment'
       @categories << category
       @periods << period
@@ -65,7 +65,7 @@ class Admin::WelcomeController < Admin::BaseController
     expenses.each do |expense|
       next unless expense['amount']
 
-      period = "#{expense['year']}-#{'%02d' % expense['month']}"
+      period = format('%<year>s-%<month>02d', year: expense['year'], month: expense['month'])
       category = 'TeacherOwedPayment'
       @categories << category
       @periods << period

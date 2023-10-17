@@ -24,7 +24,7 @@ class OnaSubmission < ActiveRecord::Base
     save!
   end
 
-  def process!(_raise = false)
+  def process!(raise: false)
     begin
       CourseLog.transaction(requires_new: true) do
         raise "unable to process '#{form}' form" unless form == 'issued_class'
@@ -34,8 +34,8 @@ class OnaSubmission < ActiveRecord::Base
         self.status = 'done'
         self.log = nil
       end
-    rescue Exception => e
-      raise e if _raise
+    rescue StandardError => e
+      raise e if raise
 
       self.log = "#{e}\n#{e.backtrace.join("\n")}"
       self.status = 'error'
@@ -55,7 +55,7 @@ class OnaSubmission < ActiveRecord::Base
         self.log = nil
         self.status = 'yanked'
       end
-    rescue Exception => e
+    rescue StandardError => e
       self.log = "#{e}\n#{e.backtrace.join("\n")}"
       save!
       raise e

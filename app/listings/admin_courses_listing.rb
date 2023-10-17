@@ -14,7 +14,7 @@ class AdminCoursesListing < Listings::Base
     local_wday(c.weekday)
   end
   column :start_time do |c|
-    "#{c.start_time.hour}:#{'%02d' % c.start_time.min}" if c.start_time
+    format('%<hour>d:%<min>02d', hour: c.start_time.hour, min: c.start_time.min) if c.start_time
   end
   column :place do |c|
     name = c.place.try(&:name)

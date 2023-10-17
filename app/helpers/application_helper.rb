@@ -95,7 +95,7 @@ module ApplicationHelper
       single_class_price_by_kind: PaymentPlan.single_class_by_kind
         .transform_values { |p| number_to_currency(p.price) },
       payment_plans: PaymentPlan.all.order(:order, :price).to_a.select do |p|
-                       !p.other? && (p.price.to_f != 0 || p.description.downcase.include?('bonif'))
+                       !p.other? && (p.price.to_f > 0.001 || p.description.downcase.include?('bonif'))
                      end.map do |p|
                        { code: p.code, description: p.description, price: p.price.to_f }
                      end,

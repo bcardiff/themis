@@ -42,32 +42,20 @@ class StudentPack < ActiveRecord::Base
     start_date = date.to_date.at_beginning_of_month
     if plan && !plan.single_class?
       due_date = case plan.code
-                 when '3_MESES'
+                 when '3_MESES', '3_MESES_CASH'
                    (start_date + 2.months).at_end_of_month
                  when '2_MESES_LIBRE'
                    (start_date + 1.months).at_end_of_month
-                 when '3_MESES_CASH'
-                   (start_date + 2.months).at_end_of_month
                  else
                    start_date.at_end_of_month
                  end
 
       case plan.code
-      when '1_X_SEMANA_3'
+      when '1_X_SEMANA_3', '1_X_SEMANA_3_CASH'
         weeks = 3
-      when '1_X_SEMANA_3_CASH'
-        weeks = 3
-      when '1_X_SEMANA_4'
+      when '1_X_SEMANA_4', '1_X_SEMANA_4_CASH', '1_X_SEMANA_4_SALE_30', '1_X_SEMANA_4_SALE_50'
         weeks = 4
-      when '1_X_SEMANA_4_CASH'
-        weeks = 4
-      when '1_X_SEMANA_4_SALE_30'
-        weeks = 4
-      when '1_X_SEMANA_4_SALE_50'
-        weeks = 4
-      when '1_X_SEMANA_5'
-        weeks = 5
-      when '1_X_SEMANA_5_CASH'
+      when '1_X_SEMANA_5', '1_X_SEMANA_5_CASH'
         weeks = 5
       else
         current_date = start_date

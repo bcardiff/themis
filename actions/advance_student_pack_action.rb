@@ -1,5 +1,6 @@
 class AdvanceStudentPackAction < Action::Base
   def initialize(current_user, student_pack)
+    super
     @current_user = current_user
     @student_pack = student_pack
   end

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     @total = incomes.sum(:payment_amount)
   end
 
-  def is_room_signed?
+  def room_signed?
     session[:room_token] == Settings.room_password
   end
 

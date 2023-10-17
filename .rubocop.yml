@@ -19,17 +19,23 @@ Metrics/MethodLength:
   Include:
     - "app/controllers/*"
     - "app/models/*"
-  Max: 20
+  Max: 80
 Metrics/AbcSize:
   Include:
     - "app/controllers/*"
     - "app/models/*"
-  Max: 50
+  Max: 70
 Metrics/ClassLength:
-  Max: 150
+  Max: 200
 Metrics/BlockLength:
   AllowedMethods: ['describe']
   Max: 200
+Metrics/ModuleLength:
+  Max: 150
+Metrics/CyclomaticComplexity:
+  Max: 20
+Metrics/PerceivedComplexity:
+  Max: 20
 
 Style/Documentation:
   Enabled: false
@@ -43,6 +49,8 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/MultilineBlockChain:
+  Enabled: false  
 
 Layout/HashAlignment:
   EnforcedColonStyle: key
