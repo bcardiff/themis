@@ -1,4 +1,4 @@
-class UpdateCaballitoName < ActiveRecord::Migration
+class UpdateCaballitoName < ActiveRecord::Migration[7.0]
   def up
     execute <<-SQL
       UPDATE places SET name = 'La Fragua' WHERE name = 'Donarte'

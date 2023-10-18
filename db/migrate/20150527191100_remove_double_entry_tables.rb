@@ -1,4 +1,4 @@
-class RemoveDoubleEntryTables < ActiveRecord::Migration
+class RemoveDoubleEntryTables < ActiveRecord::Migration[7.0]
 
   def self.down
     create_table "double_entry_account_balances", :force => true do |t|

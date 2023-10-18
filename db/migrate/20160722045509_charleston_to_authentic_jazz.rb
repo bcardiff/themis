@@ -1,4 +1,4 @@
-class CharlestonToAuthenticJazz < ActiveRecord::Migration
+class CharlestonToAuthenticJazz < ActiveRecord::Migration[7.0]
   def up
     execute "UPDATE tracks SET Code = 'AJ_PRIN' WHERE Code = 'CH_PRIN';"
     execute "UPDATE tracks SET Code = 'AJ_AVAN' WHERE Code = 'CH_AVAN';"

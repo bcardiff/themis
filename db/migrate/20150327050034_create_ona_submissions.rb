@@ -1,4 +1,4 @@
-class CreateOnaSubmissions < ActiveRecord::Migration
+class CreateOnaSubmissions < ActiveRecord::Migration[7.0]
   def change
     create_table :ona_submissions do |t|
       t.string :form

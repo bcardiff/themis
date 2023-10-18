@@ -1,4 +1,4 @@
-class AddPaidPaidAmountPaidAtToTeacherCourseLogs < ActiveRecord::Migration
+class AddPaidPaidAmountPaidAtToTeacherCourseLogs < ActiveRecord::Migration[7.0]
   def change
     add_column :teacher_course_logs, :paid, :boolean
     add_column :teacher_course_logs, :paid_amount, :decimal

@@ -1,4 +1,4 @@
-class CreateTeachLogs < ActiveRecord::Migration
+class CreateTeachLogs < ActiveRecord::Migration[7.0]
   def change
     create_table :teach_logs do |t|
       t.date :date

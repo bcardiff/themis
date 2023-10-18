@@ -1,4 +1,4 @@
-class CreateStudentPacks < ActiveRecord::Migration
+class CreateStudentPacks < ActiveRecord::Migration[7.0]
   def change
     create_table :student_packs do |t|
       t.references :student, index: true, foreign_key: true

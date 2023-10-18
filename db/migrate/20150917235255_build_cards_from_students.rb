@@ -1,4 +1,4 @@
-class BuildCardsFromStudents < ActiveRecord::Migration
+class BuildCardsFromStudents < ActiveRecord::Migration[7.0]
   def up
     execute "DELETE FROM cards"
     time = Time.now.to_s(:db)

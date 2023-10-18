@@ -1,4 +1,4 @@
-class CreateStudentCourseLogs < ActiveRecord::Migration
+class CreateStudentCourseLogs < ActiveRecord::Migration[7.0]
   def change
     create_table :student_course_logs do |t|
       t.references :student, index: true, foreign_key: true

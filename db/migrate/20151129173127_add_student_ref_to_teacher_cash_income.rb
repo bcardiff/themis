@@ -1,4 +1,4 @@
-class AddStudentRefToTeacherCashIncome < ActiveRecord::Migration
+class AddStudentRefToTeacherCashIncome < ActiveRecord::Migration[7.0]
   def up
     add_reference :teacher_cash_incomes, :student, index: true, foreign_key: true
 

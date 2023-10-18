@@ -1,4 +1,4 @@
-class CreateCourseLogs < ActiveRecord::Migration
+class CreateCourseLogs < ActiveRecord::Migration[7.0]
   def change
     create_table :course_logs do |t|
       t.references :course

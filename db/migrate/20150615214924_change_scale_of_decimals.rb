@@ -1,4 +1,4 @@
-class ChangeScaleOfDecimals < ActiveRecord::Migration
+class ChangeScaleOfDecimals < ActiveRecord::Migration[7.0]
   def up
     change_column :payment_plans, :price, :decimal, :precision => 10, :scale => 2
     change_column :student_course_logs, :payment_amount, :decimal, :precision => 10, :scale => 2
