@@ -37,6 +37,7 @@ gem 'rails-i18n'
 gem 'simple_calendar'
 
 gem 'listings'
+gem 'sassc-rails'
 
 # gem 'rails_12factor', :group => :production
 gem 'bootstrap3_autocomplete_input'

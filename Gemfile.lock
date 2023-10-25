@@ -492,6 +492,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   sass-rails
+  sassc-rails
   sdoc
   selenium-webdriver
   simple_calendar

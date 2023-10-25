@@ -2,11 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
+=begin 
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
-
+=end
   protected
 
   def teacher_owed_cash(teacher, date = School.today)

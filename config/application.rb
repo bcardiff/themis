@@ -35,5 +35,8 @@ module Themis
     config.react.addons = true
 
     config.active_job.queue_adapter = :async
+    config.assets.paths << Rails.root.join("vendor")
+    config.assets.precompile += %w( *.scss )
+
   end
 end
